@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+<script src=hist.js></script>
+<script>
+  if (typeof(type) == 'undefined') 
+    type = '6C';
+
+  if (typeof(op) == 'undefined') 
+    op = 'reset';
+
+  if (type != 'starter' && 
+      type != 'corner' &&  
+      type != 'edge' && 
+      type != '3C' && 
+      type != '6C')
+    type = '6C';
+
+  if (op != 'random' && op != 'reset')
+    op = 'reset';
+
+  home_starter = "RLRLRLRLRRLRLRLRLRLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
+  home_corners = "RLRLRLRLRRLRLRLRLRYLYLYLYLYYLYLYLYLYBLBLBLBLBBLBLBLBLB";
+  home_3c      = "RRRRRRRRRRRRRRRRRRYYYYYYYYYYYYYYYYYYBBBBBBBBBBBBBBBBBB";
+  home_6c      = "RRRRRRRRROOOOOOOOOYYYYYYYYYWWWWWWWWWGGGGGGGGGBBBBBBBBB";
+
+  if (type == "starter") {
+    name = "Starter";
+    help = "cube_use_help_starter.html";
+  }
+  else if (type == "corner") {
+    name = "3-Color Corner";
+    help = "cube_use_help_corner.html";
+  }
+  else if (type == "edge") {
+    name = "3-Color Edge";
+    help = "cube_use_help_edge.html";
+  }
+  else if (type == "3C") {
+    name = "3-Color";
+    help = "cube_use_help.html";
+  }
+  else if (type == "6C") {
+    name = "6-Color";
+    help = "cube_use_help.html";
+  }
+ document.write("<title>Interactive " + name + " Cube</title>"); 
+</script>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=randcube.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<script>
+  document.write("<font size=+2> Interactive " + name + " Cube </font><br>"); 
+  var rand = Math.floor(Math.random()*arr.length);
+  hst();
+  rand = history.state.rand;
+  var line = arr[rand].split(' ');
+  var facelets = line[0];
+
+  if (op == 'reset') {
+    if      (type == 'starter') facelets = home_starter;
+    else if (type == 'corner')  facelets = home_corners;
+    else if (type == 'edge')    facelets = home_3c;
+    else if (type == '3C')      facelets = home_3c;
+    else if (type == '6C')      facelets = home_6c;
+  }
+  else {
+    if (type != "6C") {
+      facelets = facelets.replace(/O/g, 'R');
+      facelets = facelets.replace(/G/g, 'B');
+      facelets = facelets.replace(/W/g, 'Y');
+    }
+    if (type == "starter") 
+      for (var i=0; i < 54; i++) {
+        facelets = facelets.replace(/B/g, 'L');
+        facelets = facelets.replace(/Y/g, 'L');
+      }
+    if (type == "starter" || type == "corner") {
+      var tmp = facelets.split('');
+      for (var i=0; i < 54; i++)
+        if (home_corners[i] == 'L')
+          tmp[i] = "L";
+      facelets = tmp.join('')
+    }
+    if (type == "edge") {
+      tmp = facelets.split('');
+      for (var i=0; i < 54; i++)
+        if (home_corners[i] != 'L')
+          tmp[i] = home_corners[i];
+      facelets = tmp.join('')
+    }
+  }
+
+  document.write('<iframe width=300 height=300 scrolling=no frameborder=0');
+  document.write(' src="cube.html?config=AnimCube.txt&edit=1&facelets=' + facelets + '">');
+  document.write('</iframe>');
+</script>
+<br>
+<table>
+ <tr height=20>
+ <tr>
+  <td>
+   <form method=get action=cube_use_js.html>
+    <script> document.write("<input name=type value=" + type + " type=hidden>"); </script>
+    <input name=op value=random type=hidden>
+    <script> document.write("<input name=hist value=" + hist + " type=hidden>"); </script>
+    <input value=Random type=submit class="btn cuw1">
+   </form>
+  </td>
+  <td width=10>
+  <td>
+   <form method=get action=cube_use_js.html>
+    <script> document.write("<input name=type value=" + type + " type=hidden>"); </script>
+    <input name=op value=reset type=hidden>
+    <script> document.write("<input name=hist value=" + hist + " type=hidden>"); </script>
+    <input value=Reset type=submit class="btn cuw2">
+   </form>
+  </td>
+  <td width=10>
+  <td>
+   <script>
+    document.write('<form method=get action=' + help + '>');
+    document.write('<input value=Help type=submit class="btn cuw2">');
+    document.write('</form>');
+   </script>
+  </td>
+ </tr>
+</table>
+<script>
+  if (hist != 0)
+    document.write ("<br><a href=\"javascript: history.go(-" + hist + ")\">Back</a><br>");
+</script>
+<br><br>
+</center>
+</div>
+</body>
+</html>

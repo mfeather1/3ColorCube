@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6-Color Corner Position Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=rpt.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+ </style>
+</head>
+<body>
+<center>
+<script>
+"use strict";
+
+/* 6-Color Corner Position Symmetry
+
+      Mins    Syms    Configs
+   -------    ----   --------
+       740      48      35520
+       170      24       4080
+         4      16         64
+        40      12        480
+         8       8         64
+        16       6         96
+         2       4          8
+         2       3          6
+         2       1          2
+   -------           --------
+       984              40320   Ratio: 40.98
+*/
+
+var title = "6-Color Corner Position Symmetry"
+var cp6c_sym = new Uint16Array(C_PERM * CUBE_SYM);
+
+main();
+
+function main() {
+  init();
+  count_cp6c_mins();
+}
+
+function count_cp6c_mins() {
+  var c1 = new Uint32Array(C_PERM);
+  var c2 = new Uint32Array(C_PERM);
+  var c3 = new Uint32Array(49);
+  for (var min=0; min < C_PERM; min++) {
+    if (c1[min] == 0) {
+      c1[min] = min;
+      for (var op=1; op < CUBE_SYM; op++) {
+        var cpsym = cp6c_sym[min*CUBE_SYM + op];
+        c1[cpsym] = min;
+      }
+    }
+  }
+  for (var i=0; i < C_PERM; i++)
+    c2[c1[i]]++;
+  for (var i=0; i < C_PERM; i++)
+    if (c2[i] != 0)
+      c3[c2[i]]++;
+  rpt(c3, title);
+}
+
+function populate_cp6c_sym() {
+  assign_centers_6c();
+  var tmpstr = new Uint8Array(FACELETS);
+  for (var cp=0; cp < C_PERM; cp++) {
+    int_to_perm(cp, cps, 8);
+    set_colors_6c(0,1,2,3,4,5,6);
+    make_cubestr_cnr(cnr);
+    cp6c_sym[cp*CUBE_SYM] = cp;
+    for (var op=1; op < CUBE_SYM; op++) {
+      sym_op(tmpstr, cubestr, op);
+      cp6c_sym[cp*CUBE_SYM+op] = convert_cnr_6c(tmpstr, cps, cts);
+    }
+  }
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_cp6c_sym();
+}
+</script>
+</center>
+</body>

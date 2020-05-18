@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Edge Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=rpt.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+ </style>
+</head>
+<body>
+<center>
+<script>
+"use strict";
+
+/* 3-Color Edge Symmetry
+
+      Mins    Syms    Configs
+   -------    ----   --------
+   1474839      48   70792272
+      6896      24     165504
+       149      16       2384
+       220      12       2640
+        22       8        176
+        32       6        192
+         2       4          8
+         6       3         18
+         2       2          4
+         2       1          2
+   -------           --------
+   1482170           70963200   Ratio: 47.88
+*/
+
+var title = '3-Color Edge Symmetry';
+var count1 = new Uint32Array(E_PRM * E_TWIST);
+var count2 = new Uint8Array(E_PRM * E_TWIST);
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);
+
+main();
+
+function main() {
+  init();
+  count_ept_mins();
+}
+
+function count_ept_mins() {
+  for (var ep=0; ep < E_PRM; ep++) {
+    for(var et=0; et < E_TWIST; et++) {
+      var min = ep*E_TWIST + et;
+      if (count1[min] == 0) {
+        count1[min] = min;
+        for (var op=1; op < CUBE_SYM; op++) {
+          var epsym = ep_sym[ep*CUBE_SYM+op];
+          var etsym = get_etsym(ep, et, op);
+          count1[epsym*E_TWIST+etsym] = min;
+        }
+      }
+    }
+  }
+  count_mins(E_PRM, E_TWIST);
+}
+
+function populate_ep_sym() {
+  assign_centers_3c();
+  var tmpstr = new Uint8Array(FACELETS);
+  for (var ep=0; ep < E_PRM; ep++) {
+    ep_sym[ep*CUBE_SYM] = ep;
+    int_to_strp(ep_b3[ep], eps, 11, 3);
+    make_cubestr_edg(edg2);
+    for (var op=1; op < CUBE_SYM; op++) {
+      sym_op(tmpstr, cubestr, op);
+      ep_sym[ep*CUBE_SYM+op] = convert_edg_3c(tmpstr); 
+    }
+  }
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_ep_sym();
+  populate_et_sym();
+  if (ET_SYM_METHOD == 1)
+    get_etsym = get_etsym_m1;
+  else if (ET_SYM_METHOD == 2)
+    get_etsym = get_etsym_m2;
+  else
+    get_etsym = get_etsym_m3;
+}
+</script>
+</center>
+</body>

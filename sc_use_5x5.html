@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+ <title> 5x5 Supercubes With Random +Centers </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=hist.js></script>
+ <script src=sc_rand.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> 5x5 Supercubes With Random +Centers </font>
+<br><br>
+<script>
+  var arrows = new Array(6);
+  var sf = new Array (150);
+
+  for (var i=0; i < sf.length; i++)
+    sf[i] = 0;
+
+  if (typeof(cmd) != 'undefined' && cmd == 'Reset') {
+    sfacelets = sf.join('');
+    hst();
+  }
+  else {
+    rand = sc_rand();
+    hst();
+    for (i=0; i < arrows.length; i++) {
+      line = arr[history.state.rand[i]];
+      arrows[i] = line.substr(0,4);
+    }
+    super_twist(0,  17,  13,   7,  11)  // U
+    super_twist(1, 107, 111, 117, 113)  // L
+    super_twist(2,  61,  67,  63,  57)  // F
+    super_twist(3, 136, 142, 138, 132)  // R
+    super_twist(4,  86,  92,  88,  82)  // B
+    super_twist(5,  36,  42,  38,  32)  // D
+    sfacelets = sf.join('');
+  }
+
+  document.write("<iframe width=360 height=360 scrolling=no frameborder=0");
+  document.write(" src=\"cube5.html?config=AnimCube.txt&edit=1&buttonbar=2&colorscheme=ROYKGB&supercube=1&gabbacolors=1&superfacelets=" + sfacelets + "\">");
+  document.write("</iframe>");
+
+  function super_twist(n, a, b, c, d) {
+    tw = arrows[n].split('');
+    sf[a] = tw[0];
+    sf[b] = tw[1];
+    sf[c] = tw[2];
+    sf[d] = tw[3];
+  }
+
+</script>
+
+<table>
+ <tr height=16>
+ <tr>
+  <td>
+   <form method=get action=sc_use_5x5.html>
+    <script> document.write("<input name=hist value=" + hist + " type=hidden>"); </script>
+    <input class="btn cuw1" value=Random type=submit>
+   </form>
+  </td>
+  <td width=15>
+  <td>
+   <form method=get action=sc_use_5x5.html>
+    <script> document.write("<input name=hist value=" + hist + " type=hidden>"); </script>
+    <input class="btn cuw2" name=cmd value=Reset type=submit>
+   </form>
+  </td>
+  <td width=15>
+  <td>
+   <form method=get action=supercube_5x5.html>
+    <input class="btn cuw2" value=Help type=submit>
+   </form>
+  </td>
+ </tr>
+</table>
+<script>
+  if (hist != 0)
+    document.write ("<br><a href=\"javascript: history.go(-" + hist + ")\">Back</a><br>");
+</script>
+<br><br>
+</center>
+</div>
+</body>
+</html>

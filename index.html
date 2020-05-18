@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+ <title> Unique Solving Method for Rubik's Cube </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <style> td {text-align:center} </style>
+ <style> div.wrap {padding-left:5%; padding-right:5%;} </style>
+ <meta name=viewport content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class=wrap>
+<center>
+<table><tr height=2><td></table>
+<font size="+2">Unique Solving Method for Rubik's Cube</font><br>
+<!-- <font size="+2">How to Solve Rubik's Cube - A 3-Color Method</font><br> -->
+<table><tr height=2><td></table>
+<font size="+1">By Michael Feather</font>
+<br><br>
+<font size="+2">
+Part 1: Solve The 3-Color Cube 
+</font>
+<table border=0> 
+ <tr height=5>
+ <tr>
+  <td width=190 align=center> 
+    <button class="btn ixw1"  onclick="location='starter.html'">Starter Cube</button>
+  </td>
+  <td width=190 align=center> 
+    <button class="btn ixw1" onclick="location='corners.html'">Corner Cube</button>
+  </td>
+  <td width=190 align=center> 
+    <button class="btn ixw1" onclick="location='edges.html'">Full Cube</button>
+  </td>
+ </tr>
+ <tr height=2>
+ <tr>
+  <td align=center>
+   <iframe width=130 height=130 scrolling=no frameborder=0 
+    src="cube.html?config=AnimCube.txt&buttonbar=0&facelets=rlrlrlrlrrlrlrlrlrllllllllllllllllllllllllllllllllllll">
+   </iframe>
+  </td>
+  <td align=center>
+   <iframe width=130 height=130 scrolling=no frameborder=0 
+    src="cube.html?config=AnimCube.txt&buttonbar=0&facelets=rlrlrlrlrrlrlrlrlrylylylylyylylylylyblblblblbblblblblb">
+   </iframe>
+  </td>
+  <td align=center>
+   <iframe width=130 height=130 scrolling=no frameborder=0 
+    src="cube.html?config=AnimCube.txt&buttonbar=0&colorscheme=rryybb">
+   </iframe>
+  </td>
+ </tr>
+</table>
+<table border=0>
+ <tr height=7>
+ <tr> <td colspan=6 align=center> <font size=+2> Part 2: Solve The 6-Color Cube </font> </td> </tr>
+ <tr height=1> 
+ <tr>
+  <td align=center> 
+   <button class="btn ixw1" onclick="location='corners_6c.html'">Corners</button>
+  </td>
+  <td width=30></td>
+  <td align=center> 
+   <button class="btn ixw1" onclick="location='edges_6c.html'">Edges</button>
+  </td>
+ </tr>
+</table>
+<br>
+<table border=0>
+ <tr height=7>
+ <tr> <td colspan=6 align=center> <font size=+2> Interactive Cubes </font> </td> </tr>
+ <tr height=1> 
+ <tr>
+  <td align=center> 
+   <button class="btn ixw1" onclick="location='cube_use.html'">All Stages</button>
+  </td>
+  <td width=30></td>
+  <td align=center> 
+   <button class="btn ixw1" onclick="location='interactive_cubes.html'">All Sizes</button>
+  </td>
+ </tr>
+ <tr height=7>
+</table>
+<table border=0>
+ <tr height=25>
+ <tr> <td colspan=7 align=center>  <font size="+2"> Corner Solving Demos </font> </td> </tr>
+ <tr>
+  <td align=center>
+   <button class="btn ixw2" onclick="location='starter_demo.html'">Starter</button>
+  </td>
+  <td width=15>
+  <td align=center>
+   <button class="btn ixw2" onclick="location='corner_demo.html'">3-Color</button>
+  </td>
+  <td width=15>
+  <td align=center>
+   <button class="btn ixw2" onclick="location='corner_6c_2_demo.html'">6-Color</button>
+  </td>
+  <td width=15>
+  <td align=center>
+   <button class="btn ixw2" onclick="location='corner_6c_demo.html'">Complete</button>
+  </td>
+ </tr>
+</table>
+<table border=0>
+ <tr height=25>
+ <tr> <td colspan=5 align=center>  <font size="+2"> Edge Solving Demos </font> </td> </tr>
+ <tr>
+  <td align=center>
+   <button class="btn ixw2" onclick="location='edge_demo.html'">3-Color</button>
+  </td>
+  <td width=20>
+  <td align=center>
+   <button class="btn ixw2" onclick="location='edge_6c_2_demo.html'">6-Color</button>
+  </td>
+  <td width=20>
+  <td align=center>
+   <button class="btn ixw2" onclick="location='edge_6c_demo.html'">Complete</button>
+  </td>
+ </tr>
+</table>
+<table border=0>
+ <tr height=30>
+ <tr> <td colspan=7 align=center>  <font size="+2"> Cube Solver </font> </td> </tr>
+<!--
+ <tr> 
+  <td colspan=7 width=460> 
+   <p> Depth 9 is for fast processors (3+ Ghz), otherwise use
+   Depth 8 or Dist Files, see help in the solver for details.</p>
+  </td>
+ </tr>
+ <tr height=5>
+-->
+ <tr> 
+  <td> <button id=solver class="btn ixw2" onclick="location='solve.html'">Depth 8</button> </td>
+  <td width=15>
+  <td> <button id=solver class="btn ixw2" onclick="location='solve.html?dist_gen_depth=9&stl=5s'">Depth 9</button> </td>
+  <td width=15>
+  <td> <button id=solver class="btn ixw2" onclick="location='solve.html?load_dist_files=1&stl=5s'">Dist Files</button> </td>
+  <td width=15>
+  <td> <button id=solver class="btn ixw2" onclick="location='solve.html?use_dist3=1&stl=5s'">Dist 3</button> </td>
+  <tr height=10>
+</table>
+<br>
+<table>
+ <tr>
+  <td align=center>
+   <font size=+1> Cube Animation Software is 
+    <!--
+    <a target=_blank href=https://github.com/cubing/AnimCubeJS>AnimCubeJS</a>
+    -->
+    <a target=_blank href=https://cubing.github.io/AnimCubeJS/animcubejs.html>AnimCubeJS</a>
+   </font>
+  </td>
+ </tr>
+ <tr height=10>
+ <tr>
+  <td>
+   <font size=+1>
+    <a href=idx.html>Site Index</a>
+   </font>
+  </td>   
+ </tr>
+ <tr height=10>
+ <tr>
+  <td>
+   <font size=+1>
+    <script>
+     if (location.href.indexOf('gitlab') > 0)
+      document.write('<a href=https://mfeather1.github.io/3ColorCube>Github Mirror</a>');
+     else
+      document.write('<a href=https://mfeather.gitlab.io/3ColorCube>Gitlab Mirror</a>');
+    </script>
+   </font>
+  </td>
+ </tr>
+</table>
+<br><br>
+</center>
+</div>
+</body>
+</html>

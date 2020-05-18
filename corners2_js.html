@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+ <title> Random 6-Color Corner Cubes - Pre-solved as 3-color - Solvable with Half-Twists Only</title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel=stylesheet type=text/css href=style2.css>
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src="hist.js"></script>
+ <script src="corners2.js"></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Random 6-Color Corner Cubes </font> <br>
+<font size=+1> Pre-Solved as 3-color </font><br>
+<font size=+1> Solvable with Half-Twists Only </font>
+<br> 
+<script>
+  var rand = Math.floor(Math.random()*corners2.length);
+  hst();
+  rand = history.state.rand;
+  var line = corners2[rand];
+  var facelets = line.substr(0,54);
+  var move = line.substr(55);
+  document.write('<iframe width=300 height=300 scrolling=no frameborder=0');
+  document.write(' src="cube.html?config=AnimCube.txt&edit=1&move=' + move + '&facelets=' + facelets + '">');
+  document.write('</iframe>');
+</script>
+
+<table border=0>
+ <tr height=15>
+ <tr>
+  <td>
+   <form method=get action=corners2_js.html>
+    <script> document.write("<input name=hist value=" + hist + " type=hidden>"); </script>
+    <input value=Next type=submit class="btn cuw2">
+   </form>
+  </td>
+  <td width=20>
+  <td>
+   <form method=get action=corners2_help.html>
+    <input value='Help' type=submit class="btn cuw2">
+   </form>
+  </td>
+ </tr>
+</table>
+<script>
+  if (hist != 0)
+    document.write("<br><a href=\"javascript: history.go(-" + hist + ")\">Back</a><br>");
+</script>
+<br><br>
+</center>
+</div>
+</body>
+</html>

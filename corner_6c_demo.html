@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+ <title> Solving Demo - Complete Solve of Corners </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style>
+  .tabdata td { padding-left:5px; padding-right:5px; border-color:black; text-align:center; }
+  .tabdata2 td { padding-left:6px; padding-right:6px; border-color:black; text-align:center; }
+  .tabdata3 td { padding-left:12px; padding-right:12px; border-color:black; text-align:center; }
+  div.wrap {padding-left:8%; padding-right:8%;}
+ </style>
+ <script src=hist.js></script>
+ <script src=corner_demo.js></script>
+ <script src=starter_seq_demo.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Solving Demo <br> Complete Solve of Corners</font>
+<br><br>
+<font size=+1><b>Solve as 3-Color</b></font><br>
+Red=Orange, Blue=Green, Yellow=White
+<table><tr><td height=2></td></table>
+<table border=0><tr>
+<td style=text-align:center valign=top>
+<script>
+  var rand = Math.floor(Math.random()*arr.length);
+  hst();
+  var rand = history.state.rand;
+  var line = arr[rand].split(' ');
+  var table = line[2].split(',');
+  var fe = line[0];
+  var corners = [0,2,6,8,9,11,15,17,18,20,24,26,27,29,33,35,36,38,42,44,45,47,51,53];
+  var facelets = 'RLRLRLRLROLOLOLOLOYLYLYLYLYWLWLWLWLWGLGLGLGLGBLBLBLBLB';
+  facelets = facelets.split('');
+  for (i=0; i < 24; i++) 
+    facelets[corners[i]] = fe[i];
+  facelets = facelets.join('');
+  var move = line[1];
+  var move2 = line[3];
+  var text = line[4];
+  var table2 = line[5].split(',');
+  function repl(s) { 
+    s = s.replace("A1", "Solve Top Face"); 
+    s = s.replace("A2", "Turn cube to match setup for "); 
+    s = s.replace("A3", "Apply Sequence ");
+    s = s.replace("A4", "Move solved faces to Left & Right");
+    s = s.replace("A5", "Solve Top Face with Left twist");
+    s = s.replace("A6", "Solve Top Face with Right twist");
+    s = s.replace("A7", "Solve Top Face with L & R twists");
+    s = s.replace("A8", "Solve Top Face with Front twist (<a href=corners2.html>WW</a>)");
+    s = s.replace("A9", "Solve Top Face with Back twist (<a href=corners2.html>WW</a>)");
+    s = s.replace("-", "&#8209;");
+    return (s);
+  } 
+  document.write('<iframe width=200 height=200 scrolling=no frameborder=0');
+  document.write(' src="cube.html?config=AnimCube.txt&edit=1&move=' + move + '&facelets=' + facelets + '">');
+  document.write('</iframe>');
+</script>
+<table><tr height=8><td></table>
+<table cellspacing=0><tr><td>
+  <script>
+    var loc = "corner_6c_demo.html?hist=" + hist;
+    document.write("<button id=solver class=\"btn dmw1\" onclick=\"location='" + loc + "'\">Random</button>");
+  </script>
+  </td><td width=14><td>
+  <button id=solver class="btn dmw2" onclick="location='corners_6c_help.html'">Help</button>
+  </td></tr></table>
+</td><td width=20>
+<td style=text-align:center>
+<table align=center class=tabdata style=border-collapse:collapse;border-color:white border=1>
+<script>
+  for (var i=0; i < table.length; i++) {
+    var v = table[i].split(':');
+    document.write('<tr><td>' + repl(v[0]) + '</td><td style=text-align:left>' + repl(v[1]) + '</td></tr>');
+  }
+</script>
+</table>
+</td></tr></table>
+<br>
+<script>
+  show_starter_seq();
+</script>
+<br>
+<table><tr height=20><td></table>
+<font size=+1><b>Solve as 6-Color</b></font>
+<table border=0><tr><td>
+<script>
+  move2 = line[3];
+  document.write('<iframe width=200 height=200 scrolling=no frameborder=0');
+  document.write(' src="cube.html?config=AnimCube.txt&edit=1&initmove=' + move + '&move=' + move2 + '&facelets=' + facelets + '">');
+  document.write('</iframe>');
+</script>
+</td><td width=30><td>
+<p>
+<script> 
+  function repl2(s) { 
+    s = s.replace("B01", "Half-twist the front face to make the setup for the Parallel Sequence.");
+    s = s.replace("B02", "No faces are solvable with half-twists and no faces have parallel pairs, half-twist the right face to make parallel pairs and then half-twist the front face to make the setup for the Parallel Sequence.");
+    s = s.replace("B03", "No faces are solvable with half-twists and no faces have parallel pairs, half-twist the right face to make parallel pairs and then turn the cube to make the setup for the Parallel Sequence.");
+    s = s.replace("B04", "No faces are solvable with half-twists and no faces have parallel pairs, half-twist the right face to make parallel pairs, turn the cube and then half-twist the front face to make the setup for the Parallel Sequence.");
+    s = s.replace("B05", "No faces are solvable with half-twists and no faces have parallel pairs, half-twist the right face to make parallel pairs which in this case also makes the setup for the Parallel Sequence.");
+    s = s.replace("B06", "No faces are solvable with half-twists, turn the cube and then half-twist the front face to make the setup for the Parallel Sequence.");
+    s = s.replace("B07", "No faces are solvable with half-twists, turn the cube to make the setup for the Parallel Sequence.");
+    s = s.replace("B08", "No faces are solvable with half-twists, use the Parallel Sequence (this configuration already matches the setup).");
+    s = s.replace("B09", "The Front &amp; Back faces are solvable, solve with a half twist and then turn the cube so they are on the left &amp; right to make the setup for the Waterwheel Sequence.");
+    s = s.replace("B10", "The Front &amp; Back faces are solvable, solve with half-twists and then turn the cube so they are on the left &amp; right to make the setup for the Waterwheel Sequence.");
+    s = s.replace("B11", "The Front &amp; Back faces are solved, turn the cube so they are on the left &amp; right to make the setup for the Waterwheel Sequence.");
+    s = s.replace("B12", "The Left &amp; Right faces are solvable, solve with a half twist and use the Waterwheel Sequence.");
+    s = s.replace("B13", "The Left &amp; Right faces are solvable, solve with half-twists and use the Waterwheel Sequence.");
+    s = s.replace("B14", "The Left &amp; Right faces are solved, use the Waterwheel Sequence");
+    s = s.replace("B15", "The Top &amp; Bottom faces are solvable, solve with a half twist and then turn the cube so they are on the left &amp; right to make the setup for the Waterwheel Sequence.");
+    s = s.replace("B16", "The Top &amp; Bottom faces are solvable, solve with half-twists and then turn the cube so they are on the left &amp; right to make the setup for the Waterwheel Sequence.");
+    s = s.replace("B17", "The Top &amp; Bottom faces are solved, turn the cube so they are on the left &amp; right to make the setup for the Waterwheel Sequence.");
+    s = s.replace("B18", "This configuration can be solved with Half-Twists.");
+    return (s);
+  }
+  function repl3(s) { 
+    s = s.replace("A1", "Make Setup"); 
+    s = s.replace("A2", "Waterwheel Sequence"); 
+    s = s.replace("A3", "Parallel Sequence");
+    s = s.replace("A4", "Solve With Half-Twists");
+    s = s.replace("-", "&#8209;");
+    return (s);
+  } 
+  document.write(repl2(text)); </script>
+</p>
+<table><tr height=5><td></tr></table>
+<table align=center class=tabdata style=border-collapse:collapse;border-color:white border=1>
+<script>
+  if (table2.length > 1) {
+    for (var i=0; i < table2.length; i++) {
+      var v = table2[i].split(':');
+      document.write('<tr><td>' + repl(v[0]) + '</td><td style=text-align:left>' + repl3(v[1]) + '</td></tr>');
+    }
+  }
+</script>
+</table>
+</td></tr></table>
+<script>
+  if (hist != 0) {
+    document.write("<br>");
+    document.write("<a href=\"javascript: history.go(-" + hist + ")\">Back</a>");
+  }
+</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

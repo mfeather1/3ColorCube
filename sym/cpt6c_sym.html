@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6-Color Corner Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=rpt.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+ </style>
+</head>
+<body>
+<center>
+<script>
+"use strict";
+
+/* 6-Color Corner Symmetry
+
+      Mins    Syms    Configs
+   -------    ----   --------
+   1832428      48   87956544
+      9064      24     217536
+       104      16       1664
+       301      12       3612
+        33       8        264
+        34       6        204
+         1       4          4
+         3       3          9
+         1       2          2
+         1       1          1
+   -------           --------
+   1841970           88179840   Ratio: 47.87
+*/
+
+var title = '6-Color Corner Symmetry';
+var count1 = new Uint32Array(C_PERM * C_TWIST);
+var count2 = new Uint8Array(C_PERM * C_TWIST);
+var cp6c_sym = new Uint16Array(C_PERM * CUBE_SYM);
+
+main();
+
+function main() {
+  init();
+  count_cpt6c_mins();
+}
+
+function count_cpt6c_mins() {
+  for (var cp=0; cp < C_PERM; cp++) {
+    for(var ct=0; ct < C_TWIST; ct++) {
+      var min = cp*C_TWIST + ct;
+      if (count1[min] == 0) {
+        count1[min] = min;
+        for (var op=1; op < CUBE_SYM; op++) {
+          var cpsym = cp6c_sym[cp*CUBE_SYM+op];
+          if (CT_SYM_METHOD == 3)
+            var ctsym = get_ctsym(cp6c_cp3c[cpsym], ct, op);
+          else {
+            var cpt3c = cp6c_cp3c[cp]*C_TWIST + ct;
+            var ctsym = get_ctsym(cpt3c, op);
+          }
+          count1[cpsym*C_TWIST+ctsym] = min;
+        }
+      }
+    }
+  }
+  count_mins(C_PERM, C_TWIST);
+}
+
+function populate_cp6c_sym() {
+  assign_centers_6c();
+  var tmpstr = new Uint8Array(FACELETS);
+  for (var cp=0; cp < C_PERM; cp++) {
+    int_to_perm(cp, cps, 8);
+    set_colors_6c(0,1,2,3,4,5,6);
+    make_cubestr_cnr(cnr);
+    cp6c_sym[cp*CUBE_SYM] = cp;
+    for (var op=1; op < CUBE_SYM; op++) {
+      sym_op(tmpstr, cubestr, op);
+      cp6c_sym[cp*CUBE_SYM+op] = convert_cnr_6c(tmpstr, cps, cts);
+    }
+  }
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_cp_sym();
+  populate_cp6c_sym();
+  if (CT_SYM_METHOD == 1) {
+    populate_cpt_sym();
+    get_ctsym = get_ctsym_m1;
+  }
+  else if (CT_SYM_METHOD == 2) {
+    populate_op_tables();
+    populate_cpt_min();
+    populate_cpt_sym2();
+    get_ctsym = get_ctsym_m2;
+  }
+  else if (CT_SYM_METHOD == 3) {
+    populate_ct_sym();
+    get_ctsym = get_ctsym_m3;
+  }
+}
+</script>
+</center>
+</body>

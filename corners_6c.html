@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6-Color Corner Sequences </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> .tabdata td {
+   padding-left:15px; padding-right:15px; border-color:black; text-align:center; } 
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> 6-Color Corner Sequences </font>
+<br><br>
+<p>Start by solving the corners using the instructions for the 3-color cube, 
+to do that just think of the color on each pair of opposite faces as being 
+the same (red-orange, yellow-white, blue-green), if that seems unintuitive
+then look at <a href=6c_as_3c.html>this</a>.
+The following examples show what a 3-color solution looks like on a 6-color
+cube, corner facelets match either the center color or that of the opposite
+face.</p>
+<table>
+ <tr>
+  <td>
+   <iframe width=130 height=130 scrolling=no frameborder=0 
+    src="cube.html?config=AnimCube.txt&edit=1&facelets=RLRLRLOLOOLRLOLOLRYLWLYLWLYWLYLWLYLWGLGLGLBLBGLBLBLGLB">
+   </iframe>
+  </td>
+  <td width=60>
+  <td>
+   <iframe width=130 height=130 scrolling=no frameborder=0 
+    src="cube.html?config=AnimCube.txt&edit=1&facelets=RLOLRLOLRRLOLOLOLRYLYLYLWLYWLWLWLYLWGLGLGLBLGBLBLBLBLG">
+   </iframe>
+  </td>
+  <td width=60>
+  <td>
+   <iframe width=130 height=130 scrolling=no frameborder=0 
+    src="cube.html?config=AnimCube.txt&edit=1&facelets=RLRLRLOLRRLOLOLOLOYLYLYLWLWWLYLWLWLYGLBLGLBLBGLGLBLBLG">
+   </iframe>
+  </td>
+ </tr>
+</table>
+<br>
+<p>After solving the corners as a 3-color cube there are three possible states
+that can be reached using half-twists only:
+<br><br>
+1) The corners can be solved on all sides 
+<br><br>
+2) The corners can be solved on one pair of opposite faces only
+<br><br>
+3) No faces can be solved 
+<br><br>
+The following table shows how to tell which opposite face pairs are solvable 
+with half-twists, a more detailed description is 
+<a href=corners_6c_cases.html>here</a>.</p>
+<br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=2>
+ <tr align=center colspan=4 style="border:1px">
+  <td colspan=4>Opposite Face Arrangements</td>
+ </tr>
+ <tr align=center> 
+  <td style="border:1px solid"> Split </td>
+  <td style="border:1px solid"> Color Pairs </td>
+  <td style="border:1px solid"> Opposite Face </td>  
+  <td style="border:1px solid"> Solvable </td>
+ </tr>
+ <tr align=center>
+  <td> 2-2 </td>
+  <td> Parallel </td>
+  <td> Aligned </td>
+  <td> Yes </td>
+ </tr>
+ <tr align=center>
+  <td> 2-2 </td>
+  <td> Diagonal </td>
+  <td> Diagonal </td>
+  <td> Yes </td>
+ </tr>
+ <tr align=center>
+  <td> 2-2 </td>
+  <td> Parallel </td>
+  <td> Perpendicular </td>
+  <td> No </td>
+ </tr>
+ <tr align=center>
+  <td> 3-1 </td>
+  <td> N/A </td>
+  <td> N/A </td>
+  <td> No </td>
+ </tr>
+</table>
+<br>
+<p>If only one pair of opposite faces can be solved then place the cube so the 
+solved faces are on the left &amp; right to make the setup for the Waterwheel
+Sequence which is shown below.
+For this setup it is only necessary that the left &amp; right faces are solved,
+the other faces can be ignored (do not have to match cube below).
+The sequence does not solve the corners, it makes them solvable with 
+half-twists.
+<br><br>
+After applying the sequence (press Play) you can see in the above table (2-2
+split, diagonal) that the corners can be solved using half-twists.
+Go ahead and complete the solution using the mouse.
+If it is not immediately obvious how to solve the corners with half-twists 
+then look at <a href=corners_6c_solve.html>this</a>.
+
+<br><br> <a name=ww></a>
+The first four moves of this sequence make the <a href=corners2.html>Waterwheel</a> 
+configuration.
+The fifth move is the one that "fixes" the 6-color configuration so it can be 
+solved using half-twists.  The last four moves are the inverse of the 
+the first four.
+You can see how the sequence works on all possible configurations
+<a href=corners_6c_5.html>here</a>.</p>
+<br>Waterwheel Sequence<br>
+<iframe width=200 height=200 scrolling=no frameborder=0 
+ src="cube.html?config=AnimCube.txt&edit=1&move=R'D2'L2'F2RF2'L2D2R&facelets=rlolrlrlrololololrylylylwlywlylwlwlwglglglglgblblblblb">
+</iframe>
+<br><br>
+<p>If no faces can be solved then the above sequence will fix one pair of 
+opposite faces so that the corners can be solved with half-twists, no
+setup is needed.
+To complete the solution, apply the sequence again as described above.
+To avoid having to do the sequence twice use the 
+<a href=parallel.html>Parallel Sequence</a> instead.
+<br><br>
+<a name=options></a>
+The 6-color corners can be solved before or after the 3-color edges
+are solved. 
+If the 6-color corners are solved first then solving the 3-color edges slightly
+scrambles them but they remain solvable with half-twists.
+It is not actually necessary to solve the corners prior to solving the edges,
+just making them solvable with half-twists is sufficient.
+If the 3-color edges are solved first then one minor additional step is needed
+as shown <a href=corners_6c_3.html>here</a>.
+<br><br>
+Try solving Random 6-Color Corner Cubes (pre-solved as 3-color) 
+that are solvable with half-twists <a href=corners2_js.html>here</a>.</p>
+<br>
+<a href="javascript: history.go(-1)">Back</a>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

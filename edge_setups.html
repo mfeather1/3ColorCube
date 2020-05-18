@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Edge Cubes - Using Half-Twists to Make Setups </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=hist.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> 3-Color Edge Cubes <br> Using Half-Twists to Make Setups </font>
+<br><br>
+<script>
+  arr=[
+    "L2'F2D2","L2'F2","D2L2'F2","U2L2'F2","Y2L2'F2","B2R2U2","R2U2","X'L2'F2","F2R2U2","R2B2D2",
+    "B2","D2B2","D2","F2B2","X'F2","F2","F2D2","U2B2","Y2F2","U2","U2D2","XF2","X","U2F2","X'U2",
+    "L2D2B2","B2R2D2","R2D2","XL2'F2","F2R2D2","L2B2","D2L2B2","U2L2B2","Z2L2'F2","R2F2D2" ];
+  var rand = Math.floor(Math.random()*arr.length);
+  hst();
+  if (typeof(cs) == 'undefined')
+    cs = 0;
+  rand = history.state.rand;
+  move = arr[rand];
+  cs = (cs == rand%6) ? (cs+1)%6 : cs = rand%6;
+  if (cs == 0)      facelets = "RRRRRYRRRRRRRRRRYRYRYYYYYYYYYYYYYYRYBBBBBBBBBBBBBBBBBB";
+  else if (cs == 1) facelets = "RRRRRBRRRRRRRRRRBRBRBBBBBBBBBBBBBBRBYYYYYYYYYYYYYYYYYY";
+  else if (cs == 2) facelets = "YYYYYBYYYYYYYYYYBYBYBBBBBBBBBBBBBBYBRRRRRRRRRRRRRRRRRR";
+  else if (cs == 3) facelets = "YYYYYRYYYYYYYYYYRYRYRRRRRRRRRRRRRRYRBBBBBBBBBBBBBBBBBB";
+  else if (cs == 4) facelets = "BBBBBRBBBBBBBBBBRBRBRRRRRRRRRRRRRRBRYYYYYYYYYYYYYYYYYY"
+  else if (cs == 5) facelets = "BBBBBYBBBBBBBBBBYBYBYYYYYYYYYYYYYYBYRRRRRRRRRRRRRRRRRR";
+  facelets2 = "LLLLLWLLLLLLLLLLWLWLWWWWWWWWWWWWWWLWDDDDDDDDDDDDDDDDDD";
+  document.write("<table><td>");
+  document.write("<iframe width=300 height=300 scrolling=no frameborder=0");
+  document.write(' src="cube.html?config=AnimCube.txt&edit=1&initrevmove=%23&move=' + move + '&facelets=' + facelets + '">');
+  document.write("</iframe>");
+  document.write("</td><td width=30");
+  document.write("</td><td valign=top style=text-align:center>");
+  document.write("<br>3C-E1<br>");
+  document.write("<iframe width=130 height=130 scrolling=no frameborder=0");
+  document.write(" src=\"cube.html?config=AnimCube.txt&move=R'Um2'R&facelets=" + facelets2 + "\">");
+  document.write("</iframe>");
+  document.write("</td></tr></table>");
+</script>
+<table>
+ <tr height=20>
+ <tr>
+  <td>
+   <form method=get action=edge_setups.html>
+    <script> document.write("<input name=type value=" + type + " type=hidden>"); </script>
+    <script> document.write("<input name=cs value=" + cs + " type=hidden>"); </script>
+    <script> document.write("<input name=hist value=" + hist + " type=hidden>"); </script>
+    <input value=Random type=submit class="btn cuw1">
+   </form>
+  </td>
+  <td width=20>
+  <td>
+   <script>
+    document.write('<form method=get action=edge_setups_help.html>');
+    document.write('<input value=Help type=submit class="btn cuw2">');
+    document.write('</form>');
+   </script>
+  </td>
+ </tr>
+</table>
+<script>
+  if (hist != 0)
+    document.write ("<br><a href=\"javascript: history.go(-" + hist + ")\">Back</a><br>");
+</script>
+<br><br>
+</center>
+</div>
+</body>
+</html>

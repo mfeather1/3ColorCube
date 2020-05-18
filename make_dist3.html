@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+ <title> Make Dist3 File</title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=rch.js></script>
+ <script src=solve.js></script>
+ <script src=rclib.js></script>
+</head>
+<body>
+<center>
+<font size=+2> Make Dist3 File </font>
+</center>
+<br>
+<p>This makes a very large array in memory (418 MB) and the process of
+downloading makes another copy of it, thus the need for 2 GB of RAM.
+<br><br>
+A relatively quick way to test if it will work on any given device 
+is by adding dist_gen_depth=8 to the URL of this page as shown by this 
+<a id=make_d3_link></a>, the file below will be Dist3_08F.dat instead of
+Dist3_10F.dat.
+If the test is successful (including downloading the file) then restart the
+browser afterwards to clear the memory prior to doing the full run.</p>
+<br>
+<div id=title> </div>
+<br>
+<button onclick="make_dist_arrays()">Start</button> 
+<div id=status></div>
+<div id=status2></div>
+<div id=back></div>
+<a id=d1e></a>
+<br>
+
+<script>
+"use strict";
+
+USE_DIST3 = 1;
+
+var done = 0;
+var dl1_done = 0;
+var d1_url;
+var d1_blob;
+
+document.getElementById('status').innerHTML = 
+  '<br><center><a href="javascript: history.go(-1)">Back</a></center>';
+
+dist_gen_depth = null;
+
+var params = location.search.substr(1).split('&');
+for (var i=0; i < params.length; i++) {
+  var p = params[i].split('=');
+  window[p[0]] = p[1];
+}
+
+var pmsg = '';
+
+if (isNaN(dist_gen_depth)) {
+  dist_gen_depth = 10; 
+  pmsg = 'Parameter dist_gen_depth is invalid, changed to 10<br><br>';
+}
+else {
+  if (dist_gen_depth == null)
+    dist_gen_depth = 10; 
+  else {
+    dist_gen_depth = parseInt(dist_gen_depth);
+    var f = 0;
+    if (dist_gen_depth < 8) {
+      dist_gen_depth = 8;
+      f = 1;
+    }
+    else if (dist_gen_depth > 10) {
+      dist_gen_depth = 10;
+      f = 1;
+    }
+    if (f)
+      pmsg = 'Parameter dist_gen_depth must be in range 8-10, changed to ' +
+        dist_gen_depth + '<br><br>';
+  }
+}
+
+var dep = ((dist_gen_depth < 10) ? '0' : '') + dist_gen_depth;
+var file_name = 'Dist3_' + dep + 'F.dat';
+var msg = '';
+if (dist_gen_depth == 9)
+  var msg =
+  '<br><br>This will run for about 2 minutes and then prompt to save the files.';
+else if (dist_gen_depth == 10)
+  var msg = 
+  '<br><br>This will run for 20-25 minutes and then prompt to save the file.';
+
+document.getElementById('title').innerHTML = 
+  pmsg + 'Press Start to make ' + file_name + msg + '<br>';
+
+if (typeof(style) == 'undefined')
+  var style = 'light';
+if (style == 'dark') {
+  document.body.style.color = 'white';
+  document.body.style.backgroundColor = 'black';
+  document.getElementById('make_d3_link').innerHTML = 
+    '<a href="make_dist3.html?dist_gen_depth=8&style=dark">link</a>';
+}
+else {
+  document.getElementById('make_d3_link').innerHTML = 
+    '<a href="make_dist3.html?dist_gen_depth=8">link</a>';
+}
+
+function make_dist_arrays()
+{
+  if (!done) {
+    done = 1;
+    document_write('<br>');
+    document.getElementById('status').innerHTML =  '<br>Initializing';
+    setTimeout(step1, 100);
+  }
+}
+
+function step1()
+{
+  init();
+  var s = document.getElementById('status').innerHTML;
+  document.getElementById('status').innerHTML =  s +
+    '<br>Generating Dist3 to Depth ' + dist_gen_depth;
+  setTimeout(step2, 100);
+}
+
+function step2()
+{
+  try {
+    dist3 = new Uint8Array(MIN_EP*C_TWIST*E_TWIST/8);  // 418 MB
+    mkd();
+    step3();
+  }
+  catch (e) {
+    alert(e);
+  }
+}
+
+function step3()
+{
+  var s = document.getElementById('status').innerHTML;
+  document.getElementById('status').innerHTML =
+     s + "<br><br>Save File:<br><br>" +
+     "<button onclick=dl1m()>Dist3</button>&nbsp;&nbsp;&nbsp;"; 
+  document.getElementById('back').innerHTML =
+     '<br><center><a href="javascript: history.go(-1)">Back</a> </center>';
+}
+
+function showUrl() {
+   alert(d1_url);
+}
+
+function revokeURL() {
+  try {
+    d1_url = window.URL.revokeObjectURL(d1_url);
+    dist3 = null;
+    d1_blob = null;
+    d1e.href = null;
+    alert('Url has been revoked');
+  }
+  catch (e) {
+    alert(e);
+  }
+}
+
+function dl1m() {
+  if (!dl1_done) {
+    document.getElementById('status2').innerHTML =
+      '<br>Preparing Download for ' + file_name + '<br>';
+    setTimeout(dl1, 100);
+  }
+}
+
+function dl1() {
+  try {
+    d1_blob = new Blob([dist3], {type: "octet/stream"});
+    d1_url = window.URL.createObjectURL(d1_blob);
+    d1e.href = d1_url;
+    d1e.download = file_name;
+    d1e.click();
+    //  Firefox bug in version 45 ESR:
+    //  If download is canceled then blob will remain in memory until
+    //  the browser is restarted (closing tab does not clear nor does
+    //  revokeObjectURL).
+    //  document.getElementById('status2').innerHTML =
+    //    "<br><button onclick=showUrl()>Show Url</button>&nbsp;&nbsp;&nbsp;" +
+    //    "<button onclick=revokeURL()>Revoke URL</button><br>";
+    dl1_done = 1;
+  }
+  catch (e) {
+    alert(e);
+  }
+}
+
+</script>
+</body>
+</html>

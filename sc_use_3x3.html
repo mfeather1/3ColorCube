@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+ <title> Supercubes With Random Centers </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <style> td {text-align:center} </style>
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=hist.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Supercubes With Random Centers </font>
+<br><br>
+<script>
+  var homeCube  = "RRRRRRRRROOOOOOOOOYYYYYYYYYKKKKKKKKKGGGGGGGGGBBBBBBBBB";
+  var scubeHome = "000000000000000000000000000000000000000000000000000000";
+
+  if (typeof(cmd) != 'undefined' && cmd == 'Reset') {
+    var centers = "000000 0 Y";
+    var sfacelets = homeCube;
+    hst();
+  }
+  else {
+    var rand = randCenters();
+    hst();
+    centers = history.state.rand;
+    sfacelets = add_centers(scubeHome, centers);
+  }
+
+  document.write('Centers: ' + centers + '<br><br>');
+
+  function randCenters() {
+    // solvable as in not getting single twisted center at the end
+    solvable = 'A';   // N=not solvable, Y=solvable, A=all
+    var lda = [0, 1];
+    var ldy = [0, 3, 2, 1];
+    var ldn = [2, 1, 0, 3];
+    var sum = 0;
+    var str = '';
+    for (var i=0; i < 5; i++) {
+      var n = Math.floor(Math.random()*4);
+      sum += n;
+      str += n;
+    }
+    if (solvable == 'A')
+      n = lda[sum%2];
+    else if (solvable == 'Y')
+      n = ldy[sum%4];
+    else if (solvable == 'N')
+      n = ldn[sum%4];
+    sum += n;
+    str += n;
+    str += ' ' + sum;
+    if ( sum == 0 || sum == 4 || sum == 8 || sum == 12 || sum == 16)
+      solvable = 'Y';
+    else 
+      solvable = 'N';
+    return(str + ' ' + solvable);
+  }
+
+  function add_centers(sfacelets, centers) {
+    var f = sfacelets.split('');
+    var c = centers.split('');
+    f[4]  = c[0];
+    f[40] = c[1];
+    f[22] = c[2];
+    f[49] = c[3];
+    f[31] = c[4];
+    f[13] = c[5];
+    return(f.join(''));
+  }
+
+  document.write("<iframe width=280 height=280 scrolling=no frameborder=0");
+  document.write(" src=\"cube.html?config=AnimCube.txt&edit=1&supercube=1&gabbacolors=1&facelets=" + homeCube + "&superfacelets=" + sfacelets + "\">");
+  document.write("</iframe>");
+</script>
+<br><br>
+<table>
+ <tr>
+  <td>
+   <form method=get action=sc_use_3x3.html>
+    <script> document.write("<input name=hist value=" + hist + " type=hidden>"); </script>
+    <input class="btn cuw1" value=Random type=submit>
+  </form>
+  </td>
+  <td width=15>
+  <td>
+   <form method=get action=sc_use_3x3.html>
+    <script> document.write("<input name=hist value=" + hist + " type=hidden>"); </script>
+    <input class="btn cuw2" name=cmd value=Reset type=submit>
+   </form>
+  </td>
+  <td width=15>
+  <td>
+   <form method=get action=supercube_3x3_help.html>
+    <input class="btn cuw2" value=Help type=submit>
+   </form>
+  </td>
+ </tr>
+</table>
+<script>
+  if (hist != 0) {
+    document.write("<br>");
+    document.write("<a href=\"javascript: history.go(-" + hist + ")\">Back</a><br>");
+  }
+</script>
+<br><br>
+</center>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+ <title> Cube Solver Help - Using Dist3 </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+</head>
+<body>
+<center>
+<font size="+2"> Cube Solver Help - Using Dist3 </font>
+<br><br>
+<p>To get better performance by using the Dist3 search array it must first be
+generated to depth 10 and saved to a file which can be done <a id=d3_link><a>.
+Also, arrays Dist 1 &amp; 2 must be generated to depth 9 and saved to files as
+described on the previous page.
+Run the solver with use_dist3=1 added to the URL as shown by this 
+<a id=solve_link></a> and select the files (including Dist3_10F.dat) by
+pressing the [Load Dist Files] button.
+<br><br>
+The Dist files can also be made using programs that are part of the C Solver
+(written in the C programming language), see instructions in the README file
+(section "Dist Files for JS Solver") in solver.tar.gz.</p>
+<br>
+<a href="javascript: history.go(-1)">Back</a>
+<br><br>
+<script>
+params = location.search.substr(1).split('&');
+for (var i=0; i < params.length; i++) {
+  var p = params[i].split('=');
+  window[p[0]] = p[1];
+}
+if (typeof(style) == 'undefined')
+  var style = 'light';
+if (style == 'dark') {
+  document.body.style.color = 'white';
+  document.body.style.backgroundColor = 'black';
+  document.getElementById('solve_link').innerHTML = 
+    '<a href="solve.html?use_dist3=1&style=dark">link</a>';
+  document.getElementById('d3_link').innerHTML = 
+    '<a href="make_dist3.html?style=dark">here</a>';
+}
+else {
+  document.getElementById('solve_link').innerHTML = 
+    '<a href="solve.html?use_dist3=1">link</a>';
+  document.getElementById('d3_link').innerHTML = 
+    '<a href="make_dist3.html">here</a>';
+}
+</script>
+</center>
+</body>
+</html>

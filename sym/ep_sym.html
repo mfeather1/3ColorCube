@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Edge Position Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=rpt.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+ </style>
+</head>
+<body>
+<center>
+<script>
+"use strict";
+
+/* 3-Color Edge Position Symmetry
+
+      Mins    Syms    Configs
+   -------    ----   --------
+       679      48      32592
+        68      24       1632
+        17      16        272
+         8      12         96
+         5       8         40
+         2       6         12
+         1       3          3
+         1       2          2
+         1       1          1
+   -------           --------
+       782              34650   Ratio: 44.31
+*/
+
+var title = '3-Color Edge Position Symmetry'; 
+var count1 = new Uint32Array(E_PRM * E_TWIST);
+var count2 = new Uint8Array(E_PRM * E_TWIST);
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);
+
+main();
+
+function main() {
+  init();
+  count_ep_mins();
+}
+
+function count_ep_mins() {
+  var c1 = new Uint32Array(E_PRM);
+  var c2 = new Uint32Array(E_PRM);
+  var c3 = new Uint32Array(49);
+  for (var min=0; min < E_PRM; min++) {
+    if (c1[min] == 0) {
+      c1[min] = min;
+      for (var op=1; op < CUBE_SYM; op++) {
+        var epsym = ep_sym[min*CUBE_SYM + op];
+        c1[epsym] = min;
+      }
+    }
+  }
+  for (var i=0; i < E_PRM; i++)
+    c2[c1[i]]++;
+  for (var i=0; i < E_PRM; i++)
+    if (c2[i] != 0)
+      c3[c2[i]]++;
+  rpt(c3, title);
+}
+
+function populate_ep_sym() {
+  assign_centers_3c();
+  var tmpstr = new Uint8Array(FACELETS);
+  for (var ep=0; ep < E_PRM; ep++) {
+    ep_sym[ep*CUBE_SYM] = ep;
+    int_to_strp(ep_b3[ep], eps, 11, 3);
+    make_cubestr_edg(edg2);
+    for (var op=1; op < CUBE_SYM; op++) {
+      sym_op(tmpstr, cubestr, op);
+      ep_sym[ep*CUBE_SYM+op] = convert_edg_3c(tmpstr); 
+    }
+  }
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_ep_sym();
+}
+
+</script>
+</center>
+</body>

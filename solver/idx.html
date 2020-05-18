@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+ <title> Cube Solver (without web worker) </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style2.css">
+ <style> td {text-align:center} </style>
+ <style> div.wrap {padding-left:5%; padding-right:5%;} </style>
+ <meta name=viewport content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class=wrap>
+<center>
+<table><tr height=2><td></table>
+<font size="+2"> Cube Solver </font><br>
+(without web worker)
+<br><br>
+<table>
+ <tr> 
+  <td> <button id=solver class="btn ixw2" onclick="location='solve.html'">Depth 8</button> </td>
+  <td width=15>
+  <td> <button id=solver class="btn ixw2" onclick="location='solve.html?dist_gen_depth=9&stl=5s'">Depth 9</button> </td>
+  <td width=15>
+  <td> <button id=solver class="btn ixw2" onclick="location='solve.html?load_dist_files=1&stl=5s'">Dist Files</button> </td>
+  <td width=15>
+  <td> <button id=solver class="btn ixw2" onclick="location='solve.html?use_dist3=1&stl=5s'">Dist 3</button> </td>
+  <tr height=10>
+</table>
+<br>
+<a href="javascript: history.go(-1)">Back</a>
+<br><br>
+</center>
+</div>
+</body>
+</html>

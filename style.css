@@ -1,0 +1,27 @@
+a:link {color:#4B80FE}
+a:visited {color:#854ABB}
+body {
+    background-color: #38383D;
+    color: white;
+    margin-left: 10%; 
+    margin-right: 10%;
+}
+td {
+    text-align: justify;
+}
+p {
+    margin:0;
+    text-align: justify; 
+}
+iframe { border: 0; }  
+.mdw1 { width:80px; }
+.btn {
+  height:28px;
+  border-radius:15px;
+  background:white;
+  padding:0px;
+  border:none;
+  outline:none;
+  /* cursor:pointer; */
+}
+

@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6-Color Edge Position Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=rpt.js></script>
+ <script src=epr_sym.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+ </style>
+</head>
+<body>
+<center>
+<script>
+"use strict";
+
+/* 6-Color Edge Position Symmetry
+
+      Mins    Syms    Configs
+   -------    ----   --------
+   9972862      48  478697376
+     12139      24     291336
+       462      16       7392
+       404      12       4848
+        41       8        328
+        47       6        282
+         4       4         16
+         6       3         18
+         1       2          2
+         2       1          2
+   -------           --------
+   9985968          479001600   Ratio: 47.97
+*/
+
+var title = '6-Color Edge Position Symmetry';
+var count1 = new Uint32Array(E_PRM * E_PRMr);
+var count2 = new Uint8Array(E_PRM * E_PRMr);
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);
+
+main();
+
+function main() {
+  init();
+  count_ep6c_mins();
+}
+
+function count_ep6c_mins() {
+  var epr = new Uint8Array(3);
+  var eprsym = new Uint8Array(3);
+  for (var ep=0; ep < E_PRM; ep++) {
+    for (epr[0]=0; epr[0] < 24; epr[0]++) {
+      for (epr[1]=0; epr[1] < 24; epr[1]++) {
+        for (epr[2]=0; epr[2] < 24; epr[2]++) {
+          var min = ep*E_PRMr + eprsum(epr);
+          if (count1[min] == 0) {
+            count1[min] = min;
+            for (var op=1; op < CUBE_SYM; op++) {
+              var epsym = ep_sym[ep*CUBE_SYM+op];
+              get_eprsym(eprsym, ep, epr, op);
+              var ep6csym = epsym*E_PRMr + eprsum(eprsym);
+              count1[ep6csym] = min;
+            }
+          }
+        }
+      }
+    }
+  }
+  count_mins(E_PRM, E_PRMr);
+}
+
+function get_eprsym(eprsym, ep, epr, op) {
+  for (var i=0; i < 3; i++) {
+    var ix = op*35640 + ep_slice[ep*3+i]*72 + epr[i]*3 + i;
+    eprsym[slice_map[op*3+i]] = epr_sym[ix];
+  }
+}
+
+function eprsum(epr) {
+  return(epr[0]*576 + epr[1]*24 + epr[2]);
+}
+
+function populate_ep_sym() {
+  assign_centers_3c();
+  var tmpstr = new Uint8Array(FACELETS);
+  for (var ep=0; ep < E_PRM; ep++) {
+    ep_sym[ep*CUBE_SYM] = ep;
+    int_to_strp(ep_b3[ep], eps, 11, 3);
+    make_cubestr_edg(edg2);
+    for (var op=1; op < CUBE_SYM; op++) {
+      sym_op(tmpstr, cubestr, op);
+      ep_sym[ep*CUBE_SYM+op] = convert_edg_3c(tmpstr); 
+    }
+  }
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_ep_sym();
+  populate_epr_sym();
+}
+</script>
+</center>
+</body>
