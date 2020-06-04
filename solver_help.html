@@ -40,8 +40,7 @@ a time.</p>
 <br><br>
 <b>Search Time</b>
 <br><br>
-<p>
-If a solution is more than 20 moves then a shorter one can be found by 
+<p>If a solution is more than 20 moves then a shorter one can be found by 
 increasing Search Time which is normally 5 seconds (by default).
 Search Time is just one part of the total processing time.
 Before the Solver can search it must first make several tables for moves &amp;
@@ -59,19 +58,8 @@ Search performance can be improved by generating the dist arrays to Depth 9
 which takes longer initially, anywhere from 17 seconds (on 3.7 Ghz processor)
 to two minutes or more depending on device performance.
 Generate time can be eliminated by using dist files as described in the next
-section.
+section.</p>
 <br><br>
-<!--
-Note:<br>
-In Firefox, if generating to depth 9 the browser will pop-up a message asking
-whether to stop the script or let it continue, likewise if Search Time is set to
-more than 10 seconds.
-This message can be ignored (which allows the solver to run) or eliminated 
-altogether by setting
-<a href="http://kb.mozillazine.org/Dom.max_script_run_time">dom.max_script_run_time</a>
-in <a href="http://kb.mozillazine.org/About:config">about:config</a>.</p>
-<br><br>
--->
 <b>Using Dist Files</b>
 <br><br>
 <p>By saving the dist arrays to files they only have to be generated once,
