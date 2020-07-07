@@ -1,0 +1,516 @@
+<!doctype html>
+<html>
+<head>
+ <title> Batch Cube Solver </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=../verify.js></script>
+ <script src=readfiles.js></script>
+ <script src=batch_cubes.js></script>
+ <style> 
+  div.wrap {
+    height:100%;
+    overflow:auto;
+    padding:0px 5%;
+  }
+  .sbtn {
+    height:28px;
+    width:74px;
+    border-radius:15px;
+    background-color:#ffffff;
+    padding:0px;
+    border:none;
+    outline:none;
+  }
+  input {
+    height:22px;
+    width:22px;
+  }
+ </style>
+</head>
+<body>
+<div class=wrap>
+<script>
+if (typeof(Worker) == "undefined") {
+  document.write('This browser does not appear to support web workers<br>');
+  document.write('Try this link instead: <a href=../solver/idx.html>Alt Solver</a>');
+}
+</script>
+<table>
+<tr><td height=8></tr>
+<tr><td valign=top>
+<font size=+2> Batch Cube Solver </font>
+<br><br>
+<div id=btn></div>
+<button id=sbtn class="btn svw1" onclick="run_batch()">Solve</button>
+<p></p> 
+<br>
+<div id=status></div>
+</td>
+</tr><tr height=8></tr></table>
+<br><br>
+
+<script>
+"use strict";
+/* 
+  To use this program, put list of cubes to be solved in batch_cubes.js
+
+  Parameters:
+  dist_gen_depth=9    generate dists 1 & 2 to depth 9 (default is 8)
+  load_dist_files=1   load dist files instead of generate (default is generate)
+  use_dist3=1         add large (418 MB) Dist3 (default is not use)
+  stl=N               set search time limit to N seconds (default is 5)
+  stoplen=N           stop search on first solution with length <= N (default is 20)
+  conc=N              N = number of concurrent processes (default = # of processors)
+  cube_format         0 = don't show, 1 = single line, 2 = text layout (default is 2)
+*/
+var stl = 5;
+var stoplen = 20;
+var cube_format = 2;
+var fnames = [];
+var dist_loaded = [0, 0, 0];
+var solve_running = 0;
+var dist_files_loaded = 0;
+var sbtn_bgcolor_active = "#aaaaaa";    // should match btn:active in style2.css
+var sbtn_bgcolor_inactive = "#ffffff";  // should match btn background-color style2.css
+var facelets;
+var mp_done;
+var USE_DIST3 = 0;
+var dist_gen_depth = 0;
+var distp2_gen_depth = 8;
+var dist3_gen_depth = 0;
+var load_dist_files = 0;
+var dist1, dist2, dist3, distp2;
+var dist1_shared, dist2_shared, dist3_shared, distp2_shared;
+var gdone, gdone_shared;
+var worker = [];
+var show_deps = false;
+var conc, conc_param, conc_mvlist = [];
+var init_done = 0;
+var mkd_dep9_done = 0;
+var stime, gtime0;
+var init_time;
+var cube_ix = 0;
+var CUBE_HOME   = "RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO";
+var CUBE_BLANK  = "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
+
+main();
+
+function main() {
+
+  var params = location.search.substr(1).split('&');
+
+  for (var i=0; i < params.length; i++) {
+    var p = params[i].split('=');
+    if (typeof(p[1]) != 'undefined')
+      window[p[0]] = p[1];
+  }
+
+  if (typeof(conc) != 'undefined')
+    conc_param = conc;
+
+  init_conc();
+
+  try {
+    dist1_shared  = new SharedArrayBuffer(MIN_EP*C_PRM*1094);   //  57 MB
+  }
+  catch(e) {
+      shared_memory_error_handler(e);
+      return;
+  }
+
+  worker[1] = new Worker('solve.js');
+
+  try {
+    worker[1].postMessage({'cmd': 'test', 'dist1': dist1_shared});
+  }
+  catch(e) {
+      shared_memory_error_handler(e);
+      return;
+  }
+
+  worker[1].addEventListener('message', ipc);
+
+  for (var i=2; i <= conc; i++) {
+    worker[i] = new Worker('solve.js');
+    worker[i].addEventListener('message', ipc);
+  }
+
+  dist2_shared  = new SharedArrayBuffer(MIN_EP*C_PRM*1024);   //  53 MB
+  distp2_shared = new SharedArrayBuffer(C_PRMr*E_PRMr);       //   8 MB
+
+  gdone_shared = new SharedArrayBuffer(1);
+  gdone = new Uint8Array(gdone_shared);
+
+  if (typeof(show_depths) != 'undefined')
+    if (show_depths == '1')
+      show_deps = true;
+
+  if (typeof(use_dist3) != 'undefined')
+    if (use_dist3 == 1) {
+      USE_DIST3 = 1;
+      dist3_gen_depth = 10;
+      load_dist_files = 1;
+      dist_loaded = [0, 0, 0, 0];
+      dist3_shared  = new SharedArrayBuffer(MIN_EP*C_TWIST*256);  // 418 MB
+    }
+
+  if (isNaN(dist_gen_depth))
+    dist_gen_depth = ((load_dist_files == 1) ? 9 : 8) 
+  else {
+    if (dist_gen_depth == 0)
+      dist_gen_depth = ((load_dist_files == 1) ? 9 : 8) 
+    else {
+      var gen_max = ((load_dist_files == 1) ? 10 : 9);
+      if (dist_gen_depth < 8)
+        dist_gen_depth = 8;
+      else if (dist_gen_depth > gen_max)
+        dist_gen_depth = gen_max;
+    }
+  }
+
+  if (typeof dist_gen_depth == 'string')
+    dist_gen_depth = parseInt(dist_gen_depth);
+
+  if (isNaN(stl) || stl < 0)
+     stl = 5;
+
+  if (load_dist_files == 1) {
+    init_fnames();
+    document.getElementById('btn').innerHTML =
+      '<input type=file id=selectFiles style="display:none;" ' +
+      'onchange="readfiles(this.files)" multiple>' +
+      '<button class="btn svw4" ' +
+      'onclick="document.getElementById(\'selectFiles\').click()">' +
+      'Load Dist Files</button><br>';
+    document.getElementById('sbtn').style.display = 'none';
+  }
+
+  if (cube_format != '0' && cube_format != '1' && cube_format != '2')
+    cube_format = 2;
+}
+
+var first_time = true;  // static local
+
+function run_batch() {
+  gtime0 = Date.now();
+  if (solve_running == 1)
+    return;
+  mp_done = 0;
+  sbtn_active();
+  if (load_dist_files == 1) {
+    if (dist_files_loaded == 0) {
+      var need = '';
+      for (var i=0, n=0; i < fnames.length; i++) {
+        if (dist_loaded[i] == 0) { 
+          need += fnames[i] + '<br>'; 
+          n++;
+        }
+      }
+      var str = (n==1) ? "this file" : "these files";
+        document.getElementById('status').innerHTML = 
+          'Load ' + str + ' before solving:<br>' + need;
+        sbtn_inactive();
+      return;
+    }
+  }
+  msgtxt.length = 0;
+  document.getElementById('status').style.textAlign = 'left';
+  if (cube_ix < batch_cubes.length)
+    facelets = batch_cubes[0];
+  else {
+    document.getElementById('status').innerHTML = 'No more cubes in file';
+    sbtn_inactive();
+    return;
+  }
+  logtxt.length = 0;
+  document_write('Concurrent Processes = ' + conc + '<br>');
+  var n = (USE_DIST3 == 1) ? dist3_gen_depth : dist_gen_depth;
+  document_write('Search Array Gen Depth = ' + n + '<br><br>');
+  solve_running = 1;
+  gdone[0] = 0;
+  if (first_time) {
+    send_init_request_to_workers();
+    first_time = false;
+  }
+  else
+    send_solve_request_to_workers();
+}
+
+function send_init_request_to_workers() {
+  for (var i=1; i <= conc; i++)
+    worker[i].postMessage({
+      'cmd': 'init',
+      'worker': i,
+      'dist1': dist1_shared,
+      'dist2': dist2_shared,
+      'dist3': dist3_shared,
+      'distp2': distp2_shared,
+      'dist_files_loaded': dist_files_loaded,
+      'dist_gen_depth': dist_gen_depth,
+      'conc': conc,
+    });
+}
+
+function send_solve_request_to_workers() {
+  stime = Date.now();
+  if (facelets.length > 54)
+    facelets = facelets.substring(0, 54);
+  if (facelets.length != 54) {
+    msg2(facelets + '<br>');
+    msg2('Cube must have 54 facelets, this has: ' + facelets.length + '<br>');
+    sbtn_inactive();
+    return;
+  }
+  else { 
+    stl = stl + '';  // convert to char for verify
+    var verif = verify_main(facelets);
+  }
+  if (verif == 0) {
+    for (var i=1; i <= conc; i++)
+      worker[i].postMessage({
+        'worker': i,
+        'cmd': 'solve',
+        'facelets': facelets,
+        'stl': stl,
+        'stoplen': stoplen,
+        'use_dist3': USE_DIST3,
+        'mvlist': conc_mvlist[i],
+        'gdone': gdone_shared
+      });
+  }
+  else {
+    msg2(facelets + '<br>');
+    msg2(msgtxt.join(''));
+    sbtn_inactive();
+  }
+}
+
+function init_conc() {
+  var conc_val = [1,1,2,3,4,4,6,6,8,9,10,10,12,12,14,14,16,16,18];
+  conc = navigator.hardwareConcurrency;
+  conc = (conc > 18) ? 18 : conc_val[conc];
+  if (typeof(conc) == 'undefined')
+    conc = 1;
+  if (typeof(conc_param) != 'undefined') {
+    var valid_values = (['1','2','3','4','6','8','9','10','12','14','16','18']);
+    for (var i=0, valid=0; i < 12; i++)
+      if (conc_param == valid_values[i])
+        valid = 1;
+    if (valid == 1)
+      conc = conc_param;
+  }
+  var n = conc;
+  if (n == 1)  icm(1, 1, 0, 18);
+  if (n == 2)  icm(1, 2, 0, 9);
+  if (n == 3)  icm(1, 3, 0, 6);
+  if (n == 6)  icm(1, 6, 0, 3);
+  if (n == 9)  icm(1, 9, 0, 2);
+  if (n == 18) icm(1, 18, 0, 1);
+  if (n == 4)  { icm(1, 2, 0, 4);  icm(3, 4, 8, 5);  }    // 2*4 + 2*5
+  if (n == 8)  { icm(1, 6, 0, 2);  icm(7, 8, 12, 3); }    // 6*2 + 2*3
+  if (n == 10) { icm(1, 2, 0, 1);  icm(3, 10, 2, 2); }    // 2*1 + 8*2
+  if (n == 12) { icm(1, 6, 0, 1);  icm(7, 12, 6, 2); }    // 6*1 + 6*2
+  if (n == 14) { icm(1, 10, 0, 1); icm(11, 14, 10, 2); }  // 10*1 + 4*2
+  if (n == 16) { icm(1, 14, 0, 1); icm(15, 16, 14, 2); }  // 14*1 + 2*2
+}
+
+function icm(row_start, rows, col_start, cols) {
+  for (var i=row_start, j=col_start; i <= rows; i++, j+=cols) {
+    conc_mvlist[i] = [];
+    for (var k=0; k < cols; k++)
+      conc_mvlist[i][k] = j+k;
+    conc_mvlist[i][k] = -1;
+  }
+}
+
+var worker_status = [];  // static local
+
+function ipc(e) {
+  var cmd = e.data.cmd;
+
+  if (cmd == 'init_done') {
+    init_done++;
+    if (init_done == conc) {
+      init_time = Date.now();
+      if (load_dist_files == 0)
+        worker[1].postMessage({'cmd': 'mkd_dep8'});
+      else {
+        heading();
+        send_solve_request_to_workers(); 
+      }
+    }
+  }
+
+  if (cmd == 'mkd_dep8_done') {
+    if (dist_gen_depth == 8) {
+      // msg('Making DistP2');
+      worker[1].postMessage({'cmd': 'mkdp2'});
+    }
+    else if (dist_gen_depth == 9)
+      for (var i=1; i <= conc; i++)
+        worker[i].postMessage({'cmd': 'mkd_dep9', 'worker': i});
+  }
+
+  if (cmd == 'mkd_dep9_done') {
+    mkd_dep9_done++;
+    if (mkd_dep9_done == conc) {
+      msg('Making DistP2');
+      worker[1].postMessage({'cmd': 'mkdp2'});
+    }
+  }
+
+  if (cmd == 'mkdp2_done') {
+    heading();
+    send_solve_request_to_workers(); 
+  }
+
+  if (cmd == 'show_solution') {
+    worker_status[e.data.worker] = e;
+    gdone[0] = 1; 
+    mp_done++;
+    if (mp_done == conc) {
+      for (var i=1, min=99, idx=0; i <= conc; i++) {
+        var n = worker_status[i].data.moves.length;
+        if (n !=0 && n < min) {
+          min = n;
+          idx = i;
+        }
+      }
+      show_solution(worker_status[idx]);
+      if (cube_ix+1 == batch_cubes.length) {
+        var time = ((Date.now() - gtime0)/1000).toFixed(2);
+        msg2('Total Time: ' + time);
+        sbtn_inactive();
+      }
+      else {
+        cube_ix++;
+        gdone[0] = 0;
+        mp_done = 0;
+        facelets = batch_cubes[cube_ix]; 
+        stime = Date.now();
+        send_solve_request_to_workers();
+      }
+    }
+  }
+
+  if (cmd == 'msg')
+    if (e.data.msg.substring(0,9) != 'Searching')
+      document.getElementById('status').innerHTML = e.data.msg;
+
+  if (cmd == 'dep9stat') {
+    var s = 'Making Search Arrays<br>Generating to Depth 9<br>Progress: ';
+    var count = e.data.count;
+    var len  = e.data.len;
+    var n = Math.round(count/(len/conc)*10)*10;
+    if (n > 100)
+      n = 100;
+    if (n >= 10) 
+      document.getElementById('status').innerHTML = s + n + '%';
+  }
+}
+
+function heading() {
+    msg('Concurrent Processes: ' + conc + '<br>');
+    var n = (USE_DIST3 == 1) ? dist3_gen_depth : dist_gen_depth;
+    msg2('Search Array Gen Depth: ' + n + '<br>');
+    msg2('Search Time Limit: ' + stl + '<br>');
+    msg2('Stop Length: ' + stoplen + '<br><br>');
+    var t1 = ((init_time - gtime0)/1000).toFixed(2);
+    msg2('Init Time: ' + t1 + '<br>');
+    if (load_dist_files == 0) {
+      var t2 = ((Date.now() - init_time)/1000).toFixed(2);
+      var t3 = ((Date.now() - gtime0)/1000).toFixed(2);
+      msg2('Dist  Time: ' + t2 + '<br>');
+      msg2('Init + Dist Time: ' + t3 + '<br>');
+    }
+    msg2('<br>');
+}
+
+function msg(s) {
+  document.getElementById('status').innerHTML = s;
+}
+
+function show_solution(e)
+{
+  if (cube_format > 0)
+    msg2('Cube ' + (cube_ix+1) + ':<br>');
+  if (cube_format == 0)
+    var cube_text = '';
+  else if (cube_format == 1)
+    cube_text = facelets + '<br>';
+  else if (cube_format == 2)
+    cube_text = show_cube_layout2(facelets);
+  var moves = e.data.moves;
+  var sol_deps = ' [' + e.data.sol_dep1 + '+' + e.data.sol_dep2 +']';
+  var len = ' (' + moves.length + 'f)';
+  var time = ((Date.now() - stime)/1000).toFixed(2);
+  var str = cube_text + moves.join(' ') + sol_deps + len + ' ' + time + '<br>';
+  if (cube_format == 0)
+    msg2(str);
+  else
+    msg2(str + '<br>');
+}
+
+function msg(s) {
+  document.getElementById('status').innerHTML = s;
+}
+
+function msg2(s) {
+  var s0 = document.getElementById('status').innerHTML;
+  document.getElementById('status').innerHTML = s0 + s;
+}
+
+function readfiles_done() {
+  document.getElementById('status').innerHTML = 
+    'All Dist Files Loaded<br>Ready to Solve';
+  document.getElementById('btn').innerHTML = '';
+  dist_files_loaded = 1;
+  document.getElementById('sbtn').style.display = 'block';
+}
+
+function sbtn_active() {
+  document.getElementById('sbtn').style.backgroundColor = sbtn_bgcolor_active;
+}
+
+function sbtn_inactive() {
+  document.getElementById('sbtn').style.backgroundColor = sbtn_bgcolor_inactive;
+}
+
+function shared_memory_error_handler(e) {
+  document.getElementById('status').innerHTML = 
+    'This browser does not appear to support shared memory so ' +
+    'unfortunately, the Batch Cube Solver cannot be used. ' +
+    'See <a target=_blank href="https://caniuse.com/#feat=sharedarraybuffer">Supported Browsers</a>.' +
+    '<br><br><button onclick="alert(\'' + e + '\')">Show Error</button>';
+  solve_running = 1;  // disable buttons
+}
+
+function show_cube_layout2(s)
+{
+  var c = '<pre>';
+  c += '    ' + s[0] + s[1] + s[2] + '<br>';
+  c += '    ' + s[3] + s[4] + s[5] + '<br>';
+  c += '    ' + s[6] + s[7] + s[8] + '<br>';
+  c +=  s[9] + s[10] + s[11] + ' ' + s[12] + s[13] + s[14] + ' ' + 
+        s[15] + s[16] + s[17] + ' ' + s[18] + s[19] + s[20] + '<br>';
+  c += s[21] + s[22] + s[23] + ' ' + s[24] + s[25] + s[26] + ' ' +
+        s[27] + s[28] + s[29] + ' ' + s[30] + s[31] + s[32] + '<br>';
+  c += s[33] + s[34] + s[35] + ' ' + s[36] + s[37] + s[38] + ' ' +
+        s[39] + s[40] + s[41] + ' ' + s[42] + s[43] + s[44] + '<br>';
+  c += '    ' + s[45] + s[46] + s[47] + '<br>';
+  c += '    ' + s[48] + s[49] + s[50] + '<br>';
+  c += '    ' + s[51] + s[52] + s[53];
+  c += '</pre>';
+  return(c);
+}
+
+</script>
+</div>
+</body>
+</html>

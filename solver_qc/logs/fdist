@@ -1,0 +1,18 @@
+ff() {
+  grep "\[" $1 |
+  awk '{print $(NF-2) $(NF-1)}' | 
+  sed 's/\[//; s/](/ /; s/)//' |
+  sort | uniq -c  | sort -nr |
+  sed "s/+/ /; s/f//" 
+}
+
+fmt() {
+  awk '{printf("%3d %d+%d %d\n", $1, $2, $3, $4)}'
+}
+
+ff $1 | awk '{if ($2 + $3 == $4) print}' | fmt    # normal
+echo
+ff $1 | awk '{if ($2 + $3 == $4+2) print}' | fmt  # elim two moves
+echo
+ff $1 | awk '{if ($2 + $3 == $4+1) print}' | fmt  # elim one move
+

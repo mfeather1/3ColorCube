@@ -3,8 +3,8 @@
 <head>
  <title> Cube Solver Help </title>
  <meta name="robots" content="noindex, nofollow">
- <link rel=icon href=mini_cube.png type=image/png>
- <link rel="stylesheet" type="text/css" href="style.css">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
  <meta name=viewport content="width=device-width, initial-scale=1">
 </head>
 <body><center>
@@ -12,7 +12,7 @@
 <br><br>
 <p>To use the solver press the Random button and after a scrambled cube 
 appears press Solve.
-After a minute or so the solve will complete and a blue bar appears under the
+After a minute or so the solve will complete and a green bar appears under the
 cube which is the media player control panel, press the Play button (right
 arrow) to see the solution.
 Subsequent solves will run faster, more about that in the "Search Time"
@@ -34,7 +34,7 @@ If you get an error, compare your cube to the one on the screen and find the
 square(s) that do not match and fix them, then press Solve again.
 Repeat until there are no more errors.
 <br><br>
-Once all the errors are fixed it will solve the cube and the blue bar will
+Once all the errors are fixed it will solve the cube and the green bar will
 appear, press the second button from the right to show the solution one move at
 a time.</p>
 <br><br>
@@ -108,7 +108,33 @@ in the cube area (for solved cube).
 In some cases the sum will be larger which means that the first move in phase
 2 was to the same face as the last move in phase 1 so the moves were either
 combined or if they cancel each other (R + R' for example) then both are
-removed from the sequence.</p>
+removed from the sequence.
+<br><br>
+It is possible to stop the search for solutions lengths other than 20 moves by
+using URL parameter stoplen=N where N is the desired number of moves.
+This <a target=_blank href=solve.html?stl=5&show_depths=1&stoplen=19>link</a>
+is an example of searching for 19 move solutions.
+When using stoplen, do not add "s" to the stl (search time limit) parameter or
+in the Search Time box on the screen because that will override the URL stoplen
+value with 20.</p>
+<br><br>
+<b>Concurrent Processes</b>
+<br><br>
+<p>The Quad-Core Solver will normally run as many concurrent processes as your
+device has processors but the number can be set to: 1, 2, 3, 4, 6, 8, 9, 10,
+12, 14, 16 or 18 by adding parameter "conc=N" to the solver URL where N is the
+desired number of processes. 
+The number of concurrent processes being used by the solver is shown in the log.
+<br><br>
+Each solver process searches for a solution starting with one or more of the 18
+possible moves (R, R2, R', etc).
+With a conc setting of 2, 3, 6, 9 or 18, the 18 moves can be equally divided
+among the processes (to see the move assignments for all settings see function
+init_conc in solve.html).
+The number of processes does not have to match the number of processors, the
+operating system will balance the load if needed. 
+While the conc parameter is available for experimenting, the default setting is 
+likely fine for most cases.</p>
 <br>
 <a href="JavaScript:window.close()">Close</a>
 <br><br>

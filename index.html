@@ -125,23 +125,26 @@ Part 1: Solve The 3-Color Cube
 <table border=0>
  <tr height=30>
  <tr> <td colspan=7 align=center>  <font size="+2"> Cube Solver </font> </td> </tr>
-<!--
- <tr> 
-  <td colspan=7 width=460> 
-   <p> Depth 9 is for fast processors (3+ Ghz), otherwise use
-   Depth 8 or Dist Files, see help in the solver for details.</p>
-  </td>
- </tr>
- <tr height=5>
--->
  <tr> 
   <td> <button id=solver class="btn ixw2" onclick="location='solve.html'">Depth 8</button> </td>
   <td width=15>
-  <td> <button id=solver class="btn ixw2" onclick="location='solve.html?dist_gen_depth=9&stl=5s'">Depth 9</button> </td>
+  <td> <button id=solver class="btn ixw2" onclick="location='solve.html?dist_gen_depth=9&stl=5s&show_depths=1'">Depth 9</button> </td>
   <td width=15>
-  <td> <button id=solver class="btn ixw2" onclick="location='solve.html?load_dist_files=1&stl=5s'">Dist Files</button> </td>
+  <td> <button id=solver class="btn ixw2" onclick="location='solve.html?load_dist_files=1&stl=5s&show_depths=1'">Dist Files</button> </td>
   <td width=15>
-  <td> <button id=solver class="btn ixw2" onclick="location='solve.html?use_dist3=1&stl=5s'">Dist 3</button> </td>
+  <td> <button id=solver class="btn ixw2" onclick="location='solve.html?use_dist3=1&stl=5s&show_depths=1'">Dist 3</button> </td>
+</table>
+<table border=0>
+ <tr height=20>
+ <tr> <td colspan=7 align=center>  <font size="+2"> Quad-Core Solver </font> </td> </tr>
+ <tr> 
+  <td> <button id=solver class="btn ixw2" onclick="location='solver_qc/solve.html?stl=5s&show_depths=1'">Depth 8</button> </td>
+  <td width=15>
+  <td> <button id=solver class="btn ixw2" onclick="location='solver_qc/solve.html?dist_gen_depth=9&stl=5s&show_depths=1'">Depth 9</button> </td>
+  <td width=15>
+  <td> <button id=solver class="btn ixw2" onclick="location='solver_qc/solve.html?load_dist_files=1&stl=5s&show_depths=1'">Dist Files</button> </td>
+  <td width=15>
+  <td> <button id=solver class="btn ixw2" onclick="location='solver_qc/solve.html?use_dist3=1&stl=5s&show_depths=1'">Dist 3</button> </td>
   <tr height=10>
 </table>
 <br>

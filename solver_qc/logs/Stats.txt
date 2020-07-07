@@ -1,0 +1,224 @@
+The following is a summary of results for two tests of Solving 1000 random 
+cubes for solutions with 20 moves or less.  These tests were done using 
+batch_solve_qc.html.  The logs for the two runs are:
+
+Rand1000_Depth_09.log - normal run with Dist1 & Dist2 generated to depth 9
+Rand1000_Depth_10.log - this adds Dist3 which is generated to depth 10
+
+There is also a test for "contrived" cubes (Contrived.log) which is for the
+77 configs that are 3-color solutions and at the maximal distance from 6-color 
+solution (for configs that are 3-color solutions) which is 16 moves, this set
+is reduced by symmetry (full set is 1716).
+
+These tests were done on an AMD Ryzen5 3400G, 3.7Ghz Quad-Core/8 thread,
+16 GB RAM (DDR4 2667MHz) with Chromium 79 on Fedora 31.
+
+
+-------------------------------------------------------------------------------
+Total & Average Time (divide by 1000 for average time)
+-------------------------------------------------------------------------------
+grep Total Rand1000_Depth_*.log
+Rand1000_Depth_09.log:Total Time: 599.75  --> 0.60 avg
+Rand1000_Depth_10.log:Total Time: 253.66  --> 0.25 avg
+
+Another test of Depth 9 was done with hyperthreading off and the conc param
+set to 4, resultant Total Time was 628.39 so there is only about a 5% gain from 
+hyperthreading (using 2 threads per core).
+
+
+-------------------------------------------------------------------------------
+Frequency Distribution of Solution Times (one second intervals)
+-------------------------------------------------------------------------------
+grep '\[' Rand1000_Depth_09.log | awk '{printf("%d\n", $NF)}' | sort -n |
+uniq -c | awk '{printf("%3d  %d-%d\n", $1, $2, $2+1)}'
+877  0-1
+ 56  1-2
+ 20  2-3
+ 19  3-4
+ 14  4-5
+  4  5-6
+  4  6-7
+  4  7-8
+  1  10-11
+  1  11-12
+
+grep '\[' Rand1000_Depth_10.log | awk '{printf("%d\n", $NF)}' | sort -n |
+uniq -c | awk '{printf("%3d  %d-%d\n", $1, $2, $2+1)}'
+972  0-1
+ 25  1-2
+  3  2-3
+
+
+-------------------------------------------------------------------------------
+Top 10 Longest Solves
+-------------------------------------------------------------------------------
+grep "\[" Rand1000_Depth_09.log | awk '{print $NF}' | sort -nr | head
+11.40
+10.42
+7.67
+7.34
+7.29
+7.18
+6.96
+6.70
+6.56
+6.15
+
+grep "\[" Rand1000_Depth_10.log | awk '{print $NF}' | sort -nr | head
+2.50
+2.45
+2.11
+1.97
+1.85
+1.80
+1.75
+1.68
+1.68
+1.64
+
+
+-------------------------------------------------------------------------------
+Top 10 Shortest Solves
+-------------------------------------------------------------------------------
+grep "\[" Rand1000_Depth_09.log  | awk '{print $NF}' | sort -n | head
+0.01
+0.01
+0.01
+0.01
+0.02
+0.02
+0.02
+0.02
+0.03
+0.03
+
+grep "\[" Rand1000_Depth_10.log  | awk '{print $NF}' | sort -n | head
+0.00
+0.01
+0.02
+0.02
+0.02
+0.03
+0.03
+0.03
+0.03
+0.03
+
+
+-------------------------------------------------------------------------------
+Frequency Distribution of Solution Lengths
+-------------------------------------------------------------------------------
+grep "\[" Rand1000_Depth_09.log | awk '{print $(NF-1)}' | sort | uniq -c | sort -nr
+    752 (20f)
+    187 (19f)
+     51 (18f)
+      6 (17f)
+      2 (16f)
+      2 (15f)
+
+grep "\[" Rand1000_Depth_10.log | awk '{print $(NF-1)}' | sort | uniq -c | sort -nr
+    720 (20f)
+    210 (19f)
+     58 (18f)
+      7 (17f)
+      4 (16f)
+      1 (15f)
+
+
+-------------------------------------------------------------------------------
+Frequency Distribution of Solution Lengths by Phase
+-------------------------------------------------------------------------------
+fdist Rand1000_Depth_09.log
+280 15+5 20
+266 14+6 20
+ 85 13+7 20
+ 74 16+4 20
+ 68 14+5 19
+ 52 15+4 19
+ 25 14+4 18
+ 23 13+6 19
+ 18 16+3 19
+ 18 15+3 18
+ 18 12+8 20
+ 12 12+7 19
+  4 12+6 18
+  3 14+3 17
+  2 15+2 17
+  1 16+1 17
+  1 15+0 15
+  1 14+2 16
+  1 14+1 15
+  1 13+5 18
+  1 13+3 16
+
+ 12 14+8 20
+  6 15+7 20
+  6 14+7 19
+  3 13+8 19
+  2 14+6 18
+  1 16+6 20
+  1 16+5 19
+  1 15+6 19
+  1 13+7 18
+
+  5 15+6 20
+  4 13+8 20
+  1 15+5 19
+  1 14+7 20
+  1 14+6 19
+  1 13+7 19
+
+fdist Rand1000_Depth_10.log
+296 15+5 20
+232 14+6 20
+ 79 16+4 20
+ 76 14+5 19
+ 68 13+7 20
+ 67 15+4 19
+ 25 15+3 18
+ 23 14+4 18
+ 22 13+6 19
+ 19 16+3 19
+ 18 12+8 20
+ 12 12+7 19
+  4 14+3 17
+  3 14+2 16
+  3 12+6 18
+  2 15+2 17
+  1 16+2 18
+  1 16+1 17
+  1 14+1 15
+  1 13+5 18
+  1 13+3 16
+
+ 13 14+8 20
+  5 14+7 19
+  4 15+7 20
+  3 13+8 19
+  2 15+6 19
+  2 15+5 18
+  2 14+6 18
+  1 16+6 20
+  1 16+5 19
+  1 13+7 18
+
+  5 15+6 20
+  3 13+8 20
+  1 15+5 19
+  1 14+7 20
+  1 14+6 19
+  1 13+7 19
+
+
+-------------------------------------------------------------------------------
+Contrived Cubes
+-------------------------------------------------------------------------------
+Average time: 24.64/77 = .32
+
+fdist Contrived.log 
+ 63 10+8 18
+  7 10+7 17
+  4 10+6 16
+  2 9+8 17
+  1 9+7 16
+
