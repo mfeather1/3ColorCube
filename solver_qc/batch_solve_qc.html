@@ -89,7 +89,6 @@ var dist1, dist2, dist3, distp2;
 var dist1_shared, dist2_shared, dist3_shared, distp2_shared;
 var gdone, gdone_shared;
 var worker = [];
-var show_deps = false;
 var conc, conc_param, conc_mvlist = [];
 var init_done = 0;
 var mkd_dep9_done = 0;
@@ -146,10 +145,6 @@ function main() {
 
   gdone_shared = new SharedArrayBuffer(1);
   gdone = new Uint8Array(gdone_shared);
-
-  if (typeof(show_depths) != 'undefined')
-    if (show_depths == '1')
-      show_deps = true;
 
   if (typeof(use_dist3) != 'undefined')
     if (use_dist3 == 1) {
