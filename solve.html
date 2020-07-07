@@ -455,6 +455,7 @@ function solve() {
     var v = stl.substr(stl.length-1);
     if (v == 's' || v == 't') {
       stoplen = (v=='s') ? 20 : 0;
+      show_deps = (v=='s') ? 1 : 0;
       stl = stl.substr(0, stl.length-1);
     }
     solve_running = 1;
