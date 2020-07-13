@@ -1,3 +1,6 @@
+# This is used to make the "Frequency Distribution of Solution Lengths by Phase"
+# report shown in Stats.txt
+
 ff() {
   grep "\[" $1 |
   awk '{print $(NF-2) $(NF-1)}' | 

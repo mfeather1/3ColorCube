@@ -13,11 +13,6 @@
  <script src=readfiles.js></script>
  <script src=batch_cubes.js></script>
  <style> 
-  div.wrap {
-    height:100%;
-    overflow:auto;
-    padding:0px 5%;
-  }
   .sbtn {
     height:28px;
     width:74px;
@@ -26,10 +21,6 @@
     padding:0px;
     border:none;
     outline:none;
-  }
-  input {
-    height:22px;
-    width:22px;
   }
  </style>
 </head>
@@ -307,12 +298,12 @@ function init_conc() {
   if (n == 6)  icm(1, 6, 0, 3);
   if (n == 9)  icm(1, 9, 0, 2);
   if (n == 18) icm(1, 18, 0, 1);
-  if (n == 4)  { icm(1, 2, 0, 4);  icm(3, 4, 8, 5);  }    // 2*4 + 2*5
-  if (n == 8)  { icm(1, 6, 0, 2);  icm(7, 8, 12, 3); }    // 6*2 + 2*3
-  if (n == 10) { icm(1, 2, 0, 1);  icm(3, 10, 2, 2); }    // 2*1 + 8*2
-  if (n == 12) { icm(1, 6, 0, 1);  icm(7, 12, 6, 2); }    // 6*1 + 6*2
-  if (n == 14) { icm(1, 10, 0, 1); icm(11, 14, 10, 2); }  // 10*1 + 4*2
-  if (n == 16) { icm(1, 14, 0, 1); icm(15, 16, 14, 2); }  // 14*1 + 2*2
+  if (n == 4)  { icm(1, 2, 0, 4);  icm(3, 4, 8, 5);  }
+  if (n == 8)  { icm(1, 6, 0, 2);  icm(7, 8, 12, 3); }
+  if (n == 10) { icm(1, 2, 0, 1);  icm(3, 10, 2, 2); }
+  if (n == 12) { icm(1, 6, 0, 1);  icm(7, 12, 6, 2); }
+  if (n == 14) { icm(1, 10, 0, 1); icm(11, 14, 10, 2); }
+  if (n == 16) { icm(1, 14, 0, 1); icm(15, 16, 14, 2); }
 }
 
 function icm(row_start, rows, col_start, cols) {
