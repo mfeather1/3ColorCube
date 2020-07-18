@@ -825,7 +825,7 @@ function get_ctsym_m3(cpsym, ct, op) {
   return ((ct_op_type[op] == 0) ? ct_sym[ct*CUBE_SYM+op] :
     ((ct_op_type[op] == 1) ?
     ct_fb_ud[cpsym*C_TWIST + ct_sym[ct*CUBE_SYM+op]] :
-    ct_lr_ud[cpsym*C_TWIST + ct_sym[ct*CUBE_SYM+op]]));
+    ct_fb_ud[(69-cpsym)*C_TWIST + ct_sym[ct*CUBE_SYM+op]]));
 }
 
 function populate_cpt_sym() {
@@ -1498,10 +1498,8 @@ function populate_ct_sym()
         ct_sym[ix] = get_ct_lr(s, s[28]);  // R
     }
   }
-  for (var ct=0; ct < C_TWIST; ct++) {
+  for (var ct=0; ct < C_TWIST; ct++)
     ct_fb_ud[ct] = ct;
-    ct_lr_ud[ct] = ct;
-  }
   /*
   for (var cp=1; cp < C_PRM; cp++) {
     int_to_strp(cp_b2[cp], cps, 7, 2);
@@ -1528,13 +1526,6 @@ function populate_ct_sym()
       for (; i < 8; i++)
         cts_fb[i] = (cps[i] == 0) ? (cts[i]+1)%3 : cts[i];
      ct_fb_ud[cp*C_TWIST+ct] = str_to_int(cts_fb, 7, 3);
-    }
-  }
-  // apply ct_fb_ud twice to make ct_lr_ud
-  for (cp=1, ix=C_TWIST; cp < C_PRM; cp++, ix=cp*C_TWIST) {
-    for (ct=0; ct < C_TWIST; ct++) {
-       var ctsym = ct_fb_ud[ix+ct];
-       ct_lr_ud[ix+ct] = ct_fb_ud[ix+ctsym];
     }
   }
   // populated.push('ct_sym');
@@ -1574,6 +1565,16 @@ function get_ct_lr(s, r) {
   for (; i < 8; i++)
     cts[i] = ((s[cnr_idx[i*3]]==r)?2:((s[cnr_idx[i*3+1]]==r)?0:1));
   return(str_to_int(cts, 7, 3));
+}
+
+function update_ct_sym() {
+  var tmp = new Int16Array(C_TWIST);
+  for (var ct=0; ct < C_TWIST; ct++)
+    tmp[ct_fb_ud[69*C_TWIST + ct]]= ct;
+  for (var ct=0; ct < C_TWIST; ct++)
+    for (var op=0; op < CUBE_SYM; op++)
+      if (ct_op_type[op] == 2)
+        ct_sym[ct*CUBE_SYM + op] = tmp[ct_sym[ct*CUBE_SYM + op]];
 }
 
 function document_write(s) {

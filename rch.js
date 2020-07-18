@@ -1,7 +1,7 @@
 "use strict";
 
 var CT_SYM_METHOD = 3;      // Method 2 replaces cpt_sym (14 MB) with cpt_sym2 (318 KB) and cpt_min (600 KB)
-                            // Method 3 uses ct_sym (205 KB), ct_fb_ud (300 KB), ct_lr_ud (300 KB)
+                            // Method 3 uses ct_sym (205 KB) and ct_fb_ud (300 KB)
 
 var ET_SYM_METHOD = 3;      // Methods 2 and 3 eliminate et_sym_UF (used only during init)
                             // Method 3 replaces et_sym_FR (2 MB) with et_fr (64 KB) and et_fr_ix (124 KB)
@@ -101,7 +101,6 @@ else if (CT_SYM_METHOD == 2)
 else {
   var ct_sym    = new Uint16Array(C_TWIST * CUBE_SYM);    //   205 
   var ct_fb_ud  = new Uint16Array(C_PRM * C_TWIST);       //   300
-  var ct_lr_ud  = new Uint16Array(C_PRM * C_TWIST);       //   300
 }
 
 if (ET_SYM_METHOD == 1) 

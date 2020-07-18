@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
- <title> 3-Color Corner Symmetry - Method 3 </title>
+ <title> 3-Color Corner Symmetry - Method 3B </title>
  <meta name="author" content="Michael Feather">
  <meta name="robots" content="nofollow">
  <script src=../rch.js></script>
@@ -16,14 +16,16 @@
 <center>
 <script>
 "use strict";
+// Versions:
+// cpt_sym_m3a: uses array ct_lr_ud
+// cpt_sym_m3b: does not use array ct_lr_ud
 
 // Symmetry Arrays
 var cp_sym    = new Uint8Array(C_PRM * CUBE_SYM);     //   3 KB
 var ct_sym_m3 = new Uint16Array(C_TWIST * CUBE_SYM);  // 205 KB
 var ct_fb_ud  = new Uint16Array(C_PRM * C_TWIST);     // 300 KB 
-var ct_lr_ud  = new Uint16Array(C_PRM * C_TWIST);     // 300 KB
 
-var title  = "3-Color Corner Symmetry<br>Method 3"
+var title  = "3-Color Corner Symmetry<br>Method 3B"
 var count1 = new Uint32Array(C_PRM * C_TWIST);
 var count2 = new Uint8Array(C_PRM * C_TWIST);
 
@@ -32,6 +34,7 @@ main();
 function main(){
   init();
   populate_ct_sym_m3();
+  update_ct_sym_m3();
   count_ct_mins_m3();
 }
 
@@ -56,7 +59,7 @@ function get_ctsym_m3(cpsym, ct, op) {
   return ((ct_op_type[op] == 0) ? ct_sym_m3[ct*CUBE_SYM+op] :
     ((ct_op_type[op] == 1) ?
     ct_fb_ud[cpsym*C_TWIST + ct_sym_m3[ct*CUBE_SYM+op]] :
-    ct_lr_ud[cpsym*C_TWIST + ct_sym_m3[ct*CUBE_SYM+op]]));
+    ct_fb_ud[(69-cpsym)*C_TWIST + ct_sym_m3[ct*CUBE_SYM+op]]));
 }
 
 function populate_ct_sym_m3() {
@@ -81,23 +84,14 @@ function populate_ct_sym_m3() {
         ct_sym_m3[ix] = get_ct_lr(s, s[28]);  // R
     }
   }
-  for (var ct=0; ct < C_TWIST; ct++) {
+  for (var ct=0; ct < C_TWIST; ct++)
     ct_fb_ud[ct] = ct;
-    ct_lr_ud[ct] = ct;
-  }
   for (var cp=1; cp < C_PRM; cp++) {
     int_to_strp(cp_b2[cp], cps, 7, 2);
     for (ct=0; ct < C_TWIST; ct++) {
       int_to_strp(ct, cts, 7, 3);
       make_cubestr_cnr(cnr2);
       ct_fb_ud[cp*C_TWIST+get_ct_fb(cubestr, cubestr[25])] = ct;
-    }
-  }
-  // apply ct_fb_ud twice to make ct_lr_ud
-  for (cp=1, ix=C_TWIST; cp < C_PRM; cp++, ix=cp*C_TWIST) {
-    for (ct=0; ct < C_TWIST; ct++) {
-       var ctsym = ct_fb_ud[ix+ct];
-       ct_lr_ud[ix+ct] = ct_fb_ud[ix+ctsym];
     }
   }
 }
@@ -132,6 +126,16 @@ function get_ct_lr(s, r) {
   for (; i < 8; i++)
     cts[i] = ((s[cnr_idx[i*3]]==r)?2:((s[cnr_idx[i*3+1]]==r)?0:1));
   return(str_to_int(cts, 7, 3));
+}
+
+function update_ct_sym_m3() {
+  var tmp = new Int16Array(C_TWIST);
+  for (var ct=0; ct < C_TWIST; ct++)
+    tmp[ct_fb_ud[69*C_TWIST + ct]]= ct;
+  for (var ct=0; ct < C_TWIST; ct++)
+    for (var op=0; op < CUBE_SYM; op++)
+      if (ct_op_type[op] == 2)
+        ct_sym_m3[ct*CUBE_SYM + op] = tmp[ct_sym_m3[ct*CUBE_SYM + op]];
 }
 
 function init() {

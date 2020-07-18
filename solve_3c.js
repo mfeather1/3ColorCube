@@ -207,6 +207,7 @@ function init()
   }
   else {
     populate_ct_sym();
+    update_ct_sym();
     get_ctsym = get_ctsym_m3;
   }
   populate_ept_ops_indexes();
