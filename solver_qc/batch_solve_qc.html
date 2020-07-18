@@ -26,12 +26,6 @@
 </head>
 <body>
 <div class=wrap>
-<script>
-if (typeof(Worker) == "undefined") {
-  document.write('This browser does not appear to support web workers<br>');
-  document.write('Try this link instead: <a href=../solver/idx.html>Alt Solver</a>');
-}
-</script>
 <table>
 <tr><td height=8></tr>
 <tr><td valign=top>
@@ -92,6 +86,9 @@ var CUBE_BLANK  = "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
 main();
 
 function main() {
+
+  if (typeof(Worker) == "undefined")
+    worker_error_handler();
 
   var params = location.search.substr(1).split('&');
 
@@ -466,6 +463,13 @@ function sbtn_active() {
 
 function sbtn_inactive() {
   document.getElementById('sbtn').style.backgroundColor = sbtn_bgcolor_inactive;
+}
+
+function worker_error_handler() {
+  document.getElementById('status').innerHTML = 
+    'This browser does not appear to support web workers so<br>' +
+    'unfortunately the Batch Cube Solver can not be used.<br>';
+  solve_running = 1;  // disable button
 }
 
 function shared_memory_error_handler(e) {
