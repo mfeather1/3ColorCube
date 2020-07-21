@@ -96,13 +96,22 @@ function populate_ct_sym_m3() {
       ct_fb_ud[cp*C_TWIST+get_ct_fb(cubestr, cubestr[25])] = ct;
     }
   }
-  // apply ct_fb_ud twice to make ct_lr_ud
+  for (var cp=1; cp < C_PRM; cp++) {
+    int_to_strp(cp_b2[cp], cps, 7, 2);
+    for (ct=0; ct < C_TWIST; ct++) {
+      int_to_strp(ct, cts, 7, 3);
+      make_cubestr_cnr(cnr2);
+      ct_lr_ud[cp*C_TWIST+get_ct_lr(cubestr, cubestr[28])] = ct;
+    }
+  }
+  /* another way to make ct_lr_ud is to apply ct_fb_ud twice
   for (cp=1, ix=C_TWIST; cp < C_PRM; cp++, ix=cp*C_TWIST) {
     for (ct=0; ct < C_TWIST; ct++) {
        var ctsym = ct_fb_ud[ix+ct];
        ct_lr_ud[ix+ct] = ct_fb_ud[ix+ctsym];
     }
   }
+  */
 }
 
 function populate_ct_op_type() {
