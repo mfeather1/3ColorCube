@@ -725,19 +725,17 @@ function dependency(arr, func) {
 function update_et_sym()
 {
   // update et_sym[] so that op16e[op*2+1] can be replaced by just op in get_etsym()
-  var op_lr_fb = new Uint8Array([ 1, 2, 3, 4, 9,10,11,12,25,26,27,28,33,34,35,36]);  // LR -> FB
-  var op_ud_fb = new Uint8Array([13,14,15,16,17,18,19,20,37,38,39,40,41,42,43,44]);  // UD -> FB
-  for (var i=0; i < 16; i++) {
-    var op1 = op_lr_fb[i];
-    var op2 = op_ud_fb[i];
-    for (var et=0; et < E_TWIST; et++) {
-      et_sym[et*CUBE_SYM+op1] = et_sym[et*CUBE_SYM+op16e[op1*2+1]];
-      if (ET_SYM_METHOD == 1)
-        et_sym[et*CUBE_SYM+op2] = et_sym[et*CUBE_SYM+op16e[op2*2+1]];
-      else {  // update et_sym[] so et_sym_UF[] is no longer needed 
-        var fr = et_sym_FR[et];
-        var uf = et_sym_UF[et];
-        et_sym[fr*CUBE_SYM+op2] = et_sym[uf*CUBE_SYM+op16e[op2*2+1]];
+  for (var op=0; op < CUBE_SYM; op++) {
+    if (op16e[op*2] != 0) {
+      for (var et=0; et < E_TWIST; et++) {
+        if (op16e[op*2] == OP_FR || ET_SYM_METHOD == 1)
+          et_sym[et*CUBE_SYM + op] = et_sym[et*CUBE_SYM + op16e[op*2+1]];
+        else {
+          // for ET_SYM_METHOD 2, update so et_sym_UF[] is no longer needed 
+          var et_fr = et_sym_FR[et];
+          var et_uf = et_sym_UF[et];
+          et_sym[et_fr*CUBE_SYM + op] = et_sym[et_uf*CUBE_SYM + op16e[op*2+1]];
+        }
       }
     }
   }

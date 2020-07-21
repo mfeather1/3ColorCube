@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Corner Symmetry - Method 4A </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=rpt.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+ </style>
+</head>
+<body>
+<center>
+<script>
+"use strict";
+// Versions:
+// cpt_sym_m4a: ct_sym_ur size is 300 KB, used in get_ctsym()
+// cpt_sym_m4b: ct_sym_ur size is   4 KB, not used in get_ctsym()
+
+// Symmetry Arrays
+var cp_sym    = new Uint8Array(C_PRM * CUBE_SYM);     //    3 KB
+var ct_sym_m4 = new Uint16Array(C_TWIST * CUBE_SYM);  //  205 KB 
+var ct_sym_uf = new Uint16Array(C_PRM * C_TWIST);     //  300 KB 
+var ct_sym_ur = new Uint16Array(C_PRM * C_TWIST);     //  300 KB 
+
+var title  = "3-Color Corner Symmetry<br>Method 4A"
+var op16c  = new Uint8Array(CUBE_SYM * 2);
+var count1 = new Uint32Array(C_PRM * C_TWIST);
+var count2 = new Uint8Array(C_PRM * C_TWIST);
+
+main();
+
+function main() {
+  init();
+  populate_ct_sym_arr(ct_sym_uf, OP_UF, C_PRM);
+  populate_ct_sym_arr(ct_sym_ur, OP_UR, C_PRM);
+  populate_ct_sym_m4();
+  count_ct_mins_m4();
+}
+
+function count_ct_mins_m4() {
+  for (var cp=0; cp < C_PRM; cp++) {
+    for (var ct=0; ct < C_TWIST; ct++) {
+      var min = cp*C_TWIST + ct; 
+      if (count1[min] == 0) {
+        count1[min] = min;
+        for (var op=1; op < CUBE_SYM; op++) {
+          var cpsym = cp_sym[cp*CUBE_SYM + op];
+          var ctsym = get_ctsym_m4(cp, ct, op);
+          count1[cpsym*C_TWIST + ctsym] = min;
+        }
+      }
+    }
+  }
+  count_mins(C_PRM, C_TWIST);
+}
+
+function populate_ct_sym_arr(arr, op, n) {
+  var tempstr = new Uint8Array(FACELETS);
+  for (var cp=0; cp < n; cp++) {
+    int_to_strp(cp_b2[cp], cps, 7, 2);
+    for (var ct=0; ct < C_TWIST; ct++) {
+      int_to_strp(ct, cts, 7, 3);
+      make_cubestr_cnr(cnr2);
+      sym_op(tempstr, cubestr, map[op]);
+      arr[cp*C_TWIST+ct] = cubestr_to_ct(tempstr);
+    }
+  }
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_cp_sym();
+  init_op16c();
+}
+
+function get_ctsym_m4(cp, ct, op) {
+  if (op16c[op*2] == 0) 
+    return ct_sym_m4[ct*CUBE_SYM + op];
+  else if (op16c[op*2] == OP_UF) 
+    return ct_sym_m4[ct_sym_uf[cp*C_TWIST + ct]*CUBE_SYM + op16c[op*2+1]];
+  else 
+    return ct_sym_m4[ct_sym_ur[cp*C_TWIST + ct]*CUBE_SYM + op16c[op*2+1]];
+}
+
+function init_op16c() {
+  // symmetry operations that maintain consistent corner twist values 
+  // for all corner position values
+
+  var op_ud = new Uint8Array([0,1,3,5,7,9,11,22,24,25,27,29,31,33,35,46]);
+
+  /* for the symmetry operations that are not consistent, make the
+     equivalent from a pair of operations using one of either OP_UF or
+     OP_UR and one of the 16 consistent symmetries. 
+
+     OP_UF and OP_UR are defined in rch.js, any value from UF will work
+     for OP_UF, likewise for OP_UR.
+     UF: 2, 4, 10, 12, 13, 15, 17, 19, 26, 28, 34, 36, 37, 39, 41, 43
+     UR: 6, 8, 14, 16, 18, 20, 21, 23, 30, 32, 38, 40, 42, 44, 45, 47
+  */
+
+  for (var i=0; i < 2; i++) {
+    var op1 = (i) ? OP_UF: OP_UR;
+    for (var j=0; j < 16; j++) {
+      var op2 = op_ud[j];
+      op16c[op_op[op1*CUBE_SYM+op2]*2] = op1;
+      op16c[op_op[op1*CUBE_SYM+op2]*2+1] = op2;
+    }
+  }
+}
+
+function populate_ct_sym_m4() {
+  var tempstr = new Uint8Array(FACELETS);
+  int_to_strp(cp_b2[0], cps, 7, 2);
+  for(var ct=0; ct < C_TWIST; ct++)
+    for (var op=0; op < CUBE_SYM; op++)
+      if (op16c[op*2] == 0) {
+        int_to_strp(ct, cts,7, 3);
+        make_cubestr_cnr(cnr2);
+        sym_op(tempstr, cubestr, map[op]);
+        ct_sym_m4[ct*CUBE_SYM + op] = cubestr_to_ct(tempstr);
+      }
+}
+
+function cubestr_to_ct(s) {
+  var cts = new Uint8Array(8);
+  var U = s[4];
+  for (var i=0; i < 8; i++) {
+    var x = s[cnr_idx[i*3]];
+    var y = s[cnr_idx[i*3+1]];
+    if (x == U)
+      cts[i] = 0;
+    else if (y == U)
+       cts[i] = 1;
+    else
+       cts[i] = 2;
+  }
+  return(str_to_int(cts, 7, 3));
+}
+</script>
+</center>
+</body>
+</html>

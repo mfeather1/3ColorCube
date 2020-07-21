@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
- <title> 3-Color Edge Symmetry - Alt Method 2B</title>
+ <title> 3-Color Edge Symmetry - (without update_et_sym)</title>
  <meta name="author" content="Michael Feather">
  <meta name="robots" content="nofollow">
  <script src=../rch.js></script>
@@ -15,18 +15,19 @@
 <body>
 <center>
 <script>
-"use strict";
 /*
-  This program adds the sym op translation to et_sym[], note the difference in 
-  use of op vs op16e[op*2+1] in get_etsym().
+  This version shows how get_etsym() is used without doing et_sym_update().
+  The difference is that an extra lookup is done (op16e[op] instead of op)
+  for the 32 sym ops that are not consistent.
 */
-var title = '3-Color Edge Symmetry<br>Alt Method 2B';
+
+"use strict";
+
+var title = '3-Color Edge Symmetry<br>(without update_et_sym)';
+var et_sym_UF = new Uint16Array(E_PRM * E_TWIST);
 var count1 = new Uint32Array(E_PRM * E_TWIST);
 var count2 = new Uint8Array(E_PRM * E_TWIST);
 var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);
-
-// array to translate et_fr to et_uf 
-var et_fr_uf = new Uint16Array(E_TWIST);
 
 main();
 
@@ -56,12 +57,9 @@ function get_etsym(ep, et, op) {
   if (op16e[op*2] == 0)
     return et_sym[et*CUBE_SYM+op];
   else if (op16e[op*2] == OP_FR)
-    return et_sym[et_sym_FR[ep_slice[ep*3]*E_TWIST+et]*CUBE_SYM + op];
-  else {
-    var et_fr = et_sym_FR[ep_slice[ep*3+1]*E_TWIST+et];
-    var et_uf = et_fr_uf[et_fr];  // translate et_fr to et_uf
-    return et_sym[et_uf*CUBE_SYM + op];
-  }
+    return et_sym[et_sym_FR[ep_slice[ep*3]*E_TWIST+et]*CUBE_SYM + op16e[op*2+1]];
+  else 
+    return et_sym[et_sym_UF[ep_slice[ep*3+1]*E_TWIST+et]*CUBE_SYM + op16e[op*2+1]];
 }
 
 function populate_ep_sym() {
@@ -94,20 +92,6 @@ function local_populate_et_sym() {
     }
 }
 
-function local_update_et_sym()
-{
-  for (var op=0; op < CUBE_SYM; op++)
-    if (op16e[op*2] != 0)
-      for (var et=0; et < E_TWIST; et++)
-        et_sym[et*CUBE_SYM + op] = et_sym[et*CUBE_SYM + op16e[op*2+1]];
-}
-
-function populate_et_fr_uf() {
-  // simple 1-1 mapping of et_fr to et_uf
-  for (var et=0; et < E_TWIST; et++)
-    et_fr_uf[et_sym_FR[et]] = et_sym_UF[et];
-}
-
 function init() {
   init2();
   set_colors_3c(0, 1, 2);
@@ -115,11 +99,10 @@ function init() {
   populate_op_tables();
   populate_ep_sym();
   local_populate_et_sym();  // make et_sym but do not do et_sym_update()
-  populate_et_sym_FR();     
-  populate_et_sym_UF_m2();  // generate first row of et_sym_UF only
-  local_update_et_sym();    // apply sym op translation only to et_sym 
-  populate_et_fr_uf();      // generate et_fr to et_uf translation array 
+  populate_et_sym_FR();
+  populate_et_sym_UF_m1(); 
 }
+
 </script>
 </center>
 </body>
