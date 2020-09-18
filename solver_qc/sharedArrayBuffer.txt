@@ -1,0 +1,50 @@
+This document shows how to enable sharedArrayBuffer in Firefox when using
+a local web-server.
+
+-----------------------------------------------------------------------------
+
+In Firefox, set all of these to true in about:config:
+
+browser.tabs.remote.useCrossOriginOpenerPolicy
+browser.tabs.remote.useCrossOriginEmbedderPolicy
+javascript.options.shared_memory
+dom.postMessage.sharedArrayBuffer.withCOOP_COEP
+
+-----------------------------------------------------------------------------
+
+For Apache web-server set the headers in the Directory section of http.conf
+or userdir.conf.  This example is for userdir.conf (in /etc/httpd/conf.d):
+
+<Directory "/home/*/public_html">
+   ...
+   Header set Cross-Origin-Opener-Policy same-origin
+   Header set Cross-Origin-Embedder-Policy require-corp
+</Directory>
+
+Restart web-server after making changes.
+
+-----------------------------------------------------------------------------
+
+Here is a simple web-page to test if the headers are working:
+
+<!doctype html>
+<html>
+<script>
+// when accessing this web-page on a local host, secure context requires
+// using localhost or 127.0.0.1 for hostname in the URL (can not use a
+// custom name defined in /etc/hosts)
+//
+// with firefox, these both need to be true to use sharedArrayBuffer:
+alert('window.isSecureContext = ' + window.isSecureContext);
+alert ('crossOriginIsolated = ' + crossOriginIsolated);
+</script>
+</html>
+
+-----------------------------------------------------------------------------
+
+Documentation links:
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer
+https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts
+
+-----------------------------------------------------------------------------
