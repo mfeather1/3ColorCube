@@ -25,18 +25,19 @@ Restart web-server after making changes.
 
 -----------------------------------------------------------------------------
 
-Here is a simple web-page to test if the headers are working:
+The following is a simple web-page to test if the headers are working.
+When accessing the page on a local host, secure context requires using 
+localhost or 127.0.0.1 for hostname in the URL (can not use a custom name
+defined in /etc/hosts).  With Firefox, both properties must be true in
+order to use sharedArrayBuffer.
 
 <!doctype html>
 <html>
+<div id=status></id>
 <script>
-// when accessing this web-page on a local host, secure context requires
-// using localhost or 127.0.0.1 for hostname in the URL (can not use a
-// custom name defined in /etc/hosts)
-//
-// with firefox, these both need to be true to use sharedArrayBuffer:
-alert('window.isSecureContext = ' + window.isSecureContext);
-alert ('crossOriginIsolated = ' + crossOriginIsolated);
+document.getElementById('status').innerHTML =
+  'window.isSecureContext = ' + window.isSecureContext +
+  '<br>crossOriginIsolated = ' + crossOriginIsolated;
 </script>
 </html>
 
