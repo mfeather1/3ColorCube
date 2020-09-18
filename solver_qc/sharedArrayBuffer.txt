@@ -27,9 +27,8 @@ Restart web-server after making changes.
 
 The following is a simple web-page to test if the headers are working.
 When accessing the page on a local host, secure context requires using 
-localhost or 127.0.0.1 for hostname in the URL (can not use a custom name
-defined in /etc/hosts).  With Firefox, both properties must be true in
-order to use sharedArrayBuffer.
+localhost or 127.0.0.1 for hostname in the URL.  With Firefox, both 
+properties must be true in order to use sharedArrayBuffer.
 
 <!doctype html>
 <html>
