@@ -842,7 +842,9 @@ function shared_memory_error_handler(e) {
   document.getElementById('status').innerHTML = 
     'This browser does not appear to support shared memory so ' +
     'unfortunately, the Quad-Core Solver cannot be used. ' +
-    'See <a target=_blank href="https://caniuse.com/#feat=sharedarraybuffer">Supported Browsers</a>.' +
+    'See <a target=_blank href="https://caniuse.com/#feat=sharedarraybuffer">Supported Browsers</a>. ' +
+    'Firefox versions 79+ can run this on local web-server as described ' +
+    '<a target=_blank href=sharedArrayBuffer.txt>here</a>.' +
     '<br><br><button onclick="alert(\'' + e + '\')">Show Error</button>';
   facelets = CUBE_HOME;
   update_layout();
