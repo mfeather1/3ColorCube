@@ -3,15 +3,6 @@ a local web-server.
 
 -----------------------------------------------------------------------------
 
-In Firefox, set all of these to true in about:config:
-
-browser.tabs.remote.useCrossOriginOpenerPolicy
-browser.tabs.remote.useCrossOriginEmbedderPolicy
-javascript.options.shared_memory
-dom.postMessage.sharedArrayBuffer.withCOOP_COEP
-
------------------------------------------------------------------------------
-
 For Apache web-server set the headers in the Directory section of http.conf
 or userdir.conf.  This example is for userdir.conf (in /etc/httpd/conf.d):
 
@@ -22,6 +13,16 @@ or userdir.conf.  This example is for userdir.conf (in /etc/httpd/conf.d):
 </Directory>
 
 Restart web-server after making changes.
+
+-----------------------------------------------------------------------------
+
+In Firefox, set all of the following to true in about:config (if not already,
+recent versions default to true):
+
+browser.tabs.remote.useCrossOriginOpenerPolicy
+browser.tabs.remote.useCrossOriginEmbedderPolicy
+javascript.options.shared_memory
+dom.postMessage.sharedArrayBuffer.withCOOP_COEP
 
 -----------------------------------------------------------------------------
 
@@ -39,6 +40,12 @@ document.getElementById('status').innerHTML =
   '<br>crossOriginIsolated = ' + crossOriginIsolated;
 </script>
 </html>
+
+-----------------------------------------------------------------------------
+
+On the 3-ColorCube website, if you get the following message in cube area(s):
+"Your organization has blocked access to this page or website"
+then press ctrl-F5 (or ctrl-shift-r) to reload the page.
 
 -----------------------------------------------------------------------------
 
