@@ -609,7 +609,7 @@ function populate_et_sym()
         make_cubestr_edg(edg2);
         sym_op(tmpstr, cubestr, map[j]);
         // convert_edg_3c(tmpstr);
-        cubestr_to_et(tmpstr);
+        cubestr_to_ets(tmpstr);
         et_sym[i*CUBE_SYM+j] = str_to_int(ets,11,2);
     }
   if (show_init_time_details == 1) {
@@ -641,7 +641,7 @@ function populate_et_sym()
 }
 
 function populate_et_sym_FR() {
-  var sav = new Uint8Array(12);
+  // var sav = new Uint8Array(12);
   var tmpstr = new Uint8Array(FACELETS);
   assign_centers_3c();
   var etsa = new Uint8Array(E_TWIST*12)
@@ -661,14 +661,14 @@ function populate_et_sym_FR() {
       make_cubestr_edg(edg2);
       sym_op(tmpstr, cubestr, OP_FR);
       // convert_edg_3c(tmpstr);
-      cubestr_to_et(tmpstr);
+      cubestr_to_ets(tmpstr);
       et_sym_FR[slice*E_TWIST+et] = str_to_int(ets,11,2);
     }
   }
   // populated.push("et_sym_FR");
 }
 
-function cubestr_to_et(s)
+function cubestr_to_ets(s)
 {
   for (var i=0; i < 12; i++) {
     var x = s[edg_idx[i*2]];
@@ -678,7 +678,7 @@ function cubestr_to_et(s)
 }
 
 function populate_et_sym_UF_m1() {
-  var sav = new Uint8Array(12);
+  // var sav = new Uint8Array(12);
   var tmpstr = new Uint8Array(FACELETS);
   assign_centers_3c();
   for (var slice=0; slice < SLICE_PRM; slice++) {
@@ -690,7 +690,7 @@ function populate_et_sym_UF_m1() {
       make_cubestr_edg(edg2);
       sym_op(tmpstr, cubestr, OP_UF);
       // convert_edg_3c(tmpstr);
-      cubestr_to_et(tmpstr);
+      cubestr_to_ets(tmpstr);
       et_sym_UF[slice*E_TWIST+et] = str_to_int(ets,11,2);
     }
   }
@@ -699,7 +699,7 @@ function populate_et_sym_UF_m1() {
 
 function populate_et_sym_UF_m2() {
   // for et_sym_method 2 populate first row only
-  var sav = new Uint8Array(12);
+  // var sav = new Uint8Array(12);
   var tmpstr = new Uint8Array(FACELETS);
   assign_centers_3c();
   int_to_strp(ep_b3[slice_ep[1]], eps, 11, 3);
@@ -710,7 +710,7 @@ function populate_et_sym_UF_m2() {
     make_cubestr_edg(edg2);
     sym_op(tmpstr, cubestr, OP_UF);
     // convert_edg_3c(tmpstr);
-    cubestr_to_et(tmpstr);
+    cubestr_to_ets(tmpstr);
     et_sym_UF[et] = str_to_int(ets,11,2);
   }
   // populated.push("et_sym_UF");
