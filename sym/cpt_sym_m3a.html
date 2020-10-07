@@ -64,7 +64,8 @@ function get_ctsym_m3(cpsym, ct, op) {
 
 function populate_ct_sym_m3() {
   var s = new Int8Array(FACELETS);
-  var cts_fb = new Uint8Array(8);
+  var cts1 = new Uint8Array(8);
+  var cts2 = new Uint8Array(8);
   assign_centers_3c();
   populate_ct_op_type();
   for (var ct=0; ct < C_TWIST; ct++)
@@ -88,6 +89,7 @@ function populate_ct_sym_m3() {
     ct_fb_ud[ct] = ct;
     ct_lr_ud[ct] = ct;
   }
+  /*
   for (var cp=1; cp < C_PRM; cp++) {
     int_to_strp(cp_b2[cp], cps, 7, 2);
     for (ct=0; ct < C_TWIST; ct++) {
@@ -104,6 +106,7 @@ function populate_ct_sym_m3() {
       ct_lr_ud[cp*C_TWIST+get_ct_lr(cubestr, cubestr[28])] = ct;
     }
   }
+  */
   /* another way to make ct_lr_ud is to apply ct_fb_ud twice
   for (cp=1, ix=C_TWIST; cp < C_PRM; cp++, ix=cp*C_TWIST) {
     for (ct=0; ct < C_TWIST; ct++) {
@@ -112,6 +115,42 @@ function populate_ct_sym_m3() {
     }
   }
   */
+  /*
+    the following is an optimization of the above code that makes arrays
+    ct_fb_ud and ct_lr_ud
+
+    in the ct_fb_ud table below, the first two columns are cps[i] and cts[i]
+    the third column is ct_fb_ud[i] for i in range 0-3
+    the fourth column is ct_fb_ud[i] for i in range 4-7
+    likewise for the ct_lr_ud table 
+
+         ct_fb_ud                ct_lr_ud     
+    ------------------      ------------------
+    cps  cts  0-3  4-7      cps  cts  0-3  4-7 
+    ---  ---  ---  ---      ---  ---  ---  ---
+     0    0    0    2        0    0    0    1
+     0    1    1    0        0    1    1    2
+     0    2    2    1        0    2    2    0
+     1    0    1    0        1    0    2    0
+     1    1    2    1        1    1    0    1
+     1    2    0    2        1    2    1    2
+  */
+  for (var cp=1; cp < C_PRM; cp++) {
+    int_to_strp(cp_b2[cp], cps, 7, 2);
+    for (ct=0; ct < C_TWIST; ct++) {
+      int_to_strp(ct, cts, 7, 3);
+      for (var i=0; i < 4; i++) {
+        cts1[i] = cps[i] ? (cts[i]+1)%3 : cts[i];
+        cts2[i] = cps[i] ? (cts[i]+2)%3 : cts[i];
+      }
+      for (; i < 8; i++) {
+        cts1[i] = cps[i] ? cts[i] : (cts[i]+2)%3;
+        cts2[i] = cps[i] ? cts[i] : (cts[i]+1)%3;
+      }
+      ct_fb_ud[cp*C_TWIST+ct] = str_to_int(cts1, 7, 3);
+      ct_lr_ud[cp*C_TWIST+ct] = str_to_int(cts2, 7, 3);
+    }
+  }
 }
 
 function populate_ct_op_type() {
