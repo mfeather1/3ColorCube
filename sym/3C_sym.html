@@ -74,7 +74,7 @@ function counts() {
        ept[ep*E_TWIST + et] = -1;
   // use array ept_min_ops for the list of 7331 EPT configs that do not have
   // 48 unique symmetries (list is reduced by symmetry, full size is 170928)
-  for (var i=0, j=0; i < N_EPT_MIN_OPS; i++, j++) {
+  for (var i=0; i < N_EPT_MIN_OPS; i++) {
     var ep = ept_min_ops[i*27];
     var et = ept_min_ops[i*27+1];
     if (ept[ep*E_TWIST + et] == -1) {
