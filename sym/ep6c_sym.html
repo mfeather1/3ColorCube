@@ -1,9 +1,10 @@
 <!doctype html>
 <html>
 <head>
- <title> 6-Color Edge Position Symmetry </title>
+ <title> 6-Color Edge Symmetry </title>
  <meta name="author" content="Michael Feather">
  <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
  <script src=../rch.js></script>
  <script src=../rclib.js></script>
  <script src=epr_sym.js></script>
@@ -15,12 +16,11 @@
 </head>
 <body>
 <center>
-<font size=+2>6-Color Edge Position Symmetry</font>
+<font size=+2>6-Color Edge Symmetry</font>
 <br>
-<p>This program uses more memory than may be available on some devices
-so here are the results from a previous run.
-To actually run the counts (on a device with at least 4 GB of RAM), press 
-the button below the table.</p>
+<p> This program may take a while to run on some devices so here are the 
+results from a previous run.
+To actually run the counts, press the button below the table.</p>
 <table border=1>
  <tr><td><b>Mins</b></td><td><b>Syms</b></td><td><b>Configs</b></td></tr>
  <tr><td>9972862</td><td>48</td><td>478697376</td></tr>
@@ -44,10 +44,16 @@ the button below the table.</p>
 <br><br>
 <script>
 "use strict";
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);     //  3 MB
+var ept = new Int8Array(E_PRM * E_TWIST);           // 68 MB
+var count1 = new Int32Array(24 * E_PRMr);           //  2 MB
+var count2 = new Int32Array(49);
 
-var count1 = new Uint32Array(E_PRM * E_PRMr);    // 1827 MB (1.8 GB)
-var count2 = new Uint8Array(E_PRM * E_PRMr);     //  458 MB
-var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);  //    3 MB
+// EP_SYM_48_MINS is the number of EP mins with 48 unique symmetries 
+// 782 = EP mins (total)
+// 103 = EP mins not having 48 unique symmetries
+// 782 - 103 = 679
+var EP_SYM_48_MINS = 679;
 
 function run_counts() {
   document.getElementById('status').innerHTML = 'Counts are running<br><br>';
@@ -57,34 +63,124 @@ function run_counts() {
 function main() {
   var time0 = Date.now();
   init();
-  count_ep6c_mins();
+  counts();
+  rpt();
   var time1 = ((Date.now()-time0)/1000).toFixed(2);
   document.getElementById('status').innerHTML += 
     '<br>Run Time: ' + time1 + '<br><br>';
 }
 
-function count_ep6c_mins() {
+function counts() {
+  for (var ep=0; ep < E_PRM; ep++)
+     ept[ep] = -1;
+  for (var ep=0; ep < E_PRM; ep++) {
+    if (ep_min_op[ep] == 0 && ept_op_idx[ep] != NIL) {
+      ept[ep] = 0;
+      var n = fill_ept(ep);
+      clear_count1(n);
+      do_epr_sym(ep);
+      epr_counts(n);
+    }
+  }
+}
+
+function fill_ept(ep) {
+  var q = 1;
+  for (var op=1; op < CUBE_SYM; op++) {
+    var epsym = ep_sym[ep*CUBE_SYM + op];
+    if (ept[epsym] == -1)
+      ept[epsym] = q++;
+  }
+  return q;
+}
+
+function clear_count1(n) {
+  for (var i=0; i < n; i++)
+    for (var j=0; j < E_PRM; j++)
+        count1[i*E_PRMr + j] = 0;
+} 
+
+function do_epr_sym(ep) {
   var epr = new Uint8Array(3);
   var eprsym = new Uint8Array(3);
-  for (var ep=0; ep < E_PRM; ep++) {
-    for (epr[0]=0; epr[0] < 24; epr[0]++) {
-      for (epr[1]=0; epr[1] < 24; epr[1]++) {
-        for (epr[2]=0; epr[2] < 24; epr[2]++) {
-          var min = ep*E_PRMr + eprsum(epr);
-          if (count1[min] == 0) {
-            count1[min] = min;
-            for (var op=1; op < CUBE_SYM; op++) {
-              var epsym = ep_sym[ep*CUBE_SYM+op];
-              get_eprsym(eprsym, ep, epr, op);
-              var ep6csym = epsym*E_PRMr + eprsum(eprsym);
-              count1[ep6csym] = min;
-            }
+  for (epr[0]=0; epr[0] < 24; epr[0]++) {
+    for (epr[1]=0; epr[1] < 24; epr[1]++) {
+      for (epr[2]=0; epr[2] < 24; epr[2]++) {
+        var eprn = eprsum(epr);
+        if (count1[eprn] == 0) {
+          var min = eprn;
+          count1[eprn] = min; 
+          for (var op=1; op < CUBE_SYM; op++) {
+            var epsym = ep_sym[ep*CUBE_SYM + op];
+            get_eprsym(eprsym, ep, epr, op);
+            count1[ept[epsym]*E_PRMr + eprsum(eprsym)] = min;
           }
         }
       }
     }
   }
-  count_mins(E_PRM, E_PRMr);
+}
+
+function epr_counts(n) {
+  var ept = new Int8Array(E_PRMr);
+  for (var i=0; i < E_PRMr; i++)
+    ept[i] = 0;
+  for (var i=0; i < n; i++)
+    for (var j=0; j < E_PRMr; j++)
+        ept[count1[i*E_PRMr + j]]++;
+  for (var i=0; i < E_PRMr; i++)
+    if (ept[i] != 0)
+      count2[ept[i]]++;
+}
+
+function rpt() {
+  var t1 = 0;
+  var t2 = 0;
+  var n1, n2;  
+  var arr = [];
+  for (var i=CUBE_SYM, ix=0; i > 0; i--)
+    if (count2[i] != 0) {
+      n1 = count2[i];
+      n2 = i*count2[i];
+      if (i == CUBE_SYM) {
+        n1 += EP_SYM_48_MINS * E_PRMr;
+        n2 += EP_SYM_48_MINS * E_PRMr * CUBE_SYM;
+      }
+      arr[ix] = [];
+      arr[ix][0] = n1;
+      arr[ix][1] = i;
+      arr[ix++][2] = n2;
+      t1 += n1;
+      t2 += n2;
+    }
+  var s = '<table border=1>';
+  s += '<tr><td><b>Mins</b></td><td><b>Syms</b></td><td><b>Configs</b></td></tr>';
+  for (var i=0; i < arr.length; i++)
+    s += '<tr><td>' + arr[i][0] + '</td><td>' + arr[i][1] + 
+        '</td><td>' + arr[i][2] + '</td></tr>';
+  s += '<tr><td><b>' + t1 + '</b></td><td></td><td><b>' + t2 + '</b></td></tr>';
+  s += '<tr><td colspan=3 style=text-align:center>Ratio = ';
+  s += (t2/t1).toFixed(2) + '</td></tr>';
+  s += '</table>';
+  document.getElementById('status').innerHTML = s;
+}
+
+function init() {
+  if (ET_SYM_METHOD == 1)
+    get_etsym = get_etsym_m1;
+  else if (ET_SYM_METHOD == 2)
+    get_etsym = get_etsym_m2;
+  else
+    get_etsym = get_etsym_m3;
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_ep_sym();
+  populate_epr_sym();
+  populate_ep_min();
+  populate_min_ep();
+  populate_ept_min_op();
 }
 
 function get_eprsym(eprsym, ep, epr, op) {
@@ -110,46 +206,6 @@ function populate_ep_sym() {
       ep_sym[ep*CUBE_SYM+op] = convert_edg_3c(tmpstr); 
     }
   }
-}
-
-function init() {
-  init2();
-  set_colors_3c(0, 1, 2);
-  init_map(map, sym_op_FR, sym_op_UR, reflect);
-  populate_ep_sym();
-  populate_epr_sym();
-}
-
-function rpt(arr) {
-  var s = '<table border=1>';
-  s += '<tr><td><b>Mins</b></td><td><b>Syms</b></td>';
-  s += '<td><b>Configs</b></td></tr>'; 
-  var sum1=0, sum2=0;
-  for (var i=CUBE_SYM; i > 0; i--) {
-    if (arr[i] != 0) {
-      sum1 += arr[i];
-      sum2 += arr[i]*i;
-      s += '<tr><td>' + arr[i] + '</td><td>' + i + '</td><td>';
-      s += arr[i]*i + '</td></tr>';
-    }
-  }
-  s += '<tr><td><b>' + sum1 + '</b></td><td></td><td><b>';
-  s += sum2 + '</b></td></tr>';
-  s += '<tr><td colspan=3 style=text-align:center>Ratio = ';
-  s += (sum2/sum1).toFixed(2) + '</td></tr>';
-  s += '</table>';
-  document.getElementById('status').innerHTML = s;
-}
-
-function count_mins(n1, n2) {
-  var count3 = new Uint32Array(49);
-  for (var i=0; i < n1; i++)
-    for (var j=0; j < n2; j++)
-      count2[count1[i*n2 + j]]++;
-  for (var i=0; i < n1*n2; i++)
-    if (count2[i] != 0)
-      count3[count2[i]]++;
-  rpt(count3);
 }
 </script>
 </center>
