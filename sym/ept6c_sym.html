@@ -1,11 +1,12 @@
 <!doctype html>
 <html>
 <head>
- <title> 3-Color Cube Symmetry </title>
+ <title> 6-Color Edge Symmetry </title>
  <meta name="author" content="Michael Feather">
  <meta name="robots" content="nofollow">
  <script src=../rch.js></script>
  <script src=../rclib.js></script>
+ <script src=epr_sym.js></script>
  <style>
   table { border-collapse: collapse; }
   td { text-align: right; padding: 4px 10px 4px; }
@@ -14,26 +15,25 @@
 </head>
 <body>
 <center>
-<font size=+2>3-Color Cube Symmetry</font>
+<font size=+2>6-Color Edge Symmetry</font>
 <br>
-<p> This program takes a while to run (6 minutes on 3.7 Ghz processor)
-so here are the results from a previous run which can be compared to the
-counts <a target=_blank href="http://forum.cubeman.org/?q=node/view/248">here</a>.
+<p> This program takes a while to run (45 seconds on 3.7 Ghz processor)
+so here are the results from a previous run.
 To actually run the counts, press the button below the table.</p>
 <table border=1>
  <tr><td><b>Mins</b></td><td><b>Syms</b></td><td><b>Configs</b></td></tr>
- <tr><td>226325259954</td><td>48</td><td>10863612477792</td></tr>
- <tr><td>     5982162</td><td>24</td><td>     143571888</td></tr>
- <tr><td>        8566</td><td>16</td><td>        137056</td></tr>
- <tr><td>        8086</td><td>12</td><td>         97032</td></tr>
- <tr><td>         352</td><td> 8</td><td>          2816</td></tr>
- <tr><td>         222</td><td> 6</td><td>          1332</td></tr>
- <tr><td>           6</td><td> 4</td><td>            24</td></tr>
- <tr><td>          14</td><td> 3</td><td>            42</td></tr>
- <tr><td>           8</td><td> 2</td><td>            16</td></tr>
- <tr><td>           2</td><td> 1</td><td>             2</td></tr>
- <tr><td><b>226331259372</b></td><td></td><td><b>10863756288000</b></td></tr>
- <tr><td colspan=3 style=text-align:center>Ratio=47.9994</td></tr>
+ <tr><td>20436960964</td><td>48</td><td>980974126272</td></tr>
+ <tr><td>     875138</td><td>24</td><td>     21003312</td></tr>
+ <tr><td>        3796</td><td>16</td><td>        60736</td></tr>
+ <tr><td>        6904</td><td>12</td><td>         82848</td></tr>
+ <tr><td>         166</td><td> 8</td><td>          1328</td></tr>
+ <tr><td>         358</td><td> 6</td><td>          2148</td></tr>
+ <tr><td>          16</td><td> 4</td><td>            64</td></tr>
+ <tr><td>          28</td><td> 3</td><td>            84</td></tr>
+ <tr><td>           2</td><td> 2</td><td>             4</td></tr>
+ <tr><td>           4</td><td> 1</td><td>             4</td></tr>
+ <tr><td><b>20437847376</b></td><td></td><td><b>980995276800</b></td></tr>
+ <tr><td colspan=3 style=text-align:center>Ratio=47.9990</td></tr>
 </table>
 <br>
 <button onclick=run_counts()>Run Counts</button>
@@ -45,7 +45,7 @@ To actually run the counts, press the button below the table.</p>
 "use strict";
 var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);     //  3 MB
 var ept = new Int8Array(E_PRM * E_TWIST);           // 68 MB
-var count1 = new Int32Array(24 * C_PRM * C_TWIST);  // 14 MB
+var count1 = new Int32Array(24 * E_PRMr);           //  2 MB
 var count2 = new Int32Array(49);
 
 // EPT_SYM_48_MINS is the number of EPT min configs that have 48 unique
@@ -83,8 +83,8 @@ function counts() {
       ept[ep*E_TWIST + et] = 0;
       n = fill_ept(ep, et);
       clear_count1(n);
-      do_cpt_sym(ep, et);
-      cpt_counts(n);
+      do_epr_sym(ep, et);
+      epr_counts(n);
     }
   }
 }
@@ -102,45 +102,42 @@ function fill_ept(ep, et, n) {
 
 function clear_count1(n) {
   for (var i=0; i < n; i++)
-    for (var cp=0; cp < C_PRM; cp++)
-      for(var ct=0; ct < C_TWIST; ct++) 
-        count1[i*C_PRM_TW + cp*C_TWIST + ct] = 0;
+    for (var j=0; j < E_PRMr; j++)
+        count1[i*E_PRMr + j] = 0;
 } 
 
-function do_cpt_sym(ep, et) {
-  for (var cp=0; cp < C_PRM; cp++) {
-    for(var ct=0; ct < C_TWIST; ct++) {
-      if (count1[cp*C_TWIST + ct] == 0) {
-        var min = cp*C_TWIST + ct;
-        count1[cp*C_TWIST + ct] = min; 
-        for (var op=1; op < CUBE_SYM; op++) {
-          var epsym = ep_sym[ep*CUBE_SYM + op];
-          var etsym = get_etsym(ep, et, op);
-          var cpsym = cp_sym[cp*CUBE_SYM + op];
-          if (CT_SYM_METHOD == 3)
-            var ctsym = get_ctsym(cpsym, ct, op);
-          else {
-            var cpt = cp*C_TWIST + ct;
-            var ctsym = get_ctsym(cpt, op);
+function do_epr_sym(ep, et) {
+  var epr = new Uint8Array(3);
+  var eprsym = new Uint8Array(3);
+  for (epr[0]=0; epr[0] < 24; epr[0]++) {
+    for (epr[1]=0; epr[1] < 24; epr[1]++) {
+      for (epr[2]=0; epr[2] < 24; epr[2]++) {
+        var eprn = eprsum(epr);
+        if (count1[eprn] == 0) {
+          var min = eprn;
+          count1[eprn] = min; 
+          for (var op=1; op < CUBE_SYM; op++) {
+            var epsym = ep_sym[ep*CUBE_SYM + op];
+            var etsym = get_etsym(ep, et, op);
+            get_eprsym(eprsym, ep, epr, op);
+            count1[ept[epsym*E_TWIST+etsym]*E_PRMr + eprsum(eprsym)] = min;
           }
-          count1[ept[epsym*E_TWIST+etsym]*C_PRM_TW + cpsym*C_TWIST +ctsym] = min;
         }
       }
     }
   }
 }
 
-function cpt_counts(n) {
-  var cpt = new Int8Array(C_PRM_TW);
-  for (var i=0; i < C_PRM_TW; i++)
-    cpt[i] = 0;
+function epr_counts(n) {
+  var ept = new Int8Array(E_PRMr);
+  for (var i=0; i < E_PRMr; i++)
+    ept[i] = 0;
   for (var i=0; i < n; i++)
-    for (var cp=0; cp < C_PRM; cp++)
-      for (var ct=0; ct < C_TWIST; ct++) 
-        cpt[count1[i*C_PRM_TW + cp*C_TWIST + ct]]++;
-  for (var i=0; i < C_PRM_TW; i++)
-    if (cpt[i] != 0)
-      count2[cpt[i]]++;
+    for (var j=0; j < E_PRMr; j++)
+        ept[count1[i*E_PRMr + j]]++;
+  for (var i=0; i < E_PRMr; i++)
+    if (ept[i] != 0)
+      count2[ept[i]]++;
 }
 
 function rpt() {
@@ -153,8 +150,8 @@ function rpt() {
       n1 = count2[i];
       n2 = i*count2[i];
       if (i == CUBE_SYM) {
-        n1 += EPT_SYM_48_MINS * C_PRM_TW;
-        n2 += EPT_SYM_48_MINS * C_PRM_TW * CUBE_SYM;
+        n1 += EPT_SYM_48_MINS * E_PRMr;
+        n2 += EPT_SYM_48_MINS * E_PRMr * CUBE_SYM;
       }
       arr[ix] = [];
       arr[ix][0] = n1;
@@ -187,26 +184,22 @@ function init() {
   init_map(map, sym_op_FR, sym_op_UR, reflect);
   populate_op_tables();
   populate_ep_sym();
+  populate_epr_sym();
   populate_et_sym();
   populate_ep_min();
   populate_min_ep();
   populate_ept_min_op();
-  populate_cp_sym();
-  if (CT_SYM_METHOD == 1) {
-    populate_cpt_sym();
-    get_ctsym = get_ctsym_m1;
+}
+
+function get_eprsym(eprsym, ep, epr, op) {
+  for (var i=0; i < 3; i++) {
+    var ix = op*35640 + ep_slice[ep*3+i]*72 + epr[i]*3 + i;
+    eprsym[slice_map[op*3+i]] = epr_sym[ix];
   }
-  else if (CT_SYM_METHOD == 2) {
-    populate_op_tables();
-    populate_cpt_min();
-    populate_cpt_sym2();
-    get_ctsym = get_ctsym_m2;
-  }
-  else if (CT_SYM_METHOD == 3) {
-    populate_ct_sym();
-    update_ct_sym();
-    get_ctsym = get_ctsym_m3;
-  }
+}
+
+function eprsum(epr) {
+  return(epr[0]*576 + epr[1]*24 + epr[2]);
 }
 
 function populate_ep_sym() {
