@@ -5,9 +5,10 @@
  <meta name="author" content="Michael Feather">
  <meta name="robots" content="nofollow">
  <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../mini_cube.png type=image/png>
  <script src=../rch.js></script>
  <script src=../rclib.js></script>
- <script src=rpt.js></script>
+ <script src=symlib.js></script>
  <style>
   table { border-collapse: collapse; }
   td { text-align: right; padding: 4px 10px 4px; }
@@ -15,25 +16,36 @@
 </head>
 <body>
 <center>
+<font size=+2> 3-Color Edge Symmetry - Alt Method 2B </font>
+<br><br>
+<div id=status></div>
+<br>
+<a href="javascript: history.go(-1)">Back</a>
+<br><br>
 <script>
 "use strict";
 /*
   This program adds the sym op translation to et_sym[], note the difference in 
   use of op vs op16e[op*2+1] in get_etsym().
 */
-var title = '3-Color Edge Symmetry<br>Alt Method 2B';
-var count1 = new Uint32Array(E_PRM * E_TWIST);
-var count2 = new Uint8Array(E_PRM * E_TWIST);
-var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);
+
+var count1 = new Uint32Array(E_PRM * E_TWIST);   // 271 MB
+var count2 = new Uint8Array(E_PRM * E_TWIST);    //  68 MB
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);  //   3 MB
 
 // array to translate et_fr to et_uf 
 var et_fr_uf = new Uint16Array(E_TWIST);
 
-main();
+document.getElementById('status').innerHTML = 'Counts are running<br>';
+setTimeout(main, 100);
 
 function main() {
+  var time0 = Date.now();
   init();
   count_ept_mins();
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  document.getElementById('status').innerHTML += 
+    '<br>Run Time: ' + time1 + '<br>';
 }
 
 function count_ept_mins() {
@@ -62,20 +74,6 @@ function get_etsym(ep, et, op) {
     var et_fr = et_sym_FR[ep_slice[ep*3+1]*E_TWIST+et];
     var et_uf = et_fr_uf[et_fr];  // translate et_fr to et_uf
     return et_sym[et_uf*CUBE_SYM + op];
-  }
-}
-
-function populate_ep_sym() {
-  assign_centers_3c();
-  var tmpstr = new Uint8Array(FACELETS);
-  for (var ep=0; ep < E_PRM; ep++) {
-    ep_sym[ep*CUBE_SYM] = ep;
-    int_to_strp(ep_b3[ep], eps, 11, 3);
-    make_cubestr_edg(edg2);
-    for (var op=1; op < CUBE_SYM; op++) {
-      sym_op(tmpstr, cubestr, op);
-      ep_sym[ep*CUBE_SYM+op] = convert_edg_3c(tmpstr); 
-    }
   }
 }
 

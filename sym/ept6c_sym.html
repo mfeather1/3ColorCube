@@ -5,8 +5,10 @@
  <meta name="author" content="Michael Feather">
  <meta name="robots" content="nofollow">
  <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../mini_cube.png type=image/png>
  <script src=../rch.js></script>
  <script src=../rclib.js></script>
+ <script src=symlib.js></script>
  <script src=epr_sym.js></script>
  <style>
   table { border-collapse: collapse; }
@@ -64,7 +66,7 @@ function main() {
   var time0 = Date.now();
   init();
   counts();
-  rpt();
+  rpt2(EPT_SYM_48_MINS*E_PRMr);
   var time1 = ((Date.now()-time0)/1000).toFixed(2);
   document.getElementById('status').innerHTML += 
     '<br>Run Time: ' + time1 + '<br><br>';
@@ -115,13 +117,12 @@ function do_epr_sym(ep, et) {
       for (epr[2]=0; epr[2] < 24; epr[2]++) {
         var eprn = eprsum(epr);
         if (count1[eprn] == 0) {
-          var min = eprn;
-          count1[eprn] = min; 
+          count1[eprn] = eprn; 
           for (var op=1; op < CUBE_SYM; op++) {
             var epsym = ep_sym[ep*CUBE_SYM + op];
             var etsym = get_etsym(ep, et, op);
             get_eprsym(eprsym, ep, epr, op);
-            count1[ept[epsym*E_TWIST+etsym]*E_PRMr + eprsum(eprsym)] = min;
+            count1[ept[epsym*E_TWIST+etsym]*E_PRMr + eprsum(eprsym)] = eprn;
           }
         }
       }
@@ -139,38 +140,6 @@ function epr_counts(n) {
   for (var i=0; i < E_PRMr; i++)
     if (ept[i] != 0)
       count2[ept[i]]++;
-}
-
-function rpt() {
-  var t1 = 0;
-  var t2 = 0;
-  var n1, n2;  
-  var arr = [];
-  for (var i=CUBE_SYM, ix=0; i > 0; i--)
-    if (count2[i] != 0) {
-      n1 = count2[i];
-      n2 = i*count2[i];
-      if (i == CUBE_SYM) {
-        n1 += EPT_SYM_48_MINS * E_PRMr;
-        n2 += EPT_SYM_48_MINS * E_PRMr * CUBE_SYM;
-      }
-      arr[ix] = [];
-      arr[ix][0] = n1;
-      arr[ix][1] = i;
-      arr[ix++][2] = n2;
-      t1 += n1;
-      t2 += n2;
-    }
-  var s = '<table border=1>';
-  s += '<tr><td><b>Mins</b></td><td><b>Syms</b></td><td><b>Configs</b></td></tr>';
-  for (var i=0; i < arr.length; i++)
-    s += '<tr><td>' + arr[i][0] + '</td><td>' + arr[i][1] + 
-        '</td><td>' + arr[i][2] + '</td></tr>';
-  s += '<tr><td><b>' + t1 + '</b></td><td></td><td><b>' + t2 + '</b></td></tr>';
-  s += '<tr><td colspan=3 style=text-align:center>Ratio = ';
-  s += (t2/t1).toFixed(4) + '</td></tr>';
-  s += '</table>';
-  document.getElementById('status').innerHTML = s;
 }
 
 function init() {

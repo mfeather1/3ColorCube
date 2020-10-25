@@ -1,13 +1,14 @@
 <!doctype html>
 <html>
 <head>
- <title> 3-Color Edge Symmetry - (without update_et_sym)</title>
+ <title> 3-Color Edge Symmetry - (without update_et_sym) </title>
  <meta name="author" content="Michael Feather">
  <meta name="robots" content="nofollow">
  <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../mini_cube.png type=image/png>
  <script src=../rch.js></script>
  <script src=../rclib.js></script>
- <script src=rpt.js></script>
+ <script src=symlib.js></script>
  <style>
   table { border-collapse: collapse; }
   td { text-align: right; padding: 4px 10px 4px; }
@@ -15,6 +16,12 @@
 </head>
 <body>
 <center>
+<font size=+2> 3-Color Edge Symmetry - (without update_et_sym) </font>
+<br><br>
+<div id=status></div>
+<br>
+<a href="javascript: history.go(-1)">Back</a>
+<br><br>
 <script>
 /*
   This version shows how get_etsym() is used without doing et_sym_update().
@@ -24,17 +31,21 @@
 
 "use strict";
 
-var title = '3-Color Edge Symmetry<br>(without update_et_sym)';
-var et_sym_UF = new Uint16Array(E_PRM * E_TWIST);
-var count1 = new Uint32Array(E_PRM * E_TWIST);
-var count2 = new Uint8Array(E_PRM * E_TWIST);
-var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);
+var count1 = new Uint32Array(E_PRM * E_TWIST);     // 271 MB
+var count2 = new Uint8Array(E_PRM * E_TWIST);      //  68 MB
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);    //   3 MB
+var et_sym_UF = new Uint16Array(E_PRM * E_TWIST);  //   2 MB
 
-main();
+document.getElementById('status').innerHTML = 'Counts are running<br>';
+setTimeout(main, 100);
 
 function main() {
+  var time0 = Date.now();
   init();
   count_ept_mins();
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  document.getElementById('status').innerHTML += 
+    '<br>Run Time: ' + time1 + '<br>';
 }
 
 function count_ept_mins() {
