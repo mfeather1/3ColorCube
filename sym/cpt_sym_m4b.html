@@ -144,22 +144,6 @@ function update_ct_sym_m4()
     }
   }
 }
-
-function cubestr_to_ct(s) {
-  var cts = new Uint8Array(8);
-  var U = s[4];
-  for (var i=0; i < 8; i++) {
-    var x = s[cnr_idx[i*3]];
-    var y = s[cnr_idx[i*3+1]];
-    if (x == U)
-      cts[i] = 0;
-    else if (y == U)
-       cts[i] = 1;
-    else
-       cts[i] = 2;
-  }
-  return(str_to_int(cts, 7, 3));
-}
 </script>
 </center>
 </body>

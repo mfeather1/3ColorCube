@@ -29,10 +29,10 @@
 // cpt_sym_m4b: ct_sym_ur size is   4 KB, not used in get_ctsym()
 
 // Symmetry Arrays
-var cp_sym    = new Uint8Array(C_PRM * CUBE_SYM);     //    3 KB
-var ct_sym_m4 = new Uint16Array(C_TWIST * CUBE_SYM);  //  205 KB 
-var ct_sym_uf = new Uint16Array(C_PRM * C_TWIST);     //  300 KB 
-var ct_sym_ur = new Uint16Array(C_PRM * C_TWIST);     //  300 KB 
+var cp_sym    = new Uint8Array(C_PRM * CUBE_SYM);     //   3 KB
+var ct_sym_m4 = new Uint16Array(C_TWIST * CUBE_SYM);  // 205 KB 
+var ct_sym_uf = new Uint16Array(C_PRM * C_TWIST);     // 300 KB 
+var ct_sym_ur = new Uint16Array(C_PRM * C_TWIST);     // 300 KB 
 
 var count1 = new Uint32Array(C_PRM * C_TWIST);        // 600 KB
 var count2 = new Uint8Array(C_PRM * C_TWIST);         // 150 KB
@@ -138,22 +138,6 @@ function populate_ct_sym_m4() {
         sym_op(tempstr, cubestr, map[op]);
         ct_sym_m4[ct*CUBE_SYM + op] = cubestr_to_ct(tempstr);
       }
-}
-
-function cubestr_to_ct(s) {
-  var cts = new Uint8Array(8);
-  var U = s[4];
-  for (var i=0; i < 8; i++) {
-    var x = s[cnr_idx[i*3]];
-    var y = s[cnr_idx[i*3+1]];
-    if (x == U)
-      cts[i] = 0;
-    else if (y == U)
-       cts[i] = 1;
-    else
-       cts[i] = 2;
-  }
-  return(str_to_int(cts, 7, 3));
 }
 </script>
 </center>

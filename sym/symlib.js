@@ -62,6 +62,52 @@ function populate_list(perm, symfunc) {
   return(list);
 }
 
+function populate_ep_sym() {
+  assign_centers_3c();
+  var tmpstr = new Uint8Array(FACELETS);
+  for (var ep=0; ep < E_PRM; ep++) {
+    ep_sym[ep*CUBE_SYM] = ep;
+    int_to_strp(ep_b3[ep], eps, 11, 3);
+    make_cubestr_edg(edg2);
+    for (var op=1; op < CUBE_SYM; op++) {
+      sym_op(tmpstr, cubestr, op);
+      ep_sym[ep*CUBE_SYM+op] = convert_edg_3c(tmpstr); 
+    }
+  }
+}
+
+function populate_et_sym_no_update() {
+  init_op16e();
+  assign_centers_3c();
+  int_to_strp(ep_b3[0], eps, 11, 3);
+  var tmpstr = new Uint8Array(FACELETS);
+  for(var i=0; i < E_TWIST;  i++)
+    for (var j=0; j < CUBE_SYM; j++)
+      if (op16e[j*2] == 0) {
+        int_to_strp(i, ets, 11, 2);
+        make_cubestr_edg(edg2);
+        sym_op(tmpstr, cubestr, map[j]);
+        convert_edg_3c(tmpstr);
+        et_sym[i*CUBE_SYM+j] = str_to_int(ets,11,2);
+    }
+}
+
+function cubestr_to_ct(s) {
+  var cts = new Uint8Array(8);
+  var U = s[4];
+  for (var i=0; i < 8; i++) {
+    var x = s[cnr_idx[i*3]];
+    var y = s[cnr_idx[i*3+1]];
+    if (x == U)
+      cts[i] = 0;
+    else if (y == U)
+       cts[i] = 1;
+    else
+       cts[i] = 2;
+  }
+  return(str_to_int(cts, 7, 3));
+}
+
 function rpt(arr) {
   var s = '<table border=1>';
   s += '<tr><td><b>Mins</b></td><td><b>Syms</b></td>';
