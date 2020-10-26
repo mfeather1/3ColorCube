@@ -63,9 +63,6 @@ function run_counts() {
 
 function main() {
   var time0 = Date.now();
-  // override these two rch.js settings for better performance
-  CT_SYM_METHOD = 1;
-  ET_SYM_METHOD = 1;
   init();
   counts();
   rpt2(EPT_SYM_48_MINS*C_PRM_TW, 4);
