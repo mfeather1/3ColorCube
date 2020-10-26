@@ -1,9 +1,9 @@
 // EPR Sym Method 1
-var epr_sym = new Uint8Array(CUBE_SYM * SLICE_PRM * 24 * 3);
+var epr_sym = new Uint8Array(CUBE_SYM * SLICE_PRM * 24 * 3);  // 1671 KB
 
 // EPR Sym Method 2
-var epr_sym2 = new Uint8Array(176 * 24);
-var epr_idx = new Uint8Array(CUBE_SYM * SLICE_PRM *3);
+var epr_sym2 = new Uint8Array(176 * 24);                      //  4 KB
+var epr_idx = new Uint8Array(CUBE_SYM * SLICE_PRM *3);        // 70 KB
 
 var slice_map = new Uint8Array([
   0,1,2,0,2,1,1,2,0,0,2,1,1,2,0,0,1,2,1,0,2,0,1,2,

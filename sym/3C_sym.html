@@ -19,7 +19,7 @@
 <center>
 <font size=+2>3-Color Cube Symmetry</font>
 <br>
-<p> This program takes a while to run (6 minutes on 3.7 Ghz processor)
+<p> This program takes a while to run (5 minutes on 3.7 Ghz processor)
 so here are the results from a previous run which can be compared to the
 counts <a target=_blank href="http://forum.cubeman.org/?q=node/view/248">here</a>.
 To actually run the counts, press the button below the table.</p>
@@ -63,6 +63,9 @@ function run_counts() {
 
 function main() {
   var time0 = Date.now();
+  // override these two rch.js settings for better performance
+  CT_SYM_METHOD = 1;
+  ET_SYM_METHOD = 1;
   init();
   counts();
   rpt2(EPT_SYM_48_MINS*C_PRM_TW, 4);
