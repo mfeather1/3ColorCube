@@ -26,15 +26,15 @@ To actually run the counts, press the button below the table.</p>
 <table border=1>
  <tr><td><b>Mins</b></td><td><b>Syms</b></td><td><b>Configs</b></td></tr>
  <tr><td>20436960964</td><td>48</td><td>980974126272</td></tr>
- <tr><td>     875138</td><td>24</td><td>     21003312</td></tr>
- <tr><td>        3796</td><td>16</td><td>        60736</td></tr>
- <tr><td>        6904</td><td>12</td><td>         82848</td></tr>
- <tr><td>         166</td><td> 8</td><td>          1328</td></tr>
- <tr><td>         358</td><td> 6</td><td>          2148</td></tr>
- <tr><td>          16</td><td> 4</td><td>            64</td></tr>
- <tr><td>          28</td><td> 3</td><td>            84</td></tr>
- <tr><td>           2</td><td> 2</td><td>             4</td></tr>
- <tr><td>           4</td><td> 1</td><td>             4</td></tr>
+ <tr><td>     875138</td><td>24</td><td>    21003312</td></tr>
+ <tr><td>       3796</td><td>16</td><td>       60736</td></tr>
+ <tr><td>       6904</td><td>12</td><td>       82848</td></tr>
+ <tr><td>        166</td><td> 8</td><td>        1328</td></tr>
+ <tr><td>        358</td><td> 6</td><td>        2148</td></tr>
+ <tr><td>         16</td><td> 4</td><td>          64</td></tr>
+ <tr><td>         28</td><td> 3</td><td>          84</td></tr>
+ <tr><td>          2</td><td> 2</td><td>           4</td></tr>
+ <tr><td>          4</td><td> 1</td><td>           4</td></tr>
  <tr><td><b>20437847376</b></td><td></td><td><b>980995276800</b></td></tr>
  <tr><td colspan=3 style=text-align:center>Ratio=47.9990</td></tr>
 </table>
@@ -66,7 +66,7 @@ function main() {
   var time0 = Date.now();
   init();
   counts();
-  rpt2(EPT_SYM_48_MINS*E_PRMr);
+  rpt2(EPT_SYM_48_MINS*E_PRMr, 2);
   var time1 = ((Date.now()-time0)/1000).toFixed(2);
   document.getElementById('status').innerHTML += 
     '<br>Run Time: ' + time1 + '<br><br>';
