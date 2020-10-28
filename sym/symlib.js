@@ -62,20 +62,6 @@ function populate_list(perm, symfunc) {
   return(list);
 }
 
-function populate_ep_sym() {
-  assign_centers_3c();
-  var tmpstr = new Uint8Array(FACELETS);
-  for (var ep=0; ep < E_PRM; ep++) {
-    ep_sym[ep*CUBE_SYM] = ep;
-    int_to_strp(ep_b3[ep], eps, 11, 3);
-    make_cubestr_edg(edg2);
-    for (var op=1; op < CUBE_SYM; op++) {
-      sym_op(tmpstr, cubestr, op);
-      ep_sym[ep*CUBE_SYM+op] = convert_edg_3c(tmpstr); 
-    }
-  }
-}
-
 function populate_et_sym_no_update() {
   init_op16e();
   assign_centers_3c();
