@@ -82,13 +82,13 @@ function counts() {
 }
 
 function fill_cpm(cp) {
-  var q = 1;
+  var n = 1;
   for (var op=1; op < CUBE_SYM; op++) {
     var cpsym = cp6c_sym[cp*CUBE_SYM + op];
     if (cpm[cpsym] == -1)
-      cpm[cpsym] = q++;
+      cpm[cpsym] = n++;
   }
-  return q;
+  return n;
 }
 
 function clear_count1(n) {
@@ -117,8 +117,6 @@ function do_ct_sym(cp) {
 
 function ct_counts(n) {
   var tmp = new Int8Array(C_TWIST);
-  for (var i=0; i < C_TWIST; i++)
-    tmp[i] = 0;
   for (var i=0; i < n; i++)
     for (var j=0; j < C_TWIST; j++)
         tmp[count1[i*C_TWIST + j]]++;

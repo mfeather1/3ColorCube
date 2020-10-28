@@ -82,13 +82,13 @@ function counts() {
 }
 
 function fill_epm(ep) {
-  var q = 1;
+  var n = 1;
   for (var op=1; op < CUBE_SYM; op++) {
     var epsym = ep_sym[ep*CUBE_SYM + op];
     if (epm[epsym] == -1)
-      epm[epsym] = q++;
+      epm[epsym] = n++;
   }
-  return q;
+  return n;
 }
 
 function clear_count1(n) {
@@ -112,8 +112,6 @@ function do_et_sym(ep) {
 
 function et_counts(n) {
   var tmp = new Int8Array(E_TWIST);
-  for (var i=0; i < E_TWIST; i++)
-    tmp[i] = 0;
   for (var i=0; i < n; i++)
     for (var j=0; j < E_TWIST; j++)
         tmp[count1[i*E_TWIST + j]]++;

@@ -72,7 +72,6 @@ function main() {
 }
 
 function counts() {
-  var n;
   for (var ep=0; ep < E_PRM; ep++)
     for (var et=0; et < E_TWIST; et++)
        ept[ep*E_TWIST + et] = -1;
@@ -83,7 +82,7 @@ function counts() {
     var et = ept_min_ops[i*27+1];
     if (ept[ep*E_TWIST + et] == -1) {
       ept[ep*E_TWIST + et] = 0;
-      n = fill_ept(ep, et);
+      var n = fill_ept(ep, et);
       clear_count1(n);
       do_epr_sym(ep, et);
       epr_counts(n);
@@ -91,15 +90,15 @@ function counts() {
   }
 }
 
-function fill_ept(ep, et, n) {
-  var q = 1;
+function fill_ept(ep, et) {
+  var n = 1;
   for (var op=1; op < CUBE_SYM; op++) {
     var epsym = ep_sym[ep*CUBE_SYM + op];
     var etsym = get_etsym(ep, et, op);
     if (ept[epsym*E_TWIST + etsym] == -1)
-      ept[epsym*E_TWIST + etsym] = q++;
+      ept[epsym*E_TWIST + etsym] = n++;
   }
-  return q;
+  return n;
 }
 
 function clear_count1(n) {
@@ -131,8 +130,6 @@ function do_epr_sym(ep, et) {
 
 function epr_counts(n) {
   var ept = new Int8Array(E_PRMr);
-  for (var i=0; i < E_PRMr; i++)
-    ept[i] = 0;
   for (var i=0; i < n; i++)
     for (var j=0; j < E_PRMr; j++)
         ept[count1[i*E_PRMr + j]]++;
