@@ -6,8 +6,8 @@
  <link rel=icon href=mini_cube.png type=image/png>
  <link rel="stylesheet" type="text/css" href="style.css">
  <meta name=viewport content="width=device-width, initial-scale=1">
- <style>
-  .tabdata td { padding-left:10px; padding-right:10px; text-align:right}
+ <style> .tabdata td {
+   padding-left:15px; padding-right:15px; border-color:black; text-align:right; }
  </style>
 </head>
 <body>
@@ -30,7 +30,7 @@
 var dist;
 var counts = new Uint32Array(12);
 
-document.getElementById('status').innerHTML = 
+document.getElementById('status').innerHTML =
   '<a href="javascript: history.go(-1)">Back</a>';
 
 function readfile(files) {
@@ -63,7 +63,7 @@ function readfile2(file) {
 }
 
 function show_counts(file) {
-  document.getElementById('status').innerHTML = file.name + ' Loaded - ' + 
+  document.getElementById('status').innerHTML = file.name + ' Loaded - ' +
     Math.round(dist.length/1024/1024) + ' MB<br><br>';
 
   for (var i=0; i < 12; i++)
@@ -83,8 +83,8 @@ function show_counts(file) {
       counts[dist[i]>>4]++;
     }
   }
-  var str = document.getElementById('status').innerHTML + 
-    '<table class=tabdata style=border-collapse:collapse border=1>' +
+  var str = document.getElementById('status').innerHTML +
+    '<table class=tabdata style=border-collapse:collapse;border-color:white border=1>' +
     '<tr><td>Depth</td><td>Count</td></tr>';
 
   for (i=0; i < 12; i++)
@@ -100,7 +100,7 @@ function get_distb_count()
 {
   var count, i, j, k;
   var bits = new Uint8Array(256);
-  
+
   for (i=0; i < 256; i++)
     for (j=0, k=1, bits[i]=0; j < 8; j++, k*=2)
       if (i & k) bits[i]++;
@@ -115,13 +115,13 @@ function loadfile(file) {
   var bufSize = file.size/8;
   var offset = 0;
   var readbuf = null;
-  dist = new Uint8Array(fileSize); 
+  dist = new Uint8Array(fileSize);
   var readEventHandler = function(e) {
     if (e.target.error == null) {
       var buf = new Uint8Array(e.target.result);
       for (var i=0; i < bufSize; i++)
         dist[offset+i] = buf[i];
-      offset += buf.length; 
+      offset += buf.length;
     } else {
       console.log("Read Error: " + e.target.error);
       return;
