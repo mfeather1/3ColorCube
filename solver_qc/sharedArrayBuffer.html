@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+ <title> Firefox SharedArrayBuffer </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+</head>
+<body>
+<center><font size="+2"> Firefox SharedArrayBuffer </font></center>
+<br>
+<p>This document shows how to enable SharedArrayBuffer in Firefox when using
+a local web-server.  The reason for using a local server is that Firefox
+requires cross-origin headers to be set (by the server) in order to use
+SharedArrayBuffer.  The server that hosts Github Pages (which is the home of
+the 3ColorCube web-site) does not currently set these headers and therefore
+will not work so the alternative is to host locally.
+<br><br>
+NOTE:<br>
+This document applies to a web-server that you run locally (on your PC) and
+that you are able/willing to modify the config files (as in you have web-server
+administration knowledge/experience).
+This also means running the 3ColorCube web-site locally (which means
+downloading the zip file from github and extracting the files in your
+local web directory).
+This document is specific to the Apache web-server, adjust the instructions
+accordingly for other web-server software.</p>
+<br><hr><br>
+<p>For Apache web-server set the headers in the Directory section of http.conf
+or userdir.conf.  This example is for userdir.conf (in /etc/httpd/conf.d):
+<br><br>
+&lt;Directory "/home/*/public_html"&gt;<br>
+   ...<br>
+   Header set Cross-Origin-Opener-Policy same-origin<br>
+   Header set Cross-Origin-Embedder-Policy require-corp<br>
+&lt;/Directory&gt;
+<br><br>
+Restart web-server after making changes.</p>
+<br><hr><br>
+<p>In Firefox, set all of the following to true in about:config (if not already,
+recent versions default to true):
+<br><br>
+browser.tabs.remote.useCrossOriginOpenerPolicy<br>
+browser.tabs.remote.useCrossOriginEmbedderPolicy<br>
+javascript.options.shared_memory<br>
+dom.postMessage.sharedArrayBuffer.withCOOP_COEP</p>
+<br><hr><br>
+<p>The following is a simple web-page to test if the headers are working.
+When accessing the page on a local host, secure context requires using 
+localhost or 127.0.0.1 for hostname in the URL.  With Firefox, both 
+properties must be true in order to use SharedArrayBuffer.</p>
+<pre>
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;div id=status&gt;&lt;/div&gt;
+&lt;script&gt;
+document.getElementById('status').innerHTML =
+  'window.isSecureContext = ' + window.isSecureContext +
+  '&lt;br&gt;crossOriginIsolated = ' + crossOriginIsolated;
+&lt;/script&gt;
+&lt;/html&gt;
+</pre>
+<br><hr><br>
+<p>On the 3-ColorCube website, if you get the following message in cube area(s):<br>
+"Your organization has blocked access to this page or website"<br>
+then press ctrl-F5 (or ctrl-shift-r) to reload the page.</p>
+<br><hr><br>
+<p>Documentation links:
+<br><br>
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer<br>
+https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts</p>
+<br><hr><br>
+</body>
+</html>
