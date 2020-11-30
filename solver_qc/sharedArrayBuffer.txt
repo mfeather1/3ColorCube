@@ -1,5 +1,19 @@
-This document shows how to enable sharedArrayBuffer in Firefox when using
-a local web-server.
+This document shows how to enable SharedArrayBuffer in Firefox when using
+a local web-server.  The reason for using a local web-server is that Firefox
+requires cross-origin headers to be set (by the web-server) in order to use
+SharedArrayBuffer.  The web-server that hosts Github Pages (which is the home
+of the 3ColorCube web-site) does not currently set these headers and therefore
+will not work so the alternative is to host locally.
+
+NOTE:
+This document applies to a web-server that you run locally (on your PC) and
+that you are able/willing to modify the config files (as in you have web-server
+administration knowledge/experience).
+This also means running the 3ColorCube web-site locally (which means
+downloading the zip file from github and extracting the files in your
+local web directory).
+This document is specific to the Apache web-server, adjust the instructions
+accordingly for other web-server software.
 
 -----------------------------------------------------------------------------
 
@@ -29,7 +43,7 @@ dom.postMessage.sharedArrayBuffer.withCOOP_COEP
 The following is a simple web-page to test if the headers are working.
 When accessing the page on a local host, secure context requires using 
 localhost or 127.0.0.1 for hostname in the URL.  With Firefox, both 
-properties must be true in order to use sharedArrayBuffer.
+properties must be true in order to use SharedArrayBuffer.
 
 <!doctype html>
 <html>
