@@ -17,13 +17,13 @@ requires cross-origin headers to be set (by the server) in order to use
 SharedArrayBuffer.
 The server that hosts Github Pages (which is the home of the 3ColorCube
 web-site) does not currently set these headers and therefore will not work
-so the alternative is to configure your local web-server to set these headers
-and host the 3ColorCube web-site locally </p>
+so the alternative is to configure a local web-server to set these headers
+and host the 3ColorCube web-site locally. </p>
 <br><hr><br>
 <p>For Apache web-server set the headers in the Directory section of http.conf
 or userdir.conf.  This example is for userdir.conf in /etc/httpd/conf.d 
-(consult the documentation for your platform for the specific details of where
-to set these headers):
+(consult platform specific documentation for details of where to set these 
+headers on other platforms):
 <br><br>
 &lt;Directory "/home/*/public_html"&gt;<br>
    ...<br>
@@ -58,12 +58,12 @@ document.getElementById('status').innerHTML =
 </pre>
 <br><hr><br>
 <p>Download the 3ColorCube-master.zip file from Gitub, extract the files into
-your local web directory and navigate to the local copy of the 3ColorCube
+local web directory and navigate to the local copy of the 3ColorCube
 web-site in Firefox (via localhost or 127.0.0.1) and the Quad-Core Solver will
 work provided that the above test page shows both isSecureContext and
 crossOriginIsolated are true.
 <br><br>
-If you get the following message in cube area(s):<br>
+If the following message appears in cube area(s):<br>
 "Your organization has blocked access to this page or website"<br>
 then press ctrl-F5 (or ctrl-shift-r) to reload the page.</p>
 <br><hr><br>
