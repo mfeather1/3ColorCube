@@ -14,22 +14,16 @@
 <p>This document shows how to enable SharedArrayBuffer in Firefox when using
 a local web-server.  The reason for using a local server is that Firefox
 requires cross-origin headers to be set (by the server) in order to use
-SharedArrayBuffer.  The server that hosts Github Pages (which is the home of
-the 3ColorCube web-site) does not currently set these headers and therefore
-will not work so the alternative is to host locally.
-<br><br>
-NOTE:<br>
-This document applies to a web-server that you run locally (on your PC) and
-that you are able/willing to modify the config files (as in you have web-server
-administration knowledge/experience).
-This also means running the 3ColorCube web-site locally (which means
-downloading the zip file from github and extracting the files in your
-local web directory).
-This document is specific to the Apache web-server, adjust the instructions
-accordingly for other web-server software.</p>
+SharedArrayBuffer.
+The server that hosts Github Pages (which is the home of the 3ColorCube
+web-site) does not currently set these headers and therefore will not work
+so the alternative is to configure your local web-server to set these headers
+and host the 3ColorCube web-site locally </p>
 <br><hr><br>
 <p>For Apache web-server set the headers in the Directory section of http.conf
-or userdir.conf.  This example is for userdir.conf (in /etc/httpd/conf.d):
+or userdir.conf.  This example is for userdir.conf in /etc/httpd/conf.d 
+(consult the documentation for your platform for the specific details of where
+to set these headers):
 <br><br>
 &lt;Directory "/home/*/public_html"&gt;<br>
    ...<br>
@@ -63,14 +57,21 @@ document.getElementById('status').innerHTML =
 &lt;/html&gt;
 </pre>
 <br><hr><br>
-<p>On the 3-ColorCube website, if you get the following message in cube area(s):<br>
+<p>Download the 3ColorCube-master.zip file from Gitub, extract the files into
+your local web directory and navigate to the local copy of the 3ColorCube
+web-site in Firefox (via localhost or 127.0.0.1) and the Quad-Core Solver will
+work provided that the above test page shows both isSecureContext and
+crossOriginIsolated are true.
+<br><br>
+If you get the following message in cube area(s):<br>
 "Your organization has blocked access to this page or website"<br>
 then press ctrl-F5 (or ctrl-shift-r) to reload the page.</p>
 <br><hr><br>
-<p>Documentation links:
-<br><br>
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer<br>
-https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts</p>
-<br><hr><br>
+<p>Links to Mozilla Developer Network (MDN) Documentation:<br>
+<a target=_blank href=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer>SharedArraybuffer</a>&nbsp;&nbsp;
+<a target=_blank href=https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts>Secure Contexts</a></p>
+<br>
+<center><a href="javascript: history.go(-1)">Back</a></center>
+<br>
 </body>
 </html>
