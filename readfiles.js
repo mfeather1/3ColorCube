@@ -33,9 +33,9 @@ function readfiles(files) {
       for (var j=0; j < fnames.length; j++) {
         if (files[i].name == fnames[j] && dist_loaded[j] == 0) {
           try {
-            /* if (files[i].name.substring(0,5) == 'Dist3')
+            if (files[i].name.substring(0,5) == 'Dist3')
               load_dist3(files[i]);
-            else */
+            else
               readfile(files[i]);
           }
           catch (e) {
@@ -97,7 +97,7 @@ function load_msg() {
 
 function load_dist3(file) {
   var fileSize = file.size;
-  var bufSize = file.size/8;
+  var bufSize = file.size/16;
   var offset = 0;
   var readbuf = null;
   dist3 = new Uint8Array(fileSize); 
