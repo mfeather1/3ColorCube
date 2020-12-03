@@ -36,9 +36,9 @@ function readfiles(files) {
       for (var j=0; j < fnames.length; j++) {
         if (files[i].name == fnames[j] && dist_loaded[j] == 0) {
           try {
-            /* if (files[i].name.substring(0,5) == 'Dist3')
+            if (files[i].name.substring(0,5) == 'Dist3')
               load_dist3(files[i]);
-            else */
+            else
               readfile(files[i]);
           }
           catch (e) {
