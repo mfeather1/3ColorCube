@@ -116,8 +116,8 @@ function load_dist3(file) {
   var readbuf = null;
   dist3 = new Uint8Array(dist3_shared);
   var readEventHandler = function(e) {
-    var buf = new Uint8Array(e.target.result);
     if (e.target.error == null) {
+      var buf = new Uint8Array(e.target.result);
       for (var i=0; i < bufSize; i++)
         dist3[offset+i] = buf[i];
       offset += buf.length; 
