@@ -57,33 +57,36 @@ function readfile(file) {
   reader.readAsArrayBuffer(file);
   reader.onload = function(e) {
     if (name == fnames[0]) {
-      dist1 = new Uint8Array(e.target.result);
-      var d1 = new Uint8Array(dist1_shared);
-      for (var i=0; i < dist1.length; i++)
-        d1[i] = dist1[i];
+      var d1 = new Uint8Array(e.target.result);
+      var d1s = new Uint8Array(dist1_shared);
+      for (var i=0; i < d1.length; i++)
+        d1s[i] = d1[i];
       dist_loaded[0] = 1;
       load_msg();
     }
     if (name == fnames[1]) {
-      dist2 = new Uint8Array(e.target.result);
-      var d2 = new Uint8Array(dist2_shared);
-      for (var i=0; i < dist2.length; i++)
-        d2[i] = dist2[i];
+      var d2 = new Uint8Array(e.target.result);
+      var d2s = new Uint8Array(dist2_shared);
+      for (var i=0; i < d2.length; i++)
+        d2s[i] = d2[i];
       dist_loaded[1] = 1;
       load_msg();
     }
     if (USE_DIST3) {
       if (name == fnames[2]) {
-        dist3 = new Uint8Array(e.target.result);
+        var d3 = new Uint8Array(e.target.result);
+        var d3s = new Uint8Array(dist3_shared);
+        for (var i=0; i < d3.length; i++)
+          d3s[i] = d3[i];
         dist_loaded[2] = 1;
         load_msg();
       }
     }
     if (name == fnames[fnames.length-1]) {
-      distp2 = new Uint8Array(e.target.result);
-      var p2 = new Uint8Array(distp2_shared);
-      for (var i=0; i < distp2.length; i++)
-        p2[i] = distp2[i];
+      var p2 = new Uint8Array(e.target.result);
+      var p2s = new Uint8Array(distp2_shared);
+      for (var i=0; i < p2.length; i++)
+        p2s[i] = p2[i];
       dist_loaded[fnames.length-1] = 1;
       load_msg();
     }
@@ -108,13 +111,13 @@ function load_msg() {
 
 function load_dist3(file) {
   var fileSize = file.size;
-  var bufSize = file.size/8;
+  var bufSize = file.size/16;
   var offset = 0;
   var readbuf = null;
   dist3 = new Uint8Array(dist3_shared);
   var readEventHandler = function(e) {
+    var buf = new Uint8Array(e.target.result);
     if (e.target.error == null) {
-      var buf = new Uint8Array(e.target.result);
       for (var i=0; i < bufSize; i++)
         dist3[offset+i] = buf[i];
       offset += buf.length; 
