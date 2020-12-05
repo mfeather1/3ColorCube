@@ -66,8 +66,8 @@ var emv         = new Uint8Array(MOVES * 12);
 var mvlist1     = new Int8Array(3);
 var mvlist2     = new Int8Array(MOVES+1);
 
-// Arrays larger than 1 KB
-//                                                           Size(KB)
+// Arrays larger than 1 KB, see solve.html for shared arrays
+//                                                            Size(KB)
 var cp_mov      = new Uint8Array(C_PRM * MOVES);          //     1
 var min_ep      = new Uint16Array(MIN_EP);                //     2
 var op_op       = new Uint8Array(CUBE_SYM*CUBE_SYM);      //     2
@@ -78,19 +78,13 @@ var b2_slice    = new Uint16Array(4096);                  //     8
 var ep_min_op   = new Uint8Array(E_PRM);                  //    34
 var cp6c_cp3c   = new Uint8Array(C_PERM);                 //    40 
 var ep_min      = new Uint16Array(E_PRM);                 //    68
-var ept_op_idx  = new Int16Array(E_PRM);                  //    68
 var et_mov      = new Uint16Array(E_TWIST * MOVES);       //    72
 var ct_mov      = new Uint16Array(C_TWIST * MOVES);       //    77 
 var cp6c_cpr    = new Uint16Array(C_PERM);                //    80 
 var ep_b3       = new Uint32Array(E_PRM);                 //   135
-var et_sym      = new Uint16Array(E_TWIST * CUBE_SYM);    //   192
 var ep_slice    = new Uint16Array(E_PRM * 3);             //   203
 var epr_mov     = new Uint8Array(SLICE_PRM*24*MOVES);     //   209
 var b3_ep       = new Uint16Array(B3_MAX);                //   346
-var cpt_min     = new Uint16Array(C_PRM_TW * 2);          //   600
-var ep_mov      = new Uint16Array(E_PRM * MOVES);         //  1218
-var cp6c_mov    = new Uint16Array(C_PERM * MOVES);        //  1418
-var et_sym_FR   = new Uint16Array(SLICE_PRM * E_TWIST);   //  1980
 
 if (CT_SYM_METHOD == 1) 
   var cpt_sym   = new Uint16Array(C_PRM_TW * CUBE_SYM);   // 14352
@@ -101,43 +95,26 @@ else {
   var ct_fb_ud  = new Uint16Array(C_PRM * C_TWIST);       //   300
 }
 
-if (ET_SYM_METHOD == 1) 
-  var et_sym_UF = new Uint16Array(SLICE_PRM * E_TWIST);   //  1980 
-else
-  var et_sym_UF = new Uint16Array(E_TWIST);               //     4
-
+/* not used
 if (ET_SYM_METHOD == 3) {
  var et_fr = new Uint16Array(E_TWIST*16);                 //    64
  var et_fr_ix = new Uint16Array(SLICE_PRM*E_TWIST/16);    //   124
-}
+}  
+var ep_sym      = new Uint16Array(E_PRM * CUBE_SYM);      //  3248 
+*/
 
-// Used 6% of the time 2058/34650
-var ept_ops_ix1 = new Int8Array(MIN_EP);                  //     1
-var ept_ops_ix2 = new Int16Array(N_EPT_OPS_IX2*E_TWIST);  //   412
+/* Cube Layout:
 
-// Used 6% of the time (same as above)
-if (EPT_OP_METHOD == 1)
-var ept_min_op  = new Int8Array(EP_MULTI_MIN_OP*E_TWIST); //  4116
-else
-var ept_min_op  = new Int8Array(N_EPT_MIN_OP*E_TWIST);    //  2580
-
-// Used rarely (.24% of the time 170928/70963200)
-var ept_min_ops = new Uint16Array(N_EPT_MIN_OPS * 27);    //   387
-
-// var ep_sym      = new Uint16Array(E_PRM * CUBE_SYM);   //  3248 
-
-// Cube Layout:
-//
-//          00 01 02
-//          03 04 05
-//          06 07 08
-// 09 10 11 12 13 14 15 16 17 18 19 20
-// 21 22 23 24 25 26 27 28 29 30 31 32
-// 33 34 35 36 37 38 39 40 41 42 43 44
-//          45 46 47
-//          48 49 50
-//          51 52 53
-
+          00 01 02
+          03 04 05
+          06 07 08
+ 09 10 11 12 13 14 15 16 17 18 19 20
+ 21 22 23 24 25 26 27 28 29 30 31 32
+ 33 34 35 36 37 38 39 40 41 42 43 44
+          45 46 47
+          48 49 50
+          51 52 53
+*/
 var center_idx = [4,22,25,28,31,49];
 
 var cnr_idx = new Uint8Array 

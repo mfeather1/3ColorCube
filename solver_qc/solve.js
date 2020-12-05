@@ -36,7 +36,6 @@ var show_phase2_counts = 0;
 var dist_loaded = [0, 0, 0];
 var dist3_gen_depth = 0;
 var minmv;
-var dist1, dist2, dist3, distp2;
 var USE_DIST3 = 0;
 var disp = ['R','L','U','D','F','B'];
 var disp2 = [' ','2','\''];
@@ -53,6 +52,13 @@ var gdone;
 var conc;
 var uniq_nodes = 244;  // unique 3-color nodes at depth 4
 
+// shared arrays
+var dist1, dist2, dist3, distp2;
+var ept_min_op, ept_min_ops, ept_op_idx;
+var ept_ops_ix1, ept_ops_ix2;
+var ep_mov, cp6c_mov, cpt_min;
+var et_sym, et_sym_FR, et_sym_UF;
+
 // If the last move of the 3-color solution is to the same face as the
 // first move of the 6-color solution (phase 2) then the two moves are
 // combined into one or if they cancel each other then both are removed
@@ -61,7 +67,7 @@ var uniq_nodes = 244;  // unique 3-color nodes at depth 4
 
 var show_combine = 0;
 
-importScripts('../rch.js');
+importScripts('rch.js');
 importScripts('../rclib.js');
 importScripts('readfiles.js');
 
@@ -77,6 +83,17 @@ function ipc(e) {
     dist2 = new Uint8Array(e.data.dist2);
     dist3 = new Uint8Array(e.data.dist3);
     distp2 = new Uint8Array(e.data.distp2);
+    ept_min_op = new Int8Array(e.data.ept_min_op);
+    ept_min_ops = new Uint16Array(e.data.ept_min_ops);
+    ept_op_idx = new Int16Array(e.data.ept_op_idx);
+    ept_ops_ix1 = new Int8Array(e.data.ept_ops_ix1);
+    ept_ops_ix2 = new Int16Array(e.data.ept_ops_ix2);
+    ep_mov = new Uint16Array(e.data.ep_mov);
+    cp6c_mov = new Uint16Array(e.data.cp6c_mov);
+    cpt_min = new Uint16Array(e.data.cpt_min);
+    et_sym = new Uint16Array(e.data.et_sym);
+    et_sym_FR = new Uint16Array(e.data.et_sym_FR);
+    et_sym_UF = new Uint16Array(e.data.et_sym_UF);
     dist_files_loaded = e.data.dist_files_loaded;
     dist_gen_depth = e.data.dist_gen_depth;
     conc = e.data.conc;
@@ -493,11 +510,17 @@ function init()
   init_map(map, sym_op_FR, sym_op_UR, reflect);
   populate_op_tables();
   populate_ep_min();
-  populate_et_sym();
   populate_min_ep();
-  populate_ept_min_op();
   populate_cp_sym();
-  populate_cpt_min();
+  if (worker == 1) {
+    populate_et_sym();
+    populate_ept_min_op();
+    populate_cpt_min();
+    populate_ept_ops_indexes();
+    populate_cp6c_mov();
+  }
+  else
+    init_op16e();
   if (CT_SYM_METHOD == 1) {
     populate_cpt_sym();
     get_ctsym = get_ctsym_m1;
@@ -511,8 +534,6 @@ function init()
     update_ct_sym();
     get_ctsym = get_ctsym_m3;
   }
-  populate_ept_ops_indexes();
-  populate_cp6c_mov();
   populate_epr_mov();
 }
 

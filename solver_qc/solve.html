@@ -7,7 +7,7 @@
  <link rel=icon href=../mini_cube.png type=image/png>
  <link rel="stylesheet" type="text/css" href="../style2.css">
  <meta name=viewport content="width=device-width, initial-scale=1">
- <script src=../rch.js></script>
+ <script src=rch.js></script>
  <script src=../rclib.js></script>
  <script src=../verify.js></script>
  <script src=readfiles.js></script>
@@ -228,7 +228,6 @@ var dist3_gen_depth = 0;
 var distp2_gen_depth = 0;
 var load_dist_files = 0;
 var dist1, dist2, dist3, distp2;
-var dist1_shared, dist2_shared, dist3_shared, distp2_shared;
 var gdone, gdone_shared;
 var worker = [];
 var show_deps = true; 
@@ -239,6 +238,11 @@ var gtime0;
 var init_time;
 var CUBE_HOME   = "RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO";
 var CUBE_BLANK  = "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
+var dist1_shared, dist2_shared, dist3_shared, distp2_shared;
+var ept_min_op_shared, ept_min_ops_shared, ept_op_idx_shared;
+var ept_ops_ix1_shared, ept_ops_ix2_shared;
+var ep_mov_shared, cp6c_mov_shared, cpt_min_shared;
+var et_sym_shared, et_sym_FR_shared, et_sym_UF_shared;
 
 main();
 
@@ -284,6 +288,34 @@ function main() {
 
   dist2_shared  = new SharedArrayBuffer(MIN_EP*C_PRM*1024);   //  53 MB
   distp2_shared = new SharedArrayBuffer(C_PRMr*E_PRMr);       //   8 MB
+
+  /* 
+    Notes on array usage by the solver:
+    1. ept_min_op & ept_ops_ix[1-2] are used 6% of the time (2058/34650)
+    2. ept_min_ops is used .24% of the time (170928/70963200) 
+    3. cpt_min is only used when the search node is a 3-color solution unless
+       CPT_SYM_METHOD=2 in which case it is used for every node 
+  */
+                                                                        //   KB
+  ept_ops_ix1_shared = new SharedArrayBuffer(MIN_EP);                   //    1
+  ept_op_idx_shared  = new SharedArrayBuffer(E_PRM * 2);                //   68
+  et_sym_shared      = new SharedArrayBuffer(E_TWIST * CUBE_SYM * 2);   //  192
+  ept_min_ops_shared = new SharedArrayBuffer(N_EPT_MIN_OPS * 27 * 2);   //  387
+  ept_ops_ix2_shared = new SharedArrayBuffer(N_EPT_OPS_IX2*E_TWIST*2);  //  412
+  cpt_min_shared     = new SharedArrayBuffer(C_PRM_TW * 2 * 2);         //  600
+  ep_mov_shared      = new SharedArrayBuffer(E_PRM * MOVES * 2);        // 1218
+  cp6c_mov_shared    = new SharedArrayBuffer(C_PERM * MOVES * 2);       // 1418
+  et_sym_FR_shared   = new SharedArrayBuffer(SLICE_PRM * E_TWIST * 2);  // 1980 
+
+  if (EPT_OP_METHOD == 1)
+    ept_min_op_shared = new SharedArrayBuffer(EP_MULTI_MIN_OP*E_TWIST); // 4116
+  else
+    ept_min_op_shared = new SharedArrayBuffer(N_EPT_MIN_OP*E_TWIST);    // 2580
+
+  if (ET_SYM_METHOD == 1) 
+    et_sym_UF_shared = new SharedArrayBuffer(SLICE_PRM * E_TWIST * 2);  // 1980 
+  else
+    et_sym_UF_shared = new SharedArrayBuffer(E_TWIST * 2);              //    4
 
   gdone_shared = new SharedArrayBuffer(1);
   gdone = new Uint8Array(gdone_shared);
@@ -519,6 +551,17 @@ function send_init_request_to_workers() {
       'dist2': dist2_shared,
       'dist3': dist3_shared,
       'distp2': distp2_shared,
+      'ept_min_op' : ept_min_op_shared,
+      'ept_min_ops' : ept_min_ops_shared,
+      'ept_op_idx' : ept_op_idx_shared,
+      'ept_ops_ix1' : ept_ops_ix1_shared,
+      'ept_ops_ix2' : ept_ops_ix2_shared,
+      'ep_mov' : ep_mov_shared,
+      'cp6c_mov' : cp6c_mov_shared,
+      'cpt_min' : cpt_min_shared,
+      'et_sym' : et_sym_shared,
+      'et_sym_FR' : et_sym_FR_shared,
+      'et_sym_UF' : et_sym_UF_shared,
       'dist_files_loaded': dist_files_loaded,
       'dist_gen_depth': dist_gen_depth,
       'conc': conc,

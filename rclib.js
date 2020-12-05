@@ -117,7 +117,8 @@ function init2()
 	}
     }
 
-  for(i=0; i < E_PRM; i++)
+  if (typeof(worker) == 'undefined' || worker == 1) {
+    for(i=0; i < E_PRM; i++)
     {
       int_to_strp(ep_b3[i], s, 11, 3);
 
@@ -129,6 +130,7 @@ function init2()
 	  ep_mov[i*MOVES+j] = b3_ep[str_to_int(tmp,11,3)];
 	}		
     }
+  }
 
   for(i=0; i < E_TWIST; i++)
     {
@@ -627,8 +629,8 @@ function populate_et_sym()
   else
     populate_et_sym_UF_m2();
 
-  if (ET_SYM_METHOD == 3)
-    populate_et_fr();
+  // if (ET_SYM_METHOD == 3)
+  //   populate_et_fr();
    
   update_et_sym();
 
@@ -716,7 +718,7 @@ function populate_et_sym_UF_m2() {
   // populated.push("et_sym_UF");
 }
 
-function populate_et_fr() {
+/* function populate_et_fr() {
   for (var i=0; i < SLICE_PRM; i++)
     for (var j=0; j < E_TWIST; j+=16) {
       var n = et_sym_FR[i*E_TWIST + j];
@@ -725,7 +727,7 @@ function populate_et_fr() {
         for (var k=0; k < 16; k++)
           et_fr[n*16 + k] = et_sym_FR[i*E_TWIST + j+k];
     } 
-}
+} */
 
 function dependency(arr, func) {
   // functions can check dependencies here (for arrays not already populated by init2)
@@ -817,12 +819,12 @@ function get_etsym_m2(ep, et, op) {
     et_sym[et_sym_FR[ep_slice[ep*3+1]*E_TWIST+et]*CUBE_SYM+op]));
 }
 
-function get_etsym_m3(ep, et, op) {
+/* function get_etsym_m3(ep, et, op) {
   return ((op16e[op*2] == 0) ? et_sym[et*CUBE_SYM+op] :
     ((op16e[op*2] == OP_FR) ?
     et_sym[et_fr[(et_fr_ix[(ep_slice[ep*3]<<7)+(et>>4)]<<4)+(et&0xF)]*CUBE_SYM+op] :
     et_sym[et_fr[(et_fr_ix[(ep_slice[ep*3+1]<<7)+(et>>4)]<<4)+(et&0xF)]*CUBE_SYM+op]));
-}
+} */
 
 function get_ctsym_m1(cpt, op) {
   return cpt_sym[cpt*CUBE_SYM + op];
