@@ -106,10 +106,10 @@ if (ET_SYM_METHOD == 1)
 else
   var et_sym_UF = new Uint16Array(E_TWIST);               //     4
 
-if (ET_SYM_METHOD == 3) {
+/* if (ET_SYM_METHOD == 3) {
  var et_fr = new Uint16Array(E_TWIST*16);                 //    64
  var et_fr_ix = new Uint16Array(SLICE_PRM*E_TWIST/16);    //   124
-}
+} */
 
 // Used 6% of the time 2058/34650
 var ept_ops_ix1 = new Int8Array(MIN_EP);                  //     1

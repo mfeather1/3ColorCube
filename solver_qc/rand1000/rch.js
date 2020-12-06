@@ -3,10 +3,11 @@
 var CT_SYM_METHOD = 3;      // Method 2 replaces cpt_sym (14 MB) with cpt_sym2 (318 KB) and cpt_min (600 KB)
                             // Method 3 uses ct_sym (205 KB) and ct_fb_ud (300 KB)
 
-var ET_SYM_METHOD = 2;      // Method 2 eliminates et_sym_UF (used only during init, reduced to 4 KB)
+var ET_SYM_METHOD = 3;      // Methods 2 and 3 eliminate et_sym_UF (used only during init)
+                            // Method 3 replaces et_sym_FR (2 MB) with et_fr (64 KB) and et_fr_ix (124 KB)
 
-var EPT_OP_METHOD = 1;      // Method 2 reduces ept_min_op from 4 MB to 2.5 MB, uses 8 MB of temp files
-                            // during initialization, takes slightly longer to init 
+var EPT_OP_METHOD = 1;      // Method 2 reduces ept_min_op from 4 MB to 2.5 MB, uses 8 MB
+                            // of temp files during initialization
 
 var show_init_time_details = 0;
 
@@ -39,6 +40,8 @@ var N_EPT_MIN_OP    = 1290  // #rows in ept_min_op (deduplicated)
 var N_EPT_MIN_OPS   = 7331; // #rows in ept_min_ops
 var N_EPT_OPS_IX2   = 103;  // #rows in ept_ops_ix2
 
+var cfg_idx = 0;
+
 // Arrays with size less than 1 KB
 
 var flip        = new Uint8Array([1,0]);
@@ -54,45 +57,90 @@ var edg         = new Uint8Array(24);
 var cnr2        = new Uint8Array(24); 
 var edg2        = new Uint8Array(24); 
 var inv_op      = new Uint8Array(CUBE_SYM);
+var ct_op_type  = new Uint8Array(CUBE_SYM);
 var cubestr     = new Uint8Array(FACELETS);
 var cp_b2       = new Uint8Array(C_PRM);
+var op16e       = new Uint8Array(CUBE_SYM * 2);
 var b2_cp       = new Uint8Array(B2_MAX);
 var cmv         = new Uint8Array(MOVES * 8);
 var emv         = new Uint8Array(MOVES * 12);
 var mvlist1     = new Int8Array(3);
 var mvlist2     = new Int8Array(MOVES+1);
 
-// Arrays larger than 1 KB, see solve.html for shared arrays
-//                                                            Size(KB)
+var ctw = [];  // array of pointers to functions
+var etw = [];
+
+//                                                           Size(KB)
+var cp_mov      = new Uint8Array(C_PRM * MOVES);          //     1
 var min_ep      = new Uint16Array(MIN_EP);                //     2
 var op_op       = new Uint8Array(CUBE_SYM*CUBE_SYM);      //     2
 var slice_ep    = new Uint16Array(SLICE_PRM * 3);         //     3
 var map         = new Uint8Array(CUBE_SYM * FACELETS);    //     3
+var cp_sym      = new Uint8Array(C_PRM*CUBE_SYM);         //     3
 var b2_slice    = new Uint16Array(4096);                  //     8
+var ep_min_op   = new Uint8Array(E_PRM);                  //    34
 var cp6c_cp3c   = new Uint8Array(C_PERM);                 //    40 
+var ep_min      = new Uint16Array(E_PRM);                 //    68
+var ept_op_idx  = new Int16Array(E_PRM);                  //    68
+var et_mov      = new Uint16Array(E_TWIST * MOVES);       //    72
+var ct_mov      = new Uint16Array(C_TWIST * MOVES);       //    77 
+var cp6c_cpr    = new Uint16Array(C_PERM);                //    80 
 var ep_b3       = new Uint32Array(E_PRM);                 //   135
+var et_sym      = new Uint16Array(E_TWIST * CUBE_SYM);    //   192
+var ep_slice    = new Uint16Array(E_PRM * 3);             //   203
+var epr_mov     = new Uint8Array(SLICE_PRM*24*MOVES);     //   209
 var b3_ep       = new Uint16Array(B3_MAX);                //   346
+var cpt_min     = new Uint16Array(C_PRM_TW * 2);          //   600
+var ep_mov      = new Uint16Array(E_PRM * MOVES);         //  1218
+var cp6c_mov    = new Uint16Array(C_PERM * MOVES);        //  1418
+var et_sym_FR   = new Uint16Array(SLICE_PRM * E_TWIST);   //  1980
 
-/* not used
+if (CT_SYM_METHOD == 1) 
+  var cpt_sym   = new Uint16Array(C_PRM_TW * CUBE_SYM);   // 14352
+else if (CT_SYM_METHOD == 2)
+  var cpt_sym2  = new Uint16Array(MIN_CPT * CUBE_SYM);    //   318
+else {
+  var ct_sym    = new Uint16Array(C_TWIST * CUBE_SYM);    //   205 
+  var ct_fb_ud  = new Uint16Array(C_PRM * C_TWIST);       //   300
+}
+
+if (ET_SYM_METHOD == 1) 
+  var et_sym_UF = new Uint16Array(SLICE_PRM * E_TWIST);   //  1980 
+else
+  var et_sym_UF = new Uint16Array(E_TWIST);               //     4
+
 if (ET_SYM_METHOD == 3) {
  var et_fr = new Uint16Array(E_TWIST*16);                 //    64
  var et_fr_ix = new Uint16Array(SLICE_PRM*E_TWIST/16);    //   124
-}  
-var ep_sym      = new Uint16Array(E_PRM * CUBE_SYM);      //  3248 
-*/
+}
 
-/* Cube Layout:
+// Used 6% of the time 2058/34650
+var ept_ops_ix1 = new Int8Array(MIN_EP);                  //     1
+var ept_ops_ix2 = new Int16Array(N_EPT_OPS_IX2*E_TWIST);  //   412
 
-          00 01 02
-          03 04 05
-          06 07 08
- 09 10 11 12 13 14 15 16 17 18 19 20
- 21 22 23 24 25 26 27 28 29 30 31 32
- 33 34 35 36 37 38 39 40 41 42 43 44
-          45 46 47
-          48 49 50
-          51 52 53
-*/
+// Used 6% of the time (same as above)
+if (EPT_OP_METHOD == 1)
+var ept_min_op  = new Int8Array(EP_MULTI_MIN_OP*E_TWIST); //  4116
+else
+var ept_min_op  = new Int8Array(N_EPT_MIN_OP*E_TWIST);    //  2580
+
+// Used rarely (.24% of the time 170928/70963200)
+var ept_min_ops = new Uint16Array(N_EPT_MIN_OPS * 27);    //   387
+
+// var ep_sym      = new Uint16Array(E_PRM * CUBE_SYM);   //  3248 
+
+// Cube Layout:
+//
+//          00 01 02
+//          03 04 05
+//          06 07 08
+// 09 10 11 12 13 14 15 16 17 18 19 20
+// 21 22 23 24 25 26 27 28 29 30 31 32
+// 33 34 35 36 37 38 39 40 41 42 43 44
+//          45 46 47
+//          48 49 50
+//          51 52 53
+
 var center_idx = [4,22,25,28,31,49];
 
 var cnr_idx = new Uint8Array 
@@ -119,6 +167,14 @@ var reflect = new Uint8Array([
   12,13,14,15,16,17,18,19,20, 6, 7, 8, 3, 4, 5, 0, 1, 2]);
 
 var seq_gen = [];
-var logtxt = [];
+var populated = [];
 var logwin;
-var cfg_idx = 0;
+var logtxt = [];
+var solution = [];
+var get_etsym;
+var get_ctsym;
+var color;
+var first_time = 1;
+var gtime0;
+var init_time;
+var search_time;

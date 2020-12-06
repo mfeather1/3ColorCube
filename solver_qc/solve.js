@@ -50,6 +50,10 @@ var worker_node_count = 0;
 var worker_nodes = [];
 var gdone;
 var conc;
+var get_etsym, get_ctsym;
+var search_time;
+var first_time = 1;
+var solution = [];
 var uniq_nodes = 244;  // unique 3-color nodes at depth 4
 
 // shared arrays
@@ -58,6 +62,11 @@ var ept_min_op, ept_min_ops, ept_op_idx;
 var ept_ops_ix1, ept_ops_ix2;
 var ep_mov, cp6c_mov, cpt_min;
 var et_sym, et_sym_FR, et_sym_UF;
+var ep_slice, epr_mov;
+var cp_mov, et_mov, ct_mov;
+var ep_min, ep_min_op, cp_sym;
+var cpt_sym, cpt_sym2, ct_sym, ct_fb_ud;
+var ct_op_type, op16e, cp6c_cpr;
 
 // If the last move of the 3-color solution is to the same face as the
 // first move of the 6-color solution (phase 2) then the two moves are
@@ -94,9 +103,28 @@ function ipc(e) {
     et_sym = new Uint16Array(e.data.et_sym);
     et_sym_FR = new Uint16Array(e.data.et_sym_FR);
     et_sym_UF = new Uint16Array(e.data.et_sym_UF);
+    ep_slice = new Uint16Array(e.data.ep_slice);
+    epr_mov = new Uint8Array(e.data.epr_mov);
+    cp_mov = new Uint8Array(e.data.cp_mov);
+    ct_mov = new Uint16Array(e.data.ct_mov);
+    et_mov = new Uint16Array(e.data.et_mov);
+    ep_min = new Uint16Array(e.data.ep_min);
+    ep_min_op = new Uint8Array(e.data.ep_min_op);
+    cp_sym = new Uint8Array(e.data.cp_sym);
+    op16e = new Uint8Array(e.data.op16e);
+    cp6c_cpr = new Uint16Array(e.data.cp6c_cpr);
     dist_files_loaded = e.data.dist_files_loaded;
     dist_gen_depth = e.data.dist_gen_depth;
     conc = e.data.conc;
+    if (CT_SYM_METHOD == 1)
+      cpt_sym = new Uint16Array(e.data.cpt_sym);
+    else if (CT_SYM_METHOD == 2)
+      cpt_sym2 = new Uint16Array(e.data.cpt_sym2);
+    else {
+      ct_sym = new Uint16Array(e.data.ct_sym);
+      ct_fb_ud = new Uint16Array(e.data.ct_fb_ud);
+      ct_op_type = new Uint8Array(e.data.ct_op_type);
+    }
     init();
     postMessage({'cmd': 'init_done', 'worker': worker});
   }
@@ -502,39 +530,35 @@ function init()
     get_etsym = get_etsym_m1;
   else if (ET_SYM_METHOD == 2)
     get_etsym = get_etsym_m2;
-  else
-    get_etsym = get_etsym_m3;
   init2();
   init_seq();
   set_colors_3c(0, 1, 2);
   init_map(map, sym_op_FR, sym_op_UR, reflect);
   populate_op_tables();
-  populate_ep_min();
-  populate_min_ep();
-  populate_cp_sym();
   if (worker == 1) {
+    populate_cp_sym();
+    populate_ep_min();
     populate_et_sym();
     populate_ept_min_op();
     populate_cpt_min();
     populate_ept_ops_indexes();
     populate_cp6c_mov();
+    populate_epr_mov();
+    if (CT_SYM_METHOD == 1)
+      populate_cpt_sym();
+    else if (CT_SYM_METHOD == 2)
+      populate_cpt_sym2();
+    else {
+      populate_ct_sym();
+      update_ct_sym();
+    }
   }
-  else
-    init_op16e();
-  if (CT_SYM_METHOD == 1) {
-    populate_cpt_sym();
+  if (CT_SYM_METHOD == 1)
     get_ctsym = get_ctsym_m1;
-  }
-  else if (CT_SYM_METHOD == 2) {
-    populate_cpt_sym2();
+  else if (CT_SYM_METHOD == 2)
     get_ctsym = get_ctsym_m2;
-  }
-  else {
-    populate_ct_sym();
-    update_ct_sym();
+  else
     get_ctsym = get_ctsym_m3;
-  }
-  populate_epr_mov();
 }
 
 function show_files_loaded() {

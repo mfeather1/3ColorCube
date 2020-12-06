@@ -22,7 +22,6 @@ var depth2 = 0;
 var dist_gen_depth = 8;
 var distp2_gen_depth = 8;
 var search_depth = 18;
-var minmv = 99;
 var count = new Uint32Array(4);
 var count2 = new Uint32Array(4);
 var seq = new Uint8Array(20);
@@ -32,12 +31,12 @@ var done  = 0;
 var done2 = 0;
 var auto_extend_search = 0;
 var time_format = 0;
-var load_dist_files = 0;
 var dist_files_loaded = 0;
 var show_phase2_counts = 0;
 var dist_loaded = [0, 0, 0];
 var dist3_gen_depth = 0;
-var dist1, dist2, dist3, distp, distp2;
+var minmv;
+var dist1, dist2, dist3, distp2;
 var USE_DIST3 = 0;
 var disp = ['R','L','U','D','F','B'];
 var disp2 = [' ','2','\''];
@@ -46,7 +45,13 @@ var show_methods = 0;
 var stl = 5;
 var stoplen = 0;
 var init_done = 0;
-var sol_dep1, sol_dep2, p1_nodes;
+var sol_dep1, sol_dep2;
+var worker, worker_mvlist;
+var worker_node_count = 0;
+var worker_nodes = [];
+var gdone;
+var conc;
+var uniq_nodes = 244;  // unique 3-color nodes at depth 4
 
 // If the last move of the 3-color solution is to the same face as the
 // first move of the 6-color solution (phase 2) then the two moves are
@@ -64,82 +69,121 @@ addEventListener('message', ipc);
 
 function ipc(e) {
   var cmd = e.data.cmd;
+
+  if (cmd == 'init') {
+    worker = e.data.worker;
+    postMessage({'cmd': 'msg', 'msg': 'Initializing'});
+    dist1 = new Uint8Array(e.data.dist1);
+    dist2 = new Uint8Array(e.data.dist2);
+    dist3 = new Uint8Array(e.data.dist3);
+    distp2 = new Uint8Array(e.data.distp2);
+    dist_files_loaded = e.data.dist_files_loaded;
+    dist_gen_depth = e.data.dist_gen_depth;
+    conc = e.data.conc;
+    init();
+    postMessage({'cmd': 'init_done', 'worker': worker});
+  }
+
+  if (cmd == 'mkd_dep8') {
+    var msg = 'Making Search Arrays<br>Generating to Depth ' + dist_gen_depth;
+    postMessage({'cmd': 'msg', 'msg': msg});
+    populate_dist_arrays(1, 8);
+    postMessage({'cmd': 'mkd_dep8_done'});
+  }
+
+  if (cmd == 'mkd_dep9') {
+    worker = e.data.worker;
+    if (worker == 1) {
+      var msg = 'Making Search Arrays<br>Generating to Depth 9';
+      postMessage({'cmd': 'msg', 'msg': msg});
+    }
+    populate_worker_nodes();
+    populate_dist_arrays(9, 9);
+    postMessage({'cmd': 'mkd_dep9_done', 'worker': worker});
+  }
+
+  if (cmd == 'mkdp2') {
+    update_dist_arrays();
+    populate_distp2();
+    postMessage({'cmd': 'mkdp2_done'});
+  }
+
   if (cmd == 'solve') {
-    gtime0 = Date.now();
     var facelets = e.data.facelets;
     stl = e.data.stl;
-    dist_gen_depth = e.data.dist_gen_depth;
     stoplen = e.data.stoplen;
-    load_dist_files = e.data.load_dist_files;
     USE_DIST3 = e.data.use_dist3;
-    logtxt.length = 0;
-    show_cube_layout(facelets);
-    if (init_done == 0) {
-      postMessage({'cmd': 'msg', 'msg': 'Initializing'});
-      init();
-      var msg = 'Making Search Arrays<br>Generating to Depth ' + dist_gen_depth;
-      if (dist_gen_depth == 9)
-        msg += '<br>Progress: 0%';
-      postMessage({'cmd': 'msg', 'msg': msg});
-      if (load_dist_files == 0) {
-        mkd();
-        mkdp2();
-      }
-      init_done = 1;
-    }
-    postMessage({'cmd': 'msg', 'msg': 'Searching for Solution'});
+    if (USE_DIST3 == 1)
+      dist3_gen_depth = 10;
+    worker_mvlist = e.data.mvlist;
+    gdone = new Uint8Array(e.data.gdone);
+    if (!first_time) 
+      logtxt.length = 0;
+    if (e.data.worker == 1 && gdone[0] == 0)
+      postMessage({'cmd': 'msg', 'msg': 'Searching for Solution'});
     solver_main(facelets);
     postMessage({
+      'worker': worker,
       'cmd': 'show_solution',
       'moves': solution,
       'search_time': search_time,
-      'sol_dep1' : sol_dep1,
-      'sol_dep2' : sol_dep2,
-      'p1_nodes' : p1_nodes,
+      'sol_dep1': sol_dep1,
+      'sol_dep2': sol_dep2,
       'logtxt': logtxt});
     first_time = 0;
   }
-  if (cmd == 'readfiles') {
-    dist_gen_depth = e.data.dist_gen_depth;
-    USE_DIST3 = e.data.use_dist3;
-    if (USE_DIST3 == 1) {
-      dist3_gen_depth = 10;
-      dist_loaded = [0, 0, 0, 0];
-    }
-    init_fnames()
-    readfiles(e.data.files);
+}
+
+function show_dist_counts() {
+  var count1 = [];
+  var count2 = [];
+  var count3 = [];
+  for (var i=0; i < 12; i++) {
+    count1[i] = 0;
+    count2[i] = 0;
+    count3[i] = 0;
   }
+  for (var i=0; i < dist1.length; i++) {
+    count1[dist1[i]&0xF]++;
+    count1[dist1[i]>>4]++;
+  }
+  for (var i=0; i < dist2.length; i++) {
+    count2[dist2[i]&0xF]++;
+    count2[dist2[i]>>4]++;
+  }
+  for (var i=0; i < distp2.length; i++)
+    count3[distp2[i]]++;
+  document_write('<table class=tabdata style="border-collapse:collapse;border-color:white" border=1>');
+  document_write('<tr><td colspan=4 style=text-align:center;border-color:white>Search Arrays</td></tr>');
+  document_write('<tr><td>Depth</td><td>Dist1</td><td>Dist2</td><td>DistP2</td></tr>');
+  for (i=1; i <= dist_gen_depth; i++) {
+    document_write('<tr><td>' + i + '</td><td>' + count1[i] + '</td><td>');
+    document_write(count2[i] + '</td><td>' + ((i<9)?count3[i]:'n/a') + '</td></tr>');
+  }
+  document_write('</table>'); 
+  document_write('<br>');
 }
 
 function solver_main(facelets)
 {
   stime0 = Date.now();
-  var time0 = Date.now();
 
   if (show_methods == 1) {
     document_write('CT_SYM_METHOD = ' + CT_SYM_METHOD + '<br>');
     document_write('ET_SYM_METHOD = ' + ET_SYM_METHOD + '<br>');
     document_write('EPT_OP_METHOD = ' + EPT_OP_METHOD + '<br><br>');
   }
-  if (first_time == 0) {
-    if (USE_DIST3)
-      document_write('Search Array Gen Depth = ' + dist3_gen_depth + '<br>');
+  if (first_time == 1)
+    if (dist_files_loaded == 0)
+      show_dist_counts();
     else
-      document_write('Search Array Gen Depth = ' + dist_gen_depth + '<br>');
-    
-    document_write('<br>');
-  }
+      show_files_loaded();
   document_write('Search:<br>');
   solve_cube(facelets);
-  if (first_time) {
-    var time1 = Date.now();
-    document_write(((time1-gtime0)/1000).toFixed(2) + ' Total Time<br><br>');
-  }
 }
 
 function solve_cube(facelets)
 {
-  var time0 = Date.now();
   var epr = new Uint8Array(3);
   convert_edg_6c(facelets, eps, ets);
   convert_cnr_6c(facelets, cps, cts);
@@ -154,20 +198,21 @@ function solve_cube(facelets)
   done = 0;
   done2 = 0;
   auto_extend_search = 0;
-  p1_nodes = 0;
+  solution.length = 0;
   for (depth = 1; depth <= search_depth; depth++)
   {
     if (done == 1)
       break;
     count[0] = count[1] = count[2] = 0;
-    solver_search (ep, et, cp, ct, cp6c, epr, 1, mvlist2);
-    var stat = (done == 0) ? 'completed' : 'stopped';
-    if (count[0] != 18) {
-      document_write('Depth ' + depth + ' ' + stat + ', ' +
-        count[0] + ' nodes, ' + count[1] + ' / ' + count[2] + ' tests<br>');
-      p1_nodes += count[0];
-    }
-    if (minmv == depth+1 && done == 0) {
+    solver_search (ep, et, cp, ct, cp6c, epr, 1, worker_mvlist);
+    var stat = (done == 0 && gdone[0] == 0) ? 'completed' : 'stopped';
+    if (count[0] > 18) 
+      document_write('Depth ' + depth + ' ' + stat + '<br>');
+      // node counts are disabled for quad-core because the log will only show
+      // counts for the worker that found the solution
+      // document_write('Depth ' + depth + ' ' + stat + ', ' +
+      //   count[0] + ' nodes, ' + count[1] + ' / ' + count[2] + ' tests<br>');
+    if (minmv == depth+1 && done == 0 && gdone[0] == 0) {
       document_write('Optimal Solution Found (proved optimal)<br>');
       done = 1;
     }
@@ -210,7 +255,7 @@ function show_moves()
       seq2[1] = cm;  
       sol3c[0]--;  // shorten sol3c by 1
       minmv--;
-    }
+    } 
   }
   for (var i=1; i <= sol3c[0]; i++) 
     solution[i-1] = disp[Math.floor(sol3c[i]/3)] + disp2[sol3c[i]%3];
@@ -234,7 +279,7 @@ function show_moves()
 function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
 {
   for (var i=0, mv=0; (mv=mvlist[i]) != -1; i++) {
-    if (done == 1)
+    if (done == 1 || gdone[0] == 1)
       return;
     count[0]++;
     var ep = ep_mov[epn*18+mv];
@@ -261,9 +306,7 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
             for (var j=1; j <= n; j++)
               sol3c[j] = seq[j];
             depth2 = dst;
-            // count2[0] = count2[1] = count2[2] = 0;
             solver_search2 (0, 0, 0, 0, cp6c, epr, 1, mvlist2);
-            // show_p2_counts(); 
             done2 = 0;
           }
         }
@@ -336,6 +379,7 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
 function chk_sol(cpr, epr) {
   if (cpr == 0 && epr[0] == 0 && epr[1] == 0 && epr[2] == 0) {
     show_optimal_solution();
+    document_write('Optimal Solution Found<br>');
     done = 1; 
     return 1;
   }
@@ -354,15 +398,12 @@ function solver_search2(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
   for (var i=0, mv=0; (mv=mvlist[i]) != NIL; i++) {
     if (done2 == 1)
       return;
-    // count2[0]++;
     var ep = ep_mov[epn*MOVES+mv];
     var et = et_mov[etn*MOVES+mv];
     var cp = cp_mov[cpn*MOVES+mv];
     var ct = ct_mov[ctn*MOVES+mv];
     if (n == depth2) {
-      // count2[1]++;
       if (ep == 0 && et == 0 && cp == 0 && ct == 0) {
-        // count2[2]++;
         var cp6c = cp6c_mov[cp6cn*MOVES+mv];
         var cpr = cp6c_cpr[cp6c];
         get_epr_mov(epr, epn, eprn, mv);
@@ -438,37 +479,14 @@ function show_optimal_solution() {
 // Populate Search Arrays Dist1 & Dist2
 // ----------------------------------------------------------------------------
 
-function mkd()
-{
-  var time0 = Date.now();
-  allocate_dist_arrays();
-  populate_dist_arrays();
-  var time1 = Date.now();
-  var time2 = ((time1-time0)/1000).toFixed(2);
-  var tstr2 = (time_format) ? convert_time(time2) : time2;
-  document_write(tstr2 + ' Populate Dist1 & Dist2<br><br>');
-}
-
-function mkdp2()
-{
-  var time0 = Date.now();
-  populate_distp2();
-  var time1 = Date.now();
-  var time2 = ((time1-time0)/1000).toFixed(2);
-  var time3 = ((time1-gtime0)/1000).toFixed(2); 
-  var tstr2 = (time_format) ? convert_time(time2) : time2;
-  var tstr3 = (time_format) ? convert_time(time3) : time3;
-  document_write(tstr2 + ' Populate DistP2<br><br>');
-  document_write(tstr3 + ' Init + Dist Time<br><br>');
-}
-
 function init()
 {
-  var time0 = Date.now();
   if (ET_SYM_METHOD == 1)
     get_etsym = get_etsym_m1;
   else if (ET_SYM_METHOD == 2)
     get_etsym = get_etsym_m2;
+  else
+    get_etsym = get_etsym_m3;
   init2();
   init_seq();
   set_colors_3c(0, 1, 2);
@@ -496,57 +514,28 @@ function init()
   populate_ept_ops_indexes();
   populate_cp6c_mov();
   populate_epr_mov();
-  if (dist_files_loaded) {
-    document_write('Files Loaded:<br>');
-    for (var i=0; i < fnames.length; i++)
-      document_write(fnames[i] + '<br>');
-    document_write('<br>');
-  }
-  var time1 = Date.now();
-  var time2 = ((time1-time0)/1000).toFixed(2);
-  init_time = (time_format) ? convert_time(time2) : time2;
-  document_write(init_time + ' Init Time (Move and Symmetry Tables)<br><br>');
 }
 
-function allocate_dist_arrays()
-{
-  if (dist1 == null) {                                 // MB
-    dist1  = new Uint8Array(MIN_EP*C_PRM*1094);        // 57
-    dist2  = new Uint8Array(MIN_EP*C_PRM*1024);        // 53
-    distp2 = new Uint8Array(C_PRMr*E_PRMr);            //  8
-  }
-  else if (dist1[1] != 0) {
-    if (dist_files_loaded == 0) {
-      for (var i=0; i < dist1.length; i++) dist1[i] = 0;
-      for (var i=0; i < dist2.length; i++) dist2[i] = 0;
-    }
-  }
+function show_files_loaded() {
+  init_fnames();
+  document_write('Files Loaded:<br>');
+  for (var i=0; i < fnames.length; i++)
+    document_write(fnames[i] + '<br>');
+  document_write('<br>');
 }
 
-function populate_dist_arrays()
+function populate_dist_arrays(d1, d2)
 {
   mvlist1[1] = NIL;
-  dist1[0] = 1;
-  dist2[0] = 1;
   if (USE_DIST3) 
     dist3[0] = 1;
+  for (depth = d1; depth <= d2; depth++) {
+    cfg_idx = 0;
+    mkd_search (0, 0, 0, 0, 1, mvlist1);
+  }
+}
 
-  document_write('<table class=tabdata style="border-collapse:collapse;border-color:white" border=1>');
-  document_write('<tr><td colspan=3 style=text-align:center;border-color:white>Search Arrays</td></tr>');
-
-  if (USE_DIST3) 
-    document_write('<tr><td>Depth</td><td>Dist1</td><td>Dist2</td><td>Dist3</td></tr>');
-  else  
-    document_write('<tr><td>Depth</td><td>Dist1</td><td>Dist2</td></tr>');
-
-  for (depth = 1; depth <= dist_gen_depth; depth++)
-    {
-      cfg_idx = 0;
-      count[1] = count[2] = count[3] = 0;
-      mkd_search (0, 0, 0, 0, 1, mvlist1);
-      show_line_mkd (depth);
-    }
-  document_write('</table>');
+function update_dist_arrays() {
   for (var i=0; i < dist1.length; i++) {
     if ((dist1[i]&0xF) == 0)
       dist1[i] |= dist_gen_depth+1;
@@ -561,7 +550,6 @@ function populate_dist_arrays()
   }
   dist1[0] &= 0xF0;
   dist2[0] &= 0xF0;
-  // dist3 first bit should remain set (unset means not reached)
 }
 
 function mkd_search (epn, etn, cpn, ctn, n, mvlist)
@@ -596,13 +584,11 @@ function mkd_search (epn, etn, cpn, ctn, n, mvlist)
       var dist = ((ctsym&1) ? dist1[ix]>>4 : dist1[ix]&0xF);
       if (dist == 0) {
         dist1[ix] |= ((ctsym&1)?n<<4:n);
-        count[1]++;
       }
       ix = epmin*C_PRM*1024 + cpsym*1024 + (etsym>>1);
       dist = ((etsym&1) ? dist2[ix]>>4 : dist2[ix]&0xF);
       if (dist == 0) {
         dist2[ix] |= ((etsym&1)?n<<4:n);
-        count[2]++;
       }
       if (USE_DIST3) {
         ix = epmin*C_TWIST*256 + ctsym*256 + (etsym>>3);
@@ -610,31 +596,32 @@ function mkd_search (epn, etn, cpn, ctn, n, mvlist)
         dist = dist3[ix] & tmp; 
         if (dist == 0) {
           dist3[ix] |= tmp; 
-          count[3]++;
         }
       }
     }
     else {
-       if (depth == 9 && n == 4) // progress
-        postMessage({'cmd': 'dep9stat', 'stat': Math.round(count[1]/3450000)*10});
-      if (n <= 5)
+      if (n <= 5) {
         if (chk_dup_3c(epmin, etsym, cpsym, ctsym, n)) 
           continue;
+        if (n == 4 && depth == 9) {
+          if (worker == 1)
+            dep9stat();
+          if (worker != worker_nodes[worker_node_count++])
+            continue;
+        }
+      }
       seq[n] = mv;
       mkd_search (ep, et, cp, ct, n+1, seq_gen[mv]);
     }
   }
 }
 
-function show_line_mkd (mv)
-{
-  document_write('<tr>');
-  document_write('<td style=text-align:center>' + mv + '</td>');
-  document_write('<td>' + count[1] + '</td>');
-  document_write('<td>' + count[2] + '</td>');
-  if (USE_DIST3)
-    document_write('<td>' + count[3] + '</td>');
-  document_write('</tr>');
+function dep9stat() {
+  postMessage({
+    'cmd': 'dep9stat', 
+    'count': worker_node_count, 
+    'len': worker_nodes.length
+  });
 }
 
 // ----------------------------------------------------------------------------
@@ -649,18 +636,9 @@ function populate_distp2()
   var ep = 0;
   var et = 0;
   var cp6c = 0;
-
-  document_write('<table class=tabdata style=border-collapse:collapse;border-color:white; border=1>');
-  document_write('<tr><td>Depth</td><td>DistP2</td></tr>');
-
   distp2[0] = 1;
   for (depth=1; depth <= distp2_gen_depth; depth++)
-    {
-      count[0] = 0;
-      distp2_search(ep, et, cp, ct, cp6c, epr, 1, mvlist2);
-      show_line_distp2(depth);
-    }
-  document_write('</table>');
+    distp2_search(ep, et, cp, ct, cp6c, epr, 1, mvlist2);
   for (var i=0; i < distp2.length; i++)
     if (distp2[i] == 0) 
       distp2[i] = distp2_gen_depth + 1;
@@ -732,19 +710,14 @@ function eprsum(epr)
   return(epr[0]*576 + epr[1]*24 + epr[2]);
 }
 
-function show_line_distp2 (mv)
-{
-  document_write('<tr>');
-  document_write('<td style=text-align:center>' + mv + '</td>');
-  document_write('<td>' + count[0] + '</td>');
-  document_write('</tr>');
-}
-
-function show_p2_counts()
-{
-  if (show_phase2_counts) 
-    document_write('Phase 2 solution, ' + 
-      count2[0] + ' nodes, ' + 
-      count2[1] + ' tests, ' +
-      count2[2] + ' 3C<br>');
+function populate_worker_nodes() {
+  var div = Math.floor(uniq_nodes / conc);
+  var n = uniq_nodes % conc;
+  for (var i=0, j=1; i < uniq_nodes && j <= conc; i+=div, j++) {
+    var y = (n > 0) ? 1 : 0;
+    if (n > 0) n--;
+    for (var k=i; k < i+div+y; k++)
+        worker_nodes[k] = j;
+    i += y;
+  }
 }

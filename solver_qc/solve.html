@@ -227,7 +227,6 @@ var dist_gen_depth = 0;
 var dist3_gen_depth = 0;
 var distp2_gen_depth = 0;
 var load_dist_files = 0;
-var dist1, dist2, dist3, distp2;
 var gdone, gdone_shared;
 var worker = [];
 var show_deps = true; 
@@ -236,13 +235,20 @@ var init_done = 0;
 var mkd_dep9_done = 0;
 var gtime0;
 var init_time;
+var color;
 var CUBE_HOME   = "RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO";
 var CUBE_BLANK  = "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
+
 var dist1_shared, dist2_shared, dist3_shared, distp2_shared;
 var ept_min_op_shared, ept_min_ops_shared, ept_op_idx_shared;
 var ept_ops_ix1_shared, ept_ops_ix2_shared;
 var ep_mov_shared, cp6c_mov_shared, cpt_min_shared;
 var et_sym_shared, et_sym_FR_shared, et_sym_UF_shared;
+var ep_slice_shared, epr_mov_shared;
+var cp_mov_shared, ct_mov_shared, et_mov_shared;
+var ep_min_shared, ep_min_op_shared, cp_sym_shared;
+var cpt_sym_shared, cpt_sym2_shared, ct_sym_shared, ct_fb_ud_shared;
+var ct_op_type_shared, op16e_shared, cp6c_cpr_shared;
 
 main();
 
@@ -297,9 +303,19 @@ function main() {
        CPT_SYM_METHOD=2 in which case it is used for every node 
   */
                                                                         //   KB
+  op16e_shared       = new SharedArrayBuffer(CUBE_SYM * 2);             //   .1 
   ept_ops_ix1_shared = new SharedArrayBuffer(MIN_EP);                   //    1
+  cp_mov_shared      = new SharedArrayBuffer(C_PRM * MOVES);            //    1
+  cp_sym_shared      = new SharedArrayBuffer(C_PRM*CUBE_SYM);           //    3
+  ep_min_op_shared   = new SharedArrayBuffer(E_PRM);                    //   34
+  ep_min_shared      = new SharedArrayBuffer(E_PRM * 2);                //   68
   ept_op_idx_shared  = new SharedArrayBuffer(E_PRM * 2);                //   68
+  et_mov_shared      = new SharedArrayBuffer(E_TWIST * MOVES * 2);      //   72
+  ct_mov_shared      = new SharedArrayBuffer(C_TWIST * MOVES * 2);      //   77 
+  cp6c_cpr_shared    = new SharedArrayBuffer(C_PERM * 2);               //   80 
   et_sym_shared      = new SharedArrayBuffer(E_TWIST * CUBE_SYM * 2);   //  192
+  ep_slice_shared    = new SharedArrayBuffer(E_PRM * 3 * 2);            //  203
+  epr_mov_shared     = new SharedArrayBuffer(SLICE_PRM * 24 * MOVES);   //  209
   ept_min_ops_shared = new SharedArrayBuffer(N_EPT_MIN_OPS * 27 * 2);   //  387
   ept_ops_ix2_shared = new SharedArrayBuffer(N_EPT_OPS_IX2*E_TWIST*2);  //  412
   cpt_min_shared     = new SharedArrayBuffer(C_PRM_TW * 2 * 2);         //  600
@@ -316,6 +332,16 @@ function main() {
     et_sym_UF_shared = new SharedArrayBuffer(SLICE_PRM * E_TWIST * 2);  // 1980 
   else
     et_sym_UF_shared = new SharedArrayBuffer(E_TWIST * 2);              //    4
+
+  if (CT_SYM_METHOD == 1) 
+    cpt_sym_shared   = new SharedArrayBuffer(C_PRM_TW * CUBE_SYM * 2);  // 14352
+  else if (CT_SYM_METHOD == 2)
+    cpt_sym2_shared  = new SharedArrayBuffer(MIN_CPT * CUBE_SYM * 2);   //   318
+  else {
+    ct_sym_shared    = new SharedArrayBuffer(C_TWIST * CUBE_SYM * 2);   //   205 
+    ct_fb_ud_shared  = new SharedArrayBuffer(C_PRM * C_TWIST * 2);      //   300
+    ct_op_type_shared= new SharedArrayBuffer(CUBE_SYM);
+  }
 
   gdone_shared = new SharedArrayBuffer(1);
   gdone = new Uint8Array(gdone_shared);
@@ -543,29 +569,50 @@ function solve() {
 }
 
 function send_init_request_to_workers() {
-  for (var i=1; i <= conc; i++)
-    worker[i].postMessage({
+  for (var i=1; i <= conc; i++) {
+    var msg = {
       'cmd': 'init',
       'worker': i,
       'dist1': dist1_shared,
       'dist2': dist2_shared,
       'dist3': dist3_shared,
       'distp2': distp2_shared,
-      'ept_min_op' : ept_min_op_shared,
-      'ept_min_ops' : ept_min_ops_shared,
-      'ept_op_idx' : ept_op_idx_shared,
-      'ept_ops_ix1' : ept_ops_ix1_shared,
-      'ept_ops_ix2' : ept_ops_ix2_shared,
-      'ep_mov' : ep_mov_shared,
-      'cp6c_mov' : cp6c_mov_shared,
-      'cpt_min' : cpt_min_shared,
-      'et_sym' : et_sym_shared,
-      'et_sym_FR' : et_sym_FR_shared,
-      'et_sym_UF' : et_sym_UF_shared,
+      'ept_min_op': ept_min_op_shared,
+      'ept_min_ops': ept_min_ops_shared,
+      'ept_op_idx': ept_op_idx_shared,
+      'ept_ops_ix1': ept_ops_ix1_shared,
+      'ept_ops_ix2': ept_ops_ix2_shared,
+      'ep_mov': ep_mov_shared,
+      'cp6c_mov': cp6c_mov_shared,
+      'cpt_min': cpt_min_shared,
+      'et_sym': et_sym_shared,
+      'et_sym_FR': et_sym_FR_shared,
+      'et_sym_UF': et_sym_UF_shared,
+      'ep_slice': ep_slice_shared,
+      'epr_mov': epr_mov_shared,
+      'cp_mov': cp_mov_shared,
+      'ct_mov' : ct_mov_shared,
+      'et_mov': et_mov_shared,
+      'ep_min': ep_min_shared,
+      'ep_min_op': ep_min_op_shared,
+      'cp_sym': cp_sym_shared,
+      'op16e': op16e_shared,
+      'cp6c_cpr': cp6c_cpr_shared,
       'dist_files_loaded': dist_files_loaded,
       'dist_gen_depth': dist_gen_depth,
-      'conc': conc,
-    });
+      'conc': conc
+    };
+    if (CT_SYM_METHOD == 1)
+      msg.cpt_sym = cpt_sym_shared;
+    else if (CT_SYM_METHOD == 2)
+      msg.cpt_sym2 = cpt_sym2_shared;
+    else {
+      msg.ct_sym = ct_sym_shared;
+      msg.ct_fb_ud = ct_fb_ud_shared;
+      msg.ct_op_type = ct_op_type_shared;
+    }
+    worker[i].postMessage(msg);
+  }
 }
 
 function send_solve_request_to_workers() {
@@ -778,7 +825,7 @@ function clear_status()
 {
   document.getElementById('status').innerHTML = '';
   msgtxt.length = 0;
-  solution.length = 0;
+  // solution.length = 0;
 }
 
 function cvt_to_anim(c)
