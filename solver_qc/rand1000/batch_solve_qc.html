@@ -1,18 +1,19 @@
 <!doctype html>
 <html>
 <head>
- <title> Batch Cube Solver </title>
+ <title> Quad-Core Batch Solver </title>
  <meta name="author" content="Michael Feather">
  <meta name="robots" content="nofollow">
  <link rel=icon href=../../mini_cube.png type=image/png>
- <link rel="stylesheet" type="text/css" href="../../style2.css">
  <meta name=viewport content="width=device-width, initial-scale=1">
- <script src=rch.js></script>
- <script src=rclib.js></script>
- <script src=verify.js></script>
+ <script src=../rch.js></script>
+ <script src=../../rclib.js></script>
+ <script src=../../verify.js></script>
  <script src=readfiles.js></script>
  <script src=batch_cubes.js></script>
  <style> 
+  body { margin-left: 10%; margin-right: 10%; }
+  p { margin:0; text-align: justify; }
   .sbtn {
     height:28px;
     width:74px;
@@ -29,7 +30,7 @@
 <table>
 <tr><td height=8></tr>
 <tr><td valign=top>
-<font size=+2> Batch Cube Solver </font>
+<font size=+2> Quad-Core Batch Solver </font>
 <br><br>
 <div id=btn></div>
 <button id=sbtn class="btn svw1" onclick="run_batch()">Solve</button>
@@ -80,8 +81,20 @@ var mkd_dep9_done = 0;
 var stime, gtime0;
 var init_time;
 var cube_ix = 0;
+var soln_arr = [];
 var CUBE_HOME   = "RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO";
 var CUBE_BLANK  = "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
+
+var dist1_shared, dist2_shared, dist3_shared, distp2_shared;
+var ept_min_op_shared, ept_min_ops_shared, ept_op_idx_shared;
+var ept_ops_ix1_shared, ept_ops_ix2_shared;
+var ep_mov_shared, cp6c_mov_shared, cpt_min_shared;
+var et_sym_shared, et_sym_FR_shared, et_sym_UF_shared;
+var ep_slice_shared, epr_mov_shared;
+var cp_mov_shared, ct_mov_shared, et_mov_shared;
+var ep_min_shared, ep_min_op_shared, cp_sym_shared;
+var cpt_sym_shared, cpt_sym2_shared, ct_sym_shared, ct_fb_ud_shared;
+var ct_op_type_shared, op16e_shared, cp6c_cpr_shared;
 
 main();
 
@@ -131,6 +144,46 @@ function main() {
   dist2_shared  = new SharedArrayBuffer(MIN_EP*C_PRM*1024);   //  53 MB
   distp2_shared = new SharedArrayBuffer(C_PRMr*E_PRMr);       //   8 MB
 
+  op16e_shared       = new SharedArrayBuffer(CUBE_SYM * 2);             //   .1 
+  ept_ops_ix1_shared = new SharedArrayBuffer(MIN_EP);                   //    1
+  cp_mov_shared      = new SharedArrayBuffer(C_PRM * MOVES);            //    1
+  cp_sym_shared      = new SharedArrayBuffer(C_PRM*CUBE_SYM);           //    3
+  ep_min_op_shared   = new SharedArrayBuffer(E_PRM);                    //   34
+  ep_min_shared      = new SharedArrayBuffer(E_PRM * 2);                //   68
+  ept_op_idx_shared  = new SharedArrayBuffer(E_PRM * 2);                //   68
+  et_mov_shared      = new SharedArrayBuffer(E_TWIST * MOVES * 2);      //   72
+  ct_mov_shared      = new SharedArrayBuffer(C_TWIST * MOVES * 2);      //   77 
+  cp6c_cpr_shared    = new SharedArrayBuffer(C_PERM * 2);               //   80 
+  et_sym_shared      = new SharedArrayBuffer(E_TWIST * CUBE_SYM * 2);   //  192
+  ep_slice_shared    = new SharedArrayBuffer(E_PRM * 3 * 2);            //  203
+  epr_mov_shared     = new SharedArrayBuffer(SLICE_PRM * 24 * MOVES);   //  209
+  ept_min_ops_shared = new SharedArrayBuffer(N_EPT_MIN_OPS * 27 * 2);   //  387
+  ept_ops_ix2_shared = new SharedArrayBuffer(N_EPT_OPS_IX2*E_TWIST*2);  //  412
+  cpt_min_shared     = new SharedArrayBuffer(C_PRM_TW * 2 * 2);         //  600
+  ep_mov_shared      = new SharedArrayBuffer(E_PRM * MOVES * 2);        // 1218
+  cp6c_mov_shared    = new SharedArrayBuffer(C_PERM * MOVES * 2);       // 1418
+  et_sym_FR_shared   = new SharedArrayBuffer(SLICE_PRM * E_TWIST * 2);  // 1980 
+
+  if (EPT_OP_METHOD == 1)
+    ept_min_op_shared = new SharedArrayBuffer(EP_MULTI_MIN_OP*E_TWIST); // 4116
+  else
+    ept_min_op_shared = new SharedArrayBuffer(N_EPT_MIN_OP*E_TWIST);    // 2580
+
+  if (ET_SYM_METHOD == 1) 
+    et_sym_UF_shared = new SharedArrayBuffer(SLICE_PRM * E_TWIST * 2);  // 1980 
+  else
+    et_sym_UF_shared = new SharedArrayBuffer(E_TWIST * 2);              //    4
+
+  if (CT_SYM_METHOD == 1) 
+    cpt_sym_shared   = new SharedArrayBuffer(C_PRM_TW * CUBE_SYM * 2);  // 14352
+  else if (CT_SYM_METHOD == 2)
+    cpt_sym2_shared  = new SharedArrayBuffer(MIN_CPT * CUBE_SYM * 2);   //   318
+  else {
+    ct_sym_shared    = new SharedArrayBuffer(C_TWIST * CUBE_SYM * 2);   //   205 
+    ct_fb_ud_shared  = new SharedArrayBuffer(C_PRM * C_TWIST * 2);      //   300
+    ct_op_type_shared= new SharedArrayBuffer(CUBE_SYM);
+  }
+
   gdone_shared = new SharedArrayBuffer(1);
   gdone = new Uint8Array(gdone_shared);
 
@@ -174,7 +227,7 @@ function main() {
     document.getElementById('sbtn').style.display = 'none';
   }
 
-  if (cube_format != '0' && cube_format != '1' && cube_format != '2')
+  if (cube_format < '0' || cube_format > '3')
     cube_format = 2;
 }
 
@@ -226,18 +279,50 @@ function run_batch() {
 }
 
 function send_init_request_to_workers() {
-  for (var i=1; i <= conc; i++)
-    worker[i].postMessage({
+  for (var i=1; i <= conc; i++) {
+    var msg = {
       'cmd': 'init',
       'worker': i,
       'dist1': dist1_shared,
       'dist2': dist2_shared,
       'dist3': dist3_shared,
       'distp2': distp2_shared,
+      'ept_min_op': ept_min_op_shared,
+      'ept_min_ops': ept_min_ops_shared,
+      'ept_op_idx': ept_op_idx_shared,
+      'ept_ops_ix1': ept_ops_ix1_shared,
+      'ept_ops_ix2': ept_ops_ix2_shared,
+      'ep_mov': ep_mov_shared,
+      'cp6c_mov': cp6c_mov_shared,
+      'cpt_min': cpt_min_shared,
+      'et_sym': et_sym_shared,
+      'et_sym_FR': et_sym_FR_shared,
+      'et_sym_UF': et_sym_UF_shared,
+      'ep_slice': ep_slice_shared,
+      'epr_mov': epr_mov_shared,
+      'cp_mov': cp_mov_shared,
+      'ct_mov' : ct_mov_shared,
+      'et_mov': et_mov_shared,
+      'ep_min': ep_min_shared,
+      'ep_min_op': ep_min_op_shared,
+      'cp_sym': cp_sym_shared,
+      'op16e': op16e_shared,
+      'cp6c_cpr': cp6c_cpr_shared,
       'dist_files_loaded': dist_files_loaded,
       'dist_gen_depth': dist_gen_depth,
-      'conc': conc,
-    });
+      'conc': conc
+    };
+    if (CT_SYM_METHOD == 1)
+      msg.cpt_sym = cpt_sym_shared;
+    else if (CT_SYM_METHOD == 2)
+      msg.cpt_sym2 = cpt_sym2_shared;
+    else {
+      msg.ct_sym = ct_sym_shared;
+      msg.ct_fb_ud = ct_fb_ud_shared;
+      msg.ct_op_type = ct_op_type_shared;
+    }
+    worker[i].postMessage(msg);
+  }
 }
 
 function send_solve_request_to_workers() {
@@ -367,8 +452,15 @@ function ipc(e) {
       }
       show_solution(worker_status[idx]);
       if (cube_ix+1 == batch_cubes.length) {
+        if (cube_format == 3) {
+          var s0 = document.getElementById('status').innerHTML;
+          document.getElementById('status').innerHTML = s0 + soln_arr.join(' ');
+        }
         var time = ((Date.now() - gtime0)/1000).toFixed(2);
-        msg2('Total Time: ' + time);
+        if (cube_format == 1 || cube_format == 2)
+          msg2('Total Time: ' + time);
+        else
+          msg2('<br>Total Time: ' + time);
         sbtn_inactive();
       }
       else {
@@ -405,14 +497,25 @@ function heading() {
     msg2('Search Time Limit: ' + stl + '<br>');
     msg2('Stop Length: ' + stoplen + '<br><br>');
     var t1 = ((init_time - gtime0)/1000).toFixed(2);
-    msg2('Init Time: ' + t1 + '<br>');
     if (load_dist_files == 0) {
       var t2 = ((Date.now() - init_time)/1000).toFixed(2);
       var t3 = ((Date.now() - gtime0)/1000).toFixed(2);
+      msg2('Init Time: ' + t1 + '<br>');
       msg2('Dist  Time: ' + t2 + '<br>');
       msg2('Init + Dist Time: ' + t3 + '<br>');
     }
+    else {
+      show_files_loaded();
+      msg2('Init Time: ' + t1 + '<br>');
+    }
     msg2('<br>');
+}
+
+function show_files_loaded() {
+  msg2('Files Loaded:<br>');
+  for (var i=0; i < fnames.length; i++)
+    msg2(fnames[i] + '<br>');
+  msg2('<br>');
 }
 
 function msg(s) {
@@ -421,9 +524,9 @@ function msg(s) {
 
 function show_solution(e)
 {
-  if (cube_format > 0)
+  if (cube_format == 1 || cube_format == 2)
     msg2('Cube ' + (cube_ix+1) + ':<br>');
-  if (cube_format == 0)
+  if (cube_format == 0 || cube_format == 3)
     var cube_text = '';
   else if (cube_format == 1)
     cube_text = facelets + '<br>';
@@ -434,10 +537,13 @@ function show_solution(e)
   var len = ' (' + moves.length + 'f)';
   var time = ((Date.now() - stime)/1000).toFixed(2);
   var str = cube_text + moves.join(' ') + sol_deps + len + ' ' + time + '<br>';
-  if (cube_format == 0)
-    msg2(str);
+  if (cube_format == 3)
+    soln_arr.push(str);
   else
-    msg2(str + '<br>');
+    if (cube_format == 0)
+      msg2(str);
+    else
+      msg2(str + '<br>');
 }
 
 function msg(s) {

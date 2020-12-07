@@ -51,7 +51,23 @@ var worker_node_count = 0;
 var worker_nodes = [];
 var gdone;
 var conc;
+var get_etsym, get_ctsym;
+var search_time;
+var first_time = 1;
+var solution = [];
 var uniq_nodes = 244;  // unique 3-color nodes at depth 4
+
+// shared arrays
+var dist1, dist2, dist3, distp2;
+var ept_min_op, ept_min_ops, ept_op_idx;
+var ept_ops_ix1, ept_ops_ix2;
+var ep_mov, cp6c_mov, cpt_min;
+var et_sym, et_sym_FR, et_sym_UF;
+var ep_slice, epr_mov;
+var cp_mov, et_mov, ct_mov;
+var ep_min, ep_min_op, cp_sym;
+var cpt_sym, cpt_sym2, ct_sym, ct_fb_ud;
+var ct_op_type, op16e, cp6c_cpr;
 
 // If the last move of the 3-color solution is to the same face as the
 // first move of the 6-color solution (phase 2) then the two moves are
@@ -61,8 +77,8 @@ var uniq_nodes = 244;  // unique 3-color nodes at depth 4
 
 var show_combine = 0;
 
-importScripts('rch.js');
-importScripts('rclib.js');
+importScripts('../rch.js');
+importScripts('../../rclib.js');
 importScripts('readfiles.js');
 
 addEventListener('message', ipc);
@@ -77,9 +93,39 @@ function ipc(e) {
     dist2 = new Uint8Array(e.data.dist2);
     dist3 = new Uint8Array(e.data.dist3);
     distp2 = new Uint8Array(e.data.distp2);
+    ept_min_op = new Int8Array(e.data.ept_min_op);
+    ept_min_ops = new Uint16Array(e.data.ept_min_ops);
+    ept_op_idx = new Int16Array(e.data.ept_op_idx);
+    ept_ops_ix1 = new Int8Array(e.data.ept_ops_ix1);
+    ept_ops_ix2 = new Int16Array(e.data.ept_ops_ix2);
+    ep_mov = new Uint16Array(e.data.ep_mov);
+    cp6c_mov = new Uint16Array(e.data.cp6c_mov);
+    cpt_min = new Uint16Array(e.data.cpt_min);
+    et_sym = new Uint16Array(e.data.et_sym);
+    et_sym_FR = new Uint16Array(e.data.et_sym_FR);
+    et_sym_UF = new Uint16Array(e.data.et_sym_UF);
+    ep_slice = new Uint16Array(e.data.ep_slice);
+    epr_mov = new Uint8Array(e.data.epr_mov);
+    cp_mov = new Uint8Array(e.data.cp_mov);
+    ct_mov = new Uint16Array(e.data.ct_mov);
+    et_mov = new Uint16Array(e.data.et_mov);
+    ep_min = new Uint16Array(e.data.ep_min);
+    ep_min_op = new Uint8Array(e.data.ep_min_op);
+    cp_sym = new Uint8Array(e.data.cp_sym);
+    op16e = new Uint8Array(e.data.op16e);
+    cp6c_cpr = new Uint16Array(e.data.cp6c_cpr);
     dist_files_loaded = e.data.dist_files_loaded;
     dist_gen_depth = e.data.dist_gen_depth;
     conc = e.data.conc;
+    if (CT_SYM_METHOD == 1)
+      cpt_sym = new Uint16Array(e.data.cpt_sym);
+    else if (CT_SYM_METHOD == 2)
+      cpt_sym2 = new Uint16Array(e.data.cpt_sym2);
+    else {
+      ct_sym = new Uint16Array(e.data.ct_sym);
+      ct_fb_ud = new Uint16Array(e.data.ct_fb_ud);
+      ct_op_type = new Uint8Array(e.data.ct_op_type);
+    }
     init();
     postMessage({'cmd': 'init_done', 'worker': worker});
   }
@@ -134,51 +180,9 @@ function ipc(e) {
   }
 }
 
-function show_dist_counts() {
-  var count1 = [];
-  var count2 = [];
-  var count3 = [];
-  for (var i=0; i < 12; i++) {
-    count1[i] = 0;
-    count2[i] = 0;
-    count3[i] = 0;
-  }
-  for (var i=0; i < dist1.length; i++) {
-    count1[dist1[i]&0xF]++;
-    count1[dist1[i]>>4]++;
-  }
-  for (var i=0; i < dist2.length; i++) {
-    count2[dist2[i]&0xF]++;
-    count2[dist2[i]>>4]++;
-  }
-  for (var i=0; i < distp2.length; i++)
-    count3[distp2[i]]++;
-  document_write('<table class=tabdata style="border-collapse:collapse;border-color:white" border=1>');
-  document_write('<tr><td colspan=4 style=text-align:center;border-color:white>Search Arrays</td></tr>');
-  document_write('<tr><td>Depth</td><td>Dist1</td><td>Dist2</td><td>DistP2</td></tr>');
-  for (i=1; i <= dist_gen_depth; i++) {
-    document_write('<tr><td>' + i + '</td><td>' + count1[i] + '</td><td>');
-    document_write(count2[i] + '</td><td>' + ((i<9)?count3[i]:'n/a') + '</td></tr>');
-  }
-  document_write('</table>'); 
-  document_write('<br>');
-}
-
 function solver_main(facelets)
 {
   stime0 = Date.now();
-
-  if (show_methods == 1) {
-    document_write('CT_SYM_METHOD = ' + CT_SYM_METHOD + '<br>');
-    document_write('ET_SYM_METHOD = ' + ET_SYM_METHOD + '<br>');
-    document_write('EPT_OP_METHOD = ' + EPT_OP_METHOD + '<br><br>');
-  }
-  if (first_time == 1)
-    if (dist_files_loaded == 0)
-      show_dist_counts();
-    else
-      show_files_loaded();
-  document_write('Search:<br>');
   solve_cube(facelets);
 }
 
@@ -206,37 +210,19 @@ function solve_cube(facelets)
     count[0] = count[1] = count[2] = 0;
     solver_search (ep, et, cp, ct, cp6c, epr, 1, worker_mvlist);
     var stat = (done == 0 && gdone[0] == 0) ? 'completed' : 'stopped';
-    if (count[0] > 18) 
-      document_write('Depth ' + depth + ' ' + stat + '<br>');
-      // node counts are disabled for quad-core because the log will only show
-      // counts for the worker that found the solution
-      // document_write('Depth ' + depth + ' ' + stat + ', ' +
-      //   count[0] + ' nodes, ' + count[1] + ' / ' + count[2] + ' tests<br>');
     if (minmv == depth+1 && done == 0 && gdone[0] == 0) {
-      document_write('Optimal Solution Found (proved optimal)<br>');
       done = 1;
     }
   }
   var time1 = Date.now();
   var time2 = ((time1-stime0)/1000).toFixed(2)
   search_time = (time_format) ? convert_time(time2) : time2;
-  document_write('Solution Length Found: ' + solution.length + '<br>');
-  document_write(search_time + ' Search Time<br><br>');
 }
 
 function show_moves()
 {
   seq2[0] = depth2;
   if (Math.floor(sol3c[sol3c[0]]/3) == Math.floor(seq2[1]/3)) {
-     if (show_combine) {
-      document_write('Combine: ');
-      for (var i=1; i <= sol3c[0]; i++) 
-        document_write(disp[Math.floor(sol3c[i]/3)] + disp2[sol3c[i]%3]);
-      for (j=1; j <= depth2; i++, j++)
-        document_write(disp[Math.floor(seq2[j]/3)] + disp2[seq2[j]%3]);
-      i--;
-      document_write(' (' + i + 'f)<br>');
-    }
     var cm = combine_moves(sol3c[sol3c[0]], seq2[1]);
     if (cm == NIL) {
       // the moves cancel each other, delete both from the sequence
@@ -262,14 +248,9 @@ function show_moves()
   for (var j=1; j <= seq2[0]; i++, j++)
     solution[i-1] = disp[Math.floor(seq2[j]/3)] + disp2[seq2[j]%3];
   solution.length = i-1;
-  document_write(solution.join(' '));
   if (minmv == depth) {
-    document_write(' (' + solution.length + 'f*)<br>');
-    document_write('Optimal Solution Found<br>');
     done = 1;
   }
-  else
-      document_write(' (' + solution.length + 'f)<br>');
   if (minmv <= stoplen)
     done = 1;
   sol_dep1 = depth;
@@ -329,12 +310,9 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
             if (minmv == 99) {
               if (auto_extend_search == 0) {
                 auto_extend_search = 1;
-                stl_msg(2);
               }
             }
             else {
-              if (auto_extend_search == 0)
-                stl_msg(1);
               done = 1;
             }
           }
@@ -379,17 +357,10 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
 function chk_sol(cpr, epr) {
   if (cpr == 0 && epr[0] == 0 && epr[1] == 0 && epr[2] == 0) {
     show_optimal_solution();
-    document_write('Optimal Solution Found<br>');
     done = 1; 
     return 1;
   }
   return 0;
-}
-
-function stl_msg(n) {
-  document_write('Search Time Limit Reached<br>');
-  if (n == 2)
-    document_write('Solution not found, extending search<br>');
 }
 
 function solver_search2(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
@@ -470,7 +441,6 @@ function show_optimal_solution() {
   for (var i=1; i <= depth; i++)
     solution[i-1] = disp[Math.floor(seq[i]/3)] + disp2[seq[i]%3] + ' ';
   solution.length = depth;
-  document_write(solution.join(' ') + ' (' + depth + 'f*)<br>');
   sol_dep1 = depth;
   sol_dep2 = 0;
 }
@@ -485,43 +455,35 @@ function init()
     get_etsym = get_etsym_m1;
   else if (ET_SYM_METHOD == 2)
     get_etsym = get_etsym_m2;
-  else
-    get_etsym = get_etsym_m3;
   init2();
   init_seq();
   set_colors_3c(0, 1, 2);
   init_map(map, sym_op_FR, sym_op_UR, reflect);
   populate_op_tables();
-  populate_ep_min();
-  populate_et_sym();
-  populate_min_ep();
-  populate_ept_min_op();
-  populate_cp_sym();
-  populate_cpt_min();
-  if (CT_SYM_METHOD == 1) {
-    populate_cpt_sym();
+  if (worker == 1) {
+    populate_cp_sym();
+    populate_ep_min();
+    populate_et_sym();
+    populate_ept_min_op();
+    populate_cpt_min();
+    populate_ept_ops_indexes();
+    populate_cp6c_mov();
+    populate_epr_mov();
+    if (CT_SYM_METHOD == 1)
+      populate_cpt_sym();
+    else if (CT_SYM_METHOD == 2)
+      populate_cpt_sym2();
+    else {
+      populate_ct_sym();
+      update_ct_sym();
+    }
+  }
+  if (CT_SYM_METHOD == 1)
     get_ctsym = get_ctsym_m1;
-  }
-  else if (CT_SYM_METHOD == 2) {
-    populate_cpt_sym2();
+  else if (CT_SYM_METHOD == 2)
     get_ctsym = get_ctsym_m2;
-  }
-  else {
-    populate_ct_sym();
-    update_ct_sym();
+  else
     get_ctsym = get_ctsym_m3;
-  }
-  populate_ept_ops_indexes();
-  populate_cp6c_mov();
-  populate_epr_mov();
-}
-
-function show_files_loaded() {
-  init_fnames();
-  document_write('Files Loaded:<br>');
-  for (var i=0; i < fnames.length; i++)
-    document_write(fnames[i] + '<br>');
-  document_write('<br>');
 }
 
 function populate_dist_arrays(d1, d2)

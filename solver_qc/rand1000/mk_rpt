@@ -1,0 +1,143 @@
+# This makes the Results.txt report (except the sections about hyperthreading
+# and contrived cubes which are added manually).
+
+log1=Rand1000_Depth_09.log
+log2=Rand1000_Depth_10.log
+chromium_version=86
+
+main() {
+  heading
+  f1
+  f2
+  f3
+  f4
+  f5
+  f6
+}
+
+heading() {
+  echo "
+  The following is a summary of results for two tests of Solving 1000 random 
+  cubes for solutions with 20 moves or less.  These tests were done using 
+  batch_solve_qc.html.  The logs for the two runs are:
+
+  $log1 - normal run with Dist1 & Dist2 generated to depth 9
+  $log2 - this adds Dist3 which is generated to depth 10
+
+  These tests were done on an AMD Ryzen5 3400G, 3.7Ghz Quad-Core/8 thread,
+  16 GB RAM (DDR4 2667MHz) with Chromium $chromium_version on Fedora 31."
+}
+
+f1() {
+  echo '
+  -------------------------------------------------------------------------------
+  Total & Average Time (in seconds)
+  -------------------------------------------------------------------------------'
+  tot1=`grep Tot $log1 | awk -F: '{print $NF}'`
+  tot2=`grep Tot $log2 | awk -F: '{print $NF}'`
+  avg1=`echo $tot1 | awk '{printf("%0.2f", $1/1000)}'`
+  avg2=`echo $tot2 | awk '{printf("%0.2f", $1/1000)}'`
+  echo
+  echo "                Total    Average"
+  echo "  Depth  9:   $tot1      $avg1"
+  echo "  Depth 10:   $tot2      $avg2"
+}
+
+f2() {
+  echo '
+  -------------------------------------------------------------------------------
+  Frequency Distribution of Solution Times (one second intervals)
+  -------------------------------------------------------------------------------'
+  echo
+  echo "  Depth 9"
+  echo "  --------"
+  f2b $log1 
+  echo
+  echo "  Depth 10"
+  echo "  --------"
+  f2b $log2
+}
+
+f2b() {
+  grep '\[' $1 | awk '{printf("%d\n", $NF)}' | sort -n |
+  uniq -c | awk '{printf("%3d  %d-%d\n", $1, $2, $2+1)}' |
+  sed "s/^/  /"
+}
+
+f3() {
+  echo '
+  -------------------------------------------------------------------------------
+  Top 10 Longest Solves
+  -------------------------------------------------------------------------------'
+  echo
+  echo "  Depth 9"
+  echo "  -------"
+  f3b $log1 
+  echo
+  echo
+  echo "  Depth 10"
+  echo "  --------"
+  f3b $log2
+}
+
+f3b() {
+  grep "\[" $1 | awk '{print $NF}' | sort -nr | head |
+  sed "s/^/  /"
+}
+
+f4() {
+  echo '
+  -------------------------------------------------------------------------------
+  Top 10 Shortest Solves
+  -------------------------------------------------------------------------------'
+  echo
+  echo "  Depth 9"
+  echo "  -------"
+  f4b $log1 
+  echo
+  echo
+  echo "  Depth 10"
+  echo "  --------"
+  f4b $log2
+}
+
+f4b() {
+  grep "\[" $1 | awk '{print $NF}' | sort -n | head |
+  sed "s/^/  /"
+}
+
+f5() {
+  echo '
+  -------------------------------------------------------------------------------
+  Frequency Distribution of Solution Lengths
+  -------------------------------------------------------------------------------'
+  echo
+  echo "    Depth 9"
+  echo "  -----------"
+  f5b $log1
+  echo
+  echo "    Depth 10"
+  echo "  -----------"
+  f5b $log2
+}
+
+f5b() {
+  grep "\[" $1 | awk '{print $(NF-1)}' | sort | uniq -c | sort -nr
+}
+
+f6() {
+  echo '
+  -------------------------------------------------------------------------------
+  Frequency Distribution of Solution Lengths by Phase
+  -------------------------------------------------------------------------------'
+  echo
+  echo "    Depth 9"
+  echo "  -----------"
+  fdist $log1
+  echo
+  echo "   Depth 10"
+  echo "  -----------"
+  fdist $log2
+}
+
+main

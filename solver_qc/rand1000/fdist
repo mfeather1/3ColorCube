@@ -1,5 +1,5 @@
 # This is used to make the "Frequency Distribution of Solution Lengths by Phase"
-# report shown in Stats.txt
+# report shown in Results.txt
 
 ff() {
   grep "\[" $1 |
@@ -10,7 +10,7 @@ ff() {
 }
 
 fmt() {
-  awk '{printf("%3d %d+%d %d\n", $1, $2, $3, $4)}'
+  awk '{printf("  %3d %d+%d %d\n", $1, $2, $3, $4)}'
 }
 
 ff $1 | awk '{if ($2 + $3 == $4) print}' | fmt    # normal

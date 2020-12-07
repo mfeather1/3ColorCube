@@ -1,0 +1,5 @@
+These are URL parameters passed to batch_solve_qc.html that were used for
+the tests:
+
+Depth 9:  load_dist_files=1&stl=30&cube_format=0
+Depth 10: use_dist3=1&stl=30&cube_format=0         

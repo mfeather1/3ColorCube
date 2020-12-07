@@ -1,0 +1,247 @@
+                         Quad-Core Batch Solver
+                         Rand 1000 Test Results 
+
+  The following is a summary of results for two tests of Solving 1000 random 
+  cubes for solutions with 20 moves or less.  These tests were done using 
+  batch_solve_qc.html.  The logs for the two runs are:
+
+  Rand1000_Depth_09.log - normal run with Dist1 & Dist2 generated to depth 9
+  Rand1000_Depth_10.log - this adds Dist3 which is generated to depth 10
+
+  These tests were done on an AMD Ryzen5 3400G, 3.7Ghz Quad-Core/8 thread,
+  16 GB RAM (DDR4 2667MHz) with Chromium 86 on Fedora 31.
+
+  -------------------------------------------------------------------------------
+  Total & Average Time (in seconds)
+  -------------------------------------------------------------------------------
+
+                Total    Average
+  Depth  9:      370      0.37
+  Depth 10:      155      0.16
+
+  Another test was done with hyperthreading off and the conc param set to 4.
+  While there was a significant difference in performance for Depth 9, there
+  there was no difference for Depth 10 (logs in subdir no_ht).
+
+                Total    Average
+  Depth 9        453      0.45
+  Depth 10:      155      0.16
+
+  Setting conc to 8 with hyperthreading off yielded lower performance in both
+  cases (472 & 183 seconds for depth 9 & 10 respectively).
+
+  -------------------------------------------------------------------------------
+  Frequency Distribution of Solution Times (one second intervals)
+  -------------------------------------------------------------------------------
+
+  Depth 9
+  --------
+  919  0-1
+   38  1-2
+   24  2-3
+   10  3-4
+    7  4-5
+    1  6-7
+    1  7-8
+
+  Depth 10
+  --------
+  988  0-1
+   12  1-2
+
+  -------------------------------------------------------------------------------
+  Top 10 Longest Solves
+  -------------------------------------------------------------------------------
+
+  Depth 9
+  -------
+  7.26
+  6.65
+  4.72
+  4.69
+  4.68
+  4.68
+  4.38
+  4.26
+  4.23
+  3.97
+
+
+  Depth 10
+  --------
+  1.67
+  1.66
+  1.42
+  1.33
+  1.26
+  1.20
+  1.16
+  1.16
+  1.13
+  1.12
+
+  -------------------------------------------------------------------------------
+  Top 10 Shortest Solves
+  -------------------------------------------------------------------------------
+
+  Depth 9
+  -------
+  0.00
+  0.00
+  0.00
+  0.00
+  0.01
+  0.01
+  0.01
+  0.01
+  0.01
+  0.01
+
+
+  Depth 10
+  --------
+  0.00
+  0.00
+  0.01
+  0.01
+  0.01
+  0.01
+  0.02
+  0.02
+  0.02
+  0.02
+
+  -------------------------------------------------------------------------------
+  Frequency Distribution of Solution Lengths
+  -------------------------------------------------------------------------------
+
+    Depth 9
+  -----------
+    758 (20f)
+    183 (19f)
+     50 (18f)
+      5 (17f)
+      2 (16f)
+      2 (15f)
+
+    Depth 10
+  -----------
+    741 (20f)
+    192 (19f)
+     56 (18f)
+      7 (17f)
+      2 (16f)
+      2 (15f)
+
+  -------------------------------------------------------------------------------
+  Frequency Distribution of Solution Lengths by Phase
+  -------------------------------------------------------------------------------
+
+    Depth 9
+  -----------
+  280 15+5 20
+  268 14+6 20
+   89 13+7 20
+   74 16+4 20
+   63 14+5 19
+   53 15+4 19
+   25 13+6 19
+   24 14+4 18
+   18 16+3 19
+   18 15+3 18
+   18 12+8 20
+   12 12+7 19
+    4 12+6 18
+    2 15+2 17
+    2 14+3 17
+    1 16+1 17
+    1 15+0 15
+    1 14+2 16
+    1 14+1 15
+    1 13+5 18
+    1 13+3 16
+
+   11 14+8 20
+    5 15+7 20
+    5 14+7 19
+    2 14+6 18
+    2 13+8 19
+    1 16+6 20
+    1 16+5 19
+    1 15+6 19
+    1 13+7 18
+
+    5 15+6 20
+    5 13+8 20
+    2 14+7 20
+    1 15+5 19
+    1 14+6 19
+    1 13+7 19
+
+   Depth 10
+  -----------
+  292 15+5 20
+  245 14+6 20
+   79 16+4 20
+   75 13+7 20
+   68 14+5 19
+   57 15+4 19
+   23 15+3 18
+   22 14+4 18
+   21 13+6 19
+   18 12+8 20
+   17 16+3 19
+   12 12+7 19
+    4 12+6 18
+    3 15+2 17
+    3 14+3 17
+    1 16+2 18
+    1 16+1 17
+    1 15+0 15
+    1 14+2 16
+    1 14+1 15
+    1 13+5 18
+    1 13+3 16
+
+   14 14+8 20
+    6 14+7 19
+    4 15+7 20
+    4 15+6 19
+    3 13+8 19
+    2 15+5 18
+    2 14+6 18
+    1 16+6 20
+    1 16+5 19
+    1 13+7 18
+
+    6 15+6 20
+    5 13+8 20
+    2 14+7 20
+    1 15+5 19
+    1 14+6 19
+    1 13+7 19
+
+  -------------------------------------------------------------------------------
+  Contrived Cubes
+  -------------------------------------------------------------------------------
+
+  There is also a test for "contrived" cubes (Contrived.log) which is for the
+  77 configs that are 3-color solutions and at the maximal distance from 6-color 
+  solution (for configs that are 3-color solutions) which is 16 moves, this set
+  is reduced by symmetry (full set is 1716).
+
+  Total Time:   15.69 seconds
+  Average time:  0.20
+
+  Frequency Distribution of Solution Lengths:
+      4  (16f)
+     10  (17f)
+     63  (18f)
+
+  Frequency Distribution of Solution Lengths by Phase:
+   63 10+8 18
+    8 10+7 17
+    3 10+6 16
+    2  9+8 17
+    1  9+7 16
+
