@@ -21,7 +21,7 @@
 
   Another test was done with hyperthreading off and the conc param set to 4.
   While there was a significant difference in performance for Depth 9, there
-  there was no difference for Depth 10 (logs in subdir no_ht).
+  was no difference for Depth 10 (logs in subdir no_ht).
 
                 Total    Average
   Depth 9        453      0.45
