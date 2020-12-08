@@ -8,8 +8,6 @@ var ET_SYM_METHOD = 2;      // Method 2 eliminates et_sym_UF (used only during i
 var EPT_OP_METHOD = 1;      // Method 2 reduces ept_min_op from 4 MB to 2.5 MB, uses 8 MB of temp files
                             // during initialization, takes slightly longer to init 
 
-var show_init_time_details = 0;
-
 var MOVES     = 18;         // moves in face-turn metric
 var E_PRM     = 34650;      // 3C edge perms
 var E_TWIST   = 2048;       // edge twist (flip)
@@ -39,8 +37,6 @@ var N_EPT_MIN_OP    = 1290  // #rows in ept_min_op (deduplicated)
 var N_EPT_MIN_OPS   = 7331; // #rows in ept_min_ops
 var N_EPT_OPS_IX2   = 103;  // #rows in ept_ops_ix2
 
-// Arrays with size less than 1 KB
-
 var flip        = new Uint8Array([1,0]);
 var cw          = new Uint8Array([1,2,0]);
 var ccw         = new Uint8Array([2,0,1]);
@@ -53,7 +49,6 @@ var cnr         = new Uint8Array(24);
 var edg         = new Uint8Array(24); 
 var cnr2        = new Uint8Array(24); 
 var edg2        = new Uint8Array(24); 
-var inv_op      = new Uint8Array(CUBE_SYM);
 var cubestr     = new Uint8Array(FACELETS);
 var cp_b2       = new Uint8Array(C_PRM);
 var b2_cp       = new Uint8Array(B2_MAX);
@@ -61,25 +56,9 @@ var cmv         = new Uint8Array(MOVES * 8);
 var emv         = new Uint8Array(MOVES * 12);
 var mvlist1     = new Int8Array(3);
 var mvlist2     = new Int8Array(MOVES+1);
-
-// Arrays larger than 1 KB, see solve.html for shared arrays
-//                                                            Size(KB)
-var min_ep      = new Uint16Array(MIN_EP);                //     2
-var op_op       = new Uint8Array(CUBE_SYM*CUBE_SYM);      //     2
-var slice_ep    = new Uint16Array(SLICE_PRM * 3);         //     3
-var map         = new Uint8Array(CUBE_SYM * FACELETS);    //     3
-var b2_slice    = new Uint16Array(4096);                  //     8
-var cp6c_cp3c   = new Uint8Array(C_PERM);                 //    40 
-var ep_b3       = new Uint32Array(E_PRM);                 //   135
-var b3_ep       = new Uint16Array(B3_MAX);                //   346
-
-/* not used
-if (ET_SYM_METHOD == 3) {
- var et_fr = new Uint16Array(E_TWIST*16);                 //    64
- var et_fr_ix = new Uint16Array(SLICE_PRM*E_TWIST/16);    //   124
-}  
-var ep_sym      = new Uint16Array(E_PRM * CUBE_SYM);      //  3248 
-*/
+var slice_ep    = new Uint16Array(SLICE_PRM * 3);
+var map         = new Uint8Array(CUBE_SYM * FACELETS);
+var b2_slice    = new Uint16Array(4096);
 
 /* Cube Layout:
 
@@ -118,6 +97,7 @@ var reflect = new Uint8Array([
   42,43,44,21,22,23,24,25,26,27,28,29,30,31,32, 9,10,11,
   12,13,14,15,16,17,18,19,20, 6, 7, 8, 3, 4, 5, 0, 1, 2]);
 
+var show_init_time_details = 0;
 var seq_gen = [];
 var logtxt = [];
 var logwin;

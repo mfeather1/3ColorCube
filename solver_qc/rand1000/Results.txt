@@ -230,8 +230,8 @@
   6-color solution (for configs that are 3-color solutions) which is 16 moves,
   this set is reduced by symmetry (full set is 1716).
 
-  Total Time:   15.69 seconds
-  Average time:  0.20
+  Total Time: 15.69 seconds
+  Average:     0.20
 
   Frequency Distribution of Solution Lengths:
       4  (16f)

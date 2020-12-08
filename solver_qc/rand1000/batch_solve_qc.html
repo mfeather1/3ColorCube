@@ -9,7 +9,7 @@
  <script src=../rch.js></script>
  <script src=../../rclib.js></script>
  <script src=../../verify.js></script>
- <script src=readfiles.js></script>
+ <script src=../readfiles.js></script>
  <script src=batch_cubes.js></script>
  <style> 
   body { margin-left: 10%; margin-right: 10%; }
@@ -71,8 +71,6 @@ var dist_gen_depth = 0;
 var distp2_gen_depth = 8;
 var dist3_gen_depth = 0;
 var load_dist_files = 0;
-var dist1, dist2, dist3, distp2;
-var dist1_shared, dist2_shared, dist3_shared, distp2_shared;
 var gdone, gdone_shared;
 var worker = [];
 var conc, conc_param, conc_mvlist = [];
@@ -95,6 +93,8 @@ var cp_mov_shared, ct_mov_shared, et_mov_shared;
 var ep_min_shared, ep_min_op_shared, cp_sym_shared;
 var cpt_sym_shared, cpt_sym2_shared, ct_sym_shared, ct_fb_ud_shared;
 var ct_op_type_shared, op16e_shared, cp6c_cpr_shared;
+var ep_b3_shared, b3_ep_shared, op_op_shared, inv_op_shared;
+var cp6c_cp3c_shared;
 
 main();
 
@@ -117,12 +117,15 @@ function main() {
   init_conc();
 
   try {
-    dist1_shared  = new SharedArrayBuffer(MIN_EP*C_PRM*1094);   //  57 MB
+    dist1_shared  = new SharedArrayBuffer(MIN_EP*C_PRM*1094);   // 57 MB
   }
   catch(e) {
       shared_memory_error_handler(e);
       return;
   }
+
+  dist2_shared  = new SharedArrayBuffer(MIN_EP*C_PRM*1024);     // 53 MB
+  distp2_shared = new SharedArrayBuffer(C_PRMr*E_PRMr);         //  8 MB
 
   worker[1] = new Worker('solve.js');
 
@@ -140,29 +143,31 @@ function main() {
     worker[i] = new Worker('solve.js');
     worker[i].addEventListener('message', ipc);
   }
-
-  dist2_shared  = new SharedArrayBuffer(MIN_EP*C_PRM*1024);   //  53 MB
-  distp2_shared = new SharedArrayBuffer(C_PRMr*E_PRMr);       //   8 MB
-
-  op16e_shared       = new SharedArrayBuffer(CUBE_SYM * 2);             //   .1 
+                                                                        //   KB
+  inv_op_shared      = new SharedArrayBuffer(CUBE_SYM);                 //   .1
+  op16e_shared       = new SharedArrayBuffer(CUBE_SYM * 2);             //   .1
   ept_ops_ix1_shared = new SharedArrayBuffer(MIN_EP);                   //    1
   cp_mov_shared      = new SharedArrayBuffer(C_PRM * MOVES);            //    1
+  op_op_shared       = new SharedArrayBuffer(CUBE_SYM * CUBE_SYM);      //    2
   cp_sym_shared      = new SharedArrayBuffer(C_PRM*CUBE_SYM);           //    3
   ep_min_op_shared   = new SharedArrayBuffer(E_PRM);                    //   34
+  cp6c_cp3c_shared   = new SharedArrayBuffer(C_PERM);                   //   40
   ep_min_shared      = new SharedArrayBuffer(E_PRM * 2);                //   68
   ept_op_idx_shared  = new SharedArrayBuffer(E_PRM * 2);                //   68
   et_mov_shared      = new SharedArrayBuffer(E_TWIST * MOVES * 2);      //   72
-  ct_mov_shared      = new SharedArrayBuffer(C_TWIST * MOVES * 2);      //   77 
-  cp6c_cpr_shared    = new SharedArrayBuffer(C_PERM * 2);               //   80 
+  ct_mov_shared      = new SharedArrayBuffer(C_TWIST * MOVES * 2);      //   77
+  cp6c_cpr_shared    = new SharedArrayBuffer(C_PERM * 2);               //   80
+  ep_b3_shared       = new SharedArrayBuffer(E_PRM * 4);                //  135
   et_sym_shared      = new SharedArrayBuffer(E_TWIST * CUBE_SYM * 2);   //  192
   ep_slice_shared    = new SharedArrayBuffer(E_PRM * 3 * 2);            //  203
   epr_mov_shared     = new SharedArrayBuffer(SLICE_PRM * 24 * MOVES);   //  209
+  b3_ep_shared       = new SharedArrayBuffer(B3_MAX * 2);               //  346
   ept_min_ops_shared = new SharedArrayBuffer(N_EPT_MIN_OPS * 27 * 2);   //  387
   ept_ops_ix2_shared = new SharedArrayBuffer(N_EPT_OPS_IX2*E_TWIST*2);  //  412
   cpt_min_shared     = new SharedArrayBuffer(C_PRM_TW * 2 * 2);         //  600
   ep_mov_shared      = new SharedArrayBuffer(E_PRM * MOVES * 2);        // 1218
   cp6c_mov_shared    = new SharedArrayBuffer(C_PERM * MOVES * 2);       // 1418
-  et_sym_FR_shared   = new SharedArrayBuffer(SLICE_PRM * E_TWIST * 2);  // 1980 
+  et_sym_FR_shared   = new SharedArrayBuffer(SLICE_PRM * E_TWIST * 2);  // 1980
 
   if (EPT_OP_METHOD == 1)
     ept_min_op_shared = new SharedArrayBuffer(EP_MULTI_MIN_OP*E_TWIST); // 4116
@@ -279,48 +284,52 @@ function run_batch() {
 }
 
 function send_init_request_to_workers() {
+  var msg = {}; 
+  msg.cmd = 'init';
+  msg.dist1 = dist1_shared;
+  msg.dist2 = dist2_shared;
+  msg.dist3 = dist3_shared;
+  msg.distp2 = distp2_shared;
+  msg.ept_min_op = ept_min_op_shared;
+  msg.ept_min_ops = ept_min_ops_shared;
+  msg.ept_op_idx = ept_op_idx_shared;
+  msg.ept_ops_ix1 = ept_ops_ix1_shared;
+  msg.ept_ops_ix2 = ept_ops_ix2_shared;
+  msg.ep_mov = ep_mov_shared;
+  msg.cp6c_mov = cp6c_mov_shared;
+  msg.cpt_min = cpt_min_shared;
+  msg.et_sym = et_sym_shared;
+  msg.et_sym_FR = et_sym_FR_shared;
+  msg.et_sym_UF = et_sym_UF_shared;
+  msg.ep_slice = ep_slice_shared;
+  msg.epr_mov = epr_mov_shared;
+  msg.cp_mov = cp_mov_shared;
+  msg.ct_mov = ct_mov_shared;
+  msg.et_mov = et_mov_shared;
+  msg.ep_min = ep_min_shared;
+  msg.ep_min_op = ep_min_op_shared;
+  msg.cp_sym = cp_sym_shared;
+  msg.op16e = op16e_shared;
+  msg.cp6c_cpr = cp6c_cpr_shared;
+  msg.ep_b3 = ep_b3_shared;
+  msg.b3_ep = b3_ep_shared;
+  msg.op_op = op_op_shared;
+  msg.inv_op = inv_op_shared;
+  msg.cp6c_cp3c = cp6c_cp3c_shared;
+  msg.dist_files_loaded = dist_files_loaded;
+  msg.dist_gen_depth = dist_gen_depth;
+  msg.conc = conc
+  if (CT_SYM_METHOD == 1)
+    msg.cpt_sym = cpt_sym_shared;
+  else if (CT_SYM_METHOD == 2)
+    msg.cpt_sym2 = cpt_sym2_shared;
+  else {
+    msg.ct_sym = ct_sym_shared;
+    msg.ct_fb_ud = ct_fb_ud_shared;
+    msg.ct_op_type = ct_op_type_shared;
+  }
   for (var i=1; i <= conc; i++) {
-    var msg = {
-      'cmd': 'init',
-      'worker': i,
-      'dist1': dist1_shared,
-      'dist2': dist2_shared,
-      'dist3': dist3_shared,
-      'distp2': distp2_shared,
-      'ept_min_op': ept_min_op_shared,
-      'ept_min_ops': ept_min_ops_shared,
-      'ept_op_idx': ept_op_idx_shared,
-      'ept_ops_ix1': ept_ops_ix1_shared,
-      'ept_ops_ix2': ept_ops_ix2_shared,
-      'ep_mov': ep_mov_shared,
-      'cp6c_mov': cp6c_mov_shared,
-      'cpt_min': cpt_min_shared,
-      'et_sym': et_sym_shared,
-      'et_sym_FR': et_sym_FR_shared,
-      'et_sym_UF': et_sym_UF_shared,
-      'ep_slice': ep_slice_shared,
-      'epr_mov': epr_mov_shared,
-      'cp_mov': cp_mov_shared,
-      'ct_mov' : ct_mov_shared,
-      'et_mov': et_mov_shared,
-      'ep_min': ep_min_shared,
-      'ep_min_op': ep_min_op_shared,
-      'cp_sym': cp_sym_shared,
-      'op16e': op16e_shared,
-      'cp6c_cpr': cp6c_cpr_shared,
-      'dist_files_loaded': dist_files_loaded,
-      'dist_gen_depth': dist_gen_depth,
-      'conc': conc
-    };
-    if (CT_SYM_METHOD == 1)
-      msg.cpt_sym = cpt_sym_shared;
-    else if (CT_SYM_METHOD == 2)
-      msg.cpt_sym2 = cpt_sym2_shared;
-    else {
-      msg.ct_sym = ct_sym_shared;
-      msg.ct_fb_ud = ct_fb_ud_shared;
-      msg.ct_op_type = ct_op_type_shared;
-    }
+    msg.worker = i;
     worker[i].postMessage(msg);
   }
 }

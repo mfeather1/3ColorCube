@@ -67,6 +67,7 @@ var cp_mov, et_mov, ct_mov;
 var ep_min, ep_min_op, cp_sym;
 var cpt_sym, cpt_sym2, ct_sym, ct_fb_ud;
 var ct_op_type, op16e, cp6c_cpr;
+var b3_ep, ep_b3, op_op, inv_op, cp6c_cp3c;
 
 // If the last move of the 3-color solution is to the same face as the
 // first move of the 6-color solution (phase 2) then the two moves are
@@ -113,6 +114,11 @@ function ipc(e) {
     cp_sym = new Uint8Array(e.data.cp_sym);
     op16e = new Uint8Array(e.data.op16e);
     cp6c_cpr = new Uint16Array(e.data.cp6c_cpr);
+    ep_b3 = new Uint32Array(e.data.ep_b3);
+    b3_ep = new Uint16Array(e.data.b3_ep);
+    op_op = new Uint8Array(e.data.op_op);
+    inv_op = new Uint8Array(e.data.inv_op);
+    cp6c_cp3c = new Uint8Array(e.data.cp6c_cp3c);
     dist_files_loaded = e.data.dist_files_loaded;
     dist_gen_depth = e.data.dist_gen_depth;
     conc = e.data.conc;
@@ -526,16 +532,25 @@ function show_optimal_solution() {
 
 function init()
 {
+  init_seq();
+
   if (ET_SYM_METHOD == 1)
     get_etsym = get_etsym_m1;
   else if (ET_SYM_METHOD == 2)
     get_etsym = get_etsym_m2;
-  init2();
-  init_seq();
-  set_colors_3c(0, 1, 2);
-  init_map(map, sym_op_FR, sym_op_UR, reflect);
-  populate_op_tables();
+
+  if (CT_SYM_METHOD == 1)
+    get_ctsym = get_ctsym_m1;
+  else if (CT_SYM_METHOD == 2)
+    get_ctsym = get_ctsym_m2;
+  else
+    get_ctsym = get_ctsym_m3;
+
   if (worker == 1) {
+    init2();
+    set_colors_3c(0, 1, 2);
+    init_map(map, sym_op_FR, sym_op_UR, reflect);
+    populate_op_tables();
     populate_cp_sym();
     populate_ep_min();
     populate_et_sym();
@@ -553,12 +568,6 @@ function init()
       update_ct_sym();
     }
   }
-  if (CT_SYM_METHOD == 1)
-    get_ctsym = get_ctsym_m1;
-  else if (CT_SYM_METHOD == 2)
-    get_ctsym = get_ctsym_m2;
-  else
-    get_ctsym = get_ctsym_m3;
 }
 
 function show_files_loaded() {
