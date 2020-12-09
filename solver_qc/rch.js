@@ -1,12 +1,22 @@
 "use strict";
+/* 
+  CT_SYM_METHOD: 
+    Method 1 uses cpt_sym (14 MB)
+    Method 2 uses cpt_sym2 (318 KB) and cpt_min (600 KB)
+    Method 3 uses ct_sym (205 KB) and ct_fb_ud (300 KB)
 
-var CT_SYM_METHOD = 3;      // Method 2 replaces cpt_sym (14 MB) with cpt_sym2 (318 KB) and cpt_min (600 KB)
-                            // Method 3 uses ct_sym (205 KB) and ct_fb_ud (300 KB)
+  ET_SYM_METHOD:
+    Method 1 uses et_sym_UF (2 MB)
+    Method 2 does not use et_sym_UF for search, uses 4 KB for init only
 
-var ET_SYM_METHOD = 2;      // Method 2 eliminates et_sym_UF (used only during init, reduced to 4 KB)
-
-var EPT_OP_METHOD = 1;      // Method 2 reduces ept_min_op from 4 MB to 2.5 MB, uses 8 MB of temp files
-                            // during initialization, takes slightly longer to init 
+  EPT_OP_METHOD:
+    Method 1 uses ept_min_op 4 MB
+    Method 2 reduces ept_min_op to 2.5 MB, uses 8 MB of temp during init,
+             takes slightly longer on startup
+*/
+var CT_SYM_METHOD = 3;
+var ET_SYM_METHOD = 2;
+var EPT_OP_METHOD = 1;
 
 var MOVES     = 18;         // moves in face-turn metric
 var E_PRM     = 34650;      // 3C edge perms
@@ -62,15 +72,15 @@ var b2_slice    = new Uint16Array(4096);
 
 /* Cube Layout:
 
-          00 01 02
-          03 04 05
-          06 07 08
- 09 10 11 12 13 14 15 16 17 18 19 20
- 21 22 23 24 25 26 27 28 29 30 31 32
- 33 34 35 36 37 38 39 40 41 42 43 44
-          45 46 47
-          48 49 50
-          51 52 53
+           00 01 02
+           03 04 05
+           06 07 08
+  09 10 11 12 13 14 15 16 17 18 19 20
+  21 22 23 24 25 26 27 28 29 30 31 32
+  33 34 35 36 37 38 39 40 41 42 43 44
+           45 46 47
+           48 49 50
+           51 52 53
 */
 var center_idx = [4,22,25,28,31,49];
 
@@ -93,9 +103,9 @@ var sym_op_UR = new Uint8Array([  // Up -> Right
   38,26,14, 8, 5, 2,18,30,42,39,27,15,40,28,16,41,29,17]);
 
 var reflect = new Uint8Array([
-  51,52,53,48,49,50,45,46,47,33,34,35,36,37,38,39,40,41,
-  42,43,44,21,22,23,24,25,26,27,28,29,30,31,32, 9,10,11,
-  12,13,14,15,16,17,18,19,20, 6, 7, 8, 3, 4, 5, 0, 1, 2]);
+   2, 1, 0, 5, 4, 3, 8, 7, 6,17,16,15,14,13,12,11,10, 9,
+  20,19,18,29,28,27,26,25,24,23,22,21,32,31,30,41,40,39,
+  38,37,36,35,34,33,44,43,42,47,46,45,50,49,48,53,52,51]);
 
 var show_init_time_details = 0;
 var seq_gen = [];
