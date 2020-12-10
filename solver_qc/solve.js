@@ -658,10 +658,10 @@ function mkd_search (epn, etn, cpn, ctn, n, mvlist)
         if (chk_dup_3c(epmin, etsym, cpsym, ctsym, n)) 
           continue;
         if (n == 4 && depth == 9) {
-          if (worker == 1)
-            dep9stat();
           if (worker != worker_nodes[worker_node_count++])
             continue;
+          if (worker == 1)
+            dep9stat();
         }
       }
       seq[n] = mv;

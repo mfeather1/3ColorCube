@@ -322,11 +322,24 @@ function main() {
   et_sym_FR_shared   = new SharedArrayBuffer(SLICE_PRM * E_TWIST * 2);  // 1980 
 
   /* Notes on array usage by the solver:
-     1. ept_min_op & ept_ops_ix[1-2] are used 6% of the time (2058/34650)
-     2. ept_min_ops is used .24% of the time (170928/70963200) 
+
+     1. ept_min_op & ept_ops_ix2 are used 6% of the time (2058/34650)
+        34650 - 32592 = 2058 (see ep_sym.html in the sym dir)
+
+     2. ept_min_ops is used .24% of the time (170928/70963200)
+        70963200 - 70792272 = 170928 (see ept_sym.html in the sym dir)
+
      3. cpt_min is only used when the search node is a 3-color solution unless
-        CPT_SYM_METHOD=2 in which case it is used for every node
-  */ 
+        CT_SYM_METHOD=2 in which case it is used for every node
+
+     4. b3_ep & ep_b3 are not used during the search (b3_ep is used to convert
+        the edge position component of the cube string (54 facelets) to a
+        number, ep_b3 is only used during init)
+
+     5. cp6c_mov is only used for nodes that are not pruned by dists[1-3] which
+        is 8% on average for random cubes and 10% for contrived cubes (configs
+        that are 3-color solutions)
+  */
 
   if (EPT_OP_METHOD == 1)
     ept_min_op_shared = new SharedArrayBuffer(EP_MULTI_MIN_OP*E_TWIST); // 4116

@@ -56,9 +56,11 @@ var sol_dep1, sol_dep2, p1_nodes;
 
 var show_combine = 0;
 
-importScripts('rch.js');
-importScripts('rclib.js');
-importScripts('readfiles.js');
+if (typeof(importScripts) != 'undefined') {
+  importScripts('rch.js');
+  importScripts('rclib.js');
+  importScripts('readfiles.js');
+}
 
 addEventListener('message', ipc);
 
@@ -78,8 +80,8 @@ function ipc(e) {
       postMessage({'cmd': 'msg', 'msg': 'Initializing'});
       init();
       var msg = 'Making Search Arrays<br>Generating to Depth ' + dist_gen_depth;
-      if (dist_gen_depth == 9)
-        msg += '<br>Progress: 0%';
+      // if (dist_gen_depth == 9)
+      //   msg += '<br>Progress: 0%';
       postMessage({'cmd': 'msg', 'msg': msg});
       if (load_dist_files == 0) {
         mkd();
@@ -155,6 +157,7 @@ function solve_cube(facelets)
   done2 = 0;
   auto_extend_search = 0;
   p1_nodes = 0;
+
   for (depth = 1; depth <= search_depth; depth++)
   {
     if (done == 1)
@@ -615,11 +618,12 @@ function mkd_search (epn, etn, cpn, ctn, n, mvlist)
       }
     }
     else {
-       if (depth == 9 && n == 4) // progress
-        postMessage({'cmd': 'dep9stat', 'stat': Math.round(count[1]/3450000)*10});
-      if (n <= 5)
+      if (n <= 5) {
         if (chk_dup_3c(epmin, etsym, cpsym, ctsym, n)) 
           continue;
+        if (depth == 9 && n == 4) // progress
+          postMessage({'cmd': 'dep9stat', 'stat': Math.round(count[1]/3450000)*10});
+      }
       seq[n] = mv;
       mkd_search (ep, et, cp, ct, n+1, seq_gen[mv]);
     }
