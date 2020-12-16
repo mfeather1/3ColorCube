@@ -1,5 +1,5 @@
-# This makes the Results.txt report (except the sections about hyperthreading
-# and contrived cubes which are added manually).
+# This makes the Results.txt report (except the section about contrived cubes
+# which is added manually).
 
 log1=Rand1000_Depth_09.log
 log2=Rand1000_Depth_10.log
@@ -33,10 +33,10 @@ f1() {
   ----------------------------------------------------------------------------
   Total & Average Time (in seconds)
   ----------------------------------------------------------------------------'
-  tot1=`grep Tot $log1 | awk -F: '{print $NF}'`
-  tot2=`grep Tot $log2 | awk -F: '{print $NF}'`
-  avg1=`echo $tot1 | awk '{printf("%0.2f", $1/1000)}'`
-  avg2=`echo $tot2 | awk '{printf("%0.2f", $1/1000)}'`
+  tot1=`grep Tot $log1 | awk -F: '{printf("   %0.0f", $NF)}'`
+  tot2=`grep Tot $log2 | awk -F: '{printf("   %0.0f", $NF)}'` 
+  avg1=`echo $tot1 | awk '{printf("%0.3f", $1/1000)}'`
+  avg2=`echo $tot2 | awk '{printf("%0.3f", $1/1000)}'`
   echo
   echo "                Total    Average"
   echo "  Depth  9:   $tot1      $avg1"

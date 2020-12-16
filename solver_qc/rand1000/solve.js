@@ -55,6 +55,7 @@ var get_etsym, get_ctsym;
 var search_time;
 var first_time = 1;
 var solution = [];
+var tweak = 1;  // 1 = skip solutions > stoplen
 var uniq_nodes = 244;  // unique 3-color nodes at depth 4
 
 // shared arrays
@@ -286,7 +287,8 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
           return;
         var ix = cpr*13824 + eprsum(epr);
         var dst = distp2[ix];
-        if (dst < 9) {
+        if (dst < 9 && (tweak == 0 || (tweak == 1 &&
+          (dst + n <= stoplen || stoplen == 0)))) {
           if (n + dst < minmv) {
             minmv = dst + n;
             sol3c[0] = n;
@@ -316,6 +318,7 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
             if (minmv == 99) {
               if (auto_extend_search == 0) {
                 auto_extend_search = 1;
+                tweak = 0;
               }
             }
             else {
@@ -388,8 +391,8 @@ function solver_search2(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
         if (cpr == 0 && epr[0] == 0 && epr[1] == 0 && epr[2] == 0) {
           show_moves();
           done2 = 1;
-          if (auto_extend_search == 1)
-            done = 1;
+          // if (auto_extend_search == 1)
+          //    done = 1;
         }
       }
     }
