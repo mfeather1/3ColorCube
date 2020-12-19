@@ -54,6 +54,7 @@ var get_etsym, get_ctsym;
 var search_time;
 var first_time = 1;
 var solution = [];
+var gperf, perf;
 var uniq_nodes = 244;  // unique 3-color nodes at depth 4
 
 // shared arrays
@@ -122,6 +123,7 @@ function ipc(e) {
     dist_files_loaded = e.data.dist_files_loaded;
     dist_gen_depth = e.data.dist_gen_depth;
     conc = e.data.conc;
+    gperf = e.data.perf;
     if (CT_SYM_METHOD == 1)
       cpt_sym = new Uint16Array(e.data.cpt_sym);
     else if (CT_SYM_METHOD == 2)
@@ -250,6 +252,7 @@ function solve_cube(facelets)
   done2 = 0;
   auto_extend_search = 0;
   solution.length = 0;
+  perf = gperf;
   for (depth = 1; depth <= search_depth; depth++)
   {
     if (done == 1)
@@ -350,7 +353,8 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
           return;
         var ix = cpr*13824 + eprsum(epr);
         var dst = distp2[ix];
-        if (dst < 9) {
+        if (dst < 9 && (perf == 0 || (perf == 1 &&
+          (dst + n <= stoplen || stoplen == 0)))) {
           if (n + dst < minmv) {
             minmv = dst + n;
             sol3c[0] = n;
@@ -380,6 +384,7 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
             if (minmv == 99) {
               if (auto_extend_search == 0) {
                 auto_extend_search = 1;
+                perf = 0;
                 stl_msg(2);
               }
             }
@@ -462,8 +467,8 @@ function solver_search2(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
         if (cpr == 0 && epr[0] == 0 && epr[1] == 0 && epr[2] == 0) {
           show_moves();
           done2 = 1;
-          if (auto_extend_search == 1)
-            done = 1;
+          // if (auto_extend_search == 1)
+          //   done = 1;
         }
       }
     }

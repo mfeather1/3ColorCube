@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+ <title> Quad-Core Batch Solver Tests - Performance Comparison </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../../mini_cube.png type=image/png>
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style>
+   body { margin-left: 10%; margin-right: 10%; }
+   p { margin:0; text-align: justify; }
+   .tabdata td { padding:5px 20px; border-color:black; text-align:right; }
+ </style>
+</head>
+<body>
+<center>
+<font size="+2"> Quad-Core Batch Solver Tests <br> Performance Comparison </font>
+<br>
+<br>
+<table class=tabdata style="border-collapse:collapse" border=1>
+<tr>
+ <td colspan=3 style=text-align:center>
+  Total run time in seconds<br>(for 1000 random solves)
+ </td>
+</tr>
+<tr><td></td><td>UnOpt</td><td>Opt</td></tr>
+<tr><td>Depth 09</td><td>370.49</td><td>334.89</td></tr>
+<tr><td>Depth 10</td><td>155.26</td><td>104.04</td></tr>
+</table>
+<br><br>
+<table class=tabdata style="border-collapse:collapse" border=1>
+<tr><td colspan=4 style=text-align:center>Average solves per second</td></tr>
+<tr><td></td><td>UnOpt</td><td>Opt</td><td>Gain</td></tr>
+<tr><td>Depth 09<td>2.6991</td><td>2.9861</td><td>10.6%</td></tr>
+<tr><td>Depth 10<td>6.4408</td><td>9.6117</td><td>49.2%</td></tr>
+</table>
+<!--            trunc   round
+1000/370.49 = 2.69912  2.6991
+1000/334.89 = 2.98605  2.9861
+1000/155.26 = 6.44080  6.4408 
+1000/104.04 = 9.61168  9.6117
+(2.9861-2.6991)/2.6991 = .10633
+(9.6117-6.4408)/6.4408 = .49231
+-->
+<br>
+<a href="javascript: history.go(-1)">Back</a>
+<br>
+</center>
+</body>
+</html>

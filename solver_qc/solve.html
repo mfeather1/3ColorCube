@@ -230,6 +230,7 @@ var mkd_dep9_done = 0;
 var gtime0;
 var init_time;
 var color;
+var perf = 0;
 var CUBE_HOME   = "RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO";
 var CUBE_BLANK  = "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
 
@@ -431,6 +432,13 @@ function main() {
     facelets = ftmp.join('');
   }
 
+  if (typeof perf == 'string') {
+    if (perf == '1')
+      perf = 1;
+    else
+      perf = 0;
+  }
+
   update_layout();
   show_cube(1);
 
@@ -621,7 +629,8 @@ function send_init_request_to_workers() {
   msg.cp6c_cp3c = cp6c_cp3c_shared;
   msg.dist_files_loaded = dist_files_loaded;
   msg.dist_gen_depth = dist_gen_depth;
-  msg.conc = conc
+  msg.conc = conc;
+  msg.perf = perf;
   if (CT_SYM_METHOD == 1)
     msg.cpt_sym = cpt_sym_shared;
   else if (CT_SYM_METHOD == 2)

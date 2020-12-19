@@ -18,7 +18,7 @@ arrow) to see the solution.
 Subsequent solves will run faster, more about that in the "Search Time"
 section below.</p>
 <br><br>
-<b> Entering Colors and Solving</b>
+<b>Entering Colors and Solving</b>
 <br><br>
 <p>To solve an actual scrambled cube press the Clear button and enter the
 colors by first clicking on a color in the palette (six squares above
@@ -112,7 +112,7 @@ removed from the sequence.
 <br><br>
 It is possible to stop the search for solutions lengths other than 20 moves by
 using URL parameter stoplen=N where N is the desired number of moves.
-This <a target=_blank href=solve.html?stl=5&stoplen=19>link</a>
+This <a target=_blank href='solve.html?stl=5&stoplen=19'>link</a>
 is an example of searching for 19 move solutions.
 When using stoplen, do not add "s" to the stl (search time limit) parameter or
 in the Search Time box on the screen because that will override the URL stoplen
@@ -135,6 +135,20 @@ The number of processes does not have to match the number of processors, the
 operating system will balance the load if needed. 
 While the conc parameter is available for experimenting, the default setting is 
 likely fine for most cases.</p>
+<br><br>
+<b>One More Optimization</b>
+<br><br>
+<p>When searching for 20 move solutions (or other stoplen setting), better
+performance can be achieved by skipping the second solve phase for solutions
+with more than 20 moves.
+The log will no longer show these solutions and will contain only the final 20
+move solution.
+The performance difference is more signficant when using dist3 which had an
+improvement of 49% in a test of 1000 random cubes (10% without dist 3, see
+test results <a href=rand1000>here</a>).
+To use this feature add "perf=1" to the solver URL as in this example
+<a target=_blank href='solve.html?use_dist3=1&stl=5s&perf=1'>link</a>
+(which uses dist3).</p>
 <br>
 <a href="JavaScript:window.close()">Close</a>
 <br><br>
