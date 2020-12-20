@@ -16,7 +16,10 @@ main() {
 }
 
 heading() {
-  echo "
+  echo "\
+                         Quad-Core Batch Solver
+                         Rand 1000 Test Results 
+
   The following is a summary of results for two tests of Solving 1000 random 
   cubes for solutions with 20 moves or less.  These tests were done using 
   batch_solve_qc.html.  The logs for the two runs are:
@@ -33,14 +36,16 @@ f1() {
   ----------------------------------------------------------------------------
   Total & Average Time (in seconds)
   ----------------------------------------------------------------------------'
-  tot1=`grep Tot $log1 | awk -F: '{printf("   %0.0f", $NF)}'`
-  tot2=`grep Tot $log2 | awk -F: '{printf("   %0.0f", $NF)}'` 
-  avg1=`echo $tot1 | awk '{printf("%0.3f", $1/1000)}'`
-  avg2=`echo $tot2 | awk '{printf("%0.3f", $1/1000)}'`
+  tot1=`grep Tot $log1 | awk -F: '{printf(" %3.0f", $NF)}'`
+  tot2=`grep Tot $log2 | awk -F: '{printf(" %3.0f", $NF)}'` 
+  avg1=`echo $tot1 | awk '{printf("%5.2f", $1/1000)}'`
+  avg2=`echo $tot2 | awk '{printf("%5.2f", $1/1000)}'`
+  ss1=`echo $tot1 | awk '{printf("%5.1f", 1000/$1)}'`
+  ss2=`echo $tot2 | awk '{printf("%5.1f", 1000/$1)}'`
   echo
-  echo "                Total    Average"
-  echo "  Depth  9:   $tot1      $avg1"
-  echo "  Depth 10:   $tot2      $avg2"
+  echo "               Total    Average   Solves/second"
+  echo "  Depth  9:    $tot1     $avg1        $ss1"     
+  echo "  Depth 10:    $tot2     $avg2        $ss2"
 }
 
 f2() {
