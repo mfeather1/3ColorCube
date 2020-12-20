@@ -148,9 +148,10 @@ to use this feature add "perf=1" to the solver URL as in this example
 <a target=_blank href='solve.html?use_dist3=1&stl=5s&perf=1'>link</a> (which
 uses dist3).
 <br><br>
-There is a trade-off with discarding solutions, if search time is insufficent
-to find one of the desired length then there is no alternative (longer)
-solution available to present when the search is stopped due to timeout.
+There is a trade-off with discarding solutions, if the search time limit is
+insufficent to find one of the desired length then there is no alternative
+(longer) solution available to present when the search is stopped due to
+timeout.
 The solver normally auto-extends the search until the first solution (of any
 length) is found so in this case the first solution found (after timeout)
 may not be as good as solutions that have been discarded.
