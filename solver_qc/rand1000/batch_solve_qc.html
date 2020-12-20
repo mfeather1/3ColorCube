@@ -53,6 +53,7 @@
   stl=N               set search time limit to N seconds (default is 5)
   stoplen=N           stop search on first solution with length <= N (default is 20)
   conc=N              N = number of concurrent processes (default = # of processors)
+  perf=1              skip phase 2 for solutions with length > stoplen
   cube_format         0 = don't show, 1 = single line, 2 = text layout (default is 2)
                       3 = defer solve msgs until end of run (format same as 0)
 */
@@ -81,6 +82,7 @@ var stime, gtime0;
 var init_time;
 var cube_ix = 0;
 var soln_arr = [];
+var perf = 0;
 var CUBE_HOME   = "RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO";
 var CUBE_BLANK  = "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
 
@@ -235,6 +237,14 @@ function main() {
 
   if (cube_format < '0' || cube_format > '3')
     cube_format = 2;
+
+  if (typeof perf == 'string') {
+    if (perf == '1')
+      perf = 1;
+    else
+      perf = 0;
+  }
+
 }
 
 var first_time = true;  // static local
@@ -319,7 +329,8 @@ function send_init_request_to_workers() {
   msg.cp6c_cp3c = cp6c_cp3c_shared;
   msg.dist_files_loaded = dist_files_loaded;
   msg.dist_gen_depth = dist_gen_depth;
-  msg.conc = conc
+  msg.conc = conc;
+  msg.perf = perf;
   if (CT_SYM_METHOD == 1)
     msg.cpt_sym = cpt_sym_shared;
   else if (CT_SYM_METHOD == 2)

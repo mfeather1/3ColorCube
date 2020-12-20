@@ -136,17 +136,28 @@ operating system will balance the load if needed.
 While the conc parameter is available for experimenting, the default setting is 
 likely fine for most cases.</p>
 <br><br>
-<b>One More Optimization</b>
+<b>One More Tweak</b>
 <br><br>
-<p>When searching for 20 move solutions (or other stoplen setting), better
-performance can be achieved by skipping the second solve phase for solutions
-with more than 20 moves.
+<p>When searching for 20 move solutions (or other stoplen setting), slightly
+better performance can be achieved by skipping the second solve phase for
+solutions with more than 20 moves.
 The log will no longer show these solutions and will contain only the final 20
-move solution.
+move (or less) solution.
 The performance difference is more significant when using dist3, 
 to use this feature add "perf=1" to the solver URL as in this example
 <a target=_blank href='solve.html?use_dist3=1&stl=5s&perf=1'>link</a> (which
-uses dist3).</p>
+uses dist3).
+<br><br>
+There is a trade-off with discarding solutions, if search time is insufficent
+to find one of the desired length then there is no alternative (longer)
+solution available to present if the search is stopped due to a timeout.
+The solver normally auto-extends the search until the first solution (of any
+length) is found so in this case the first solution found (after timeout)
+may not be as good as solutions that have been discarded.
+This means that the solution length presented may be in the range of 22-25
+when a 21 had been found but was discarded.
+For this reason the perf=1 parameter should only be used with a search time
+limit that is long enough to find solutions of the desired length.</p>
 <br>
 <a href="JavaScript:window.close()">Close</a>
 <br><br>
