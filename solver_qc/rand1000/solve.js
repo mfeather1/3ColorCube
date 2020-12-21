@@ -55,7 +55,7 @@ var get_etsym, get_ctsym;
 var search_time;
 var first_time = 1;
 var solution = [];
-var gperf, perf;
+var cp6c_sav, epr_sav;
 var uniq_nodes = 244;  // unique 3-color nodes at depth 4
 
 // shared arrays
@@ -124,7 +124,6 @@ function ipc(e) {
     dist_files_loaded = e.data.dist_files_loaded;
     dist_gen_depth = e.data.dist_gen_depth;
     conc = e.data.conc;
-    gperf = e.data.perf;
     if (CT_SYM_METHOD == 1)
       cpt_sym = new Uint16Array(e.data.cpt_sym);
     else if (CT_SYM_METHOD == 2)
@@ -211,7 +210,6 @@ function solve_cube(facelets)
   done2 = 0;
   auto_extend_search = 0;
   solution.length = 0;
-  perf = gperf;
   for (depth = 1; depth <= search_depth; depth++)
   {
     if (done == 1)
@@ -289,15 +287,19 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
           return;
         var ix = cpr*13824 + eprsum(epr);
         var dst = distp2[ix];
-        if (dst < 9 && (perf == 0 || (perf == 1 &&
-          (dst + n <= stoplen || stoplen == 0)))) {
+        if (dst < 9) {
           if (n + dst < minmv) {
             minmv = dst + n;
             sol3c[0] = n;
             for (var j=1; j <= n; j++)
               sol3c[j] = seq[j];
             depth2 = dst;
-            solver_search2 (0, 0, 0, 0, cp6c, epr, 1, mvlist2);
+            if (dst + n <= stoplen)
+              solver_search2 (0, 0, 0, 0, cp6c, epr, 1, mvlist2);
+            else {
+              cp6c_sav = cp6c;
+              epr_sav = epr;
+            }
             done2 = 0;
           }
         }
@@ -320,10 +322,13 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
             if (minmv == 99) {
               if (auto_extend_search == 0) {
                 auto_extend_search = 1;
-                perf = 0;
               }
             }
             else {
+              if (minmv > stoplen) {
+                depth = sol3c[0];
+                solver_search2 (0, 0, 0, 0, cp6c_sav, epr_sav, 1, mvlist2);
+              }
               done = 1;
             }
           }

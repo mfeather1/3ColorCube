@@ -112,7 +112,7 @@ removed from the sequence.
 <br><br>
 It is possible to stop the search for solutions lengths other than 20 moves by
 using URL parameter stoplen=N where N is the desired number of moves.
-This <a target=_blank href='solve.html?stl=5&stoplen=19'>link</a>
+This <a href='solve.html?stl=5&stoplen=19'>link</a>
 is an example of searching for 19 move solutions.
 When using stoplen, do not add "s" to the stl (search time limit) parameter or
 in the Search Time box on the screen because that will override the URL stoplen
@@ -140,25 +140,13 @@ likely fine for most cases.</p>
 <br><br>
 <p>When searching for 20 move solutions (or other stoplen setting), slightly
 better performance can be achieved by skipping the second solve phase for
-solutions with more than 20 moves.
-The log will no longer show these solutions and will contain only the final 20
-move (or less) solution.
-The performance difference is more significant when using dist3, 
-to use this feature add "perf=1" to the solver URL as in this example
-<a target=_blank href='solve.html?use_dist3=1&stl=5s&perf=1'>link</a> (which
-uses dist3).
-<br><br>
-There is a trade-off with discarding solutions, if the search time limit is
-insufficent to find one of the desired length then there is no alternative
-(longer) solution available to present when the search is stopped due to
-timeout.
-The solver normally auto-extends the search until the first solution (of any
-length) is found so in this case the first solution found (after timeout)
-may not be as good as solutions that have been discarded.
-This means that the solution length presented may be in the range of 22-25
-when a 21 had been found but was discarded.
-For this reason the perf=1 parameter should only be used with a search time
-limit that is long enough to find solutions of the desired length.</p>
+solutions found during the search with more than 20 moves.
+The log will no longer show these solutions and will contain only the final 
+solution (of 20 moves or less).
+For best results, use this feature with Dist3 by adding "perf=1" to the solver
+URL as in this example 
+<a href='solve.html?use_dist3=1&stl=5s&perf=1'>link</a> (requires loading dist
+files).</p>
 <br>
 <a href="JavaScript:window.close()">Close</a>
 <br><br>
