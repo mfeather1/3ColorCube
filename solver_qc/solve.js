@@ -396,8 +396,10 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
             else {
               if (perf == 1 && minmv > stoplen) {
                 stl_msg(1);
+                var depth_sav = depth;
                 depth = sol3c[0];
                 solver_search2 (0, 0, 0, 0, cp6c_sav, epr_sav, 1, mvlist2);
+                depth = depth_sav;
               }
               else if (auto_extend_search == 0)
                 stl_msg(1);
