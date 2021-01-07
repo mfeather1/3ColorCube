@@ -5,8 +5,8 @@ corner configs (88 million) are generated to count the symmetries.
 The symmetry counts are then multiplied by the number of edge configs that map
 to the oplist.  
 There is a relatively small number of unique oplists (139) compared to the
-number of unique edge configs (875,138) hence a significant reduction in the
-amount of time required to run the count.
+number of unique edge configs (mins) with less than 48 syms (886,412) hence
+a significant reduction in the amount of time required to run the count.
 
                             1                   2                   3                     4
 Sym op: 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
