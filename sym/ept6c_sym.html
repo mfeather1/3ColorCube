@@ -36,7 +36,7 @@ To actually run the counts, press the button below the table.</p>
  <tr><td>          2</td><td> 2</td><td>           4</td></tr>
  <tr><td>          4</td><td> 1</td><td>           4</td></tr>
  <tr><td><b>20437847376</b></td><td></td><td><b>980995276800</b></td></tr>
- <tr><td colspan=3 style=text-align:center>Ratio=47.9990</td></tr>
+ <tr><td colspan=3 style=text-align:center>Ratio = 47.9990</td></tr>
 </table>
 <br>
 <button onclick=run_counts()>Run Counts</button>
@@ -152,22 +152,10 @@ function init() {
   populate_epr_sym();
   populate_et_sym();
   populate_ep_min();
-  populate_min_ep();
   populate_ept_min_op();
   for (var ep=0; ep < E_PRM; ep++)
     for (var et=0; et < E_TWIST; et++)
        epta[ep*E_TWIST + et] = -1;
-}
-
-function get_eprsym(eprsym, ep, epr, op) {
-  for (var i=0; i < 3; i++) {
-    var ix = op*35640 + ep_slice[ep*3+i]*72 + epr[i]*3 + i;
-    eprsym[slice_map[op*3+i]] = epr_sym[ix];
-  }
-}
-
-function eprsum(epr) {
-  return(epr[0]*576 + epr[1]*24 + epr[2]);
 }
 
 </script>

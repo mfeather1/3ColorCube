@@ -31,12 +31,12 @@ To actually run the counts, press the button below the table.</p>
  <tr><td>    404</td><td>12</td><td>     4848</td></tr>
  <tr><td>     41</td><td> 8</td><td>      328</td></tr>
  <tr><td>     47</td><td> 6</td><td>      282</td></tr>
- <tr><td>      4</td><td> 4</td><td>       24</td></tr>
+ <tr><td>      4</td><td> 4</td><td>       16</td></tr>
  <tr><td>      6</td><td> 3</td><td>       18</td></tr>
  <tr><td>      1</td><td> 2</td><td>        2</td></tr>
  <tr><td>      2</td><td> 1</td><td>        2</td></tr>
  <tr><td><b>9985968</b></td><td></td><td><b>479001600</b></td></tr>
- <tr><td colspan=3 style=text-align:center>Ratio=47.97</td></tr>
+ <tr><td colspan=3 style=text-align:center>Ratio = 47.97</td></tr>
 </table>
 <br>
 <button onclick=run_counts()>Run Counts</button>
@@ -141,21 +141,8 @@ function init() {
   populate_ep_sym();
   populate_epr_sym();
   populate_ep_min();
-  populate_min_ep();
   populate_ept_min_op();
 }
-
-function get_eprsym(eprsym, ep, epr, op) {
-  for (var i=0; i < 3; i++) {
-    var ix = op*35640 + ep_slice[ep*3+i]*72 + epr[i]*3 + i;
-    eprsym[slice_map[op*3+i]] = epr_sym[ix];
-  }
-}
-
-function eprsum(epr) {
-  return(epr[0]*576 + epr[1]*24 + epr[2]);
-}
-
 </script>
 </center>
 </body>

@@ -6,9 +6,9 @@
  <meta name="robots" content="nofollow">
  <meta name=viewport content="width=device-width, initial-scale=1">
  <link rel=icon href=../mini_cube.png type=image/png>
- <script src=../rch.js></script>
- <script src=../rclib.js></script>
- <script src=symlib.js></script>
+ <script src=../../rch.js></script>
+ <script src=../../rclib.js></script>
+ <script src=../symlib.js></script>
  <style>
   table { border-collapse: collapse; }
   td { text-align: right; padding: 4px 10px 4px; }
@@ -25,33 +25,16 @@
 <script>
 "use strict";
 /*
-  The purpose of these two programs (ept_sym_m2[a-b].html) is to clarify the
-  functionality of update_et_sym() in rclib.js which adds both sym op
-  translation and edge twist (et) translation to array et_sym which normally
-  just provides the symmetry et config for any given et/op combination (for
-  the 16 symmetries that maintain consistent edge twist values for all edge
-  position values).
-
-  This program (ept_sym_m2a.html) uses a new array (et_fr_uf) to translate
-  et_fr configs (edge twist configs rotated such that cube front -> right)
-  to et_uf configs (cube up -> front).  To make the new array only the first
-  row of et_sym_UF is generated and it (et_sym_UF) is not used at all in the
-  main search loop (not used by get_etsym()).
-
-  The second program (ept_sym_m2b.html) adds the sym op translation to the 
-  et_sym array (same as original implementation which just copies all 2048
-  et values for each of the 16 consistent symmetries that combine with sym
-  op fr (or uf) to make each set of 16 inconsistent symmetries) while still
-  using the new array for et translation.
+  This version shows how get_etsym() is used without doing et_sym_update().
+  The difference is that an extra lookup is done (op16e[op] instead of op)
+  for the 32 sym ops that are not consistent.
 */
 
-var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);     // 3248 KB (3 MB)
-var epm = new Int8Array(E_PRM);                     //   34 KB
-var count1 = new Int32Array(24 * E_TWIST);          //  192 KB
+var et_sym_UF = new Uint16Array(SLICE_PRM * E_TWIST);  // 1980 KB (2 MB)
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);        // 3248 KB (3 MB)
+var epm = new Int8Array(E_PRM);                        //   34 KB
+var count1 = new Int32Array(24 * E_TWIST);             //  192 KB
 var count2 = new Int32Array(49);
-
-// array to translate et_fr to et_uf 
-var et_fr_uf = new Uint16Array(E_TWIST);
 
 document.getElementById('status').innerHTML = 'Counts are running<br><br>';
 setTimeout(main, 100);
@@ -113,7 +96,7 @@ function et_counts(n) {
   var tmp = new Int8Array(E_TWIST);
   for (var i=0; i < n; i++)
     for (var j=0; j < E_TWIST; j++)
-      tmp[count1[i*E_TWIST + j]]++;
+        tmp[count1[i*E_TWIST + j]]++;
   for (var i=0; i < E_TWIST; i++)
     if (tmp[i] != 0)
       count2[tmp[i]]++;
@@ -124,17 +107,8 @@ function get_etsym(ep, et, op) {
     return et_sym[et*CUBE_SYM+op];
   else if (op16e[op*2] == OP_FR)
     return et_sym[et_sym_FR[ep_slice[ep*3]*E_TWIST+et]*CUBE_SYM + op16e[op*2+1]];
-  else {
-    var et_fr = et_sym_FR[ep_slice[ep*3+1]*E_TWIST+et];
-    var et_uf = et_fr_uf[et_fr];  // translate et_fr to et_uf
-    return et_sym[et_uf*CUBE_SYM + op16e[op*2+1]];
-  }
-}
-
-function populate_et_fr_uf() {
-  // simple 1-1 mapping of et_fr to et_uf
-  for (var et=0; et < E_TWIST; et++)
-    et_fr_uf[et_sym_FR[et]] = et_sym_UF[et];
+  else 
+    return et_sym[et_sym_UF[ep_slice[ep*3+1]*E_TWIST+et]*CUBE_SYM + op16e[op*2+1]];
 }
 
 function init() {
@@ -143,10 +117,9 @@ function init() {
   init_map(map, sym_op_FR, sym_op_UR, reflect);
   populate_op_tables();
   populate_ep_sym();
-  populate_et_sym_no_update();  // make et_sym but do not do et_sym_update()
+  populate_et_sym_no_update()  // make et_sym but do not do et_sym_update()
   populate_et_sym_FR();
-  populate_et_sym_UF_m2();      // generate first row of et_sym_UF only
-  populate_et_fr_uf();          // generate et_fr to et_uf translation array
+  populate_et_sym_UF_m1(); 
 }
 </script>
 </center>

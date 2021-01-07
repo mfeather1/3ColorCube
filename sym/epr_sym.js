@@ -95,3 +95,23 @@ function populate_epr_sym2() {
     }
   }
 }
+
+function get_eprsym(eprsym, ep, epr, op) {
+  for (var i=0; i < 3; i++) {
+    var ix = op*35640 + ep_slice[ep*3+i]*72 + epr[i]*3 + i;
+    eprsym[slice_map[op*3+i]] = epr_sym[ix];
+  }
+}
+
+function get_eprsym2(eprsym, ep, epr, op) {
+  for (var i=0; i < 3; i++) {
+    var ix = epr_idx[op*1485 + ep_slice[ep*3+i]*3 + i];
+    eprsym[slice_map[op*3+i]] = epr_sym2[ix*24 + epr[i]];
+  }
+}
+
+function eprsum(epr) {
+  return(epr[0]*576 + epr[1]*24 + epr[2]);
+}
+
+

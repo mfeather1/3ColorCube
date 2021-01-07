@@ -1,13 +1,22 @@
 "use strict";
+/* 
+  CT_SYM_METHOD: 
+    Method 1 uses cpt_sym (14 MB)
+    Method 2 uses cpt_sym2 (318 KB) and cpt_min (600 KB)
+    Method 3 uses ct_sym (205 KB) and ct_fb_ud (300 KB)
 
-var CT_SYM_METHOD = 1;      // Method 2 replaces cpt_sym (14 MB) with cpt_sym2 (318 KB) and cpt_min (600 KB)
-                            // Method 3 uses ct_sym (205 KB) and ct_fb_ud (300 KB)
+  ET_SYM_METHOD:
+    Method 1 uses et_sym_UF (2 MB)
+    Method 2 does not use et_sym_UF for search, uses 4 KB for init only
 
-var ET_SYM_METHOD = 1;      // Methods 2 and 3 eliminate et_sym_UF (used only during init)
-                            // Method 3 replaces et_sym_FR (2 MB) with et_fr (64 KB) and et_fr_ix (124 KB)
-
-var EPT_OP_METHOD = 1;      // Method 2 reduces ept_min_op from 4 MB to 2.5 MB, uses 8 MB
-                            // of temp files during initialization
+  EPT_OP_METHOD:
+    Method 1 uses ept_min_op 4 MB
+    Method 2 reduces ept_min_op to 2.5 MB, uses 8 MB of temp during init,
+             takes slightly longer on startup
+*/
+var CT_SYM_METHOD = 1;
+var ET_SYM_METHOD = 2;
+var EPT_OP_METHOD = 1;
 
 var show_init_time_details = 0;
 
@@ -67,9 +76,7 @@ var emv         = new Uint8Array(MOVES * 12);
 var mvlist1     = new Int8Array(3);
 var mvlist2     = new Int8Array(MOVES+1);
 
-var ctw = [];  // array of pointers to functions
-var etw = [];
-
+// Arrays larger than 1 KB
 //                                                           Size(KB)
 var cp_mov      = new Uint8Array(C_PRM * MOVES);          //     1
 var min_ep      = new Uint16Array(MIN_EP);                //     2
@@ -109,12 +116,12 @@ if (ET_SYM_METHOD == 1)
 else
   var et_sym_UF = new Uint16Array(E_TWIST);               //     4
 
-if (ET_SYM_METHOD == 3) {
+/* if (ET_SYM_METHOD == 3) {
  var et_fr = new Uint16Array(E_TWIST*16);                 //    64
  var et_fr_ix = new Uint16Array(SLICE_PRM*E_TWIST/16);    //   124
-}
+} */
 
-// Used 6% of the time 2058/34650
+// Used 6% of the time (2058/34650)
 var ept_ops_ix1 = new Int8Array(MIN_EP);                  //     1
 var ept_ops_ix2 = new Int16Array(N_EPT_OPS_IX2*E_TWIST);  //   412
 
@@ -124,23 +131,23 @@ var ept_min_op  = new Int8Array(EP_MULTI_MIN_OP*E_TWIST); //  4116
 else
 var ept_min_op  = new Int8Array(N_EPT_MIN_OP*E_TWIST);    //  2580
 
-// Used rarely (.24% of the time 170928/70963200)
+// Used .24% of the time (170928/70963200)
 var ept_min_ops = new Uint16Array(N_EPT_MIN_OPS * 27);    //   387
 
 // var ep_sym      = new Uint16Array(E_PRM * CUBE_SYM);   //  3248 
 
-// Cube Layout:
-//
-//          00 01 02
-//          03 04 05
-//          06 07 08
-// 09 10 11 12 13 14 15 16 17 18 19 20
-// 21 22 23 24 25 26 27 28 29 30 31 32
-// 33 34 35 36 37 38 39 40 41 42 43 44
-//          45 46 47
-//          48 49 50
-//          51 52 53
+/* Cube Layout:
 
+           00 01 02
+           03 04 05
+           06 07 08
+  09 10 11 12 13 14 15 16 17 18 19 20
+  21 22 23 24 25 26 27 28 29 30 31 32
+  33 34 35 36 37 38 39 40 41 42 43 44
+           45 46 47
+           48 49 50
+           51 52 53
+*/
 var center_idx = [4,22,25,28,31,49];
 
 var cnr_idx = new Uint8Array 
@@ -162,15 +169,17 @@ var sym_op_UR = new Uint8Array([  // Up -> Right
   38,26,14, 8, 5, 2,18,30,42,39,27,15,40,28,16,41,29,17]);
 
 var reflect = new Uint8Array([
-  51,52,53,48,49,50,45,46,47,33,34,35,36,37,38,39,40,41,
-  42,43,44,21,22,23,24,25,26,27,28,29,30,31,32, 9,10,11,
-  12,13,14,15,16,17,18,19,20, 6, 7, 8, 3, 4, 5, 0, 1, 2]);
+   2, 1, 0, 5, 4, 3, 8, 7, 6,17,16,15,14,13,12,11,10, 9,
+  20,19,18,29,28,27,26,25,24,23,22,21,32,31,30,41,40,39,
+  38,37,36,35,34,33,44,43,42,47,46,45,50,49,48,53,52,51]);
 
+var ctw = [];
+var etw = [];
 var seq_gen = [];
 var populated = [];
-var logwin;
-var logtxt = [];
 var solution = [];
+var logtxt = [];
+var logwin;
 var get_etsym;
 var get_ctsym;
 var color;

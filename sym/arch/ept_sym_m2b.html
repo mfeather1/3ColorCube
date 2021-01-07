@@ -6,9 +6,9 @@
  <meta name="robots" content="nofollow">
  <meta name=viewport content="width=device-width, initial-scale=1">
  <link rel=icon href=../mini_cube.png type=image/png>
- <script src=../rch.js></script>
- <script src=../rclib.js></script>
- <script src=symlib.js></script>
+ <script src=../../rch.js></script>
+ <script src=../../rclib.js></script>
+ <script src=../symlib.js></script>
  <style>
   table { border-collapse: collapse; }
   td { text-align: right; padding: 4px 10px 4px; }
@@ -25,16 +25,17 @@
 <script>
 "use strict";
 /*
-  This version shows how get_etsym() is used without doing et_sym_update().
-  The difference is that an extra lookup is done (op16e[op] instead of op)
-  for the 32 sym ops that are not consistent.
+  This program adds the sym op translation to et_sym[], note the difference in 
+  use of op vs op16e[op*2+1] in get_etsym().
 */
 
-var et_sym_UF = new Uint16Array(SLICE_PRM * E_TWIST);  // 1980 KB (2 MB)
-var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);        // 3248 KB (3 MB)
-var epm = new Int8Array(E_PRM);                        //   34 KB
-var count1 = new Int32Array(24 * E_TWIST);             //  192 KB
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);     // 3248 KB (3 MB)
+var epm = new Int8Array(E_PRM);                     //   34 KB
+var count1 = new Int32Array(24 * E_TWIST);          //  192 KB
 var count2 = new Int32Array(49);
+
+// array to translate et_fr to et_uf 
+var et_fr_uf = new Uint16Array(E_TWIST);
 
 document.getElementById('status').innerHTML = 'Counts are running<br><br>';
 setTimeout(main, 100);
@@ -106,9 +107,26 @@ function get_etsym(ep, et, op) {
   if (op16e[op*2] == 0)
     return et_sym[et*CUBE_SYM+op];
   else if (op16e[op*2] == OP_FR)
-    return et_sym[et_sym_FR[ep_slice[ep*3]*E_TWIST+et]*CUBE_SYM + op16e[op*2+1]];
-  else 
-    return et_sym[et_sym_UF[ep_slice[ep*3+1]*E_TWIST+et]*CUBE_SYM + op16e[op*2+1]];
+    return et_sym[et_sym_FR[ep_slice[ep*3]*E_TWIST+et]*CUBE_SYM + op];
+  else {
+    var et_fr = et_sym_FR[ep_slice[ep*3+1]*E_TWIST+et];
+    var et_uf = et_fr_uf[et_fr];  // translate et_fr to et_uf
+    return et_sym[et_uf*CUBE_SYM + op];
+  }
+}
+
+function local_update_et_sym()
+{
+  for (var op=0; op < CUBE_SYM; op++)
+    if (op16e[op*2] != 0)
+      for (var et=0; et < E_TWIST; et++)
+        et_sym[et*CUBE_SYM + op] = et_sym[et*CUBE_SYM + op16e[op*2+1]];
+}
+
+function populate_et_fr_uf() {
+  // simple 1-1 mapping of et_fr to et_uf
+  for (var et=0; et < E_TWIST; et++)
+    et_fr_uf[et_sym_FR[et]] = et_sym_UF[et];
 }
 
 function init() {
@@ -117,9 +135,11 @@ function init() {
   init_map(map, sym_op_FR, sym_op_UR, reflect);
   populate_op_tables();
   populate_ep_sym();
-  populate_et_sym_no_update()  // make et_sym but do not do et_sym_update()
-  populate_et_sym_FR();
-  populate_et_sym_UF_m1(); 
+  populate_et_sym_no_update();  // make et_sym but do not do et_sym_update()
+  populate_et_sym_FR();     
+  populate_et_sym_UF_m2();      // generate first row of et_sym_UF only
+  local_update_et_sym();        // apply sym op translation only to et_sym 
+  populate_et_fr_uf();          // generate et_fr to et_uf translation array 
 }
 </script>
 </center>
