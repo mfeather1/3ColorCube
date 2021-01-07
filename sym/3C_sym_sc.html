@@ -169,7 +169,7 @@ function count() {
   t2 += sym48 * CUBE_SYM;
   s += '<tr><td><b>' + t1 + '</b></td><td></td><td><b>' + t2 + '</b></td></tr>'; 
   s += '<tr><td colspan=3 style=text-align:center>Ratio = ' +
-       (t2/t1).toFixed(2) + '</td></tr>';
+       (t2/t1).toFixed(4) + '</td></tr>';
   s += '</table>';
   var time1 = ((Date.now()-time0)/1000).toFixed(2);
   s += '<br>Runtime: ' + time1 + '<br><br>';
