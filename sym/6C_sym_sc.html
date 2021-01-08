@@ -291,7 +291,6 @@ function step3() {
       }
       op_sym[op] = i;
     }
-    var skip = 0;
     for (var i=0; i < oix; i++) {
       if (olist[i*CUBE_SYM] == eparity) {
         for (var j=1; j < CUBE_SYM; j++)
@@ -306,16 +305,11 @@ function step3() {
       for (var i=1; i < CUBE_SYM; i++)
         olist[oix*CUBE_SYM + i] = op_sym[i];
       ocount[oix] = 1;
-      skip = 0;
     }
     else {
       ocount[i]++;
-      skip = 1;
-    }
-    if (skip == 1)
       continue;
-    else
-      ocount[oix] = 1;
+    }
     console.log(progress++);
     for (i=0; i < C_PERM*C_TWIST; i++)
       arr[i] = 0;
