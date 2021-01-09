@@ -61,7 +61,6 @@ function count() {
   var epr = new Int8Array(3);
   var eprtmp = new Int8Array(3);
   var arr = new Int8Array(E_PRMr);
-  var count = new Int32Array(CUBE_SYM + 1);
   var mlist = new Int32Array(CUBE_SYM);
   var ulist = new Int32Array(CUBE_SYM * 2);
   var op_sym = new Int8Array(CUBE_SYM);
@@ -133,7 +132,6 @@ function count() {
           }
         }
         sub_count[uix]++;
-        count[uix]++;
       }
     for (i=0; i < 10; i++)
       osub_count[oix*10+i] = sub_count[syms[i]];

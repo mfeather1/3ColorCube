@@ -75,11 +75,9 @@ function step1() {
   var epr = new Int8Array(3);
   var eprtmp = new Int8Array(3);
   var arr = new Int8Array(E_PRMr);
-  var count = new Int32Array(CUBE_SYM + 1);
   var mlist = new Int32Array(CUBE_SYM);
   var ulist = new Int32Array(CUBE_SYM * 2);
   var op_sym = new Int8Array(CUBE_SYM);
-  var ocount = new Int32Array(OSIZE);
   var olist = new Int8Array(OSIZE * CUBE_SYM);
   var osub_count = new Int32Array (OSIZE * 10);
   var sub_count = new Int32Array(CUBE_SYM + 1);
@@ -97,7 +95,6 @@ function step1() {
         mlist[mix++] = epsym;
       op_sym[op] = i;
     }
-    ocount[oix] = 1;
     for (i=0; i < E_PRMr; i++)
       arr[i] = 0;
     for (i=0; i < 10; i++)
@@ -135,14 +132,13 @@ function step1() {
           eix2++;
         }
         sub_count[uix]++;
-        count[uix]++;
       }
     for (i=0; i < 10; i++)
       osub_count[oix*10+i] = sub_count[syms[i]];
     oix++;
   }
   for (var i=0, sum=0; i < oix; i++)
-    sum += ocount[i] * osub_count[i*10];
+    sum += osub_count[i*10];
   ep6c_mins_with_48_syms = sum + ep_mins_with_48_syms * E_PRMr;
 }
 
@@ -151,7 +147,6 @@ function step2() {
   var epr = new Int8Array(3);
   var eprtmp = new Int8Array(3);
   var arr = new Int8Array(E_TWIST);
-  var count = new Int32Array(CUBE_SYM + 1);
   var mlist = new Int32Array(CUBE_SYM);
   var ulist = new Int32Array(CUBE_SYM * 2);
   var op_sym = new Int8Array(CUBE_SYM);
@@ -226,7 +221,6 @@ function step2() {
         }
       }
       sub_count[uix]++;
-      count[uix]++;
     }
     for (i=0; i < 10; i++)
       osub_count[oix*10+i] = sub_count[syms[i]];

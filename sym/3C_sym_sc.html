@@ -63,7 +63,6 @@ function main() {
 function count() {
   var oix = 0;
   var arr = new Int8Array(C_PRM_TW);
-  var count = new Int32Array(CUBE_SYM + 1);
   var mlist = new Int32Array(CUBE_SYM);
   var ulist = new Int32Array(CUBE_SYM * 2);
   var op_sym = new Int8Array(CUBE_SYM);
@@ -141,7 +140,6 @@ function count() {
           }
         }
         sub_count[uix]++;
-        count[uix]++;
       }
     }
     for (i=0; i < 10; i++)
