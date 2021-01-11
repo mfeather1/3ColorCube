@@ -333,19 +333,6 @@ function step3() {
         var cpt = cp6c*C_TWIST + ct;
         if (arr[cpt] != 0)
           continue;
-        if (cp6c_sym48[cp6c] == 1) {
-          for (var op=1; op < CUBE_SYM; op++) {
-            if (op_sym[op] == 0) {
-              var ctsym = (CT_SYM_METHOD == 3) ?
-                get_ctsym(cp_sym[cp*CUBE_SYM+op], ct, op) :
-                get_ctsym(cp*C_TWIST+ct, op);
-              var cptsym = cp6c_sym_tmp[op] + ctsym;
-              arr[cptsym] = 1;
-            }
-          }
-          sub_count[48]++;
-          continue;
-        }
         arr[cpt] = 1;
         ulist[1] = cpt;
         var uix = 1;
