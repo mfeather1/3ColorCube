@@ -462,24 +462,6 @@ function make_eps(eps, ep, epr) {
 }
 
 function populate_cp6c_sym48() {
-  var list = new Int32Array(CUBE_SYM);
-  for (var cp6c=0; cp6c < C_PERM; cp6c++) {
-    list[0] = cp6c;
-    var ix = 1;
-    for (var op=1; op < CUBE_SYM; op++) {
-      var cp6csym = cp6c_sym[cp6c*CUBE_SYM + op];
-      for (var i=0; i < ix; i++)
-        if (cp6csym == list[i])
-          break;
-      if (i == ix)
-        list[ix++] = cp6csym;
-    }
-    if (ix == 48)
-      cp6c_sym48[cp6c] = 1;
-  }
-}
-
-function populate_cp6c_sym48() {
   var c1 = new Uint32Array(C_PERM);
   var c2 = new Uint32Array(C_PERM);
   for (var i=0; i < C_PERM; i++) {
