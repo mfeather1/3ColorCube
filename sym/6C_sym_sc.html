@@ -86,10 +86,7 @@ function step1() {
   var epr = new Int8Array(3);
   var eprtmp = new Int8Array(3);
   var arr = new Int8Array(E_PRMr);
-  var mlist = new Int32Array(CUBE_SYM);
   var ulist = new Int32Array(CUBE_SYM * 2);
-  var op_sym = new Int8Array(CUBE_SYM);
-  var olist = new Int8Array(OSIZE * CUBE_SYM);
   var osub_count = new Int32Array (OSIZE * 10);
   var sub_count = new Int32Array(CUBE_SYM + 1);
   for (var eix=0; eix < ELIST_SIZE; eix++) {
@@ -324,12 +321,12 @@ function step3() {
         arr[cpt>>3] |= 1<<(cpt&7);
         if ((cpt6c_sym48[cpt>>3]&(1<<(cpt&7))) != 0) {
           for (var i=0; i < nix; i++) {
-              var op = nlist[i];
-              var ctsym = (CT_SYM_METHOD == 3) ?
-                get_ctsym(cp_sym[cp*CUBE_SYM+op], ct, op) :
-                get_ctsym(cp*C_TWIST+ct, op);
-              var cptsym = cp6c_sym_tmp[op] + ctsym;
-              arr[cptsym>>3] |= 1<<(cptsym&7);
+            var op = nlist[i];
+            var ctsym = (CT_SYM_METHOD == 3) ?
+              get_ctsym(cp_sym[cp*CUBE_SYM+op], ct, op) :
+              get_ctsym(cp*C_TWIST+ct, op);
+            var cptsym = cp6c_sym_tmp[op] + ctsym;
+            arr[cptsym>>3] |= 1<<(cptsym&7);
           }
           sub_count[CUBE_SYM]++;
           continue;
