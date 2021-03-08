@@ -39,9 +39,12 @@ solve the remaining corners using the instructions <a href=corners.html>here</a>
 The 6-color corners can be solved before or after the 3-color edges are solved.
 If solving 6-color corners first and the parallel sequence is needed then make
 the setup such that the solved faces are on the left and right, otherwise two 
-of the solved edges will get misplaced.  If solving the 3-color edges first,
-then some edges will get misplaced with either of the 6-color corner sequences
-but that is also true for the 3-color solving method as described 
+of the solved edges will get misplaced.  If the waterwheel sequence is needed
+and the pair of faces with solved corners is not the same pair with solved 
+edges then two of the solved edges will get misplaced, fix those after
+applying the sequence (with sequence 3C-E2).  If solving the 3-color edges
+first, then some edges will get misplaced with either of the 6-color corner
+sequences but that is also true for the 3-color solving method as described 
 <a href=corners_6c_3.html>here</a>.
 <br><br>
 Complete the solve using the instructions for 6-color 
@@ -53,6 +56,11 @@ sequences can always be matched exactly when solving the rest of the cube, no
 need to make partial matches where only some of the misplaced facelets/stickers
 get fixed. Another advantage is that the case in which no misplaced facelets
 can be fixed is avoided.</p>
+<!--
+Exception: if after solving one pair of opposite faces as 3-color there is one
+pair of faces solvable but it is not the solved pair then after applying ww
+sequence two edge facelets from the solved pair are misplaced.
+-->
 <br>
 <a href="javascript: history.go(-1)">Back</a>
 </center>
