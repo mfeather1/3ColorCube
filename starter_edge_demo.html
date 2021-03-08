@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+ <title> Interactive Starter Edge Cube </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=starter_edge.js></script>
+</head>
+<body>
+<center>
+<font size=+2> Interactive Starter Edge Cube </font>
+<br>
+<div id=cube></div>
+<br>
+<button onclick="ff()">Random</button>
+<br><br>
+<a href=hta.html>Back</a>
+<br><br>
+<script>
+var first = 1;
+ff();
+function ff() {
+  var rand, facelets;
+  rand = (first) ? first=0 : rand = Math.floor(Math.random()*arr.length) + 1;
+  facelets = arr[rand];
+  document.getElementById('cube').innerHTML = 
+    '<iframe width=280 height=280 scrolling=no frameborder=0' +
+    ' src="cube.html?config=AnimCube.txt&edit=1&facelets=' + facelets + '">' +
+    '</iframe>';
+}
+</script>
+</center>
+</body>
+</html>
