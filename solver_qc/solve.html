@@ -269,8 +269,6 @@ function main() {
 
   init_conc();
 
-      shared_memory_error_handler();
-      return;
   try {
     dist1_shared  = new SharedArrayBuffer(MIN_EP*C_PRM*1094);   // 57 MB
   }
