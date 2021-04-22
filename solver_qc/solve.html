@@ -269,6 +269,8 @@ function main() {
 
   init_conc();
 
+      shared_memory_error_handler();
+      return;
   try {
     dist1_shared  = new SharedArrayBuffer(MIN_EP*C_PRM*1094);   // 57 MB
   }
@@ -971,8 +973,7 @@ function worker_error_handler() {
 
 function shared_memory_error_handler(e) {
   document.getElementById('status').innerHTML = 
-    'To enable shared memory for web workers this browser requires ' +
-    'Cross-Origin headers which Github does not provide, ' +
+    'This browser requires Cross-Origin headers which Github does not provide, ' +
     'run locally instead as described <a href=cross_origin.html>here</a>.' +
     '<br><br><button onclick="alert(\'' + e + '\')">Show Error</button>';
   facelets = CUBE_HOME;
