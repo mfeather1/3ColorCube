@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+ <title> Cross-Origin Headers </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+</head>
+<body>
+<center>
+<font size="+2"> Shared Memory for Web Workers </font><br>
+<font size="+2"> Cross-Origin Headers </font><br>
+</center>
+<br>
+<p>To enable shared memory for web workers set the Cross-Origin
+headers in your local web server as shown in the example below which is for
+the Apache web server on Fedora.  Consult your platform specific documentation
+for the details of where to set these headers on your system.
+<br><br>
+File: /etc/httpd/conf.d/userdir.conf<br><br>
+&lt;Directory "/home/*/public_html"&gt;<br>
+   ...<br>
+   Header set Cross-Origin-Opener-Policy same-origin<br>
+   Header set Cross-Origin-Embedder-Policy require-corp<br>
+&lt;/Directory&gt;
+<br><br>
+Restart the web server after making changes.</p>
+<br><hr><br>
+<p> To run the Quad-Core Solver locally, download the 3ColorCube-master.zip
+file from Gitub at the link below, extract the files into your local web
+directory and navigate to it (in web browser) via localhost or 127.0.0.1.
+<br><br>
+https://github.com/mfeather1/3ColorCube/archive/refs/heads/master.zip
+<br><br>
+If the following message appears in cube area:<br>
+"Your organization has blocked access to this page or website"<br>
+then press ctrl-F5 (or ctrl-shift-r) to reload the page.</p>
+<br><hr><br>
+<p>Links to Mozilla Developer Network (MDN) Documentation:<br>
+<a target=_blank href=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer>SharedArraybuffer</a><br>
+<a target=_blank href=https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts>Secure Contexts</a></p>
+<br>
+<center><a href="javascript: history.go(-1)">Back</a></center>
+<br>
+</body>
+</html>

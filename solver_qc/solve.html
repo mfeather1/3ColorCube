@@ -269,6 +269,8 @@ function main() {
 
   init_conc();
 
+      shared_memory_error_handler();
+      return;
   try {
     dist1_shared  = new SharedArrayBuffer(MIN_EP*C_PRM*1094);   // 57 MB
   }
@@ -971,15 +973,13 @@ function worker_error_handler() {
 
 function shared_memory_error_handler(e) {
   document.getElementById('status').innerHTML = 
-    'This browser does not appear to support shared memory so ' +
-    'unfortunately, the Quad-Core Solver cannot be used. ' +
-    'See <a target=_blank href="https://caniuse.com/#feat=sharedarraybuffer">Supported Browsers</a>. ' +
-    'Firefox versions 74+ can run this on local web-server as described ' +
-    '<a href=sharedArrayBuffer.html>here</a>.' +
+    'To enable shared memory for web workers this browser requires ' +
+    'Cross-Origin headers which Github does not provide, ' +
+    'run locally instead as described <a href=cross_origin.html>here</a>.' +
     '<br><br><button onclick="alert(\'' + e + '\')">Show Error</button>';
   facelets = CUBE_HOME;
   update_layout();
-  show_cube();
+  show_cube(0);
   solve_running = 1;  // disable buttons
 }
 
