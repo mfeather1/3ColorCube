@@ -18,12 +18,11 @@
 <center>
 <font size="+2"> Dist File Contents </font>
 <br><br>
-<p> The number of 3-Color Edge Positions is 34,650 but is reduced by 48
-symmetries to 782 in the following table which shows the cube components used
-in the dist files (in second table).
-An accounting of how the 48 symmetry reduction results in 782 can be found
-<a href=sym/index.html>here</a>, see the link for 3-Color Edge Positions on
-that page.<p>
+<p>The following table shows the cube components used in the dist files 
+(which are shown in second table).
+Edge Positions are reduced by symmetry, an accounting of how the reduction
+results in 782 configs can be found <a href=sym/index.html>here</a>, see the
+link for 3-Color Edge Positions on that page.<p>
 <br>
 <table class=tabdata style=border-collapse:collapse;border-color:white border=1>
  <tr> 
@@ -31,7 +30,8 @@ that page.<p>
   <td style=border-color:white>Abbrev</td>
   <td style=border-color:white>Configs</td>
  </tr>
- <tr><td>Edge Positions/(48 Syms)</td><td>EP</td><td>782</td></tr>
+ <tr><td>Edge Positions</td><td>EP</td><td>34650</td></tr>
+ <tr><td>EP / (48 Syms)</td><td>EPSYM</td><td>782</td></tr>
  <tr><td>Edge Twist</td><td>ET</td><td>2048</td></tr>
  <tr><td>Corner Positions</td><td>CP</td><td>70</td></tr>
  <tr><td>Corner Twist</td><td>CT</td><td>2187</td></tr>
@@ -51,9 +51,30 @@ Dist 3 stores this information for 155 billion configs.</p>
   <td style=border-color:white>Cube Components</td>
   <td style=border-color:white>Configs/Byte</td>
  </tr>
- <tr><td>Dist1_09F.dat</td><td>EP CP CT</td><td>2</td></tr>
- <tr><td>Dist2_09F.dat</td><td>EP ET CP</td><td>2</td></tr>
- <tr><td>Dist3_10F.dat</td><td>EP ET CT</td><td>8</td></tr>
+ <tr><td>Dist1_09F.dat</td><td>EPSYM &nbsp; CP &nbsp; CT</td><td>2</td></tr>
+ <tr><td>Dist2_09F.dat</td><td>EPSYM &nbsp; ET &nbsp; CP</td><td>2</td></tr>
+ <tr><td>Dist3_10F.dat</td><td>EPSYM &nbsp; ET &nbsp; CT</td><td>8</td></tr>
+</table>
+<br><br>
+<p>The file DistP2_08F.dat differs from the above files in that it only
+contains information for configs that are 3-color solutions (all facelets
+match the color of the center or the opposite face).
+The components for this file are shown in the following table, only EPR
+and CPR are needed because the 3-Color components are already solved and
+are factored out.
+There is no reduction by symmetry or by storing multiple configs per byte
+with this file.</p>
+<br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr> 
+  <td style=border-color:white>6-Color Cube Component</td>
+  <td style=border-color:white>Abbrev</td>
+  <td style=border-color:white>Configs</td>
+ </tr>
+ <tr><td>Edge Positions</td><td>EP6C</td><td>479001600</td></tr>
+ <tr><td>Corner Positions</td><td>CP6C</td><td>40320</td></tr>
+ <tr><td>EP6C / EP </td><td>EPR</td><td>13824</td></tr>
+ <tr><td>CP6C / CP </td><td>CPR</td><td>576</td></tr>
 </table>
 <br>
 <a href="javascript: history.go(-1)">Back</a>
