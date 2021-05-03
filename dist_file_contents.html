@@ -41,9 +41,9 @@ that page.<p>
 which allows a value in the range of 0-15 to be stored for each config, the
 value is the minimum number of moves required to solve the config.
 Dist 3 is a bit-array so it only indicates whether a config is solvable in 10
-moves or not, if the bit is not set then the minimum number of moves required
-to solve is at least 11. Dist 3 stores this information for 155 billion configs.
-</p>
+moves or not, if the bit is not set (which has 80% probability) then the
+minimum number of moves required to solve is at least 11.
+Dist 3 stores this information for 155 billion configs.</p>
 </br>
 <table class=tabdata style=border-collapse:collapse;border-color:white border=1>
  <tr> 
