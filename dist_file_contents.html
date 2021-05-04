@@ -8,8 +8,8 @@
  <meta name=viewport content="width=device-width, initial-scale=1">
  <style> .tabdata td {
    padding: 5px 20px;
-   border-color:black;
    text-align: center;
+   border-color: black;
  }
  </style>
 </head>
@@ -18,8 +18,8 @@
 <center>
 <font size="+2"> Dist File Contents </font>
 <br><br>
-<p>The dist files contain solution lengths (number of moves) for all
-configurations of various components of the cube.
+<p>The dist files contain solution lengths for all configurations of various
+components of the cube.
 The number of configs for each 3-color cube component is shown in the table
 below, the combination of components used in each dist file is shown in the
 second table.
@@ -48,7 +48,7 @@ Dist 3 is a bit-array so it only indicates whether a config is solvable in 10
 moves or not, if the bit is not set (which has 80% probability) then the
 minimum number of moves required to solve is at least 11.
 Dist 3 stores this information for 155 billion configs.</p>
-</br>
+<br>
 <table class=tabdata style=border-collapse:collapse;border-color:white border=1>
  <tr> 
   <td style=border-color:white>File Name</td>
@@ -56,8 +56,8 @@ Dist 3 stores this information for 155 billion configs.</p>
   <td style=border-color:white>Configs/Byte</td>
  </tr>
  <tr><td>Dist1_09F.dat</td><td>EPSYM &nbsp; CP &nbsp; CT</td><td>2</td></tr>
- <tr><td>Dist2_09F.dat</td><td>EPSYM &nbsp; ET &nbsp; CP</td><td>2</td></tr>
- <tr><td>Dist3_10F.dat</td><td>EPSYM &nbsp; ET &nbsp; CT</td><td>8</td></tr>
+ <tr><td>Dist2_09F.dat</td><td>EPSYM &nbsp; CP &nbsp; ET</td><td>2</td></tr>
+ <tr><td>Dist3_10F.dat</td><td>EPSYM &nbsp; CT &nbsp; ET</td><td>8</td></tr>
 </table>
 <br><br>
 <p>The file DistP2_08F.dat differs from the above files in that it only
