@@ -18,9 +18,9 @@
 <center>
 <font size="+2"> Dist File Contents </font>
 <br><br>
-<p>The dist files contain solution lengths for all configurations of various
-components of the cube.
-The number of configs in each 3-color cube component is shown in the table
+<p>The dist files contain solution lengths (number of moves) for all
+configurations of various components of the cube.
+The number of configs for each 3-color cube component is shown in the table
 below, the combination of components used in each dist file is shown in the
 second table.
 Edge Positions are reduced by symmetry, an accounting of how the reduction
@@ -41,8 +41,9 @@ link for 3-Color Edge Positions on that page.<p>
 </table>
 <br><br>
 <p>In the following table, Dists 1 &amp; 2 each contain two configs per byte
-which allows a value in the range of 0-15 to be stored for each config, the
-value is the minimum number of moves required to solve the config.
+which allows a value in the range of 0-15 to be stored for each config although
+only 0-10 is actually used because the array is generated to depth 9 and the
+configs not reached are assigned a value of 10.
 Dist 3 is a bit-array so it only indicates whether a config is solvable in 10
 moves or not, if the bit is not set (which has 80% probability) then the
 minimum number of moves required to solve is at least 11.
