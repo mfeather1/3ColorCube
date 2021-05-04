@@ -42,12 +42,14 @@ link for 3-Color Edge Positions on that page.<p>
 <br><br>
 <p>In the following table, Dists 1 &amp; 2 each contain two configs per byte
 which allows a value in the range of 0-15 to be stored for each config although
-only 0-10 is actually used because the array is generated to depth 9 and the
+only 0-10 is actually used because the arrays are generated to depth 9 and the
 configs not reached are assigned a value of 10.
 Dist 3 is a bit-array so it only indicates whether a config is solvable in 10
 moves or not, if the bit is not set (which has 80% probability) then the
 minimum number of moves required to solve is at least 11.
-Dist 3 stores this information for 155 billion configs.</p>
+Dist 3 stores this information for 155 billion configs, Dists 1 &amp; 2 each
+store info for approximately 5 billion configs (counts include up to 48
+symmetries per stored config).</p>
 <br>
 <table class=tabdata style=border-collapse:collapse;border-color:white border=1>
  <tr> 
@@ -64,10 +66,14 @@ Dist 3 stores this information for 155 billion configs.</p>
 contains information for configs that are 3-color solutions (all facelets
 match the color of the center or the opposite face).
 The components for this file are shown in the following table, only EPR
-and CPR are needed because the 3-Color components are already solved and
-are factored out.
-There is no reduction by symmetry or by storing multiple configs per byte
-with this file.</p>
+and CPR are needed because the 3-Color components are already solved and are
+factored out.
+There is no need for reduction by symmetry or by storing multiple configs
+per byte with this file because it is relatively small.
+A value in the range of 0-9 is stored for each config (array is generated to
+depth 8 and unreached configs are assigned 9).
+The file can store 8 million configs although parity eliminates the need for
+half of them.</p>
 <br>
 <table class=tabdata style=border-collapse:collapse;border-color:white border=1>
  <tr> 
