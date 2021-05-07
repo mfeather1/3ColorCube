@@ -971,8 +971,11 @@ function worker_error_handler() {
 
 function shared_memory_error_handler(e) {
   document.getElementById('status').innerHTML = 
-    'This browser requires Cross-Origin headers which Github does not provide, ' +
-    'run locally instead as described <a href=cross_origin.html>here</a>.' +
+    'This browser either does not support shared memory or it ' +
+    'requires cross-origin headers, check ' +
+    '<a target=_blank href=https://caniuse.com/sharedarraybuffer>here</a> ' +
+    'for status. If the latter is the case then this can be run ' +
+    'locally as described <a href=cross_origin.html>here</a>.' +
     '<br><br><button onclick="alert(\'' + e + '\')">Show Error</button>';
   facelets = CUBE_HOME;
   update_layout();
