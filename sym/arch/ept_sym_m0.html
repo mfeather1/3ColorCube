@@ -25,7 +25,7 @@
 <script>
 "use strict";
 /*
-  This version shows how get_etsym() is used without doing et_sym_update().
+  This version shows how get_etsym() is used without doing update_et_sym().
   The difference is that an extra lookup is done (op16e[op] instead of op)
   for the 32 sym ops that are not consistent.
 */
@@ -117,7 +117,7 @@ function init() {
   init_map(map, sym_op_FR, sym_op_UR, reflect);
   populate_op_tables();
   populate_ep_sym();
-  populate_et_sym_no_update()  // make et_sym but do not do et_sym_update()
+  populate_et_sym_no_update()  // make et_sym but do not do update_et_sym()
   populate_et_sym_FR();
   populate_et_sym_UF_m1(); 
 }

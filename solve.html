@@ -27,7 +27,7 @@
   }
  </style>
 </head>
-<body ondblclick="fullScreen()">
+<body ondblclick="fullScreen(event)">
 <div class=wrap>
 <center>
 <style> input { height:22px; width:22px;} </style>
@@ -600,9 +600,10 @@ function readfiles_done() {
   dist_files_loaded = 1;
 }
 
-function fullScreen()
+function fullScreen(e)
 {
-  return;
+  if (typeof e.target.type != 'undefined')
+    return;
 
   var elem = document.body;
 
