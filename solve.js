@@ -184,6 +184,7 @@ function solve_cube(facelets)
 
 function show_moves()
 {
+  var adj = 0;
   seq2[0] = depth2;
   if (Math.floor(sol3c[sol3c[0]]/3) == Math.floor(seq2[1]/3)) {
      if (show_combine) {
@@ -205,10 +206,12 @@ function show_moves()
       minmv -= 2;
     }
     else {
-      // if first move of phase 2 is half-twist then skip this solution,
-      // the shortened version will immediately follow
+      // combined moves result in ccw qtr-twist which yields 3-color solution
+      // so adjust N+N total to match moves shown in cube area, this differs
+      // from the other two cases which do not yield a 3-color solution at any
+      // point in the solve sequence
       if (seq2[1]%3 == 1)
-        return;
+        adj = 1;
       // make first move of seq2 the combined move
       seq2[1] = cm;  
       sol3c[0]--;  // shorten sol3c by 1
@@ -231,7 +234,7 @@ function show_moves()
   if (minmv <= stoplen)
     done = 1;
   sol_dep1 = depth;
-  sol_dep2 = depth2;
+  sol_dep2 = depth2 - adj;
 }
 
 function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)

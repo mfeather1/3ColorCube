@@ -1586,30 +1586,97 @@ function document_write(s) {
   logtxt.push(s);
 }
 
-function show_log()
-{
-  if (typeof(logwin) != 'undefined')
-    logwin.close();
-  logwin = window.open('', 'rc_solve_log');
-  logwin.document.write('<!doctype html>\n');
-  logwin.document.write('<html>\n');
-  logwin.document.write('<head>\n');
-  logwin.document.write('<style>\n');
-  logwin.document.write(' body {color:white; background-color:#38383D; margin-left:10%; margin-right:10%}\n');
-  logwin.document.write(' .btn {height:28px; width:100px; border-radius:15px; background:white; padding:0px; border:none;}\n');
-  logwin.document.write(' .tabdata td {text-align:right; padding:2px 10px; border-color:black}\n');
-  logwin.document.write('</style>\n');
-  logwin.document.write('</head>\n');
-  logwin.document.write('<body >\n');
-  logwin.document.write('<br>Solve Log:<br>\n');
-  for (var i=0; i < logtxt.length; i++)
-    logwin.document.write(logtxt[i] + '\n');
-  logwin.document.write('<button class=btn onclick="window.close()">Close</button>');
-  logwin.document.write('<br><br>\n');
-  logwin.document.write('</body>\n');
-  logwin.document.write('</html>\n');
-  logwin.document.title = 'Solve Log';
-  logwin.document.close();
+var logdiv;
+
+function show_log() { 
+  if (typeof getFullscreenElement() != 'undefined') {
+    var s = '<style>\n';
+    s += ' .btn {height:28px; width:100px; border-radius:15px;\n';
+    s += '   background:white; padding:0px; border:none}\n';
+    s += ' .tabdata td {text-align:right; padding:2px 10px;\n';
+    s += '   border-color:black}\n';
+    s += '</style>\n';
+    s += '<br>Solve Log:<br>\n';
+    for (var i=0; i < logtxt.length; i++)
+      s += logtxt[i] + '\n';
+    s += '<button class=btn onclick="exitFullScreen()">Back</button>\n';
+    s += '<br><br><br>\n';
+    logdiv = document.createElement('div'); 
+    logdiv.id = 'log';
+    logdiv.style.overflow = 'auto';
+    logdiv.style.paddingLeft = '10%';
+    logdiv.style.backgroundColor = '#38383D';
+    logdiv.style.textAlign = 'left';
+    document.body.appendChild(logdiv);
+    logdiv.innerHTML = s;
+    requestFullscreenFunc(logdiv);
+  } 
+  else {
+    if (typeof(logwin) != 'undefined')
+      logwin.close();
+    logwin = window.open('', 'rc_solve_log');
+    logwin.document.write('<!doctype html>\n');
+    logwin.document.write('<html>\n');
+    logwin.document.write('<head>\n');
+    logwin.document.write('<meta name=viewport\n');
+    logwin.document.write('  content="width=device-width, initial-scale=1">\n');
+    logwin.document.write('<style>\n');
+    logwin.document.write(' body {color:white; background-color:#38383D;\n');
+    logwin.document.write('   margin-left:10%; margin-right:10%}\n');
+    logwin.document.write(' .btn {height:28px; width:100px; border-radius:15px;\n');
+    logwin.document.write('   background:white; padding:0px; border:none;}\n');
+    logwin.document.write(' .tabdata td {text-align:right; padding:2px 10px;\n');
+    logwin.document.write('   border-color:black}\n');
+    logwin.document.write('</style>\n');
+    logwin.document.write('</head>\n');
+    logwin.document.write('<body >\n');
+    logwin.document.write('<br>Solve Log:<br>\n');
+    for (var i=0; i < logtxt.length; i++)
+      logwin.document.write(logtxt[i] + '\n');
+    logwin.document.write('<button class=btn\n');
+    logwin.document.write('  onclick="window.close()">Close</button>\n');
+    logwin.document.write('<br><br>\n');
+    logwin.document.write('</body>\n');
+    logwin.document.write('</html>\n');
+    logwin.document.title = 'Solve Log';
+    logwin.document.close();
+  }
+}
+
+function exitFullScreen() {
+  exitFullscreenFunc();
+  document.body.removeChild(logdiv);
+  if (fs == 1 && typeof fullscreenElement == 'undefined')
+    requestFullscreenFunc(document.body);
+}
+
+function getFullscreenElement() {
+  return (document.fullscreenElement ||
+    document.mozFullScreenElement ||
+    document.webkitFullscreenElement ||
+    document.msFullscreenElement);
+}
+
+function requestFullscreenFunc(elem) {
+  if (elem.requestFullscreen) 
+    elem.requestFullscreen();
+  else if (elem.mozRequestFullScreen)
+    elem.mozRequestFullScreen();
+  else if (elem.webkitRequestFullscreen)
+    elem.webkitRequestFullscreen();
+  else if (elem.msRequestFullscreen)
+    elem.msRequestFullscreen();
+}
+
+function exitFullscreenFunc() {
+  if (document.exitFullscreen)
+    document.exitFullscreen();
+  else if (document.mozCancelFullScreen)
+    document.mozCancelFullScreen();
+  else if (document.webkitExitFullscreen)
+    document.webkitExitFullscreen();
+  else if (document.msExitFullscreen)
+    document.msExitFullscreen();
 }
 
 function show_cube_layout(s)

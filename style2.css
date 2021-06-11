@@ -12,6 +12,10 @@ div.wrap {
   overflow:auto;
   padding:8px 10%; 
 }
+table {
+  border-style:solid; 
+  border-color:#38383D; 
+}
 td { text-align: justify; }
 p {
   margin:0;

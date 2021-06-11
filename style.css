@@ -6,6 +6,10 @@ body {
     margin-left: 10%; 
     margin-right: 10%;
 }
+table {
+  border-style:solid; 
+  border-color:#38383D; 
+}
 td {
     text-align: justify;
 }
