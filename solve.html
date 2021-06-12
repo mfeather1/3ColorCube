@@ -605,7 +605,8 @@ var fs = 0;
 function fullScreen(e) {
   if (typeof e.target.type != 'undefined')
     return;
-  if (typeof getFullscreenElement() == 'undefined') {
+  var fse = getFullscreenElement();
+  if (typeof fse == 'undefined' || fse == null) {
     fs = 1;
     requestFullscreenFunc(document.body);
   }

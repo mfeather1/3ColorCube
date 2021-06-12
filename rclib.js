@@ -1589,7 +1589,8 @@ function document_write(s) {
 var logdiv;
 
 function show_log() { 
-  if (typeof getFullscreenElement() != 'undefined') {
+  var fse = getFullscreenElement();
+  if (!(typeof fse == 'undefined' || fse == null)) {
     var s = '<style>\n';
     s += ' .btn {height:28px; width:100px; border-radius:15px;\n';
     s += '   background:white; padding:0px; border:none}\n';
@@ -1623,10 +1624,11 @@ function show_log() {
     logwin.document.write('<style>\n');
     logwin.document.write(' body {color:white; background-color:#38383D;\n');
     logwin.document.write('   margin-left:10%; margin-right:10%}\n');
-    logwin.document.write(' .btn {height:28px; width:100px; border-radius:15px;\n');
-    logwin.document.write('   background:white; padding:0px; border:none;}\n');
+    logwin.document.write(' table {border-style:solid; border-color:#38383D;}\n');
     logwin.document.write(' .tabdata td {text-align:right; padding:2px 10px;\n');
     logwin.document.write('   border-color:black}\n');
+    logwin.document.write(' .btn {height:28px; width:100px; border-radius:15px;\n');
+    logwin.document.write('   background:white; padding:0px; border:none;}\n');
     logwin.document.write('</style>\n');
     logwin.document.write('</head>\n');
     logwin.document.write('<body >\n');
