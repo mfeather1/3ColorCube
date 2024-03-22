@@ -47,7 +47,7 @@
 <table>
  <tr height=15>
  <tr>
-  <td style=text-align:left>Moves:</td>
+  <td style=text-align:right>Moves:</td>
   <td>
   <td style=text-align:left id=moves></td>
  </tr>
@@ -57,7 +57,7 @@
   <td style=text-align:left id=goal></td>
  </tr>
 </table>
-<table id=status class=tabdata>
+<table id=status class=tabdata translate=no>
  <tr height=15>
  <tr>
   <td>FL</td><td>FU</td><td>FR</td><td>FD</td>
@@ -84,7 +84,7 @@
  </tr>
 </table>
 <br>
-<a href=javascript:history.go(-1)>Back</a>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
 <br><br>
 <script>
 "use strict";
@@ -207,7 +207,7 @@ function repos() {
   acjs_paint[id]();
 }
 function help() {
-  location = 'hta_help.html';
+  location = location.href.replace('interactive_cubes_hta', 'hta_help');
 }
 function mouseup() {
   setTimeout(update, 0);
