@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+<head>
+ <title> Supercube Center Twists - Avoiding The Half-Twisted Center </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <style> td {text-align:center} </style>
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <style> 
+   .tabdata td {
+     padding-left:10px; padding-right:10px;
+     text-align:center; border-color:black;
+   }
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Supercube Center Twists <br> Avoiding The Half-Twisted Center </font>
+<br><br>
+<p> The Waterwheel Sequence, with a minor modification, can be used to
+avoid the single half-twisted center at the end of the solve.
+After solving the corners (and before solving the edges), sum the twist of all
+six centers as shown.
+If the sum is a  multiple of four (0, 4, 8, 12 or 16) then proceed normally
+(solve the edges then the centers) and there will not be a half-twisted center
+at the end.
+If the sum is not a multiple of four then use the Waterwheel Sequence with a 
+half-twist on the fifth move (instead of a quarter-twist).
+Restore the corners with half-twists (as shown by the last four moves) and the 
+solve can then be completed normally.
+Press the Random button to see more examples.</p>
+<br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td>No Twist</td><td>0</td></tr>
+ <tr><td>Quarter-Twist Clockwise</td><td>1</td></tr>
+ <tr><td>Half-Twist</td><td>2</td></tr>
+ <tr><td>Quarter Counter-Clockwise</td><td>3</td></tr>
+</table>
+<table border=0>
+ <tr height=15>
+ <tr valign=bottom>
+  <td><div id=table1></div>
+  <td width=30>
+  <td><div id=cube style=width:200px;height:200px></div>
+  <td width=30>
+  <td><div id=table2></div>
+ <tr>
+</table>
+<table><tr height=10><td></table>
+<button class="btn dmw1" onclick=new_cube(1)>Random</button>
+<br><br>
+<p>"Solvable" in the above tables refers to whether it can be solved
+without getting the single half-twisted center at the end.
+After the sequence the center on the top face is half-twisted and the sum 
+shows that the configuration is solvable, it will remain that way during the
+solve of the edges. 
+These examples always show a configuration where the sequence is needed
+but when solving scrambled cubes half of them would already be solvable.
+<br><br>
+The last four moves of the sequence, which restore the corners with 
+half-twists, can be done many different ways (16 to be exact).
+While these have varying effects on the centers the result is always a solvable 
+sum which is all that is needed prior to solving the edges.
+In other words, it works no matter how it is done.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+<script>
+"use strict";
+var U, L, F, R, B, D;
+var acjs_removeListeners = [];
+var homeCube  = "RWRWRWRWROWOWOWOWOYWYWYWYWYKWKWKWKWKGWGWGWGWGBWBWBWBWB";
+var scubeHome = "000000000000000000000000000000000000000000000000000000";
+new_cube(0);
+function new_cube(r) {
+  var centers = randCenters();
+  var sum = centers[7] + centers[8];
+  var sf = add_centers(centers);
+  U = centers[0];  L = centers[1];  F = centers[2]; 
+  R = centers[3];  B = centers[4];  D = centers[5];
+  make_table1(sum);
+  show_cube(r, sf);
+  make_table2(sum);
+}
+function make_table1(sum) {
+  var s = "<table border=0><tr><td valign=top>";
+  s += "Centers Before <br>";
+  s += "<table class=tabdata style=border-collapse:collapse;border-color:white border=1>";
+  s += "<tr><td>Top</td><td>" + U + "</td></tr>";
+  s += "<tr><td>Left</td><td>" + L + "</td></tr>";
+  s += "<tr><td>Front</td><td>" + F + "</td></tr>";
+  s += "<tr><td>Right</td><td>" + R + "</td></tr>";
+  s += "<tr><td>Back</td><td>" + B + "</td></tr>";
+  s += "<tr><td>Bottom</td><td>" + D + "</td></tr>";
+  s += "<tr><td>Sum</td><td>" + sum + "</td></tr>";
+  s += "<tr><td>Solvable</td><td> N </td></tr>";
+  s += "</table>";
+  document.getElementById('table1').innerHTML = s;
+}
+function show_cube(r, sf) {
+  var move = "R'D2'L2'F2R2F2'L2D2RR2F2U2F2";
+  var params = 'id=cube&config=AnimCube.txt&edit=1&supercube=1&scw=blank' +
+    '&gabbacolors=1&facelets=' + homeCube + '&superfacelets=' +
+    sf + '&move=' + move;
+  if (r)
+    acjs_removeListeners['cube']();
+  AnimCube3(params);
+}
+function make_table2(sum) {
+  var UB = Number(U);
+  var UA = (UB+2)%4;
+  var SA = Number(sum) + UA - UB;
+  var s = "</td><td width=30><td valign=top>";
+  s += "Centers After <br>";
+  s += "<table class=tabdata style=border-collapse:collapse;border-color:white border=1>";
+  s += "<tr><td>Top</td><td>" + UA + "</td></tr>";
+  s += "<tr><td>Left</td><td>" + L + "</td></tr>";
+  s += "<tr><td>Front</td><td>" + F + "</td></tr>";
+  s += "<tr><td>Right</td><td>" + R + "</td></tr>";
+  s += "<tr><td>Back</td><td>" + B + "</td></tr>";
+  s += "<tr><td>Bottom</td><td>" + D + "</td></tr>";
+  s += "<tr><td>Sum</td><td>" + SA + "</td></tr>";
+  s += "<tr><td>Solvable</td><td> Y </td></tr>";
+  s += "</table>";
+  document.getElementById('table2').innerHTML = s;
+}
+function randCenters() {
+  // solvable as in not getting single twisted center at the end
+  var solvable = 'N';   // N=not solvable, Y=solvable, A=all
+  var lda = [0, 1];
+  var ldy = [0, 3, 2, 1];
+  var ldn = [2, 1, 0, 3];
+  var sum = 0;
+  var str = '';
+  for (var i=0; i < 5; i++) {
+    var n = Math.floor(Math.random()*4);
+    sum += n;
+    str += n;
+  }
+  if (solvable == 'A')
+    n = lda[sum%2];
+  else if (solvable == 'Y')
+    n = ldy[sum%4];
+  else if (solvable == 'N')
+    n = ldn[sum%4];
+  sum += n;
+  str += n + ' ' + sum;
+  if ( sum == 0 || sum == 4 || sum == 8 || sum == 12 || sum == 16)
+    solvable = 'Y';
+  else 
+    solvable = 'N';
+  return(str + ' ' + solvable);
+}
+function add_centers(centers) {
+  var f = scubeHome.split('');
+  var c = centers.split('');
+  f[4]  = c[0];
+  f[40] = c[1];
+  f[22] = c[2];
+  f[49] = c[3];
+  f[31] = c[4];
+  f[13] = c[5];
+  return(f.join(''));
+}
+</script>
+</center>
+</div>
+</body>
+</html>

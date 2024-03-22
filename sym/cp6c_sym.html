@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6-Color Corner Position Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=symlib.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2> 6-Color Corner Position Symmetry </font>
+<br><br>
+<div id=status></div>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+"use strict";
+
+/* 6-Color Corner Position Symmetry
+
+      Mins    Syms    Configs
+   -------    ----   --------
+       740      48      35520
+       170      24       4080
+         4      16         64
+        40      12        480
+         8       8         64
+        16       6         96
+         2       4          8
+         2       3          6
+         2       1          2
+   -------           --------
+       984              40320   Ratio: 40.98
+*/
+
+var cp6c_sym = new Uint16Array(C_PERM * CUBE_SYM);  // 4 MB
+
+document.getElementById('status').innerHTML = 'Counts are running<br>';
+setTimeout(main, 100);
+
+function main() {
+  var time0 = Date.now();
+  init();
+  count_cp6c_mins();
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  document.getElementById('status').innerHTML +=
+    '<br>Run Time: ' + time1 + '<br>';
+}
+
+function count_cp6c_mins() {
+  var c1 = new Uint32Array(C_PERM);
+  var c2 = new Uint32Array(C_PERM);
+  var c3 = new Uint32Array(49);
+  for (var cp=0; cp < C_PERM; cp++) {
+    if (c1[cp] == 0) {
+      c1[cp] = cp;
+      for (var op=1; op < CUBE_SYM; op++) {
+        var cpsym = cp6c_sym[cp*CUBE_SYM + op];
+        c1[cpsym] = cp;
+      }
+    }
+  }
+  for (var i=0; i < C_PERM; i++)
+    c2[c1[i]]++;
+  for (var i=0; i < C_PERM; i++)
+    if (c2[i] != 0)
+      c3[c2[i]]++;
+  rpt(c3);
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_cp6c_sym();
+}
+</script>
+</center>
+</body>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Edge Cubes - Using Half-Twists to Make Setups </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> 3-Color Edge Cubes <br> Using Half-Twists to Make Setups </font>
+<br><br>
+<table>
+ <tr>
+  <td>
+   <div id=cube1 style=width:300px;height:300px></div>
+   <table style=margin:auto>
+    <tr height=20>
+    <tr>
+     <td><button class="btn dmw1" onclick="new_cube(1)">Random</button></td>
+     <td width=20>
+     <td>
+     <td><button class="btn dmw2" onclick="help()">Help</button></td>
+    </tr>
+   </table>
+  </td>
+  <td width=30>
+  <td valign=top style=text-align:center>
+   <br>3C-E1<br>
+   <div id=cube2 style=width:130px;height:130px></div>
+  </td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+<script>
+"use strict";
+var acjs_removeListeners = [];
+var arr=[
+  "L2'F2D2","L2'F2","D2L2'F2","U2L2'F2","Y2L2'F2","B2R2U2","R2U2","X'L2'F2","F2R2U2","R2B2D2",
+  "B2","D2B2","D2","F2B2","X'F2","F2","F2D2","U2B2","Y2F2","U2","U2D2","XF2","X","U2F2","X'U2",
+  "L2D2B2","B2R2D2","R2D2","XL2'F2","F2R2D2","L2B2","D2L2B2","U2L2B2","Z2L2'F2","R2F2D2"
+];
+new_cube(0);
+var facelets2 = "DDDDDWDDDDDDDDDDWDWDWWWWWWWWWWWWWWDWLLLLLLLLLLLLLLLLLL";
+AnimCube3("config=AnimCube.txt&id=cube2&move=R'Um2'R&facelets=" + facelets2);
+function new_cube(r) {
+  var facelets;
+  var rand = Math.floor(Math.random()*arr.length);
+  if (typeof(cs) == 'undefined')
+    var cs = 0;
+  var move = arr[rand];
+  cs = (cs == rand%6) ? (cs+1)%6 : cs = rand%6;
+  if (cs == 0)      facelets = "RRRRRYRRRRRRRRRRYRYRYYYYYYYYYYYYYYRYBBBBBBBBBBBBBBBBBB";
+  else if (cs == 1) facelets = "RRRRRBRRRRRRRRRRBRBRBBBBBBBBBBBBBBRBYYYYYYYYYYYYYYYYYY";
+  else if (cs == 2) facelets = "YYYYYBYYYYYYYYYYBYBYBBBBBBBBBBBBBBYBRRRRRRRRRRRRRRRRRR";
+  else if (cs == 3) facelets = "YYYYYRYYYYYYYYYYRYRYRRRRRRRRRRRRRRYRBBBBBBBBBBBBBBBBBB";
+  else if (cs == 4) facelets = "BBBBBRBBBBBBBBBBRBRBRRRRRRRRRRRRRRBRYYYYYYYYYYYYYYYYYY"
+  else if (cs == 5) facelets = "BBBBBYBBBBBBBBBBYBYBYYYYYYYYYYYYYYBYRRRRRRRRRRRRRRRRRR";
+  var params = 'config=AnimCube.txt&id=cube1&edit=1&initrevmove=#&move='; 
+  params +=  move + '&facelets=' + facelets;
+  if (r)
+    acjs_removeListeners['cube1']();
+  AnimCube3(params);
+}
+function help() {
+  location = location.href.replace('.html', '_help.html');
+}
+</script>
+</div>
+</body>
+</html>

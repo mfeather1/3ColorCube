@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+ <title> Make Dist5 </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=dist5.js></script>
+</head>
+<body>
+<center>
+<font size=+2> Make Dist5 </font>
+</center>
+<br>
+<div id=title> </div>
+<br>
+<button onclick="make_dist5()">Start</button> 
+<div id=status></div>
+<div id=status2></div>
+<div id=back></div>
+<a id=d1e></a>
+<br>
+
+<script>
+"use strict";
+
+var done = 0;
+var dl1_done = 0;
+var d1_url;
+var d1_blob;
+var time0;
+var dist5;
+var seq = new Uint8Array(20);
+var seq2 = new Uint8Array(20);
+
+document.getElementById('status').innerHTML = 
+  '<br><center><a href="javascript: history.go(-1)">Back</a></center>';
+
+var params = location.search.substr(1).split('&');
+for (var i=0; i < params.length; i++) {
+  var p = params[i].split('=');
+  window[p[0]] = p[1];
+}
+
+var file_name = 'Dist5_11F.dat';
+var msg = 'Press Start to make ' + file_name;
+
+document.getElementById('title').innerHTML = msg; 
+
+function make_dist5()
+{
+  if (!done) {
+    done = 1;
+    document_write('<br>');
+    document.getElementById('status').innerHTML =  '<br>Initializing';
+    setTimeout(step1, 100);
+  }
+}
+
+function step1()
+{
+  time0 = Date.now();
+  init();
+  var s = document.getElementById('status').innerHTML;
+  document.getElementById('status').innerHTML =  s +
+    '<br>Generating Dist5_11F.dat';
+  setTimeout(step2, 100);
+}
+
+function step2()
+{
+  try {
+    // dist5 = new Uint8Array(C_PERM*(C_TWIST+1)/2;  // 42 MB
+    dist5 = new Uint8Array(40320*2188/2);
+    populate_dist5b();
+    step3();
+  }
+  catch (e) {
+    alert(e);
+  }
+}
+
+function step3()
+{
+  var t1 = Date.now();
+  var t2 = ((t1-time0)/1000).toFixed(2);
+  var s = document.getElementById('status').innerHTML;
+  document.getElementById('status').innerHTML =
+     s + '<br><br>Run Time: ' + t2 + '<br><br>Save File:<br><br>' +
+     '<button onclick=dl1m()>Dist5</button>&nbsp;&nbsp;&nbsp;'; 
+  document.getElementById('back').innerHTML =
+     '<br><center><a href="javascript: history.go(-1)">Back</a> </center>';
+}
+
+function showUrl() {
+   alert(d1_url);
+}
+
+function dl1m() {
+  if (!dl1_done) {
+    document.getElementById('status2').innerHTML =
+      '<br>Preparing Download for ' + file_name + '<br>';
+    setTimeout(dl1, 100);
+  }
+}
+
+function dl1() {
+  try {
+    d1_blob = new Blob([dist5], {type: "octet/stream"});
+    d1_url = window.URL.createObjectURL(d1_blob);
+    d1e.href = d1_url;
+    d1e.download = file_name;
+    d1e.click();
+    dl1_done = 1;
+  }
+  catch (e) {
+    alert(e);
+  }
+}
+
+function init() {
+  init_seq();
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_cp_sym();
+  populate_cpt_min();
+  populate_cp6c_mov();
+  if (CT_SYM_METHOD == 1)
+    populate_cpt_sym();
+  else if (CT_SYM_METHOD == 2)
+    populate_cpt_sym2();
+  else {
+    populate_ct_sym();
+    update_ct_sym();
+  }
+}
+
+</script>
+</body>
+</html>

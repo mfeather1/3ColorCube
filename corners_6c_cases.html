@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6-Color Corner Cases </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <style> .tabdata td {padding:2px 15px; border-color:black; text-align:center;} 
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> 6-Color Corner Cases </font>
+<br><br>
+<table><tr height=1-><td></table>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr align=center colspan=4>
+  <td style="border:1px solid white" colspan=5> Opposite Face Arrangements </td>
+ </tr>
+ <tr align=center> 
+  <td style="border:1px solid white"> Case </td>
+  <td style="border:1px solid white"> Split </td>
+  <td style="border:1px solid white"> Color Pairs </td>
+  <td style="border:1px solid white"> Opposite Face </td>  
+  <td style="border:1px solid white"> Solvable </td>
+ </tr>
+ <tr align=center>
+  <td> 1 </td>
+  <td> 2-2 </td>
+  <td> Parallel </td>
+  <td> Aligned </td>
+  <td> Yes </td>
+ </tr>
+ <tr align=center>
+  <td> 2 </td>
+  <td> 2-2 </td>
+  <td> Diagonal </td>
+  <td> Diagonal </td>
+  <td> Yes </td>
+ </tr>
+ <tr align=center>
+  <td> 3 </td>
+  <td> 2-2 </td>
+  <td> Parallel </td>
+  <td> Perpendicular </td>
+  <td> No </td>
+ </tr>
+ <tr align=center>
+  <td> 4 </td>
+  <td> 3-1 </td>
+  <td> N/A </td>
+  <td> N/A </td>
+  <td> No </td>
+ </tr>
+</table>
+<br>
+<p><u>Case 1</u><br>
+A pair of opposite faces with a 2-2 split (2 corner facelets of each color on 
+each face) CAN be solved with half-twists if the color pairs on each face are 
+parallel and aligned with those on the opposite face.
+Here are two examples, press Play on each to solve with half-twists:</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:170px; height:170px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=U2&facelets=llllllllllllllllllylylylylywlwlwlwlwllllllllllllllllll")</script>
+   </div>
+  </td>
+  <td width=70>
+  <td>
+   <div style="width:170px; height:170px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=B2D2&facelets=llllllllllllllllllylylylylywlwlwlwlwllllllllllllllllll")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<p><u>Case 2</u><br>
+A pair of opposite faces with a 2-2 split CAN be solved with half-twists 
+if the color pairs on each face are diagonal.
+Here are two examples, press Play on each to solve with half-twists:</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:170px; height:170px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R2B2U2&facelets=llllllllllllllllllylylylylywlwlwlwlwllllllllllllllllll")</script>
+   </div>
+  </td>
+  <td width=70>
+  <td>
+   <div style="width:170px; height:170px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R2B2D2&facelets=llllllllllllllllllylylylylywlwlwlwlwllllllllllllllllll")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<p><u>Case 3</u><br>
+A pair of opposite faces with a 2-2 split CAN NOT be solved with half-twists if 
+the color pairs on each face are parallel but perpendicular to those on the 
+opposite face.  The following two examples can not be solved with half-twists
+only, use the mouse to try.  If you do solve it then you used a quarter-twist
+which would mess up the other faces if they were shown, no cheating!</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:147px; height:147px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&edit=1&initmove=R2F&facelets=llllllllllllllllllylylylylywlwlwlwlwllllllllllllllllll")</script>
+   </div>
+  </td>
+  <td width=90>
+  <td>
+   <div style="width:147px; height:147px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&edit=1&initmove=R2FY&facelets=llllllllllllllllllylylylylywlwlwlwlwllllllllllllllllll")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<p><u>Case 4</u><br>
+A pair of opposite faces with a 3-1 split, CAN NOT be solved with half-twists 
+only.
+The following two examples can not be solved with half-twists only.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:147px; height:147px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&edit=1&initmove=R2FR2&facelets=llllllllllllllllllylylylylywlwlwlwlwllllllllllllllllll")</script>
+   </div>
+  </td>
+  <td width=90>
+  <td>
+   <div style="width:147px; height:147px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&edit=1&initmove=R2FR2F2&facelets=llllllllllllllllllylylylylywlwlwlwlwllllllllllllllllll")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

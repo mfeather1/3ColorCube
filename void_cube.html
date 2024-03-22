@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+ <title> Void Cube </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <style> .tabdata td {
+   padding-left:15px; padding-right:15px; border-color:black; text-align:left; }
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Void Cube </font>
+<br><br>
+<p>The Void Cube can be solved normally, however, there are new configurations
+that do not occur on the regular cube.
+The following two "parity" configurations are both solved the same way,
+the slice containing the misplaced facelets is quarter-twisted and then all 
+four edge cubies are flipped by using Sequence 
+<a href=edges.html#cube3>3C-E3</a> twice.
+The second cube has the addition of a half-twist before &amp; after.
+This method is also used for the 
+<a href=4x4_6C.html#parity>4x4 Cube</a> and
+<a href=mc4d_parity_config.html>Magic Cube 4D</a>.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:200px; height:200px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initmove=Uc'R2Um'R2Um&move=UmR'UmL'D2LUm'RZ2R'UmL'D2LUm'R&facelets=RRRRKRRRROOOOKOOOOBGBBKBBBBGGGGKGGBGYYYYKYYYYWWWWKWWWW")</script>
+   </div>
+  </td>
+  <td width=50>
+  <td>
+   <div style="width:200px; height:200px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&move=B2UmR'UmL'D2LUm'RZ2R'UmL'D2LUm'RF2&facelets=RRRRKRRRROOOOKOOOOYWYYKYYYYWWWWKWWYWGGGGKGGGGBBBBKBBBB")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+<tr><td style=text-align:center>1</td><td>Quarter-twist the slice</td></tr>
+<tr><td style=text-align:center>2-8</td><td>Apply Seqence 3C-E3 to flip two edge cubies</td></tr>
+<tr><td style=text-align:center>9</td><td>Turn cube around</td></tr>
+<tr><td style=text-align:center>10-16</td><td>Apply Seqence 3C-E3 to flip two edge cubies</td></tr>
+</table>
+<br><br>
+<p>The above two configurations can be switched by doing Sequence 
+<a href=edges_6c.html#cube4>6C-E4</a> to either of them as shown by the following.
+The second cube is repositioned on the first move prior to the sequence
+(as is the first cube after the sequence).</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:200px; height:200px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initmove=Uc'R2Um'R2Um&move=R2'Um'R2'UmUc2&facelets=RRRRKRRRROOOOKOOOOBGBBKBBBBGGGGKGGBGYYYYKYYYYWWWWKWWWW")</script>
+   </div>
+  </td>
+  <td width=50>
+  <td>
+   <div style="width:200px; height:200px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&move=Uc'R2'Um'R2'Um&facelets=RRRRKRRRROOOOKOOOOYWYYKYYYYWWWWKWWYWGGGGKGGGGBBBBKBBBB")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

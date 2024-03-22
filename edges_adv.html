@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Edges - Advanced Solving </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <style> .tabdata td {
+   padding-left:15px; padding-right:15px; border-color:black; text-align:center; }
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center><font size="+2"> 3-Color Edges <br> Advanced Solving </font>
+<br><br>
+<p> The following shows how <a href=edges#cube3>Sequence 3C-E3</a> can be 
+modified to handle two pairs of cubies (second pair is in bottom layer) by
+adding a half-twist of the front face on the fifth move.
+This sequence can be used whenever there are two pairs of cubies (each with
+both facelets misplaced) in two different slices, make the setup with
+half-twists and/or cube rotation where applicable.
+The color of the individual facelets does not have to match the setup, they
+just have to be misplaced.
+At least four facelets will be fixed, likely more (see table below).
+</p>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&edit=1&initmove=#&move=R'UmL'D2F2LUm'R&colorscheme=rryybb")</script>
+   </div>
+<br><br>
+<!--
+  Count Fixed
+     16   4   .1975
+     32   5   .3950
+     24   6   .2962
+      8   7   .0987
+      1   8   .0123
+     81 Total
+-->
+<p>With the above setup, the rest of the cube does not have to be already
+solved so any four of the twelve cubies can be included.
+Hence there are 81 possible configurations of the four cubies where each has
+both facelets misplaced.
+The following table shows the result of using the sequence on all of them.</p>
+<br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr> <td>Fixed</td><td>Configs</td><td>Probability</td> </tr>
+ <tr><td>4</td><td>16</td><td>20%</td></tr>
+ <tr><td>5</td><td>32</td><td>39%</td></tr>
+ <tr><td>6</td><td>24</td><td>30%</td></tr>
+ <tr><td>7</td><td>8</td><td>10%</td></tr>
+ <tr><td>8</td><td>1</td><td>1%</td></tr>
+ <tr><td>Total</td><td>81</td><td>100%</td></tr>
+</table>
+<br><br>
+<p>A quick-n-dirty alternative is shown on the first cube below.
+The setup is different and there is an additional misplaced facelet on the
+back face (which can be ignored) but the idea is the same.
+The second cube is similar but the setup has three cubies in one slice and one
+in another.</p>
+<table>
+ <tr>
+  <td> 
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=Um'R'UmR&colorscheme=rryybb")</script>
+   </div>
+  </td>
+  <td width=70>
+  <td> 
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R'Um'RUm&colorscheme=rryybb")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<p>Most of the time (85%) at least four facelets will be fixed.
+The odd fifth cubie (with the single misplaced facelet) widens the range of
+possible outcomes as shown in the table below.
+The larger number of configs takes into account the six possibilities
+for the odd fifth cubie which is ignored while solving.</p>
+<br>
+<!--
+  Count Fixed
+     15   2   .0312 
+     56   3   .1166
+    107   4   .2229
+    129   5   .2687
+    102   6   .2125
+     53   7   .1104
+     16   8   .0333
+      2   9   .0041
+    480 Total
+
+  The fifth cubie is ignored so there are six possibilities for it which makes
+  for 6 * 81 configurations, however, one config from each of the six sets is
+  eliminated because there cannot be four of the same cubie that matches the
+  fifth cubie.
+-->
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr> <td>Fixed</td><td>Configs</td><td>Probability</td> </tr>
+ <tr><td>2</td><td>15</td><td>3% </td></tr>
+ <tr><td>3</td><td>56</td><td>12% </td></tr>
+ <tr><td>4</td><td>107</td><td>22% </td></tr>
+ <tr><td>5</td><td>129</td><td>27% </td></tr>
+ <tr><td>6</td><td>102</td><td>21% </td></tr>
+ <tr><td>7</td><td>53</td><td>11% </td></tr>
+ <tr><td>8</td><td>16</td><td>3% </td></tr>
+ <tr><td>9</td><td>2</td><td>&lt;1% </td></tr>
+ <tr><td>Total</td><td>480</td><td>100%</td></tr>
+</table>
+<!--
+<br><br>
+<p>The final case is where the fourth cubie is in the adjacent slice
+instead of the opposite layer as shown below.
+The number of facelets that will get fixed for any particular set of four
+cubies (each with both facelets misplaced) is the same result that would be
+obtained by using Sequence 3C-E3 and 3C-E4.
+The low outcome of only two fixed can be avoided by not using the sequence
+when the cubies in the top and bottom layers do not have the color of the top
+face (which results in no facelets fixed for those two cubies).</p>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&edit=1&initrevmove=#&move=B2FDRUm2R'D'F'&colorscheme=rryybb")</script>
+   </div>
+<br><br>
+-->
+<!--
+  Count Fixed
+      4   2   .0493
+     12   3   .1481
+     21   4   .2592
+     22   5   .2716
+     15   6   .1851
+      6   7   .0740
+      1   8   .0123
+     81 Total
+-->
+<!--
+<table class=tabdata style=border-collapse:collapse;border-color:black border=1>
+ <tr> <td>Fixed</td><td>Configs</td><td>Probability</td> </tr>
+ <tr><td>2</td><td>4</td><td>5%</td></tr>
+ <tr><td>3</td><td>12</td><td>15%</td></tr>
+ <tr><td>4</td><td>21</td><td>26%</td></tr>
+ <tr><td>5</td><td>22</td><td>27%</td></tr>
+ <tr><td>6</td><td>15</td><td>19%</td></tr>
+ <tr><td>7</td><td>6</td><td>7%</td></tr>
+ <tr><td>8</td><td>1</td><td>1%</td></tr>
+ <tr><td>Total</td><td>81</td><td>100%</td></tr>
+</table>
+-->
+<!--
+<br><br>
+<p>The following sequence flips all eight cubies on the left &amp; right faces.
+Use it if there are at least six misplaced cubies on opposite faces although
+that does not happen very often.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=Rm'Um'RmFm'&colorscheme=rryybb")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+-->
+<br>
+<style>
+.back {
+  color:#4B80FE;
+  cursor:pointer;
+  text-decoration:underline;
+}
+</style>
+<a class=back onclick="history.go(-1)">Back</a> &nbsp;
+<button class=btn style="padding:0 20px;cursor:pointer" onclick="history.go(-1)">Back</button>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

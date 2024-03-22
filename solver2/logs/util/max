@@ -1,0 +1,11 @@
+# get longest solve from a log
+
+if [ $# != 1 ]; then
+  echo -n "Usage: "
+  echo "`basename $0` {file}"
+  exit 0
+fi
+
+grep '\[' $1 | awk '{print $NF}' | sort -n | tail -1 |
+awk '{print $1}'
+

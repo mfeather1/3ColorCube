@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+ <title> Show Dist File Counts </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> .tabdata td {
+   padding-left:15px; padding-right:15px; border-color:black; text-align:right; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2> Show Dist File Counts </font>
+<br><br>
+<input type=file id=selectFiles style="display:none;"
+  onchange="readfile(this.files)">
+
+<input type=button value="Load Dist File"
+  onclick="document.getElementById('selectFiles').click();"
+  style="height:32px; width:161px">
+<br><br>
+<div id=status></div>
+<br>
+
+<script>
+"use strict";
+
+var dist;
+var counts = new Uint32Array(12);
+
+document.getElementById('status').innerHTML =
+  '<a href="javascript: history.go(-1)">Back</a>';
+
+function readfile(files) {
+  var name = files[0].name;
+  // if (name.substr(0,4) == 'Dist' && name.substr(name.length-5) == 'F.dat') {
+  if (name.substr(0,4) == 'Dist') {
+    document.getElementById('status').innerHTML = 'Loading File ' + name;
+    try {
+      if (name.substr(0,5) == 'Dist3')
+        loadfile(files[0]);
+      else
+        readfile2(files[0]);
+    }
+    catch(e) {
+      alert(e);
+    }
+  }
+  else
+    document.getElementById('status').innerHTML = 'Not a dist file: ' + name;
+}
+
+function readfile2(file) {
+  var name = file.name;
+  var reader = new FileReader();
+  reader.readAsArrayBuffer(file);
+  reader.onload = function(e) {
+    dist = new Uint8Array(e.target.result);
+    show_counts(file);
+  }
+}
+
+function show_counts(file) {
+  document.getElementById('status').innerHTML = file.name + ' Loaded - ' +
+    Math.round(dist.length/1024/1024) + ' MB<br><br>';
+
+  for (var i=0; i < 12; i++)
+    counts[i] = 0;
+
+  if (file.name.substr(0,6) == 'DistP2') {
+    for (var i=0; i < dist.length; i++)
+      counts[dist[i]]++;
+  }
+  else if (file.name.substr(0,5) == 'Dist3') {
+    counts[0] = get_distb_count();
+    counts[1] = dist.length - counts[0];
+  }
+  else {
+    for (var i=0; i < dist.length; i++) {
+      counts[dist[i]&0xF]++;
+      counts[dist[i]>>4]++;
+    }
+  }
+  var str = document.getElementById('status').innerHTML +
+    '<table class=tabdata style=border-collapse:collapse;border-color:white border=1>' +
+    '<tr><td>Depth</td><td>Count</td></tr>';
+
+  for (i=0; i < 12; i++)
+    if (counts[i] != 0)
+      str += '<tr><td style=text-align:center>' + i + '</td><td>' +
+        counts[i] + '</td></tr>';
+
+  document.getElementById('status').innerHTML = str + '</table>' +
+    '<br><a href="javascript: history.go(-1)">Back</a>';
+}
+
+function get_distb_count()
+{
+  var count, i, j, k;
+  var bits = new Uint8Array(256);
+
+  for (i=0; i < 256; i++)
+    for (j=0, k=1, bits[i]=0; j < 8; j++, k*=2)
+      if (i & k) bits[i]++;
+
+  for (i=count=0; i < dist.length; i++)
+    count += bits[dist[i]];
+  return(count);
+}
+
+function loadfile(file) {
+  var fileSize = file.size;
+  var bufSize = file.size/8;
+  var offset = 0;
+  var readbuf = null;
+  dist = new Uint8Array(fileSize);
+  var readEventHandler = function(e) {
+    if (e.target.error == null) {
+      var buf = new Uint8Array(e.target.result);
+      for (var i=0; i < bufSize; i++)
+        dist[offset+i] = buf[i];
+      offset += buf.length;
+    } else {
+      console.log("Read Error: " + e.target.error);
+      return;
+    }
+    if (offset >= fileSize) {
+      show_counts(file);
+      return;
+    }
+    readbuf(offset, bufSize, file);
+  }
+  readbuf = function(ofs, len, f) {
+    var r = new FileReader();
+    var blob = f.slice(ofs, len + ofs);
+    r.onload = readEventHandler;
+    r.readAsArrayBuffer(blob);
+  }
+  readbuf(0, bufSize, file);
+}
+
+</script>
+</center>
+</body>
+</html>

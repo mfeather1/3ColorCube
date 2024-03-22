@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Edge Position Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=symlib.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2> 3-Color Edge Position Symmetry </font>
+<br><br>
+<div id=status></div>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+"use strict";
+
+/* 3-Color Edge Position Symmetry
+
+      Mins    Syms    Configs
+   -------    ----   --------
+       679      48      32592
+        68      24       1632
+        17      16        272
+         8      12         96
+         5       8         40
+         2       6         12
+         1       3          3
+         1       2          2
+         1       1          1
+   -------           --------
+       782              34650   Ratio: 44.31
+*/
+
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);     //   3 MB
+
+document.getElementById('status').innerHTML = 'Counts are running<br>';
+setTimeout(main, 100);
+
+function main() {
+  var time0 = Date.now();
+  init();
+  count_ep_mins();
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  document.getElementById('status').innerHTML +=
+    '<br>Run Time: ' + time1 + '<br>';
+}
+
+function count_ep_mins() {
+  var c1 = new Uint32Array(E_PRM);
+  var c2 = new Uint32Array(E_PRM);
+  var c3 = new Uint32Array(49);
+  for (var ep=0; ep < E_PRM; ep++) {
+    if (c1[ep] == 0) {
+      c1[ep] = ep;
+      for (var op=1; op < CUBE_SYM; op++) {
+        var epsym = ep_sym[ep*CUBE_SYM + op];
+        c1[epsym] = ep;
+      }
+    }
+  }
+  for (var i=0; i < E_PRM; i++)
+    c2[c1[i]]++;
+  for (var i=0; i < E_PRM; i++)
+    if (c2[i] != 0)
+      c3[c2[i]]++;
+  rpt(c3);
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_ep_sym();
+}
+
+</script>
+</center>
+</body>

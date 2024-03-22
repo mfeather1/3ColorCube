@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6-Color Corner Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=symlib.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+  p { text-align: justify; margin-left: 10%; margin-right: 10%; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>6-Color Corner Symmetry</font>
+<br><br>
+<div id=status></div>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+"use strict";
+
+/* 6-Color Corner Symmetry
+
+      Mins    Syms    Configs
+   -------    ----   --------
+   1832428      48   87956544
+      9064      24     217536
+       104      16       1664
+       301      12       3612
+        33       8        264
+        34       6        204
+         1       4          4
+         3       3          9
+         1       2          2
+         1       1          1
+   -------           --------
+   1841970           88179840   Ratio: 47.87
+*/
+
+var cp6c_sym = new Uint16Array(C_PERM * CUBE_SYM);  // 3780 KB (4 MB)
+var cpm = new Int8Array(C_PERM);                    //   40 KB
+var count1 = new Int32Array(24 * C_TWIST);          //  205 KB
+var count2 = new Int32Array(49);
+
+document.getElementById('status').innerHTML = 'Counts are running<br><br>';
+setTimeout(main, 100);
+
+function main() {
+  var time0 = Date.now();
+  init();
+  counts();
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  document.getElementById('status').innerHTML +=
+    '<br>Run Time: ' + time1 + '<br><br>';
+}
+
+function counts() {
+  for (var cp=0; cp < C_PERM; cp++)
+    cpm[cp] = -1;
+
+  // populate_list returns the 244 cp mins that do not have 48 unique symmetries
+  // list[0] contains the number of cp mins that do have 48 unique symmetries
+  // which is passed to rpt2, the value is 740 (244 + 740 = 984 cp mins total)
+
+  var list = populate_list(C_PERM, cp6c_sym);
+
+  for (var i=1; i < list.length; i++) {
+    var cp = list[i];
+    cpm[cp] = 0;
+    var n = fill_cpm(cp);
+    clear_count1(n);
+    do_ct_sym(cp);
+    ct_counts(n);
+  }
+  rpt2(list[0]*C_TWIST, 2);
+}
+
+function fill_cpm(cp) {
+  var n = 1;
+  for (var op=1; op < CUBE_SYM; op++) {
+    var cpsym = cp6c_sym[cp*CUBE_SYM + op];
+    if (cpm[cpsym] == -1)
+      cpm[cpsym] = n++;
+  }
+  return n;
+}
+
+function clear_count1(n) {
+  for (var i=0; i < n; i++)
+    for (var j=0; j < C_TWIST; j++)
+      count1[i*C_TWIST + j] = 0;
+}
+
+function do_ct_sym(cp) {
+  for (var ct=0; ct < C_TWIST; ct++) {
+    if (count1[ct] == 0) {
+      count1[ct] = ct;
+      if (CT_SYM_METHOD != 3)
+        var cpt = cp6c_cp3c[cp]*C_TWIST + ct;
+      for (var op=1; op < CUBE_SYM; op++) {
+        var cpsym = cp6c_sym[cp*CUBE_SYM + op];
+        if (CT_SYM_METHOD == 3)
+          var ctsym = get_ctsym(cp6c_cp3c[cpsym], ct, op);
+        else
+          var ctsym = get_ctsym(cpt, op);
+        count1[cpm[cpsym]*C_TWIST + ctsym] = ct;
+      }
+    }
+  }
+}
+
+function ct_counts(n) {
+  var tmp = new Int8Array(C_TWIST);
+  for (var i=0; i < n; i++)
+    for (var j=0; j < C_TWIST; j++)
+        tmp[count1[i*C_TWIST + j]]++;
+  for (var i=0; i < C_TWIST; i++)
+    if (tmp[i] != 0)
+      count2[tmp[i]]++;
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_cp6c_sym();
+  if (CT_SYM_METHOD == 1) {
+    populate_cpt_sym();
+    get_ctsym = get_ctsym_m1;
+  }
+  else if (CT_SYM_METHOD == 2) {
+    populate_op_tables();
+    populate_cpt_min();
+    populate_cpt_sym2();
+    get_ctsym = get_ctsym_m2;
+  }
+  else if (CT_SYM_METHOD == 3) {
+    populate_ct_sym();
+    update_ct_sym();
+    get_ctsym = get_ctsym_m3;
+  }
+}
+
+</script>
+</center>
+</body>

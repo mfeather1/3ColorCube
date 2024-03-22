@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+ <title> Random 6-Color Corner Cubes - Pre-solved as 3-color - Solvable with Half-Twists Only</title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel=stylesheet type=text/css href=style2.css>
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src="hist.js"></script>
+ <script src="corners2.js"></script>
+ <script src="AnimCube3.js"></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Random 6-Color Corner Cubes </font> <br>
+<font size=+1> Pre-Solved as 3-color </font><br>
+<font size=+1> Solvable with Half-Twists Only </font>
+<br> 
+<div id=cube style=width:300px;height:300px></div>
+<table border=0>
+ <tr height=15>
+ <tr>
+  <td>
+  <td><button class="btn dmw1" onclick="new_cube(1)">Random</button></td>
+  <td width=20>
+  <td><button class="btn dmw2" onclick="help()">Help</button></td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+<script>
+"use strict";
+var acjs_removeListeners = [];
+new_cube(0);
+function new_cube(r) {
+  var rand = Math.floor(Math.random()*corners2.length);
+  var line = corners2[rand];
+  var facelets = line.substr(0,54);
+  var move = line.substr(55);
+  var params = 'config=AnimCube.txt&id=cube&edit=1&move=' + move + '&facelets=' + facelets;
+  if (r)
+    acjs_removeListeners['cube']();
+  AnimCube3(params);
+}
+function help() {
+  location = location.href.replace('js', 'help');
+}
+</script>
+</center>
+</div>
+</body>
+</html>

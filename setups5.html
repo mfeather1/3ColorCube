@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+ <title> Matching One of Two Facelets (Page 5 of 6) </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <script src=hist.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Matching One of Two Facelets <br> Page 5 of 6 </font>
+<br><br>
+<p>When only five or six misplaced facelets remain on the cube then it may be a
+case where only one misplaced facelet can be fixed such as in the following 
+examples.
+As you can see on the first cube below, the yellow &amp; blue misplaced
+facelets are in the right locations to match the setup for Sequence 3C-E2 
+(second cube) but while the yellow one is the correct color the blue one is
+not (should be red).
+For that reason only one misplaced facelet will be fixed as a result of 
+doing the sequence.  
+The misplaced facelets that are not part of the setup can be ignored.</p>
+<table>
+ <tr>  
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initmove=ZU2&move=R'Um'R2'UmR&facelets=ryrrrrrrrrrrrrrrrrbrbbbbbybbbbbbbbbbyyyyyyyyyybybyyyyy")</script>
+   </div>
+  </td>
+  <td width=50>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R'Um'R2'UmR&colorscheme=rryybb")</script>
+   </div>
+  </td>
+</table>
+<br><br>
+<p>On the first cube below, only the blue facelet on the top face matches the
+setup for Sequence 3C-E4 (second cube) so using it will only fix one facelet
+as shown.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=B2F'RUBU2B'R'U'F&move=R'UmLD2L'Um'R&facelets=rrrrrrrrrrrrrrrrrryyyyyyyyyyyyyyyyyybbbbbbbbbbbbbbbbbb")</script>
+   </div>
+  </td>
+  <td width=50>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R'UmLD2L'Um'R&facelets=rrrrrrrrrrrrrrrrrryyyyyyyyyyyyyyyyyybbbbbbbbbbbbbbbbbb")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<p>Another way to fix one facelet on the above configuration is to use Sequence
+3C-E2 by first matching the setup (shown on second cube below) with a half-twist
+of the front face as shown by the first move on the first cube below.
+After the first move, the red facelet on the front face is the right color but
+the blue one on the top face is not (should be yellow) so only one facelet is
+fixed as a result of doing the sequence.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=B2F'RUBU2B'R'U'F&move=F2'R'Um'R2'UmR&facelets=rrrrrrrrrrrrrrrrrryyyyyyyyyyyyyyyyyybbbbbbbbbbbbbbbbbb")</script>
+   </div>
+  </td>
+  <td width=70>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R'Um'R2'UmR&colorscheme=rryybb")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<script>
+  hst();
+  document.write('<table><tr>');
+  document.write(m(4, 'Prev') + '<td width=10>');
+  document.write(m(1, 1) + '<td width=10>');
+  document.write(m(2, 2) + '<td width=10>');
+  document.write(m(3, 3) + '<td width=10>');
+  document.write(m(4, 4) + '<td width=10>');
+  document.write('<td>5</td><td width=10>');
+  document.write(m(6, 6) + '<td width=10>');
+  document.write(m(6, 'Next'));
+  document.write('</tr></table>');
+  function m(n, s) {
+    var u = location.href.replace(/setups[1-6]/, 'setups' + n);
+    var n = u.indexOf('hist');
+    if (n > 0) u = u.substr(0, n-1);
+    var s = '<td><a href=' + u + '&hist=' + hist + '>' + s + '</a></td>';
+    return s.replace('html&', 'html?');
+  }
+  if (hist != 0) {
+    document.write("<br><a href=\"javascript: history.go(-" + hist + ")\">Back</a>");
+  }
+</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

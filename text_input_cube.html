@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+<head>
+ <title> Text Input Cube </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <script src=rch.js></script>
+ <script src=rclib.js></script>
+ <script src=moves.js></script>
+ <style>
+  .text {
+    width:210px; 
+    height:225px;
+    margin:0;
+    font-size:20px;
+    text-transform:uppercase;
+  }
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Text Input Cube </font>
+<br>
+<table border=0>
+ <tr>
+  <td style=text-align:center><br>
+   <textarea id=text spellcheck=false class=text> </textarea><br>
+   <input id=line readonly style=width:210px><br>
+   <input id=anim style=width:210px><br>
+   <table border=0>
+    <tr>
+     <td colspan=5><input id=stype type=checkbox>AnimCube Format</td></tr>
+    <tr height=1></tr>
+    <tr>
+     <td><button class="btn tiw1" onclick="show()">Show</button></td>
+     <td width=10></td>
+     <td><button class="btn tiw1" onclick="clera()">Clear</button></td>
+     <td width=10></td>
+     <td><button class="btn tiw1" onclick="help()">Help</button></td>
+    <tr>
+   </table>
+  </td>
+  <td width=30>
+  <td style=text-align:center valign=top>
+   <div id=animcube style=width:280px;height:280px></div>
+   <div id=status style=width:280px> </div>
+  </td>
+ </tr>
+ <tr height=10>
+ <tr><td colspan=3><input id=seq style=width:100%></tr>
+ <tr height=5px>
+ <tr>
+  <td colspan=3>
+   <button class="btn ixw1" onclick=apply_moves(0) translate=no>Apply Moves</button> &nbsp;&nbsp;
+   <button class="btn ixw1" onclick=apply_moves(1)>Apply Inverse</button> &nbsp;&nbsp;
+   <button class="btn ixw1" onclick=clear_seq()>Clear</button>
+  </td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+<script>
+"use strict";
+var acjs_removeListeners = [];
+var text_style='"width:210px; height:225px; margin:0; font-size:20px; text-transform:uppercase;"';
+var blank_cube = 'LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL';
+var home_cube = 'RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO';
+var facelets;
+var cubetext;
+var cmd = '';
+main();
+function main() {
+  var params = location.search.substr(1).split('&');
+  for (var i=0; i < params.length; i++) {
+    var p = params[i].split('=');
+    if (typeof(p[1]) != 'undefined')
+      window[p[0]] = p[1];
+  }
+  facelets = home_cube;
+  show_text();
+  show_cube(0);
+}
+function show() {
+  cmd = 'show';
+  clear_status();
+  if (document.getElementById('stype').checked == true) 
+    facelets = cvt_from_anim(document.getElementById('anim').value); 
+  else {
+    var tmp = document.getElementById('text').value.replace(/ /g, ''); 
+    facelets = tmp.replace(/\r?\n|\r/g, '');
+  }
+  if (facelets.length == 0)
+    facelets = home_cube;
+  else if (facelets.length < 54) {
+    document.getElementById('status').innerHTML = 
+    '<p>Not enough colors entered, you need ' + (54-facelets.length) + ' more</p>';
+    return;
+  }
+  else {
+    facelets = facelets.substr(0,54).toUpperCase();
+    var ftmp = facelets.split('');
+    for (var i=0; i < 54; i++) {
+      var f = ftmp[i];
+      // if ('0123456789WYORGBLDMCPNK.'.indexOf(f) == -1)
+      if ('WYORGB'.indexOf(f) == -1)
+        ftmp[i] = 'L';
+    }
+    facelets = ftmp.join('');
+    if (facelets.indexOf("L") != -1)
+      document.getElementById('status').innerHTML = 
+      '<p>One or more facelets are blank</p>';
+  }
+  show_text();
+  show_cube(1);
+  if (facelets.length == 54 && facelets != home_cube && facelets.indexOf("L") == -1)
+    show_solver_link();
+}
+function clear_status() {
+  document.getElementById('status').innerHTML = '';
+}
+function clera() {
+  cmd = 'clear';
+  clear_status();
+  facelets = blank_cube;
+  show_text();
+  show_cube(1);
+  document.getElementById('stype').checked = false; 
+}
+function show_text() {
+  if (cmd == 'clear') {
+    document.getElementById('line').value = '';
+    document.getElementById('anim').value = '';
+    cubetext = '';
+  }
+  else {
+    cubetext = format(facelets);
+    if (facelets.length >= 54) {
+      document.getElementById('line').value = facelets;
+      document.getElementById('anim').value = cvt_to_anim(facelets);
+    }
+  }
+
+  document.getElementById('text').value = cubetext;
+}
+function show_cube(rml) {
+  var f;
+  if (facelets.length < 54)
+    f = facelets + blank_cube.substr(1, 54-facelets.length);
+  else 
+    f = facelets;
+  var af = cvt_to_anim(f);
+  var params = animcube_params();
+  if (params != '')
+    af += params;
+  if (rml)
+    acjs_removeListeners['animcube']();
+  AnimCube3("id=animcube&config=AnimCube.txt&edit=1&facelets=" + af);
+}
+function cvt_to_anim(c) {
+  var ca = new Array(54);
+  var to_anim = [
+    6,7,8,3,4,5,0,1,2,45,48,51,46,49,52,47,50,53,12,24,
+    36,13,25,37,14,26,38,18,30,42,19,31,43,20,32,44,11,
+    10,9,23,22,21,35,34,33,15,27,39,16,28,40,17,29,41];
+  for (var i=0; i < 54; i++)
+    ca[i] = c[to_anim[i]];
+  return(ca.join(''));
+}
+function cvt_from_anim(c) {
+  var ca = new Array(54);
+  var from_anim = [
+    6,7,8,3,4,5,0,1,2,38,37,36,18,21,24,45,48,51,27,30,
+    33,41,40,39,19,22,25,46,49,52,28,31,34,44,43,42,20,
+    23,26,47,50,53,29,32,35,9,12,15,10,13,16,11,14,17];
+  for (var i=0; i < 54; i++)
+    ca[i] = c[from_anim[i]];
+  return(ca.join(''));
+}
+function format(s) {
+  var tmp = '    ' + s.substr(0,3) + '\n    ' + s.substr(3,3) + '\n    ' + s.substr(6,3) + '\n' +
+    s.substr(9,3)  + ' ' + s.substr(12,3) + ' ' + s.substr(15,3) + ' ' + s.substr(18,3) + '\n' +
+    s.substr(21,3) + ' ' + s.substr(24,3) + ' ' + s.substr(27,3) + ' ' + s.substr(30,3) + '\n' +
+    s.substr(33,3) + ' ' + s.substr(36,3) + ' ' + s.substr(39,3) + ' ' + s.substr(42,3) + '\n' +
+    '    ' + s.substr(45,3) + '\n    ' + s.substr(48,3) + '\n    ' + s.substr(51,3);
+  return(tmp);
+}
+function show_solver_link() {
+  var n = list_uniq(facelets).length;
+  var prog = (n==3) ? "solve_3c.html" : "solver/solve.html";
+  var s = "<table><tr height=5><td></table>" +
+    "<a target=_blank href=" + prog + "?facelets=" + facelets + ">Cube Solver</a>";
+  document.getElementById('status').innerHTML = s;
+}
+function list_uniq(s) {
+  var list=[];
+  list[0] = s[0];
+  for (var i=1; i < s.length; i++) {
+    for (var f=0, j=0; j < list.length; j++)
+      if (s[i] == list[j])
+        f=1;
+    if (f ==0)
+      list.push(s[i]);
+  }
+  return(list.join(''));
+}
+function apply_moves(inv) {
+  var seq = document.getElementById('seq').value;
+  if (seq == '')
+    return;
+  var line = document.getElementById('line').value
+  facelets = do_moves(line, seq, inv);
+  show_text();
+  show_cube(1);
+}
+function clear_seq() {
+  document.getElementById('seq').value = '';
+}
+function help() {
+  window.open(location.href.replace('cube', 'help'));
+}
+</script>
+</center>
+</div>
+</body>
+</html>

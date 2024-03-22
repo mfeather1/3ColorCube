@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Edge Symmetry - Method 9</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../../mini_cube.png type=image/png>
+ <script src=../../rch.js></script>
+ <script src=../../rclib.js></script>
+ <script src=../symlib.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+  p { text-align: justify; margin-left: 10%; margin-right: 10%; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>3-Color Edge Symmetry <br> Method 9</font>
+<br><br>
+<div id=status></div>
+<a href="javascript: history.go(-1)">Back</a>
+<br><br>
+<script>
+"use strict";
+/*
+  This program reduces et_sym_FR from 2MB to 256 bytes in the form of a 16x16
+  latin square with several interesting properties (see array et_sym_fr at bottom)
+  which is accessed via six indexes (see function get_et_fr) which have a total
+  size of 7.5 KB.
+*/
+
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);     // 3248 KB (3 MB)
+var epm = new Int8Array(E_PRM);                     //   34 KB
+var count1 = new Int32Array(24 * E_TWIST);          //  192 KB
+var count2 = new Int32Array(49);
+
+var et_sym_fr = new Uint8Array(16*16);
+
+// indexes for et_sym_fr
+var x1a = [], x1b = [], x1c = [];  // 6.0 KB (3 * 2048)
+var x2a = [], x2b = [], x2c = [];  // 1.5 KB (3 * 495)
+
+document.getElementById('status').innerHTML = 'Counts are running<br><br>';
+setTimeout(main, 100);
+
+function main() {
+  var time0 = Date.now();
+  init();
+  counts();
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  document.getElementById('status').innerHTML += 
+    '<br>Run Time: ' + time1 + '<br><br>';
+}
+
+function counts() {
+  for (var ep=0; ep < E_PRM; ep++)
+    epm[ep] = -1;
+  var list = populate_list(E_PRM, ep_sym);  
+  for (var i=1; i < list.length; i++) {
+    var ep = list[i];
+    epm[ep] = 0;
+    var n = fill_epm(ep);
+    clear_count1(n);
+    do_et_sym(ep);
+    et_counts(n);
+  }
+  rpt2(list[0]*E_TWIST, 2);
+}
+
+function fill_epm(ep) {
+  var n = 1;
+  for (var op=1; op < CUBE_SYM; op++) {
+    var epsym = ep_sym[ep*CUBE_SYM + op];
+    if (epm[epsym] == -1)
+      epm[epsym] = n++;
+  }
+  return n;
+}
+
+function clear_count1(n) {
+  for (var i=0; i < n; i++)
+    for (var j=0; j < E_TWIST; j++)
+      count1[i*E_TWIST + j] = 0;
+} 
+
+function do_et_sym(ep) {
+  for (var et=0; et < E_TWIST; et++) {
+    if (count1[et] == 0) {
+      count1[et] = et;
+      for (var op=1; op < CUBE_SYM; op++) {
+        var epsym = ep_sym[ep*CUBE_SYM + op];
+        var etsym = get_etsym(ep, et, op);
+        count1[epm[epsym]*E_TWIST + etsym] = et;
+      }
+    }
+  }
+}
+
+function et_counts(n) {
+  var tmp = new Int8Array(E_TWIST);
+  for (var i=0; i < n; i++)
+    for (var j=0; j < E_TWIST; j++)
+      tmp[count1[i*E_TWIST + j]]++;
+  for (var i=0; i < E_TWIST; i++)
+    if (tmp[i] != 0)
+      count2[tmp[i]]++;
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_ep_sym();
+  populate_et_sym();
+  populate_et_sym_FR();
+  populate_et_sym_fr();  // populate reduced size et_sym_fr + indexes
+}
+
+function populate_et_sym_fr() {
+  for (var i=0; i < E_TWIST; i++) {  // slice 0
+    var ix = et_sym_FR[i]>>7;
+    x2a[i] = ix;
+    for (var j=0; j < SLICE_PRM; j++)
+      x1a[ix*SLICE_PRM+j] = et_sym_FR[j*E_TWIST+i]>>7;
+  }
+  for (i=0; i < 16; i++)
+    for (j=0; j < SLICE_PRM; j++)
+      et_sym_fr[i*16+x1a[j]] = x1a[i*SLICE_PRM+j];
+
+  for (i=0; i < E_TWIST; i++) {  // slice 1
+    ix = (et_sym_FR[i]>>3)&0xF;
+    x2b[i] = ix;
+    for (j=0; j < SLICE_PRM; j++)
+      x1b[ix*SLICE_PRM+j] = (et_sym_FR[j*E_TWIST+i]>>3)&0xF;
+  }
+
+  for (i=0; i < E_TWIST; i++) {  // slice 2
+    ix = et_sym_FR[i]&0xF;
+    x2c[i] = ix;
+    for (j=0; j < SLICE_PRM; j++)
+      x1c[ix*SLICE_PRM+j] = et_sym_FR[j*E_TWIST+i]&0xF;
+  }
+
+ // Check that data obtained using new et_sym_fr matches original (et_sym_FR)
+
+  for (i=0; i < SLICE_PRM; i++)
+    for (j=0; j < E_TWIST; j++)
+      if (get_et_fr(i, j) != et_sym_FR[i*E_TWIST+j]) {
+        alert("Error");
+        break;
+      }
+}
+
+function get_et_fr(epslice, et) {
+  return ((et_sym_fr[x1a[epslice]*16 + x2a[et]]<<7) +
+          (et_sym_fr[x1b[epslice]*16 + x2b[et]]<<3) +
+          (et_sym_fr[x1c[epslice]*16 + x2c[et]]&0x7));
+}
+
+function get_etsym(ep, et, op) {
+  if (op16e[op*2] == 0)
+    return et_sym[et*CUBE_SYM+op];
+  else if (op16e[op*2] == OP_FR)
+    return et_sym[get_et_fr(ep_slice[ep*3], et)*CUBE_SYM + op];
+  else
+    return et_sym[get_et_fr(ep_slice[ep*3+1], et)*CUBE_SYM + op];
+}
+
+function show_et_sym_fr() {
+  var s = '';
+  for (var i=0; i < 16; i++) {
+    for (var j=0; j < 16; j++)
+       s += et_sym_fr[i*16 + j] + ' ';
+    s += '<br>';
+  }
+  document.getElementById('status').innerHTML = s;
+}
+
+/* et_sym_fr:
+ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 
+ 1  0  3  2  5  4  7  6  9  8 11 10 13 12 15 14 
+ 2  3  0  1  6  7  4  5 10 11  8  9 14 15 12 13 
+ 3  2  1  0  7  6  5  4 11 10  9  8 15 14 13 12 
+ 4  5  6  7  0  1  2  3 12 13 14 15  8  9 10 11 
+ 5  4  7  6  1  0  3  2 13 12 15 14  9  8 11 10 
+ 6  7  4  5  2  3  0  1 14 15 12 13 10 11  8  9 
+ 7  6  5  4  3  2  1  0 15 14 13 12 11 10  9  8 
+ 8  9 10 11 12 13 14 15  0  1  2  3  4  5  6  7 
+ 9  8 11 10 13 12 15 14  1  0  3  2  5  4  7  6 
+10 11  8  9 14 15 12 13  2  3  0  1  6  7  4  5 
+11 10  9  8 15 14 13 12  3  2  1  0  7  6  5  4 
+12 13 14 15  8  9 10 11  4  5  6  7  0  1  2  3 
+13 12 15 14  9  8 11 10  5  4  7  6  1  0  3  2 
+14 15 12 13 10 11  8  9  6  7  4  5  2  3  0  1 
+15 14 13 12 11 10  9  8  7  6  5  4  3  2  1  0
+
+Properties:
+
+1. 16x16 latin square (each value occurs exactly once in each row and column)
+   8x8 quadrants are latin squares
+   4x4 quadrants (within 8x8 quadrants) are latin squares
+   2x2 quadrants (within 4x4 quadrants) are latin squares
+
+2. The 16x16 square or any 8x8, 4x4 or 2x2 quadrant is invariant under
+   180 degree rotation (diagonal mirror-image).
+
+3. Reflection over the X or Y axis of the 16x16 square or any 8x8, 4x4 or
+   2x2 quadrant results in a 90 degree rotation.
+
+4. The structure of the square follows a simple pattern.  Starting with 1x1
+   square [0] the size is doubled by replicating into four quadrants with 
+   the square size (1 for 1x1, 2 for 2x2, etc) added to values in the lower
+   left & upper right quadrants.  Thus a square of size 2^X can be made by
+   doubling X times.
+*/
+</script>
+</center>
+</body>

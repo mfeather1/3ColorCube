@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6x6 Cube And Beyond </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube6.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> 6x6 Cube And Beyond </font>
+<br><br>
+<p>The following shows how to fix misplaced 
+<a href=cube_diagram.html>Arc Center</a> facelets on the front
+and back faces.
+The sequence varies depending on the location of the facelets.
+The first (and last) move of the sequence is the slice containing the facelet
+on the back face.
+The third (and fifth) move is the slice containing the facelet on the front 
+face (which gets relocated by the second move).
+It is ok to twist the back face to make the setup.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:240px; height:240px; display:inline-block"> 
+    <script>AnimCube6("config=AnimCube.txt&initrevmove=#&move=Rn2 F Lm2' Dn2 Lm2' Dn2 F' Rn2&colorscheme=ROYWGB")</script>
+   </div>
+  </td>
+  <td width=50>
+  <td>
+   <div style="width:240px; height:240px; display:inline-block"> 
+    <script>AnimCube6("config=AnimCube.txt&initrevmove=#&move=Rm2 F Ln2' Dm2 Ln2' Dm2 F' Rm2&colorscheme=ROYWGB")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<p>By varying the sequence as described above the Arc Centers can be solved
+on a cube of any dimension.
+The Wing Edges and X-Centers can be solved on a cube of any dimension by using
+the 4x4 sequences to solve each orbit separately.
+The +Centers can be solved on a cube of any dimension by using 
+the 5x5 sequences to solve each orbit separately.
+And of course, the Corners and Central Edges can be solved on a cube of any 
+dimension using the 3x3 sequences.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

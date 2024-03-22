@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+ <title> Corner Twist Conversion </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=../../AnimCube3.js></script>
+ <style>
+  body, html {
+    height:100%;
+    overflow:hidden;
+    margin:0; 
+  }
+  div.wrap {
+    height:100%; 
+    overflow:auto;
+    padding:8px 10%; 
+  }
+  p {
+    margin:0;
+    text-align: justify; 
+  }
+  td {text-align:center}
+  .tabdata td {
+    padding-left:20px;
+    padding-right:20px;
+    border-color:black;
+    text-align:center;
+  } 
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Corner Twist Conversion <br> (Method 3)</font><br>
+<br>
+<p>The corner twist symmetry array does not take into account the corner
+position so the values are only correct for 16 of the 48 symmetries.
+However, the other 32 symmetries are partially correct in that cubies
+that are properly positioned (can be solved by rotating in place) maintain
+the same twist value for all 48 symmetries.
+Twist values for the other cubies (not properly positioned) change when the
+cube is rotated to an axis different from the one that has the 16 correct
+symmetries, this is the purpose of the conversion.
+<br><br>
+To properly convert, the two different types of 3-color corner cubies are
+distinguished as shown below.
+The red/yellow/blue appears in a clockwise order on each cubie on the first
+cube and counter-clockwise on the second cube.</p>
+<table>
+ <tr>
+  <td>
+   <div style=width:130px;height:130px;display:inline-block>
+    <script>AnimCube3("config=../../AnimCube.txt&bgcolor=ffffff&facelets=RLLLRLLLRLLRLRLRLLYLLLYLLLYYLLLYLLLYBLLLBLLLBLLBLBLBLL")</script>
+   </div>
+  </td>
+  <td width=30>
+  <td>
+   <div style=width:130px;height:130px;display:inline-block>
+    <script>AnimCube3("config=../../AnimCube.txt&bgcolor=ffffff&facelets=LLRLRLRLLRLLLRLLLRLLYLYLYLLLLYLYLYLLLLBLBLBLLBLLLBLLLB")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<p> The following shows what happens to cubies that are not in proper
+positions when the cube is rotated.
+Prior to rotating it can be seen that none of the cubies are twisted
+(twist is based on the color of the top or bottom face).
+After cube rotation (press Play), the cubies on the first cube below are
+rotated clockwise (based on blue facelet) and the cubies on the second
+cube are rotated counter-clockwise.</p>
+<br>
+<table>
+ <tr>
+  <td>
+   <div style=width:150px;height:150px;display:inline-block>
+    <script>AnimCube3("config=../../AnimCube.txt&bgcolor=ffffff&move=Y&facelets=LLRLRLRLLRLLLRLLLRLLBLYLBLLLLBLYLBLLLLYLBLYLLYLLLBLLLY")</script>
+   </div>
+  </td>
+  <td width=30>
+  <td>
+   <div style=width:150px;height:150px;display:inline-block>
+    <script>AnimCube3("config=../../AnimCube.txt&bgcolor=ffffff&move=Y&facelets=RLLLRLLLRLLRLRLRLLBLLLYLLLBBLLLYLLLBYLLLBLLLYLLYLBLYLL")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<p>The following shows rotation to the other axis.
+After cube rotation, the cubies on the first cube below are rotated
+counter-clockwise (based on yellow facelet) and the cubies on the second
+cube are rotated clockwise.</p>
+<br>
+<table>
+ <tr>
+  <td>
+   <div style=width:150px;height:150px;display:inline-block>
+    <script>AnimCube3("config=../../AnimCube.txt&bgcolor=ffffff&move=X'&facelets=LLRLRLRLLRLLLRLLLRLLBLYLBLLLLBLYLBLLLLYLBLYLLYLLLBLLLY")</script>
+   </div>
+  </td>
+  <td width=30>
+  <td>
+   <div style=width:150px;height:150px;display:inline-block>
+    <script>AnimCube3("config=../../AnimCube.txt&bgcolor=ffffff&move=X'&facelets=RLLLRLLLRLLRLRLRLLBLLLYLLLBBLLLYLLLBYLLLBLLLYLLYLBLYLL")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<p>The following table summarizes the conversion.
+For Cube Rotation, U->R rotates so the Up face moves to the Right face
+and U-F rotates so the Up face moves to the Front face.
+For Cubie &amp; Position Type, 0 is clockwise red/yellow/blue &amp;
+1 is counter-clockwise.
+For Cubie Rotation, CW rotates clockwise and CCW rotates counter-clockwise.
+</p>
+<br>
+<table class=tabdata style=border-collapse:collapse border=1>
+ <tr>
+  <td> Cube<br>Rotation </td>
+  <td> Cubie<br>Type </td>
+  <td> Position<br>Type </td>
+  <td> Cubie<br>Rotation </td>
+ </tr>
+ <tr><td>U-&gt;R</td><td>1</td><td>0</td><td>CW</td></tr>
+ <tr><td>U-&gt;R</td><td>0</td><td>1</td><td>CCW</td></tr>
+ <tr><td>U-&gt;F</td><td>1</td><td>0</td><td>CCW</td></tr>
+ <tr><td>U-&gt;F</td><td>0</td><td>1</td><td>CW</td></tr>
+ </tr>
+</table>
+<br>
+<a href="javascript: history.go(-1)">Back</a>
+<br><br><br>
+</center>
+</div>
+</html>

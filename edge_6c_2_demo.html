@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+ <title> Solving Demo - 6-Color Edges (pre-solved as 3-color) </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style>
+  .tabdata td { padding:1px 12px; border-color:black; text-align:center; }
+  div.wrap {padding-left:8%; padding-right:8%;}
+ </style>
+ <script src=AnimCube3.js></script>
+ <script src=edge_demo.js></script>
+ <script src=edge_demo_replace.js></script>
+ <script src=edge_seq_6c.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Solving Demo <br> 6-Color Edges </font> <br> 
+<font size=+1> (pre-solved as 3-color) </font>
+<br>
+<table border=0>
+ <tr>
+  <td style=text-align:center>
+   <div id=cube style=width:200px;height:200px></div>
+   <table><tr height=8><td></table>
+   <table>
+    <tr>
+     <td><button id=solver class="btn dmw1" onclick="new_cube(1)">Random</button></td>
+     <td width=10>
+     <td><button class="btn dmw2" onclick="help()">Help</button></td>
+    </tr>
+   </table>
+  </td>
+  <td width=20>
+  <td valign=top style=text-align:center>
+   <br>
+   <table><tr height=2><td></table>
+   <div id=table></div>
+  </td>
+ </tr>
+</table>
+<br>
+<div id=edge_seq_6c></div>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+<script>
+"use strict";
+var line, move, move2;
+var acjs_removeListeners = [];
+var edges = [1,3,5,7,10,12,14,16,19,21,23,25,28,30,32,34,37,39,41,43,46,48,50,52];
+var facelets = 'RRRRRRRRROOOOOOOOOYYYYYYYYYWWWWWWWWWGGGGGGGGGBBBBBBBBB';
+new_cube(0);
+function new_cube(r) {
+  make_cube(r);
+  make_table();
+}
+show_edge_seq_6c();
+function make_cube(r) {
+  var rand = Math.floor(Math.random()*arr.length);
+  line = arr[rand].split(' ');
+  var f = facelets.split('');
+  for (var i=0; i < 24; i++) 
+    f[edges[i]] = line[0][i];
+  f = f.join('');
+  move = replm(line[1]);
+  move2 = replm2(line[3]);
+  var params = 'config=AnimCube.txt&id=cube&edit=1&initmove=';
+  params += move + '&move=' + move2 + '&facelets=' + f;
+  if (r)
+    acjs_removeListeners['cube']();
+  AnimCube3(params);
+}
+function make_table() {
+  var s= '<table align=center class=tabdata style=border-collapse:collapse;border-color:white border=1>';
+  var table = line[4].split(',');
+  for (var i=0; i < table.length; i++) {
+    var v = table[i].split(':');
+    s += '<tr><td>' + repl2(v[0]) + '</td><td style=text-align:left>' + repl2(v[1]) + '</td></tr>';
+  }
+  s += '</table>';
+  document.getElementById('table').innerHTML = s;
+}
+function help() {
+  location = location.href.replace('demo', 'help');
+}
+</script>
+</center>
+</div>
+</body>
+</html>

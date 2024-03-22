@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+ <title> Magic Cube 4D - Solving Edges on 4-Color Hypercube </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> Magic Cube 4D <br> Solving Edges on 4-Color Hypercube </font>
+<br><br>
+<p>The following shows a comparison of the 3-Color/4-Color Edge Sequences on
+the 3D and 4D cubes.
+The sequences are different but the setup configurations are the same so they are
+functionally equivalent as is the solution method.
+In other words solve it the same way as the 3D cube which is by using
+half-twists or rotation of the whole hypercube to make one of the following
+setups, use the sequence to fix one to four misplaced cubies and then repeat
+the process until all of the edge cubies are solved.
+There is another set of these four sequences for the middle layer, the inner
+layer becomes the outer layer with 4D rotation so no additional sequences
+are needed for it.</p>
+<table border=0>
+ <tr>
+  <td>
+   <div style="width:200px; height:200px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R'Um2'R&colorscheme=rryybb")</script>
+   </div>
+  </td>
+  <td width=60>
+  <td style=text-align:center><img src=img/mc4d_4C-E1.png style=width:220px></td>
+ </tr>
+ <tr height=20>
+ <tr>
+  <td>
+   <div style="width:200px; height:200px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R'Um'R2'UmR&colorscheme=rryybb")</script>
+   </div>
+  </td>
+  <td width=60>
+  <td style=text-align:center><img src=img/mc4d_4C-E2.png style=width:220px></td>
+ </tr>
+ <tr height=20>
+ <tr>
+  <td>
+   <div style="width:200px; height:200px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R'UmL'D2LUm'R&colorscheme=rryybb")</script>
+   </div>
+  </td>
+  <td width=60>
+  <td style=text-align:center><img src=img/mc4d_4C-E3.png style=width:220px></td>
+ </tr>
+ <tr>
+ <tr height=20>
+  <td>
+   <div style="width:200px; height:200px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initmove=R'UmLD2L'Um'R&move=R'UmLD2L'Um'R&colorscheme=rryybb")</script>
+   </div>
+  </td>
+  <td width=40>
+  <td style=text-align:center><img src=img/mc4d_4C-E4.png style=width:220px></td>
+ </tr>
+</table>
+<br>
+<p> With the 4D cube it is possible to get a single twisted edge as shown below
+(a 4D edge has three cubies).
+To solve it use macro 4C-1TWE which uses Sequence 4C-E3 four times (76 moves, see
+details <a href=mc4d_4C-1TWE.html>here</a>).</p>
+<table><tr height=8><td></table>
+  <img src=img/mc4d_4C-1TWE.png style=width:220px>
+<br><br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

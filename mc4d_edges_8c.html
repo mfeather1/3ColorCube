@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+ <title> Magic Cube 4D - Solving Edges on 8-Color Hypercube </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <style> .tabdata td {
+   padding-left:15px; padding-right:15px; border-color:black; text-align:center; } 
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> Magic Cube 4D <br> Solving Edges on 8-Color Hypercube </font>
+<br><br>
+<p>The following shows a comparison of the 6-Color/8-Color Edge Sequences on
+the 3D and 4D cubes.
+The sequences are different but the setup configurations are the same so they
+are functionally equivalent as is the solution method so solve it the same way
+as the 3D cube.
+There is another set of these four sequences for the middle layer.
+The inner layer becomes the outer layer with 4D rotation so no additional
+sequences are needed for it.</p>
+<table border=0>
+ <tr>
+  <td>
+   <div style="width:200px; height:200px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R'Um2'R2'Um2'R'&colorscheme=roywgb")</script>
+   </div>
+  </td>
+  <td width=60>
+  <td style=text-align:center><img src=img/mc4d_8C-E1.png style=width:220px></td>
+ </tr>
+ <tr height=20>
+ <tr>
+  <td>
+   <div style="width:200px; height:200px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R2'Um2'R2'Um2'&colorscheme=roywgb")</script>
+   </div>
+  </td>
+  <td width=60>
+  <td style=text-align:center><img src=img/mc4d_8C-E2.png style=width:220px></td>
+ </tr>
+ <tr height=20>
+ <tr>
+  <td>
+   <div style="width:200px; height:200px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R2'F2R2'F2R2'F2&colorscheme=roywgb")</script>
+   </div>
+  </td>
+  <td width=60>
+  <td style=text-align:center><img src=img/mc4d_8C-E3.png style=width:220px></td>
+ </tr>
+ <tr>
+ <tr height=20>
+  <td>
+   <div style="width:200px; height:200px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R2'Um'R2'Um&colorscheme=roywgb")</script>
+   </div>
+  </td>
+  <td width=40>
+  <td style=text-align:center><img src=img/mc4d_8C-E4.png style=width:220px></td>
+ </tr>
+</table>
+<br>
+<p> The original sequences from the regular 3D cube swap groups of three as can
+be seen on the following image (Sequence 8C-E3o).
+These are useful because often more than half of the 12 cubies can be matched 
+in a setup which means that doing the sequence will reduce the number of
+misplaced cubies. So for example if 10 of the 12 match then 8 will be fixed
+(10 fixed less 2 misplaced equals net of 8 fixed).</p>
+  <img src=img/mc4d_8C-E3o.png style=width:220px>
+<br><br>
+<p>Another reason to use the original sequences is that they are shorter as
+shown in the following table.</p>
+<br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+  <tr><td colspan=3> Sequence Move Counts </td></tr>
+  <tr>
+    <td> </td>
+    <td> Original </td>
+    <td> Hypercube </td>
+  </tr>
+  <tr><td> 8C-E1 </td><td> 8 </td><td> 20 </td></tr>
+  <tr><td> 8C-E2 </td><td> 8 </td><td> 18 </td></tr>
+  <tr><td> 8C-E3 </td><td> 12 </td><td> 24 </td></tr>
+  <tr><td> 8C-E4 </td><td> 6 </td><td> 14 </td></tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+<head>
+ <title> Cube Solver Help </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> .tabdata td {padding-left:10px; padding-right:10px;} </style>
+</head>
+<body><center>
+<b>Cube Solver Help</b>
+<br><br>
+<p>To use the solver press the Random button and after a scrambled cube 
+appears press Solve.
+After some time the solve will complete and a green bar appears under the
+cube which is the media player control panel, press the Play button (right
+arrow) to see the solution.
+Subsequent solves will run faster, more about that in the "Search Time"
+section below.</p>
+<br><br>
+<b>Entering Colors and Solving</b>
+<br><br>
+<p>To solve an actual scrambled cube press the Clear button and enter the
+colors by first clicking on a color in the palette (six squares above
+layout) then clicking on a square in the layout which changes it to the
+selected color.
+Press the Show button to update the cube on the right side of the screen 
+to see that it matches.
+<br><br>
+Press the Solve button after you have colored the entire layout.
+It will first verify that the cube is valid and if not it will give a message
+indicating what the problem is.  
+If you get an error, compare your cube to the one on the screen and find the
+square(s) that do not match and fix them, then press Solve again.
+Repeat until there are no more errors.
+<br><br>
+Once all the errors are fixed it will solve the cube and the green bar will
+appear, press the second button from the right to show the solution one move at
+a time.</p>
+<br><br>
+<b>Search Time</b>
+<br><br>
+<p>If a solution is more than 20 moves then a shorter one can be found by 
+increasing Search Time which is normally 5 seconds (by default).
+Search Time is just one part of the total processing time.
+Before the Solver can search it must first make several tables for moves &amp;
+symmetry operations in addition to making the large search arrays (dist).
+That takes a significant amount of time which can be seen in the log 
+where it shows "Init + Dist Time", only the first solve within a session
+incurs init &amp; dist time.
+The total amount of time to solve a random cube varies depending on the 
+computing capability of the device you are running it on.
+<br><br>
+After the solve completes the amount of search time used is shown below the
+Solve Log button.
+Also shown is the number of moves in each solve phase (phase
+1 is the intermediate 3-color solution, phase 2 is the final solution).
+The display is in the form N+N which normally sums to the number of moves shown
+in the cube area (for solved cube).
+In some cases the sum will be larger which means that the first move in phase
+2 was to the same face as the last move in phase 1 so the moves were either
+combined or if they cancel each other (R + R' for example) then both are
+removed from the sequence.
+<br><br>
+Search performance can be improved by generating the dist arrays to Depth 9 
+which takes longer initially, anywhere from 6 seconds (on 3.7 Ghz Quad-Core)
+to a minute or more depending on device performance.
+Generate time can be eliminated by using dist files as described in the next
+section.</p>
+<br><a id=udf></a><br>
+<b>Using Dist Files</b>
+<br><br>
+<p>By saving the dist arrays to files they only have to be generated once,
+then the files can be loaded into the Solver instead of generating.
+The dist arrays can be saved to files <a href="../make_dist_files.html">here</a>
+or they can be downloaded at these links: 
+<a target=_blank href="https://drive.google.com/file/d/1LXrK-9F0kXLZu-3NZF8bsyIU45J0P-rz/view?usp=sharing">Dist1</a>
+<a target=_blank href="https://drive.google.com/file/d/1i6dtWUcOtkDZzwtFOWuYRSqvAzrE3bWp/view?usp=sharing">Dist2</a>
+<a target=_blank href="https://drive.google.com/file/d/1osKQ_jSdjeGfpO4o4AuQOBXA5z-UyH_x/view?usp=sharing">DistP2</a>.
+The content of these files is described in more detail
+<a href=../dist_file_contents.html>here</a>.
+To use, click on the Dist Files button (on main page), then press the
+Load Dist Files button and select the files (that you generated or
+downloaded) then click Open.
+After a few seconds a message will appear under the cube indicating that the
+files have been loaded.
+Prior to loading, the list of files needed by the solver can be seen by
+pressing Solve.
+<br><br>
+Better performance can be achieved by adding search array Dist3 which is
+available in two sizes:
+<a target=_blank href="https://drive.google.com/file/d/1XWknRdQVV7H_sDHqDyzCGb4reYGRhKum/view?usp=sharing">418 MB</a>
+or
+<a target=_blank href="https://drive.google.com/file/d/1Nudh_JxYJOCz55-AGFqAp8MEMHg96RSt/view?usp=sharing">835 MB</a>.
+Your device or computer needs to have enough RAM so that the dist arrays 
+fit into available memory.
+To use, download the file of your choice and then click the button for the proper
+size under Dist3 and load as described above.</p>
+<br><br>
+<b>Searching For 20 Move Solutions</b>
+<br><br>
+<p>To stop the search based on solution length rather than search time 
+use the "s" option (append to Search Time as in 5s which is now the default).
+With a sufficiently long search time the solver will stop at the first solution 
+of 20 moves or less but if it is too short then the search will be stopped before
+reaching the goal, in that case increase it.
+<br><br>
+The "s" option will remain in effect for subsequent solves, to switch back
+to the normal search (stop based on time only) append "t" to Search Time
+(as in 5t).
+With the "s" option, there will be a large variance in the amount of time
+it takes to find a solution (with 20 moves or less) so the wait may be long
+in some cases.
+It is possible to stop the search for solution lengths other than 20 moves by
+adding URL parameter stoplen=N where N is the desired number of moves.</p>
+<br><a id=snc></a><br>
+<b>Node Counts</b>
+<br><br>
+<p>The number of nodes generated during the search can be shown in the log by
+adding URL parameter show_node_counts=N (or snc=N) where N=1 for phase 1, N=2
+for phase 2 or N=3 for both, the default is snc=1 (note: to show phase 2 nodes,
+param use_p2seq=0 must also be used).
+For phase 1, three counts are shown at each depth which are the total number
+of nodes generated, the number of nodes that actually reached that depth (did
+not get pruned) and the number of 3-color solutions.
+Lower depths at which all nodes are immediately pruned (on first move) are
+excluded from the log.
+For phase 2, one line is shown after each solution which shows the totals for
+all depths searched to complete the solution from phase 1.
+<br><br>
+The phase 2 search can be eliminated by adding URL param use_p2seq=1 (which
+is now the default) which will store the move sequences for configs that can
+be solved in 8 moves or less (these are 6-color configs that are already
+solved as 3-color).
+The log will show 0 nodes for phase 2 if both params are used 
+(use_p2seq=1 &amp; show_node_counts=2 or 3).</p>
+<br><a id=custom></a><br>
+<b>Custom Cube Display</b>
+<br><br>
+<p>The following AnimCubeJS parameters can be passed to the solver to
+customize the cube display (click on any link to see documentation).</p>
+<br>
+<table class=tabdata border=0>
+ <tr>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#align>align</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#bgcolor>bgcolor</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#borderwidth>borderwidth</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#butbgcolor>butbgcolor</a></td>
+ </tr>
+ <tr>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#buttonheight>buttonheight</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#clickprogress>clickprogress</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#counter>counter</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#cubecolor>cubecolor</a></td>
+ </tr>
+ <tr>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#doublespeed>doublespeed</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#edit>edit</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#fonttype>fonttype</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#hint>hint</a></td>
+ </tr>
+ <tr>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#hintborder>hintborder</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#hinthoriz>hinthoriz</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#hintvert>hintvert</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#metric>metric</a></td>
+ </tr>
+ <tr>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#movetext>movetext</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#movetextspace>movetextspace</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#perspective>perspective</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#position>position</a></td>
+ </tr>
+ <tr>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#repeat>repeat</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#scale>scale</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#slidercolor>slidercolor</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#snap>snap</a></td>
+ </tr>
+ <tr>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#speed>speed</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#textsize>textsize</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#troughcolor>troughcolor</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#yz>yz</a></td>
+ </tr>
+</table>
+<!--
+  not allowed:
+  buttonbar colorscheme colors config demo facelets gabbacolors initmove
+  initrevmove move pos randmoves scramble scw supercube superfacelets
+-->
+<br>
+<p>The facelets parameter can be used with color codes: RGYBWO (Red, Green,
+Yellow, Blue, White, Orange), the Text Format is used (different from
+AnimCubeJS format) which can be entered using
+<a href=../text_input_cube.html>Text Input Cube</a>, see Help on that page
+for the layout.
+</p>
+<br>
+<script>document.write('<a href="javaScript:window.close()">Close</a>')</script>
+<br><br>
+</center>
+</body>
+</html>

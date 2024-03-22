@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+ <title> Make Random Cubes </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> body {margin-left: 0px; margin-right: 0px;} </style> 
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+</head>
+<body>
+<center>
+<font size=+2> Make Random Cubes </font>
+<br><br>
+<input id=ncubes style=width:40px value=10></input>&nbsp;
+<button onclick=ff()>Go</button>
+<br><br>
+<div id=status></div>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+"use strict";
+init1();
+init_conv();
+function ff() {
+  var s = '';
+  var n = document.getElementById('ncubes').value;
+  n = n.replace(/ /g, '');
+  if (n.length == 0)
+    return;
+  if (chknum(n) == 0) {
+    for (var i=0; i < n; i++)
+      s += randcube() + '<br>';
+    var b = s.length > 0 ? '<br>' : '';
+    document.getElementById('status').innerHTML = s + b;
+  }
+  else
+    document.getElementById('status').innerHTML = 
+      'Invalid Number (must be digits only)<br><br>';
+}
+function randcube() {
+  var cs = [];
+  for (var i=0; i < 20; i++) {
+    var ep = Math.floor(Math.random()*479001600);
+    var et = Math.floor(Math.random()*2048);
+    var cp = Math.floor(Math.random()*40320);
+    var ct = Math.floor(Math.random()*2187);
+    int_to_perm(cp, cps, 8);
+    int_to_perm(ep, eps, 12);
+    int_to_strp(ct, cts, 7, 3);
+    int_to_strp(et, ets, 11, 2);
+    if (parity(eps, 12) == parity(cps, 8))
+      break;
+  }
+  make_cubestr();
+  assign_centers_6c();
+  colorize(cs);
+  return(cs.join(''));
+}
+function colorize(cs) {
+  for (var i=0; i < 54; i++)
+    if      (cubestr[i] == 0) cs[i] = 'B';
+    else if (cubestr[i] == 1) cs[i] = 'Y';
+    else if (cubestr[i] == 2) cs[i] = 'R';
+    else if (cubestr[i] == 3) cs[i] = 'G';
+    else if (cubestr[i] == 4) cs[i] = 'W';
+    else if (cubestr[i] == 5) cs[i] = 'O';
+}
+function chknum(s) {
+  for (var i=0; i < s.length; i++)
+    if (s[i] < '0' || s[i] > '9')
+      return 1;
+  return 0
+}
+</script>
+</center>
+</body>
+</html>

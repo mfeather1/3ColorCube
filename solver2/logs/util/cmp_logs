@@ -1,0 +1,129 @@
+main() {
+  bn=`basename ${PWD/logs}`
+  if [ $bn = solver_qc ]; then
+    cd ../../solver2/logs
+  fi
+  echo "----------------------------------------------------------"
+  echo Optimal
+  echo "----------------------------------------------------------"
+  optimal1
+  echo
+  optimal2
+  echo
+  echo "----------------------------------------------------------"
+  echo Suboptimal
+  echo "----------------------------------------------------------"
+  subopt1
+  echo
+  subopt2
+  echo
+  echo "----------------------------------------------------------"
+  echo Presolved - Solver2 is Optimal, Quad-Core is Suboptimal
+  echo "----------------------------------------------------------"
+  presolved1 
+  echo
+  presolved2
+  echo
+}
+
+optimal1() {
+  echo "Solver2 Quad-Core   Diff"
+  ls opt*.txt |
+  grep -v presolved |
+  while read a; do
+    n1=`grep Sea $a | rnd`
+    n2=`grep Sea ../../solver_qc/logs/$a | rnd` 
+    n3=$((n2-n1))
+    n1=`gconvert_time $n1`
+    n2=`gconvert_time $n2`
+    n3=`gconvert_time $n3`
+    echo $n1 $n2 $n3 $a
+  done |
+  awk '{printf("%7s  %7s %7s  %s\n", $1, $2, $3, $4)}'
+}
+
+optimal2() {
+  echo "Solver2 Quad-Core   Diff"
+  ls opt*.txt |
+  grep -v presolved |
+  while read a; do
+    n1=`grep Sea $a | rnd`
+    n2=`grep Sea ../../solver_qc/logs/$a | rnd`
+    echo $n1 $n2 $a
+  done |
+  awk '{printf("%7s  %7s  %6s  %s\n", $1, $2, $2-$1, $3)}'
+}
+
+subopt1() {
+  echo "Solver2 Quad-Core   Diff"
+  ls subopt*.txt ori/subopt*.txt |
+  grep -v presolved |
+  while read a; do
+    n1=`grep Sea $a | rnd`
+    n2=`grep Sea ../../solver_qc/logs/$a | rnd`
+    n3=$((n2-n1))
+    n1=`gconvert_time $n1`
+    n2=`gconvert_time $n2`
+    n3=`gconvert_time $n3`
+    echo $n1 $n2 $n3 $a
+  done |
+  sed s.ori/.. |
+  awk '{printf("%7s  %7s %7s  %s\n", $1, $2, $3, $4)}'
+}
+
+subopt2() {
+  echo "Solver2 Quad-Core   Diff"
+  ls subopt*.txt ori/subopt*.txt |
+  grep -v presolved |
+  while read a; do
+    n1=`grep Sea $a | rnd`
+    n2=`grep Sea ../../solver_qc/logs/$a | rnd` 
+    n3=$((n2-n1))
+    echo $n1 $n2 $n3 $a
+  done |
+  sed s.ori/.. |
+  awk '{printf("%7s  %7s %7s  %s\n", $1, $2, $3, $4, $5)}'
+}
+
+presolved1() {
+  echo "Solver2 Quad-Core"
+  ls *.txt |
+  grep presolved |
+  grep -v 100.txt |
+  while read a; do
+    n1=`grep Sea $a | awk '{print $NF}' | rnd`
+    n2=`grep Sea ../../solver_qc/logs/${a/optimal/subopt} | rnd` 
+    n1=`gconvert_time $n1`
+    n2=`gconvert_time $n2`
+    echo $n1 $n2 $a
+  done |
+  awk '{printf("%7s  %7s  %s\n", $1, $2, $3)}'
+}
+
+presolved2() {
+  echo "Solver2"
+  ls *.txt |
+  grep -v 100.txt |
+  grep presolved |
+  while read a; do
+    n1=`grep Sea $a | rnd`
+    n2=`grep Sea ../../solver_qc/logs/${a/optimal/subopt} | rnd` 
+    echo $n1 $n2 $a
+  done |
+  awk '{printf("%7s  %7s  %s\n", $1, $2, $3)}'
+}
+
+gconvert_time() {
+  time=`echo $1 | awk '{printf("%.0f\n", $1)}'`
+  if [ $time -ge 3600 ]; then
+    echo $time | awk '{printf("%2d:%02d:%02.0f\n", $1/3600, ($1%3600)/60, $1%60)}'
+  else
+    echo $time | awk '{printf("%02d:%02.0f\n", $1/60, $1%60)}'
+  fi
+}
+
+rnd() {
+  awk '{printf("%.0f\n", $NF)}'
+}
+
+main 

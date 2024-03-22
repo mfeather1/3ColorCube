@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+ <title> Help </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Help </font>
+<br><br>
+<p>This demo shows how to use the 
+<a href=corners_6c.html>6-Color Corner Sequences</a>
+to solve the corners of a 6-color cube that is already
+solved as 3-color.
+The Waterwheel Sequence is used when only one pair of opposite faces can be
+solved with half-twists, the setup is having solved faces on the left &amp;
+right as shown below, all other faces can be ignored.
+The Parallel Sequence is used when no faces can be solved with half-twists,
+the setup is parallel vertical pairs on the front face and parallel
+horizontal pairs on the back face as shown (color of top row on back face
+must match color of right column on front face), all other faces and centers
+can be ignored.
+The sequences do not solve the corners, they make them solvable with 
+half-twists, for more information see above link.</p>
+<br>
+<table>
+ <tr>
+  <td style=text-align:center> Waterwheel <br> Setup <br>
+   <div style="width:110px; height:110px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&textsize=17&facelets=llllllllllllllllllllllllllllllllllllwlwlwlwlwYlYlYlYlY")</script>
+   </div>
+  </td>
+  <td width=70>
+  <td style=text-align:center> Parallel <br> Setup <br>
+   <div style="width:110px; height:110px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&textsize=17&facelets=llllllllllllllllllwlwlllylyylwlllylwllllllllllllllllll")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<p> For the last step of solving with half-twists an optimal solution is shown,
+there is often more than one way to do it.
+When solving manually you can do the last step any way you like, it is very
+easy.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

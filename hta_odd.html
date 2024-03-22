@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+ <title> HTA - 6-Color Corners (odd case) </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <style> .tabdata td {
+   padding-left:15px; padding-right:15px; border-color:black; text-align:left; }
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> HTA - 6-Color Corners (odd case) </font>
+<br><br>
+<p>In this example the red-orange pair of faces have been completely solved
+(as 3-color) and the corners have been solved on the remaining faces 
+(as 3-color).
+To solve the corners as 6-color the waterwheel sequence would be used (because
+one and only one pair of faces can be solved with half-twists) but it is the
+yellow-white pair of faces that are solvable with half-twists (and are already
+solved) which means the cube needs to be turned so they are on the left and
+right. After applying the waterwheel sequence one misplaced edge facelet (from
+the red-orange pair) will need to be fixed. The table below the cube shows how
+to proceed.</p>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&edit=1&move=Z'R'D2'L2'F2RF2'L2D2RX2R'Um'R2'UmRZ&facelets=BWGYGWBBBBWGYBBGGGYBYGYBYYYWBWWYYWGWRRRROROORROORROOOO")</script>
+   </div>
+<br><br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+<tr><td style=text-align:center>1</td><td>Make setup for waterwheel sequence</td></tr>
+<tr><td style=text-align:center>2-10</td><td>Apply waterwheel sequence</td></tr>
+<tr><td style=text-align:center>11</td><td>Turn cube over</td></tr>
+<tr><td style=text-align:center>12-16</td><td>Apply Sequence 3C-E2 to fix misplaced orange facelet</td></tr>
+<tr><td style=text-align:center>17</td><td>Turn cube</td></tr>
+</table>
+<br>
+<p>After move 10 the corners are solvable (as 6-color) with half-twists only
+but there is no need to do so at this point.  After move 17 the cube is ready
+to solve the remaining edges (as 3-color).
+The corners will be solved as 6-color (with half-twists only) after the edges
+are solved as 3-color.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>
+

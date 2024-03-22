@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+ <title> Solving Demo - Complete Solve of Edges </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> 
+  .tabdata1 td { padding:0px 12px; border-color:black; text-align:center; }
+  .tabdata2 td { padding:1px 12px; border-color:black; text-align:center; }
+  div.wrap {padding-left:8%; padding-right:8%;}
+ </style>
+ <script src=AnimCube3.js></script>
+ <script src=edge_demo.js></script>
+ <script src=edge_demo_replace.js></script>
+ <script src=edge_seq_3c.js></script>
+ <script src=edge_seq_6c.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Solving Demo <br> Complete Solve of Edges </font>
+<br><br>
+<font size=+1><b>Solve as 3-Color</b></font><br>
+<table border=0 cellspacing=0 cellpadding=0><tr height=4><td></table>
+Red=Orange, Blue=Green, Yellow=White
+<br>
+<table border=0>
+ <tr>
+  <td valign=top>
+   <br><div id=cube1 style=width:200px;height:200px></div>
+   <table>
+    <tr height=14>
+    <tr>
+     <td><button id=solver class="btn dmw1" onclick="new_cube(1)">Random</button></td>
+     <td width=10>
+     <td><button class="btn dmw2" onclick="help()">Help</button></td>
+    </tr>
+   </table>
+  </td>
+  <td width=20>
+  <td valign=top><br><div id=table1></div></td>
+ </tr>
+</table>
+<br>
+<div id=edge_seq_3c></div>
+<br><br>
+<font size=+1><b>Solve as 6-Color</b></font>
+<table><tr height=5><td></table>
+<table>
+ <tr>
+  <td><div id=cube2 style=width:200px;height:200px></div></td>
+  <td width=20>
+  <td><div id=table2></div></td>
+ </tr>
+</table>
+<div id=edge_seq_6c></div>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+<script>
+"use strict";
+var line, move;
+var acjs_removeListeners = [];
+var edges = [1,3,5,7,10,12,14,16,19,21,23,25,28,30,32,34,37,39,41,43,46,48,50,52];
+var facelets = 'RRRRRRRRROOOOOOOOOYYYYYYYYYWWWWWWWWWGGGGGGGGGBBBBBBBBB';
+new_cube(0);
+show_edge_seq_3c();
+show_edge_seq_6c();
+function new_cube(r) {
+  make_cube1(r);
+  make_table1();
+  make_cube2(r);
+  make_table2();
+}
+function make_cube1(r) {
+  var rand = Math.floor(Math.random()*arr.length);
+  line = arr[rand].split(' ');
+  facelets = facelets.split('');
+  for (var i=0; i < 24; i++) 
+    facelets[edges[i]] = line[0][i];
+  facelets = facelets.join('');
+  move = replm(line[1]);
+  if (r)
+    acjs_removeListeners['cube1']();
+  AnimCube3('config=AnimCube.txt&id=cube1&edit=1&move=' + move + '&facelets=' + facelets);
+}
+function make_table1() {
+  var table = line[2].split(',');
+  var s = '<table align=center class=tabdata2 style=border-collapse:collapse;border-color:white border=1>';
+  for (var i=0; i < table.length; i++) {
+    var v = table[i].split(':');
+    s += '<tr><td>' + repl(v[0]) + '</td><td style=text-align:left>' + repl(v[1]) + '</td></tr>';
+  }
+  s += '</table>';
+  document.getElementById('table1').innerHTML = s;
+}
+function make_cube2(r) {
+  var move2 = replm2(line[3]);
+  if (r)
+    acjs_removeListeners['cube2']();
+  AnimCube3('config=AnimCube.txt&id=cube2&edit=1&initmove=' + move + '&move=' + move2 + '&facelets=' + facelets);
+}
+function make_table2() {
+  var table2 = line[4].split(',');
+  var s = '<table align=center class=tabdata1 style=border-collapse:collapse;border-color:white border=1>'
+  for (var i=0; i < table2.length; i++) {
+    var v = table2[i].split(':');
+    s += '<tr><td>' + repl(v[0]) + '</td><td style=text-align:left>' + repl2(v[1]) + '</td></tr>';
+  }
+  s += '</table>';
+  document.getElementById('table2').innerHTML = s;
+}
+function help() {
+  location = location.href.replace('demo', 'help');
+}
+</script>
+</center>
+</div>
+</body>
+</html>

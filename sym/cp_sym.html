@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Corner Position Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=symlib.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2> 3-Color Corner Position Symmetry </font>
+<br><br>
+<div id=status></div>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+"use strict";
+
+/* 3-Color Corner Position Symmetry
+
+      Mins    Syms    Configs
+   -------    ----   --------
+         1      24         24
+         2      12         24
+         2       6         12
+         2       4          8
+         2       1          2
+   -------           --------
+         9                 70   Ratio: 7.78
+*/
+
+main();
+
+function main() {
+  var time0 = Date.now();
+  init();
+  count_cp_mins();
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  document.getElementById('status').innerHTML +=
+    '<br>Run Time: ' + time1 + '<br>';
+}
+
+function count_cp_mins() {
+  var c1 = new Uint32Array(C_PRM);
+  var c2 = new Uint32Array(C_PRM);
+  var c3 = new Uint32Array(49);
+  for (var cp=0; cp < E_PRM; cp++) {
+    if (c1[cp] == 0) {
+      c1[cp] = cp;
+      for (var op=1; op < CUBE_SYM; op++) {
+        var cpsym = cp_sym[cp*CUBE_SYM + op];
+        c1[cpsym] = cp;
+      }
+    }
+  }
+  for (var i=0; i < C_PRM; i++)
+    c2[c1[i]]++;
+  for (var i=0; i < C_PRM; i++)
+    if (c2[i] != 0)
+      c3[c2[i]]++;
+  rpt(c3);
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_cp_sym();
+}
+
+</script>
+</center>
+</body>

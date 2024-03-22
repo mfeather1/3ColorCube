@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+ <title> Interactive Starter Edge Cube </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=starter_edge.js></script>
+ <script src=AnimCube3.js></script>
+</head>
+<body>
+<center>
+<font size=+2> Interactive Starter Edge Cube </font>
+<br>
+<div id=cube style=width:280px;height:280px></div> 
+<br>
+<table>
+ <tr>
+  <td><button class="btn cuw1" onclick="new_cube(1, 1)">Random</button></td>
+  <td width=10>
+  <td><button class="btn cuw2" onclick="new_cube(0, 1)">Reset</button></td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+"use strict";
+var acjs_removeListeners = [];
+new_cube(0, 0);
+function new_cube(n, r) {
+  var rand = (n == 0) ? 0 : Math.floor(Math.random()*arr.length) + 1;
+  if (r)
+    acjs_removeListeners['cube']();
+  AnimCube3('id=cube&config=AnimCube.txt&edit=1&facelets=' + arr[rand]);
+}
+</script>
+</center>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+ <title> Solver 2 </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> 
+  .link {
+   width:100px;
+   border-radius:15px;
+   background-color:#ffffff;
+   padding:3px 20px;
+   border:none;
+   outline:none;
+   color:black;
+   text-decoration:none;
+   font-family:sans-serif;
+   white-space:nowrap;
+  }
+  a.link {color:black}
+  a.link:visited {color:black}
+ </style>
+</head>
+<body>
+<center>
+<table><tr height=2><td></table>
+<font size=+2> Solver 2 </font>
+<br><br>
+<p>This version of the solver was made for presolved cubes (see section at
+bottom) but it can also be used for regular cubes, it has similar peformance
+to the Quad-Core Solver, see performance info
+<a href=perf_summary.html>here</a>.
+With this solver, all options require loading dist files as described 
+<a href=dist_files>here</a>.
+You can also see the file requirements by clicking on any link below and
+then clicking the Solve button which will list the files that need to be
+loaded.
+To run the basic solver click on the Solver button.
+For better performance, use additional dist files with the appropriate 
+button.</p>
+<br>
+<table>
+ <tr>
+  <td><a class=link onclick=go('solve.html?stl=5s&snc=1&log_brief=1') translate=no>Solver</a></td>
+ </tr>
+</table>
+<br><font size=+2 translate=no>Dist 3</font><br>
+<table>
+ <tr height=5>
+ <tr>
+  <td> <a class=link onclick=go('solve.html?use_dist3=1&stl=5s&snc=1&log_brief=1') translate=no>418 MB</a></td>
+  <td width=15>
+  <td> <a class=link onclick=go('solve.html?use_dist3=2&stl=5s&snc=1&log_brief=1') translate=no>835 MB</a></td>
+ </tr>
+</table>
+<br><br>
+<a class=link onclick=go('solve.html?use_dist4=1&stl=60&snc=1') translate=no>Optimal</a>
+<br><br><br>
+<font size=+2>Custom Cube Display</font>
+<br><br>
+<p>Here are the same links with an example of how the cube display can be
+customized with URL parameters, see
+<a target=_blank href=../solver_qc/solver_help.html#custom>Help</a> for details.</p>
+<br>
+<table>
+ <tr>
+  <td><a class=link onclick=go('solve.html?stl=5s&snc=1&log_brief=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=1&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1') translate=no>Solver</a></td>
+ </tr>
+</table>
+<br><font size=+2 translate=no>Dist 3</font><br>
+<table>
+ <tr height=5>
+ <tr>
+  <td><a class=link onclick=go('solve.html?use_dist3=1&stl=5s&snc=1&log_brief=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=1&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1&hintborder=1') translate=no>418 MB</a></td>
+  <td width=15>
+  <td><a class=link onclick=go('solve.html?use_dist3=2&stl=5s&snc=1&log_brief=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=1&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1&hintborder=1') translate=no>835 MB</a></td>
+ </tr>
+</table>
+<br><br>
+<a class=link onclick=go('solve.html?use_dist4=1&stl=60&snc=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=1&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1') translate=no>Optimal</a>
+<br><br><br>
+<font size=+2>Presolved Cubes</font>
+<table><tr><td height=8></table>
+<p>Optimally solve cube configurations that are already solved as 3-color
+(two colors only on each face).
+To see some examples, press the button below and then click on the Random button
+a few times.</p>
+<table><tr><td height=18></table>
+<a class=link onclick=go('solve.html?stl=30&snc=1&log_brief=1&random_presolved=1&use_dist9=1') translate=no>Presolved</a>
+<table><tr height=20><td></table>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>function go(s){location=s}</script>
+</center>
+</body>
+</html>

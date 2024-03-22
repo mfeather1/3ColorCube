@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+<head>
+ <title> Getting Started </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <style> td {text-align:center} </style>
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> Getting Started </font>
+<br><br>
+<p><b>Cube Terminology</b> <br><br> 
+Face - One side of the cube. There are six faces on the cube, the color of the 
+center square on each face is the color of that face.
+<br><br>
+Facelet - One colored square, there are nine on each face and 54 total.
+<br><br>
+Misplaced facelet - A facelet that does not match the color of the center square.
+<br><br> 
+Quarter-twist - A 90 degree turn of a face.
+<br><br>
+Half-twist - Two quarter twists, a 180 degree turn of a face.
+<br><br>
+Inverse - A sequence of twists played backwards.
+<br><br>
+<span translate=no>Cubie </span> - One of the 26 mini-cubes that make up
+a regular cube, each of the 8 corner <span translate=no> cubies </span> has
+three facelets and each of the 12 edge <span translate=no> cubies </span>
+has two facelets.
+<br><br>
+Split - On a Starter Cube the split is the number of colored corners on the 
+two opposite faces with colored centers.  
+Use the mouse to turn each cube so you can see the bottom face.</p> 
+<table>
+ <tr>
+  <td> 3-2 Split </td>
+  <td width=80>
+  <td> 4-1 Split </td>
+ </tr>
+ <tr>
+  <td>
+   <div style="width:120px; height:120px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&position=lluuu&initrevmove=&#34;&facelets=rlllrlrlrrlllrlllrllllllllllllllllllllllllllllllllllll")</script>
+   </div>
+  </td>
+  <td>
+  <td>
+   <div style="width:120px; height:120px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&position=lluuu&initrevmove=&#34;&facelets=rlrlrlrlrllllrlrllllllllllllllllllllllllllllllllllllll")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<p>Rows go all the way around the cube as shown on the following:</p>
+<table>
+ <tr>
+  <td> Top Row </td>
+  <td width=80>
+  <td> Bottom Row </td>
+ </tr>
+ <tr>
+  <td>
+   <div style="width:120px; height:120px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&position=lluuu&facelets=llllllllllllllllllyllyllyllyllyllyllyyyllllllyllyllyll")</script>
+   </div>
+  </td>
+  <td>
+  <td>
+   <div style="width:120px; height:120px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&position=lluuu&facelets=llllllllllllllllllllyllyllyllyllyllyllllllyyyllyllylly")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<p>Center Slice - The middle row (or column) between two opposite faces is a 
+center slice.
+The sequences show the center slice twist as a single move as shown on the 
+first cube below (press right arrow button to play).  
+However, it is done manually with two moves as shown on the second cube.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:138px; height:138px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&position=lluuu&initrevmove=#&move=Um'&facelets=lllllllllllllllllllyllyllyllyllyllyllllyyyllllyllyllyl")</script>
+   </div>
+  </td>
+  <td width=80>
+  <td>
+   <div style="width:138px; height:138px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&position=lluuu&initrevmove=#&move=d D'&facelets=lllllllllllllllllllyllyllyllyllyllyllllyyyllllyllyllyl")</script>
+   </div>
+  </td>
+  <td>
+ </tr>
+</table>
+<br><br>
+<p><b><a name="imp">Important Concept</a></b><br><br>
+A half-twist on a 3-color cube never changes the number of misplaced facelets
+so it allows you to move misplaced facelets to desired locations with minimal 
+side-effects.  
+When solving the edges, half-twists can be thought of as neutral moves which 
+are used to relocate edge facelets in order to make setups for the 
+solving sequences without messing up the corners which are already solved.
+<br><br>
+<a name="imp">Solving Tip</a><br>
+On a 3-color cube the last move of any sequence can be in either direction.  
+Also, on any cube, half-twists can be in either direction so feel free to
+customize the sequences to your liking.
+<br><br><br>
+<b>Media Player Usage Tips</b>
+<br><br>
+The initial cube view shows three sides, use the mouse to turn the cube image 
+to view the rest of it. 
+To rotate the cube press &amp; hold the left mouse button while moving the
+cursor in the direction you want the cube to turn. 
+For cubes that also allow the faces to be turned, you can either turn individual 
+faces or rotate the cube depending on whether the cursor is touching the cube
+or outside the cube when you start the move.
+<br><br>
+The buttons are used to play the sequences.</p>
+<ul>
+<li> 
+<p>The Reset button is the leftmost button.
+Use it after turning the cube to reset it back to its initial position
+before playing a sequence.</p>
+<br>
+<li> <p>The center button shows the Mirror-Image of the cube. 
+It is also used as Stop button while a sequence is playing.</p>
+<br>
+<li> 
+<p>The Play button is to the right of the mirror button, 
+it will play the sequence all the way through.</p>
+<br>
+<li> 
+<p>To Single-Step through the sequence use the button to the right of Play.</p>
+</ul>
+<br>
+<p><b><a name="imp">Making Your Own 3-Color Cube</a></b><br><br>
+While you can always use the cube simulators on this web-site to learn this
+solving method it is easier if you have an actual 3-color cube to work with,
+you can create one with stickers from sources available on the 
+<a href="http://www.google.com/search?q=cube+stickers" target=_blank>web</a>.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

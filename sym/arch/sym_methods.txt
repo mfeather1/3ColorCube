@@ -1,0 +1,126 @@
+                                 Symmetry Methods
+
+  There are four symmetry methods for corners.  Method 1 is simple but the
+  array is large (14 MB), the other methods reduce the size for better
+  caching (see sym_arr_sizes.txt for all sizes).
+
+  Components:
+    cp = 3-color corner position (70 configs)
+    ct = corner twist (2187 configs)
+    op = symmetry operation (24 rotations + reflections = 48 ops)
+
+  Method 1:
+
+    Use an array with every possible combo of cp, ct & op, a sym op is
+    applied to corner twist (ct) by doing:
+ 
+    ctsym = cpt_sym[cp][ct][op]
+
+    The array size is reduced by only storing the corner twist symmetry
+    config, the corner position symmetry is obtained via another small 
+    array (3 KB):
+
+    cpsym = cp_sym[cp][op] 
+
+    This method is implemented for corners in the solver as CT_SYM_METHOD 1.
+
+  Method 2:
+
+    Components:
+      cpt = combination of cp & ct (70 * 2187 = 153090 configs)
+      cptmin = symmetry reduced cpt (3393 configs)
+
+    Use an array with every possible combo of cptmin and op, a sym op is
+    applied by doing:
+
+    cptmin = cpt_min[cpt]
+    cptop  = cpt_op[cpt]
+    cptsym = cpt_sym[cptmin][op_op[cptop][op]]
+
+    where:
+    cpt_min converts cpt to cptmin (symmetry reduction)
+    cpt_op gives the sym op that converts cptmin to cpt (inverse cpt->min)
+    op_op gives the sym op that equates to doing cptop followed by op
+    cpt_sym applies the result of op_op to cptmin
+
+    This method is implemented for corners in the solver as CT_SYM_METHOD 2.
+
+  Method 3:
+    
+    Use a 48 symmetry array for every possible combo of ct & op which works
+    for the 16 consistent symmetries on the same axis ("consistent" means 
+    symmetry ct is same for all cp values).  For the other 32 symmetries
+    (16 on each of the other two axes) use another array with every possible
+    combo of cp & ct to convert the result from the symmetry array (one
+    conversion array for each axis).  A sym op can be applied by using a
+    function like this:
+
+    get_ctsym_m3(cpsym, ct, op) {
+      ctsym = ct_sym[ct][op]
+      if (axis[op] == 0)
+        return ctsym
+      else if (axis[op] == 1)
+        return ct_cnv_ax1[cpsym][ctsym]
+      else
+        return ct_cnv_ax2[cpsym][ctsym]
+    }
+
+    In the above code the axis array contains a 0, 1 or 2 depending on
+    whether the sym op rotates to the same axis (0) or a different axis,
+    values of 1 or 2 indicate which conversion array is to be used.
+
+    The conversion is done after symmetry has been applied to both position
+    and twist, hence cpsym is passed in as a parameter instead of cp (cpsym
+    was obtained previously via the small cp_sym array).  For more info on
+    how the conversion works see ct_conv.html.
+
+    The second conversion array (ct_cnv_ax2) can be eliminated (replaced with
+    ct_cnv_ax1) by updating the symmetry array (ct_sym) during init and
+    converting cpsym (when axis[op] = 2) in the get_ctsym function (see
+    update function in cpt_sym_m3.html and cp_conv.txt for cpsym conversion).
+
+    This method is implemented for corners in the solver as CT_SYM_METHOD 3.
+
+  Method 4:
+
+    Use a symmetry array for every possible combo of ct & op for the 16
+    consistent symmetries on the same axis.  For the other 32 symmetries,
+    make the equivalent from a pair of sym ops using one that rotates to
+    a new axis and one from the 16 consistent symmetries.  Two new arrays
+    are used, one for each axis with all possible combinations of cp & ct.
+    A sym op can be applied by using a function like this:
+
+    get_ctsym_m4(cp, ct, op) {
+      if (axis[op] == 0)
+        return ct_sym[ct][op];
+      else if (axis[op] == 1) 
+        return ct_sym[ct_sym_ax1[cp][ct]][op16c[op]];
+      else
+        return ct_sym[ct_sym_ax2[cp][ct]][op16c[op]];
+    }
+
+    In the above code, array op16c gives the sym op (of the 16 consistent
+    symmetries) to apply subsequently to ct_sym_ax[1-2] (that rotated to new
+    axis) to produce the desired op.
+
+    As with Method 3, the second array (ct_sym_ax2) can be eliminated.
+
+    This method is not implemented for corners in the solver but is shown
+    in cpt_sym_m4.html.
+
+  ----------------------------------------------------------------------------
+
+  For edges, only Method 4 (as shown above) is implemented in the solver
+  (in rch.js, ET_SYM_METHOD 1 and 2 both use this method, option 2 just
+  eliminates one  of the arrays).  This method is also used in ept_sym_m2.html
+  which documents options for updating et_sym which affect the operation of
+  the get_etsym function.
+
+  The first two methods shown above are not implemented for edges because
+  the arrays would be too large, the third method is shown in ept_sym_m3.html.
+
+  One notable difference with edges is that instead of using the 3-color edge
+  position config (34650 possible), the slice config is used (495 possible)
+  which greatly reduces the number of position + twist combinations (from 70
+  million to 1 million).
+

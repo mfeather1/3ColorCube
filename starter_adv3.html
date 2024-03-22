@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+ <title> Starter Advanced (Page 3 of 3) </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <style> td {text-align:center} </style>
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <script src=hist.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Starter Advanced <br> Page 3 of 3 </font>
+<br><br>
+<p>The 4-2 split cube shown below is the fourth cube from the Starter page.
+Press Play to see how to solve it in five moves by making a 3-2 split.  
+The first move makes configuration 33R from the previous page and the
+second move makes 32A (right mirror) from the first page.</p>
+   <div style="width:120px; height:120px; display:inline-block"> 
+     <script>AnimCube3("config=medium.txt&position=lluuu&initmove=R'D2R'D2RUR2&move=R2'F'R'DR&facelets=rlrlrlrlrrlrlrlrlrllllllllllllllllllllllllllllllllllll")</script>
+   </div>
+<br><br><br>
+<p>The following shows the last two cubes on the Starter page.
+An interesting feature of these cubes is that a half-twist to any face other
+than the top or bottom makes a 3-2 split. 
+Use the mouse to half-twist either the front, right, back or left face to make
+a 3-2 split, then press Reset and try another.
+To see the complete solution press Reset then Play, the second move makes
+configuration 32A.</p>
+<table>
+  <tr height=15>
+  <tr> 
+    <td align=center> 41L </td> 
+    <td width=50>
+    <td align=center> 41R </td> 
+  </tr>
+  <tr>
+    <td>
+      <div style="width:120px; height:120px; display:inline-block"> 
+       <script>AnimCube3("config=medium.txt&edit=1&position=lluuu&initrevmove=#&move=F2D'FD'F'&facelets=rlrlrlrlrrlrlrlrlrllllllllllllllllllllllllllllllllllll")</script>
+      </div>
+    </td>
+    <td> 
+    <td>
+      <div style="width:120px; height:120px; display:inline-block"> 
+       <script>AnimCube3("config=medium.txt&edit=1&position=lluuu&initrevmove=#&move=R2'DR'DR&facelets=rlrlrlrlrrlrlrlrlrllllllllllllllllllllllllllllllllllll")</script>
+      </div>
+    </td>
+  <tr>
+</table>
+<br>
+<script>
+  hst();
+  document.write('<table><tr>');
+  document.write(m(2, 'Prev') + '<td width=10>');
+  document.write(m(1, 1) + '<td width=10>');
+  document.write(m(2, 2) + '<td width=10>');
+  document.write('<td>3</td>');
+  document.write('</tr></table>');
+  function m(n, s) {
+    var u = location.href.replace(/starter_adv[1-3]/, 'starter_adv' + n);
+    var n = u.indexOf('hist');
+    if (n > 0) u = u.substr(0, n-1);
+    var s = '<td><a href=' + u + '&hist=' + hist + '>' + s + '</a></td>';
+    return s.replace('html&', 'html?');
+  }
+  if (hist != 0) {
+    document.write("<br><a href=\"javascript: history.go(-" + hist + ")\">Back</a>");
+  }
+</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

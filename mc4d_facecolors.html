@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+ <title> Magic Cube 4D - Face Colors </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+</head>
+<body>
+<center>
+<font size="+2"> Magic Cube 4D <br> Face Colors </font>
+<br><br>
+<p>A nice 4D Simulator which includes the Hypercube and much more is available 
+at the 
+<a target=_blank href=http://superliminal.com/cube/cube.htm>Magic Cube 4D</a>
+web-site.
+<br> <br>
+An example facecolors file for a 4-Color Hypercube is
+<a href=facecolors.txt>here</a>, put it in the same directory as the mc4d 
+jar file as per the 
+<a href=http://superliminal.com/cube/faq.html#Q16>faq</a>.
+As can be seen on the image below the color is the same for each pair of
+opposite cells.</p>
+<img src=img/mc4d_facecolors_4C_3x3.png style=width:220px>
+<br><br>
+<p>To solve using this method, start mc4d with the 4-color facecolors.txt. 
+Select puzzle Hypercube 3, do a full scramble and solve the corners
+(using the 4-color macros).
+Save a log file and then switch to eight colors by restarting mc4d without 
+the facecolors.txt.
+Open the log file and solve the corners again (using the 8-color macros).
+Repeat the process for the edges.
+<br><br>
+The solve order is:<br>
+4-color Corners<br>
+8-color Corners<br>
+4-color Edges<br>
+8-color Edges
+<br><br>
+Solving the edges as 4-color slightly scrambles the corners but they remain
+solvable with half-twists only.
+<br><br>
+Another way to solve is to use different shades of the same color for opposite
+cell pairs as with this <a href=facecolors2.txt>facecolors.txt</a>.
+This makes it easy to do the mental transition between 4-color and 8-color (no
+switching with mc4d needed).
+However, due to changes in shading as the hypercube rotates 
+some of the colors are a bit hard to distinguish at certain angles.</p>
+<img src=img/mc4d_facecolors_8C_3x3.png style=width:220px>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+</center>
+</body>
+</html>

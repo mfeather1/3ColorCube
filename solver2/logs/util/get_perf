@@ -1,0 +1,88 @@
+# get numbers from logs for display in perf_summary.html
+
+main() {
+  f1 # get solves per second & longest solves for section Suboptimal Solutions
+  echo
+  f2 # get average solves & longest solves for section Optimal Solutions
+  echo
+  f3 # get average solves & longest solves for section Presolved Optimal Solutions
+}
+
+f1()
+{
+  log1=ori/subopt_random_10000.txt
+  log2=ori/subopt_random_10000_D3_418MB.txt
+  log3=ori/subopt_random_10000_D3_835MB.txt
+  log4=ori/subopt_random_10000_D3_D4.txt
+
+  m1=`max $log1`
+  m2=`max $log2`
+  m3=`max $log3`
+  m4=`max $log4`
+
+  s1=`grep Sea $log1 | awk '{printf("%5.2f\n", 10000/$NF)}'`
+  s2=`grep Sea $log2 | awk '{printf("%5.2f\n", 10000/$NF)}'`
+  s3=`grep Sea $log3 | awk '{printf("%5.2f\n", 10000/$NF)}'`
+  s4=`grep Sea $log4 | awk '{printf("%5.2f\n", 10000/$NF)}'`
+
+  echo $s1 $m1
+  echo $s2 $m2
+  echo $s3 $m3
+  echo $s4 $m4
+}
+
+f2()
+{
+  log1=optimal_random_1000.txt
+  log2=optimal_random_1000_conc9.txt
+  log3=optimal_19_move.txt
+  log4=optimal_19_move_conc9.txt
+
+  m1=`max $log1`
+  m2=`max $log2`
+  m3=`max $log3`
+  m4=`max $log4`
+
+  s1=`grep Sea $log1 | awk '{printf("%5.2f\n", $NF/1000)}'`
+  s2=`grep Sea $log2 | awk '{printf("%5.2f\n", $NF/1000)}'`
+  s3=`grep Sea $log3 | awk '{printf("%5.2f\n", $NF/100)}'`
+  s4=`grep Sea $log4 | awk '{printf("%5.2f\n", $NF/100)}'`
+
+  # echo $s1 $m1
+  echo $s2 $m2
+  # echo $s3 $m3
+  echo $s4 $m4
+}
+
+f3()
+{
+  bn=`basename ${PWD/logs}`
+  if [ $bn = solver2 ]; then
+    log1=optimal_presolved_1000.txt
+    log2=optimal_presolved_16_move.txt
+  else
+    log1=subopt_presolved_1000.txt
+    log2=subopt_presolved_16_move.txt
+  fi
+
+  m1=`max $log1`
+  m2=`max $log2`
+
+  if [ $bn = solver2 ]; then
+    s1=`grep Sea $log1 | awk '{printf("%5.2f\n", $NF/1000)}'`
+    s2=`grep Sea $log2 | awk '{printf("%5.2f\n", $NF/77)}'`
+  else
+    s1=`grep Sea $log1 | awk '{printf("%5.2f\n", 1000/$NF)}'`
+    s2=`grep Sea $log2 | awk '{printf("%5.2f\n", 77/$NF)}'`
+  fi
+
+  echo $s1 $m1
+  echo $s2 $m2
+}
+
+max() {
+  grep '\[' $1 | awk '{print $NF}' | sort -n | tail -1 |
+  awk '{printf("%5.2f\n", $1)}'
+}
+
+main

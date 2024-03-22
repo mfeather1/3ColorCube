@@ -1,0 +1,520 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6-Color Cube Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <script src=rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=epr_sym.js></script>
+ <script src=symlib.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+  p { text-align: justify; margin-left: 10%; margin-right: 10%; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2> 6-Color Cube Symmetry </font>
+<br>
+<p> This program takes a while to run (22 seconds on 3.7 Ghz processor)
+so here are the results from a previous run.
+To actually run the counts, press the button below the table.
+<!-- Progress messages can be viewed on the console (press F12 to bring up
+the console before starting the run). -->
+The counts in the Mins column are related to M-Symmetry as described on
+Herbert Kociemba's website as shown <a href=min_vs_msym.html>here</a>.
+</p>
+<table border=1>
+ <tr><td><b>Mins</b></td><td><b>Syms</b></td><td><b>Configs</b></td></tr>
+ <tr><td>901083398122621132</td><td>48</td><td>43252003109885814336</td></tr>
+ <tr><td>        6857501210</td><td>24</td><td>        164580029040</td></tr>
+ <tr><td>            942716</td><td>16</td><td>            15083456</td></tr>
+ <tr><td>            738352</td><td>12</td><td>             8860224</td></tr>
+ <tr><td>              4094</td><td> 8</td><td>               32752</td></tr>
+ <tr><td>              5950</td><td> 6</td><td>               35700</td></tr>
+ <tr><td>                24</td><td> 4</td><td>                  96</td></tr>
+ <tr><td>               124</td><td> 3</td><td>                 372</td></tr>
+ <tr><td>                10</td><td> 2</td><td>                  20</td></tr>
+ <tr><td>                 4</td><td> 1</td><td>                   4</td></tr>
+ <tr><td><b>901083404981813616</b></td><td></td><td><b>43252003274489856000</b></td></tr>
+ <tr><td colspan=3 style=text-align:center>Ratio = 47.99999982</td></tr>
+</table>
+<br>
+<button onclick=run_counts()>Run Counts</button>
+<br><br>
+<div id=status></div>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+"use strict";
+var OSIZE = 103;
+var OSIZE2 = 13106;
+var OSIZE3 = 139;
+var ELIST_SIZE = 103;
+var ELIST2_SIZE = 13106;
+var ELIST3_SIZE = 886412;
+var elist = new Int32Array(ELIST_SIZE);
+var elist2 = new Uint16Array(ELIST2_SIZE * 4);
+var elist3 = new Uint16Array(ELIST3_SIZE * 5);
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);
+var cp6c_sym = new Uint16Array(C_PERM * CUBE_SYM);
+var syms = new Int8Array([48,24,16,12,8,6,4,3,2,1]);
+var cp6c_sym48 = new Int8Array(C_PERM);
+var cpt6c_sym48 = new Int8Array(C_PERM * C_TWIST / 8);
+var ep_mins_with_48_syms;
+var ep6c_mins_with_48_syms;
+var ept6c_mins_with_48_syms;
+var time0;
+
+function run_counts() {
+  document.getElementById('status').innerHTML = 'Counts are running<br><br>';
+  setTimeout(main, 100);
+}
+
+function main() {
+  time0 = Date.now();
+  init();
+  step1();
+  step2();
+  step3();
+}
+
+function step1() {
+  var oix=0, eix2=0;
+  var epr = new Int8Array(3);
+  var eprtmp = new Int8Array(3);
+  var arr = new Int8Array(E_PRMr);
+  var osub_count = new Int32Array (OSIZE * 10);
+  var sub_count = new Int32Array(CUBE_SYM + 1);
+  var syma = new Int32Array(CUBE_SYM);
+  for (var eix=0; eix < ELIST_SIZE; eix++) {
+    var ep = elist[eix];
+    for (i=0; i < E_PRMr; i++)
+      arr[i] = 0;
+    for (i=0; i < 10; i++)
+      sub_count[syms[i]] = 0;
+    for (epr[0]=0; epr[0] < 24; epr[0]++)
+     for (epr[1]=0; epr[1] < 24; epr[1]++)
+      for (epr[2]=0; epr[2] < 24; epr[2]++) {
+        var eprn = eprsum(epr);
+        if (arr[eprn] != 0)
+          continue;
+        arr[eprn] = 1;
+        var uix = 1;
+        syma[0] = ep*E_PRMr + eprn;
+        for (var op=1; op < CUBE_SYM; op++) {
+          var epsym = ep_sym[ep*CUBE_SYM + op];
+          get_eprsym2(eprtmp, ep, epr, op);
+          var eprsym = eprsum(eprtmp);
+          if (epsym == ep)
+            arr[eprsym] = 1;
+          syma[op] = epsym*E_PRMr + eprsym;
+        }
+        var u = uniq(syma);
+        if (u < CUBE_SYM) {
+          elist2[eix2*4] = ep;
+          for (var i=0; i < 3; i++)
+            elist2[eix2*4+i+1] = epr[i];
+          eix2++;
+        }
+        sub_count[u]++;
+      }
+    for (i=0; i < 10; i++)
+      osub_count[oix*10+i] = sub_count[syms[i]];
+    oix++;
+  }
+  for (var i=0, sum=0; i < oix; i++)
+    sum += osub_count[i*10];
+  ep6c_mins_with_48_syms = sum + ep_mins_with_48_syms * E_PRMr;
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  console.log('Step 1 of 3 Done: ' + time1);
+}
+
+function step2() {
+  var oix=0, eix3=0;
+  var epr = new Int8Array(3);
+  var eprtmp = new Int8Array(3);
+  var arr = new Int8Array(E_TWIST);
+  var ulist = new Int32Array(CUBE_SYM);
+  var op_sym = new Int8Array(CUBE_SYM);
+  var osub_count = new Int32Array(OSIZE2 * 10);
+  var sub_count = new Int32Array(CUBE_SYM + 1);
+  var syma = new Int32Array(CUBE_SYM);
+  var progress = 1;
+  console.log('Step 2 Progress:');
+  for (var eix2=0; eix2 < ELIST2_SIZE; eix2++) {
+    var ep = elist2[eix2*4];
+    for (var i=0; i < 3; i++)
+      epr[i] = elist2[eix2*4+i+1];
+    var ep6c = ep*E_PRMr + eprsum(epr);
+    ulist[0] = ep6c;
+    var uix = 1;
+    op_sym[0] = 0;
+    for (var op=1; op < CUBE_SYM; op++) {
+      var epsym = ep_sym[ep*CUBE_SYM + op];
+      get_eprsym2(eprtmp, ep, epr, op);
+      var eprsym = eprsum(eprtmp);
+      var ep6csym = epsym*E_PRMr + eprsym;
+      for (var i=0; i < uix; i++)
+        if (ep6csym == ulist[i])
+          break;
+      if (i == uix) 
+        ulist[uix++] = ep6csym;
+      op_sym[op] = i;
+    }
+    if (Math.floor(progress%(OSIZE2/4)) == 0)
+      console.log(Math.floor(progress*100/OSIZE2) + '%');
+    progress++;
+    for (i=0; i < E_TWIST; i++)
+      arr[i] = 0;
+    for (i=0; i < 10; i++)
+      sub_count[syms[i]] = 0;
+    for (var et=0; et < E_TWIST; et++) {
+      if (arr[et] != 0)
+        continue;
+      arr[et] = 1;
+      syma[0] = et;
+      for (var op=1; op < CUBE_SYM; op++) {
+        var etsym = get_etsym(ep, et, op);
+        if (op_sym[op] == 0)
+          arr[etsym] = 1;
+        syma[op] = op_sym[op]*E_TWIST + etsym;
+      }
+      var u = uniq(syma);
+      if (u < CUBE_SYM) {
+        elist3[eix3*5] = ep;
+        elist3[eix3*5+1] = et;
+        for (var i=0; i < 3; i++)
+          elist3[eix3*5+i+2] = epr[i];
+        eix3++;
+      }
+      sub_count[u]++;
+    }
+    for (i=0; i < 10; i++)
+      osub_count[oix*10+i] = sub_count[syms[i]];
+    oix++;
+  }
+  for (var i=0, sum=0; i < oix; i++)
+    sum += osub_count[i*10];
+  ept6c_mins_with_48_syms = sum + ep6c_mins_with_48_syms * E_TWIST;
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  console.log('Step 2 of 3 Done: ' + time1);
+}
+
+function step3() {
+  var oix=0;
+  var osub_count = new Int32Array(OSIZE3 * 10);
+  var ocount = new Int32Array(OSIZE3);
+  var mlist = new Int8Array(CUBE_SYM);
+  var olist = new Int8Array(OSIZE3 * CUBE_SYM);
+  var arr = new Int8Array(C_PERM*C_TWIST/8);
+  var epr = new Int8Array(3);
+  var eprtmp = new Int8Array(3);
+  var ulist = new Int32Array(CUBE_SYM * 2);
+  var op_sym = new Int8Array(CUBE_SYM);
+  var sub_count = new Int32Array(CUBE_SYM + 1);
+  var cparity = new Int8Array(C_PERM);
+  var cps = new Int8Array(8); 
+  var eps = new Int8Array(12); 
+  var cp6c_sym_tmp = new Int32Array(CUBE_SYM);
+  var syma = new Int32Array(CUBE_SYM);
+  var progress = 1;
+  for (var i=0; i < C_PERM; i++) {
+    int_to_perm(i, cps, 8);
+    cparity[i] = parity(cps, 8);
+  }
+  console.log('Step 3 Progress:');
+  for (var eix3=0; eix3 < ELIST3_SIZE; eix3++) {
+    var ep = elist3[eix3*5];
+    var et = elist3[eix3*5+1];
+    var ept = ep*E_TWIST + et;
+    for (var i=0; i < 3; i++)
+      epr[i] = elist3[eix3*5+i+2];
+    make_eps(eps, ep, epr);
+    var eparity = parity(eps, 12);
+    ulist[0] = ept;
+    ulist[1] = eprsum(epr);
+    var uix = 1;
+    op_sym[0] = 0;
+    for (var op=1; op < CUBE_SYM; op++) {
+      var epsym = ep_sym[ep*CUBE_SYM + op];
+      var etsym = get_etsym(ep, et, op);
+      var eptsym = epsym*E_TWIST + etsym;
+      get_eprsym2(eprtmp, ep, epr, op);
+      var eprsym = eprsum(eprtmp);
+      for (var i=0; i < uix; i++)
+        if (eptsym == ulist[i*2] && eprsym == ulist[i*2+1])
+          break;
+      if (i == uix) {
+        ulist[uix*2] = eptsym;
+        ulist[uix*2+1] = eprsym;
+        uix++;
+      }
+      op_sym[op] = i;
+    }
+    for (var i=0; i < oix; i++) {
+      if (olist[i*CUBE_SYM] == eparity) {
+        for (var j=1; j < CUBE_SYM; j++)
+          if (olist[i*CUBE_SYM + j] != op_sym[j])
+            break;
+        if (j == CUBE_SYM)
+          break;
+      }
+    }
+    if (i == oix) {
+      olist[i*CUBE_SYM] = eparity;
+      for (var i=1; i < CUBE_SYM; i++)
+        olist[oix*CUBE_SYM + i] = op_sym[i];
+      ocount[oix] = 1;
+    }
+    else {
+      ocount[i]++;
+      continue;
+    }
+    if (Math.floor(progress%(OSIZE3/4)) == 0)
+      console.log(Math.floor(progress*100/OSIZE3) + '%');
+    progress++;
+    for (i=0; i < C_PERM*C_TWIST/8; i++)
+      arr[i] = 0;
+    for (i=0; i < 10; i++)
+      sub_count[syms[i]] = 0;
+    var mix = 0;
+    for (var op=1; op < CUBE_SYM; op++)
+      if (op_sym[op] == 0)
+        mlist[mix++] = op;
+    for (var cp6c=0; cp6c < C_PERM; cp6c++) {
+      if (cparity[cp6c] != eparity)
+        continue;
+      if (cp6c_sym48[cp6c] > 0) {
+        if (cp6c_sym48[cp6c] == 2)
+          sub_count[CUBE_SYM] += C_TWIST * uix;
+        continue;
+      }
+      var cp = cp6c_cp3c[cp6c];
+      for (var op=0; op < CUBE_SYM; op++)
+        cp6c_sym_tmp[op] = cp6c_sym[cp6c*CUBE_SYM + op] * C_TWIST;
+      for (var ct=0; ct < C_TWIST; ct++) {
+        var cpt = cp6c*C_TWIST + ct;
+        if ((arr[cpt>>3]&(1<<(cpt&7))) != 0)
+          continue;
+        arr[cpt>>3] |= 1<<(cpt&7);
+        if ((cpt6c_sym48[cpt>>3]&(1<<(cpt&7))) != 0) {
+          for (var i=0; i < mix; i++) {
+            var op = mlist[i];
+            var ctsym = (CT_SYM_METHOD == 3) ?
+              get_ctsym(cp_sym[cp*CUBE_SYM+op], ct, op) :
+              get_ctsym(cp*C_TWIST+ct, op);
+            var cptsym = cp6c_sym_tmp[op] + ctsym;
+            arr[cptsym>>3] |= 1<<(cptsym&7);
+          }
+          sub_count[CUBE_SYM]++;
+          continue;
+        }
+        syma[0] = cpt;
+        for (var op=1; op < CUBE_SYM; op++) {
+          var ctsym = (CT_SYM_METHOD == 3) ?
+            get_ctsym(cp_sym[cp*CUBE_SYM+op], ct, op) :
+            get_ctsym(cp*C_TWIST+ct, op);
+          var cptsym = cp6c_sym_tmp[op] + ctsym;
+          if (op_sym[op] == 0)
+            arr[cptsym>>3] |= 1<<(cptsym&7);
+          syma[op] = op_sym[op]*88179840 + cptsym;
+        }
+        sub_count[uniq(syma)]++;
+      }
+    }
+    for (i=0; i < 10; i++)
+      osub_count[oix*10+i] = sub_count[syms[i]];
+    oix++;
+  }
+  var s = '<table border=1>';
+  s += '<tr><td><b>Mins</b></td><td><b>Syms</b></td><td><b>Configs</b></td></tr>';
+  var t1 = BigInt(0);
+  var t2 = BigInt(0);
+  var sym48 = BigInt(ept6c_mins_with_48_syms * C_PERM * C_TWIST / 2);
+  for (i=0; i < 10; i++) {
+    var sum = BigInt(0);
+    for (var j=0; j < oix; j++)
+      sum += BigInt(ocount[j] * osub_count[j*10 + i]);
+    t1 += sum;
+    t2 += sum * BigInt(syms[i]);
+    if (i == 0)
+      s += '<tr><td>' + (sum+sym48) + '</td><td>' + syms[i] + '</td><td>' +
+           (sum+sym48)*BigInt(CUBE_SYM) + '</td></tr>';
+    else 
+      s += '<tr><td>' + sum + '</td><td>' + syms[i] + '</td><td>' +
+           sum*BigInt(syms[i]) + '</td></tr>';
+  }
+  t1 += sym48;
+  t2 += sym48 * BigInt(CUBE_SYM);
+  s += '<tr><td><b>' + t1 + '</b></td><td></td><td><b>' + t2 + '</b></td></tr>'; 
+  s += '<tr><td colspan=3 style=text-align:center>Ratio = ' +
+       (Number(t2/10000n) / Number(t1/10000n)).toFixed(8) + '</td></tr>';
+  s += '</table>';
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  console.log('Step 3 of 3 Done: ' + time1);
+  s += '<br>Runtime: ' + time1 + '<br><br>';
+  document.getElementById('status').innerHTML = s;
+}
+
+function init() {
+  if (ET_SYM_METHOD == 1)
+    get_etsym = get_etsym_m1;
+  else if (ET_SYM_METHOD == 2)
+    get_etsym = get_etsym_m2;
+  else
+    get_etsym = get_etsym_m3;
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_ep_sym();
+  populate_et_sym();
+  populate_epr_sym2();
+  make_elist();
+  populate_cp_sym();
+  populate_cp6c_sym();
+  populate_cp6c_sym48();
+  if (CT_SYM_METHOD == 1) {
+    populate_cpt_sym();
+    get_ctsym = get_ctsym_m1;
+  }
+  else if (CT_SYM_METHOD == 2) {
+    populate_cpt_min();
+    populate_cpt_sym2();
+    get_ctsym = get_ctsym_m2;
+  }
+  else if (CT_SYM_METHOD == 3) {
+    populate_ct_sym();
+    update_ct_sym();
+    get_ctsym = get_ctsym_m3;
+  }
+  populate_cpt6c_sym48();
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  console.log('Init Time: ' + time1);
+}
+
+function make_elist() {
+  var arr1 = new Int32Array(E_PRM);
+  var arr2 = new Int32Array(E_PRM);
+  for (var ep=0; ep < E_PRM; ep++) {
+    if (arr1[ep] == 0) {
+      arr1[ep] = ep;
+      for (var op=1; op < CUBE_SYM; op++) {
+        var epsym = ep_sym[ep*CUBE_SYM+op]; 
+        arr1[epsym] = ep;
+      }
+    }
+  }
+  for (var ep=0; ep < E_PRM; ep++)
+    arr2[arr1[ep]]++;
+  for (var ep=0, i=0, n=0; ep < E_PRM; ep++)
+    if (arr2[ep] != 0)
+      if (arr2[ep] < CUBE_SYM)
+        elist[i++] = ep;
+      else
+        n++;
+  ep_mins_with_48_syms = n;
+}
+
+function make_eps(eps, ep, epr) {
+  var eps_3c = new Int8Array(12);
+  var eps_3r = new Int8Array(12);
+  var s = new Int8Array(4);
+  var ix = new Int8Array(3);
+  int_to_strp(ep_b3[ep], eps_3c, 11, 3);
+  for (var i=0; i < 3; i++) {
+    int_to_perm(epr[i], s, 4);
+    for (var j=0; j < 4; j++)
+      eps_3r[i*4+j] = s[j];
+  }
+  for (var i=0; i < 12; i++) {
+    var n = eps_3c[i];
+    eps[i] = n*4 + eps_3r[n*4+ix[n]];
+    ix[n]++;
+  }
+}
+
+function populate_cp6c_sym48() {
+  /* cp6c_sym48 counts:
+     0  4800 = 40320 - 35520 (corner perms with < 48 syms)
+     1 34780 = 35520 - 740   (corner perms with 48 syms less mins)
+     2   740 = mins with 48 syms
+     -------------------------------------------------------------
+     40320 = total corner perms
+     35520 = corner perms with 48 syms
+  */
+  var c1 = new Uint32Array(C_PERM);
+  var c2 = new Uint32Array(C_PERM);
+  for (var i=0; i < C_PERM; i++) {
+    if (c1[i] == 0) {
+      c1[i] = i;
+      for (var op=1; op < CUBE_SYM; op++) {
+        var sym = cp6c_sym[i*CUBE_SYM + op];
+        c1[sym] = i;
+      }
+    }
+  }
+  for (i=0; i < C_PERM; i++)
+    c2[c1[i]]++;
+  for (i=0; i < C_PERM; i++)
+    if (c2[c1[i]] == CUBE_SYM)
+      cp6c_sym48[i] = 1;
+  for (i=0; i < C_PERM; i++)
+    c1[i] = 0;
+  for (i=0; i < C_PERM; i++) {
+    if (c1[i] == 0) {
+      c1[i] = 1;
+      if (cp6c_sym48[i] == 1)
+        cp6c_sym48[i] = 2;
+      for (op=1; op < CUBE_SYM; op++) {
+        sym = cp6c_sym[i*CUBE_SYM + op];
+        c1[sym] = 1;
+      }
+    }
+  }
+}
+
+function populate_cpt6c_sym48() {
+  /* cpt6c_sym48 does not include configs in cp6c_sym48
+     counts:
+     0 77905536 = 88179840 - 10274304
+     1 10274304 = 87956544 - (35520 * 2187)
+     --------------------------------------------------------------
+     88179840 = 40320 * 2187 (total corner configs (perms * twist))
+     87956544 = corner configs with 48 syms
+        35520 = corner perms with 48 syms
+  */
+  var c1 = new Uint32Array(C_PERM*C_TWIST);
+  var c2 = new Uint8Array(C_PERM*C_TWIST);
+  for (var cp6c=0; cp6c < C_PERM; cp6c++) {
+    var cp = cp6c_cp3c[cp6c];
+    for (var ct=0; ct < C_TWIST; ct++) {
+      var cpt = cp6c*C_TWIST + ct;
+      if (c1[cpt] == 0) {
+        c1[cpt] = cpt;
+        for (var op=1; op < CUBE_SYM; op++) {
+          var cp6csym = cp6c_sym[cp6c*CUBE_SYM + op];
+          var ctsym = (CT_SYM_METHOD == 3) ?
+            get_ctsym(cp_sym[cp*CUBE_SYM+op], ct, op) :
+            get_ctsym(cp*C_TWIST+ct, op);
+          var cptsym = cp6csym*C_TWIST + ctsym;
+          c1[cptsym] = cpt;
+        }
+      }
+    }
+  }
+  for (var i=0; i < C_PERM*C_TWIST; i++)
+    c2[c1[i]]++;
+  for (i=0; i < C_PERM*C_TWIST; i++)
+    if (c2[c1[i]] == CUBE_SYM)
+      cpt6c_sym48[i>>3] |= 1<<(i&7);
+}
+</script>
+</center>
+</body>
+</html>

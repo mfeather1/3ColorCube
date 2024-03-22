@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6-Color as 3-Color </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <script src=6c_as_3c.js></script>
+ <script src=rch.js></script>
+ <script src=rclib.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> 6-Color as 3-Color </font>
+<br><br>
+<p>To visualize a 6-color cube as 3-color start by looking at the cube below
+where the colors on opposite faces are very close to being the same.
+Press the Random button and try to solve as 3-color. 
+Gradually increase the difference between opposite colors by raising the
+numbers (try increments of 5 or 10).</p>
+<table border=0><tr><td>
+<div id=status></div>
+<table>
+ <tr height=10>
+ <tr>
+  <td>Red/Orange</td>
+  <td><input id=ro value=25 class="btn asw1" style=padding-left:10px></td>
+ </tr>
+ <tr height=5>
+ <tr>
+  <td>Yellow/White</td>
+  <td><input id=yw value=10 class="btn asw1" style=padding-left:10px></td>
+ </tr>
+ <tr height=5>
+ <tr>
+  <td>Green/Blue</td>
+  <td><input id=gb value=5 class="btn asw1" style=padding-left:10px></td>
+ </tr>
+ <tr height=5>
+ <tr>
+ </tr>
+</table>
+<input type=hidden id=facelets value=RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO>
+<table border=0 align=center>
+ <tr>
+  <td><input name=cmd value=Home type=submit onclick=home() class="btn cuw2"></td>
+  <td width=10>
+  <td><input value=Show type=submit onclick=show() class="btn cuw2"></td>
+ </tr>
+ <tr height=10>
+ <tr>
+  <td colspan=3 style=text-align:center>
+   <input name=cmd value=Random type=submit onclick=rand() class="btn cuw1">
+  </td>
+ </tr>
+</table>
+</td><td width=30><td>
+<div id=cube style="width:290px; height:290px"></div>
+</td></tr></table>
+<br>
+<p>The range on each of the above color pairs is from 0 to 100.
+With all three values at 0 the cube is pure 3-color where the color of each
+opposite face pair is half-way between the two colors normally shown on the
+pair. 
+With all three values at 100 the cube is pure 6-color with the normal colors.
+For everything in-between, each of the two colors within a pair is a mix of the
+two original colors.
+<br><br>
+The normal colors for the Red/Orange pair are the closest together of the three
+pairs, hence it is set higher than the others because it is harder to see the
+difference at lower values.
+The opposite is the case for the Green/Blue pair which is easier to see the
+difference at lower values.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+<script>
+"use strict";
+var acjs_removeListeners = [];
+var home_cube = 'RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO';
+if (typeof(facelets) == 'undefined') {
+  var facelets  = home_cube;
+  show_cube(0);
+}
+function home() {
+  clear_status();
+  facelets = home_cube;
+  document.getElementById('facelets').value = facelets;
+  show_cube(1);
+}
+function show() {
+  clear_status();
+  facelets = document.getElementById('facelets').value; 
+  show_cube(1);
+}
+function rand() {
+  clear_status();
+  facelets = randcube();
+  document.getElementById('facelets').value = facelets;
+  show_cube(1);
+}
+function clear_status() {
+  document.getElementById('status').innerHTML = '';
+}
+function show_cube(n) {
+  var ro = document.getElementById('ro').value;
+  var yw = document.getElementById('yw').value;
+  var gb = document.getElementById('gb').value;
+  if (ro.length == 0)
+    document.getElementById('ro').value = 0;
+  if (yw.length == 0)
+    document.getElementById('yw').value = 0;
+  if (gb.length == 0)
+    document.getElementById('gb').value = 0;
+  if ((isNaN(ro) || ro < 0 || ro > 100) ||
+      (isNaN(yw) || yw < 0 || yw > 100) ||
+      (isNaN(gb) || gb < 0 || gb > 100)) {
+    document.getElementById('status').innerHTML = '<br><font color=red>Invalid Input<br>Range is 0 - 100</font>'
+    return;
+  }
+  var colors = var_color(ro, yw, gb);
+  var af = cvt_to_anim(facelets);
+  af = cvt_facelets(af);
+  var params = "id=cube&config=AnimCube.txt&edit=1&colors=";
+  params += colors + "&colorscheme=012345&facelets=" + af;
+  if (n)
+    acjs_removeListeners['cube']();
+  AnimCube3(params);
+}
+function cvt_to_anim(c) {
+  var ca = new Array(54);
+  var to_anim = [
+    6,7,8,3,4,5,0,1,2,45,48,51,46,49,52,47,50,53,12,24,
+    36,13,25,37,14,26,38,18,30,42,19,31,43,20,32,44,11,
+    10,9,23,22,21,35,34,33,15,27,39,16,28,40,17,29,41];
+  for (var i=0; i < 54; i++)
+    ca[i] = c[to_anim[i]];
+  return(ca.join(''));
+}
+function cvt_facelets(f) {
+  f = f.replace(/R/g, '0');
+  f = f.replace(/O/g, '1');
+  f = f.replace(/Y/g, '2');
+  f = f.replace(/W/g, '3');
+  f = f.replace(/G/g, '4');
+  f = f.replace(/B/g, '5');
+  return(f);
+}
+function randcube() {
+  var cs = [];
+  init_conv();
+  copy(untwc,"021", 3, 0);  // for make_cubestr
+  for (var i=0; i < 20; i++) {
+    var ep = Math.floor(Math.random()*479001600);
+    var et = Math.floor(Math.random()*2048);
+    var cp = Math.floor(Math.random()*40320);
+    var ct = Math.floor(Math.random()*2187);
+    int_to_perm(cp, cps, 8);
+    int_to_perm(ep, eps, 12);
+    int_to_strp(ct, cts, 7, 3);
+    int_to_strp(et, ets, 11, 2);
+    if (parity(eps, 12) == parity(cps, 8))
+      break;
+  }
+  make_cubestr();
+  assign_centers_6c();
+  colorize(cs);
+  return(cs.join(''));
+}
+function colorize(cs) {
+  for (var i=0; i < 54; i++)
+    if      (cubestr[i] == 0) cs[i] = 'B';
+    else if (cubestr[i] == 1) cs[i] = 'Y';
+    else if (cubestr[i] == 2) cs[i] = 'R';
+    else if (cubestr[i] == 3) cs[i] = 'G';
+    else if (cubestr[i] == 4) cs[i] = 'W';
+    else if (cubestr[i] == 5) cs[i] = 'O';
+}
+</script>
+</center>
+</div>
+</body>
+</html>

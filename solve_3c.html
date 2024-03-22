@@ -1,0 +1,441 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Cube Solver </title>
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <script src=rch.js></script>
+ <script src=rclib.js></script>
+ <script src=solve_3c.js></script>
+ <script src=verify_3c.js></script>
+ <style> 
+  div.wrap {
+    height:100%;
+    overflow:auto;
+    padding:8px 5%; }
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<style> input { height:22px; width:22px;} </style>
+<table><tr><td valign=top>
+<font size=+2> 3-Color Cube Solver </font>
+<table border=0 style=line-height:0>
+  <tr height=8>
+  <tr>
+    <td colspan=4></td>
+    <td> <input id=f0 type=button onclick=set_color(this)> </td>
+    <td> <input id=f1 type=button onclick=set_color(this)> </td>
+    <td> <input id=f2 type=button onclick=set_color(this)> </td>
+    <td colspan=2>
+    <td colspan=5 rowspan=3 align=center>
+      <table border=0>
+        <tr height=5> </tr>
+        <tr>
+          <td width=3>
+          <td> <input type=button id=R onclick=select_color(this) 
+                      style="background-color:red;"> </td>
+          <td> <input type=button id=Y onclick=select_color(this) 
+                      style="background-color:yellow;"> </td>
+          <td> <input type=button id=B onclick=select_color(this) 
+                      style="background-color:blue;"> </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan=4></td>
+    <td> <input id=f3 type=button onclick=set_color(this)> </td>
+    <td> <input id=f4 type=button onclick=set_color(this)> </td> 
+    <td> <input id=f5 type=button onclick=set_color(this)> </td>
+  </tr>
+  <tr> 
+    <td colspan=4></td>
+    <td> <input id=f6 type=button onclick=set_color(this)> </td>
+    <td> <input id=f7 type=button onclick=set_color(this)> </td>
+    <td> <input id=f8 type=button onclick=set_color(this)> </td>
+  </tr>
+  <tr height=10> </tr>
+  <tr>
+    <td> <input id=f9 type=button onclick=set_color(this)> </td>
+    <td> <input id=f10 type=button onclick=set_color(this)> </td>
+    <td> <input id=f11 type=button onclick=set_color(this)> </td>
+    <td width=12> </td>
+    <td> <input id=f12 type=button onclick=set_color(this)> </td>
+    <td> <input id=f13 type=button onclick=set_color(this)> </td>
+    <td> <input id=f14 type=button onclick=set_color(this)> </td>
+    <td width=12> </td>
+    <td> <input id=f15 type=button onclick=set_color(this)> </td>
+    <td> <input id=f16 type=button onclick=set_color(this)> </td>
+    <td> <input id=f17 type=button onclick=set_color(this)> </td>
+    <td width=12> </td>
+    <td> <input id=f18 type=button onclick=set_color(this)> </td>
+    <td> <input id=f19 type=button onclick=set_color(this)> </td>
+    <td> <input id=f20 type=button onclick=set_color(this)> </td>
+  </tr>
+  <tr>
+    <td> <input id=f21 type=button onclick=set_color(this)> </td>
+    <td> <input id=f22 type=button onclick=set_color(this)> </td>
+    <td> <input id=f23 type=button onclick=set_color(this)> </td>
+    <td> </td>
+    <td> <input id=f24 type=button onclick=set_color(this)> </td>
+    <td> <input id=f25 type=button onclick=set_color(this)> </td>
+    <td> <input id=f26 type=button onclick=set_color(this)> </td>
+    <td> </td>
+    <td> <input id=f27 type=button onclick=set_color(this)> </td>
+    <td> <input id=f28 type=button onclick=set_color(this)> </td>
+    <td> <input id=f29 type=button onclick=set_color(this)> </td>
+    <td> </td>
+    <td> <input id=f30 type=button onclick=set_color(this)> </td>
+    <td> <input id=f31 type=button onclick=set_color(this)> </td>
+    <td> <input id=f32 type=button onclick=set_color(this)> </td>
+  </tr>
+  <tr>
+    <td> <input id=f33 type=button onclick=set_color(this)> </td>
+    <td> <input id=f34 type=button onclick=set_color(this)> </td>
+    <td> <input id=f35 type=button onclick=set_color(this)> </td>
+    <td> </td>
+    <td> <input id=f36 type=button onclick=set_color(this)> </td>
+    <td> <input id=f37 type=button onclick=set_color(this)> </td>
+    <td> <input id=f38 type=button onclick=set_color(this)> </td>
+    <td> </td>
+    <td> <input id=f39 type=button onclick=set_color(this)> </td>
+    <td> <input id=f40 type=button onclick=set_color(this)> </td>
+    <td> <input id=f41 type=button onclick=set_color(this)> </td>
+    <td> </td>
+    <td> <input id=f42 type=button onclick=set_color(this)> </td>
+    <td> <input id=f43 type=button onclick=set_color(this)> </td>
+    <td> <input id=f44 type=button onclick=set_color(this)> </td>
+  </tr>
+  <tr height=10> </tr>
+  <tr>
+    <td colspan=4></td>
+    <td> <input id=f45 type=button onclick=set_color(this)> </td>
+    <td> <input id=f46 type=button onclick=set_color(this)> </td>
+    <td> <input id=f47 type=button onclick=set_color(this)> </td>
+  </tr>
+  <tr>
+    <td colspan=4></td>
+    <td> <input id=f48 type=button onclick=set_color(this)> </td>
+    <td> <input id=f49 type=button onclick=set_color(this)> </td>
+    <td> <input id=f50 type=button onclick=set_color(this)> </td>
+  </tr>
+  <tr>
+    <td colspan=4></td>
+    <td> <input id=f51 type=button onclick=set_color(this)> </td>
+    <td> <input id=f52 type=button onclick=set_color(this)> </td>
+    <td> <input id=f53 type=button onclick=set_color(this)> </td>
+  </tr>
+</table>
+
+<table border=0>
+  <tr height=14>
+  <tr>
+    <td> <button class="btn svw1" onclick="home()">Home</button> </td>
+    <td width=5>
+    <td> <button class="btn svw1" onclick="show()">Show</button> </td>
+    <td width=5>
+    <td> <button class="btn svw2" onclick="rand()">Random</button> </td>
+    <td width=5>
+    <td> <button class="btn svw1" onclick="solve()">Solve</button> </td>
+  </tr>
+  <tr height=6>
+  <tr>
+    <td> <button class="btn svw1" onclick="clera()">Clear</button> </td>
+    <td width=5> </td>
+    <td> <button class="btn svw1" onclick="help()">Help</button> </td>
+    <td width=5> </td>
+    <td valign=top colspan=3>
+      <table align=right><tr>
+        <td>All Solutions</td>
+        <td><input type=checkbox id=all_solutions></td>
+      </tr></table>
+    </td>
+  </tr>
+</table>
+
+</td><td width=5%><td id=tdc valign=top>
+<div id=cube style=width:290px;height:290px></div>
+<br>
+<div id=status style=width:300px></div>
+</td></tr></table>
+<br>
+<div id=back> </div>
+<br><br><br>
+
+<script>
+
+"use strict";
+
+var logwin;
+var color;
+var facelets_arr = [];
+var solve_option = 'none';
+var init_done = 0;
+var stoplen = 0;
+var cloze = 0;
+var solution_count = 0;
+var acjs_removeListeners = [];
+
+var CUBE_HOME   = "RRRRRRRRRBBBYYYBBBYYYBBBYYYBBBYYYBBBYYYBBBYYYRRRRRRRRR";
+var CUBE_BLANK  = "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
+
+var params = location.search.substr(1).split('&');
+
+for (var i=0; i < params.length; i++) {
+  var p = params[i].split('=');
+  if (typeof(p[1]) != 'undefined')
+    window[p[0]] = p[1];
+}
+
+if (typeof(facelets) == 'undefined')
+  var facelets = CUBE_HOME;
+else {
+  cloze = 1;
+  if (facelets.length > 54)
+    facelets = facelets.substr(0,54);
+  if (facelets.length < 54)
+    facelets = (facelets + CUBE_BLANK).substr(0,54);
+  facelets = facelets.toUpperCase();
+  var ftmp = facelets.split('');
+  for (var i=0; i < 54; i++) {
+    var f = ftmp[i];
+    if ('WYORGB'.indexOf(f) == -1)
+      ftmp[i] = 'L';
+  }
+  facelets = ftmp.join('');
+}
+
+update_layout();
+show_cube(0);
+
+if (cloze == 1)
+  document.getElementById('back').innerHTML = '<a href="JavaScript:window.close()">Close</a>';
+else 
+  document.getElementById('back').innerHTML = '<a href="javascript: history.go(-1)">Back</a>';
+
+function update_layout()
+{
+  facelets_arr = facelets.split('');
+  for (var i=0; i < 54; i++) {
+    document.getElementById('f' + i).style.backgroundColor = color_str(facelets_arr[i]);
+  }
+}
+
+function select_color(f)
+{ 
+  color = f.id;
+}
+
+function set_color(f)
+{ 
+  if (typeof(color) != 'undefined') {
+    facelets_arr[f.id.substr(1)] = color;
+    f.style.backgroundColor = color_str(color);
+  }
+}
+
+function show() {
+  if (facelets != facelets_arr.join('')) {
+    facelets = facelets_arr.join('');
+    show_cube(1);
+  }
+  else {
+    if (msgtxt.length > 0)
+      clear_status();
+  }
+}
+
+function home()
+{
+  facelets = CUBE_HOME;
+  if (CUBE_HOME != facelets_arr.join('')) {
+    update_layout();
+    show_cube(1);
+  }
+  else {
+    if (msgtxt.length > 0)
+      clear_status();
+  }
+}
+
+function rand()
+{
+  facelets = randcube();
+  facelets = facelets.replace(/O/g, 'R');
+  facelets = facelets.replace(/W/g, 'Y');
+  facelets = facelets.replace(/G/g, 'B');
+  update_layout();
+  show_cube(1);
+}
+
+function clera()
+{
+  facelets = CUBE_BLANK;
+  if (CUBE_BLANK != facelets_arr.join('')) {
+    update_layout();
+    show_cube(1);
+  }
+  else {
+    if (msgtxt.length > 0)
+      clear_status();
+  }
+  document.getElementById('all_solutions').checked = false; 
+}
+
+function help()
+{
+  window.open(location.href.replace('solve_3c', 'solver_help_3c'));
+}
+
+function solve()
+{
+  solution_count = 0;
+  msgtxt.length = 0;
+  document.getElementById('status').style.textAlign = 'left';
+  if (facelets != facelets_arr.join('')) {
+    facelets = facelets_arr.join('');
+    show_cube(1);
+  }
+  var verif = verify_main(facelets);
+  if (verif == 0) {
+    gtime0 = new Date().getTime();
+    logtxt.length = 0;
+    show_cube_layout(facelets);
+    if (first_time) {
+      if (init_done == 0) {
+        document.getElementById('status').innerHTML =  "Initializing";
+        setTimeout(step1, 100);
+      }
+      else {
+        document.getElementById('status').innerHTML =  "Making Search Arrays";
+        setTimeout(step2, 100);
+      }
+    }
+    else {
+      document.getElementById('status').innerHTML =  "Searching for Solution";
+      setTimeout(step3, 100);
+    }
+  }
+  else
+  {
+    document.getElementById('status').innerHTML = msgtxt.join('');
+  }
+}
+
+function step1()
+{
+  init();
+  init_done = 1;
+  document.getElementById('status').innerHTML =  "Making Search Arrays";
+  setTimeout(step2, 100);
+}
+
+function step2()
+{
+  mkd();
+  document.getElementById('status').innerHTML =  "Searching for Solution";
+  setTimeout(step3, 100);
+}
+
+function step3()
+{
+  solver_main();
+  show_solution();
+  first_time = 0;
+}
+
+function show_solution()
+{
+  var af = cvt_to_anim(facelets);
+  var sol = solution.join('');
+  acjs_removeListeners['cube']();
+  AnimCube3("id=cube&config=AnimCube.txt&edit=0&move=" + sol + "&facelets=" + af);
+  document.getElementById('status').style.textAlign = 'center';
+  if (solution_count == 1)
+    document.getElementById('status').innerHTML = 
+      '<button class="btn svw3" onclick="show_log()">Solve Log</button> </td>'
+  else 
+    document.getElementById('status').innerHTML = 
+      '<button class="btn svw3" onclick="show_log()">Solve Log</button> </td>' +
+      '<table><tr height=10><td></table>' + solution_count + ' Solutions Found';
+}
+
+function show_cube(n)
+{
+  if (n) {
+    clear_status();
+    acjs_removeListeners['cube']();
+  }
+  var af = cvt_to_anim(facelets);
+  AnimCube3("id=cube&config=AnimCube.txt&edit=0&facelets=" + af);
+}
+
+function clear_status()
+{
+  document.getElementById('status').innerHTML = '';
+  msgtxt.length = 0;
+}
+
+function cvt_to_anim(c)
+{
+  var ca = new Array(54);
+
+  var to_anim = [
+    6,7,8,3,4,5,0,1,2,45,48,51,46,49,52,47,50,53,12,24,
+    36,13,25,37,14,26,38,18,30,42,19,31,43,20,32,44,11,
+    10,9,23,22,21,35,34,33,15,27,39,16,28,40,17,29,41];
+
+  for (var i=0; i < 54; i++)
+    ca[i] = c[to_anim[i]];
+
+  return(ca.join(''));
+}
+
+function randcube()
+{
+  var cs = [];
+
+  init_conv();
+  copy(untwc,"021", 3, 0);  // for make_cubestr
+
+  for (var i=0; i < 20; i++) {
+    var ep = Math.floor(Math.random()*479001600);
+    var et = Math.floor(Math.random()*2048);
+    var cp = Math.floor(Math.random()*40320);
+    var ct = Math.floor(Math.random()*2187);
+
+    int_to_perm(cp, cps, 8);
+    int_to_perm(ep, eps, 12);
+    int_to_strp(ct, cts, 7, 3);
+    int_to_strp(et, ets, 11, 2);
+
+    if (parity(eps, 12) == parity(cps, 8))
+      break;
+  }
+  make_cubestr();
+  assign_centers_6c();
+  colorize(cs);
+  return(cs.join(''));
+}
+
+function colorize(cs)
+{
+  for (var i=0; i < 54; i++)
+    if      (cubestr[i] == 0) cs[i] = 'B';
+    else if (cubestr[i] == 1) cs[i] = 'Y';
+    else if (cubestr[i] == 2) cs[i] = 'R';
+    else if (cubestr[i] == 3) cs[i] = 'G';
+    else if (cubestr[i] == 4) cs[i] = 'W';
+    else if (cubestr[i] == 5) cs[i] = 'O';
+}
+
+</script>
+</center>
+</div>
+</body>
+</html>

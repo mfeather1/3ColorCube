@@ -1,0 +1,63 @@
+# check for consistency of url params between solver2 & solver_qc
+
+main()
+{
+  bn=`basename ${PWD/logs}`
+  if [ $bn = solver_qc ]; then
+    cd ../../solver2/logs
+  fi
+
+  rmt=../../solver_qc/logs
+
+  s01=subopt_random_1000.txt
+  s02=ori/subopt_random_10000_D3_418MB.txt
+  s03=ori/subopt_random_10000_D3_835MB.txt
+  s04=ori/subopt_random_10000_D3_D4.txt
+
+  s05=optimal_random_1000.txt
+  s06=optimal_random_1000_conc9.txt
+  s07=optimal_19_move.txt
+  s08=optimal_19_move_conc9.txt
+
+  s09=optimal_random_100.txt
+  s10=optimal_random_100_conc9.txt
+
+  s11a=optimal_presolved_16_move.txt
+  s12a=optimal_presolved_1000.txt
+
+  s11b=subopt_presolved_16_move.txt
+  s12b=subopt_presolved_1000.txt
+
+  list1=`seq -f %02g 1 8 | sed s/^/s/`
+  list2=`seq -f %02g 9 10 | sed s/^/s/`
+  list3=`seq -f %02g 11 12 | sed s/^/s/`
+
+  for i in $list1; do
+    eval ff \$$i
+  done
+
+  for i in $list2; do
+    eval ff \$$i
+  done
+
+  for i in $list3; do
+    eval ff2 \$${i}a  \$${i}b
+  done 
+}
+
+ff() {
+  echo $1: | sed s.ori/..
+  grep Par $1
+  grep Par $rmt/$1
+  echo
+}
+
+ff2() {
+  echo $1, $2:
+  grep Par $1
+  grep Par $rmt/$2
+  echo
+}
+
+main
+

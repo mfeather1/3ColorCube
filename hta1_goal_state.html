@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+ <title>HTA Step 1 - Goal State</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> 
+  body {margin-left: 10%; margin-right: 10%;}
+  p {margin:0; text-align: justify;}
+  .btn {
+   width:90px;
+   height:30px;
+   border-radius:15px;
+   padding:0px;
+   border:1px solid black;
+   background-color:#ffffff;
+   outline:none;
+  }
+  .btn:active {background-color: #aaaaaa;}
+ </style>
+ <script src=AnimCube3.js></script>
+ <script src=randMovesHTA.js></script>
+</head>
+<body>
+<center>
+<font size=+2>HTA Step 1<br>Goal State</font>
+<br><br>
+<p>The following shows all possible positions that each of the three cubie
+types on a 3-color cube (red-yellow, red-blue, yellow-blue) can be in for
+the goal state of HTA step 1.
+The red-yellow cubies in positions front-left and front-right are a bit
+counter-intuitive because they are flipped with respect to the yellow center.
+Likewise for the yellow-blue cubies in positions front-up and front-down.</p>
+<table>
+ <tr>
+  <td>
+   <div style=width:140px;height:140px>
+    <script>AnimCube3('config=AnimCube.txt&&buttonheight=16&facelets=LRLRRRLRLLRLRRRLRLLRLYYYLRLLRLYYYLRLLYLYBYLYLLYLYBYLYL');</script>
+   </div>
+  </td>
+  <td width=10>
+  <td>
+   <div style=width:140px;height:140px>
+    <script>AnimCube3('config=AnimCube.txt&buttonheight=16&facelets=LRLRRRLRLLRLRRRLRLLRLBYBLRLLRLBYBLRLLBLBBBLBLLBLBBBLBL');</script>
+   </div>
+  </td>
+  <td width=10>
+  <td>
+   <div style=width:140px;height:140px>
+    <script>AnimCube3('config=AnimCube.txt&buttonheight=16&facelets=LYLYRYLYLLYLYRYLYLLYLBYBLYLLYLBYBLYLLBLBBBLBLLBLBBBLBL');</script>
+  </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<p>The following is an example of what the HTA Step 1 goal state looks like
+on both the 3 and 6 color cubes for the same configuration.
+Press the Random button for more examples.</p>
+<table style=text-align:center>
+ <tr>
+   <td><div id=c1 style=width:140px;height:140px></div></td>
+   <td width=10>
+   <td><div id=c2 style=width:140px;height:140px></div></td>
+ </tr>
+</table>
+<br>
+<button class=btn onclick=f()>Random</button>
+<br><br>
+<a href=javascript:history.go(-1)>Back</a>
+<br><br>
+<script>
+f();
+function f(id) {
+  f3c = 'LRLRRRLRLLRLRRRLRLLYLYYYLYLLYLYYYLYLLBLBBBLBLLBLBBBLBL';
+  f6c = 'LRLRRRLRLLOLOOOLOLLYLYYYLYLLWLWWWLWLLGLGGGLGLLBLBBBLBL';
+  var p = '&config=AnimCube.txt&buttonheight=16';
+  var m = randMovesHTA(1, 0);
+  p += '&initmove=' + m;  
+  var p1 = 'id=c1' + p + '&facelets=' + f3c;
+  var p2 = 'id=c2' + p + '&facelets=' + f6c;
+  AnimCube3(p1);
+  AnimCube3(p2);
+}
+</script>
+</center>
+</html>

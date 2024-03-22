@@ -1,0 +1,84 @@
+                          Corner Position Conversion
+ 
+  This conversion is used when array ct_cnv_ax2 has been eliminated in 
+  method 3 or ct_sym_ax2 has been eliminated in method 4. 
+
+  For the 3-color cube there are two corner cubie types with four of each.
+  Assigning a value of 0 or 1 to each cubie based on type, the 70 possible
+  configs are as shown below with the corresponding corner position (cp)
+  value.  Subtracting cp for any config from 69 will result in a config where
+  the 0's and 1's are switched, so to convert cp just use 69-cp instead.
+    
+    cp   config
+    --  --------
+     0  00001111
+     1	00010111
+     2	00011011
+     3	00011101
+     4	00011110
+     5	00100111
+     6	00101011
+     7	00101101
+     8	00101110
+     9	00110011
+    10	00110101
+    11	00110110
+    12	00111001
+    13	00111010
+    14	00111100
+    15	01000111
+    16	01001011
+    17	01001101
+    18	01001110
+    19	01010011
+    20	01010101
+    21	01010110
+    22	01011001
+    23	01011010
+    24	01011100
+    25	01100011
+    26	01100101
+    27	01100110
+    28	01101001
+    29	01101010
+    30	01101100
+    31	01110001
+    32	01110010
+    33	01110100
+    34	01111000
+    35	10000111
+    36	10001011
+    37	10001101
+    38	10001110
+    39	10010011
+    40	10010101
+    41	10010110
+    42	10011001
+    43	10011010
+    44	10011100
+    45	10100011
+    46	10100101
+    47	10100110
+    48	10101001
+    49	10101010
+    50	10101100
+    51	10110001
+    52	10110010
+    53	10110100
+    54	10111000
+    55	11000011
+    56	11000101
+    57	11000110
+    58	11001001
+    59	11001010
+    60	11001100
+    61	11010001
+    62	11010010
+    63	11010100
+    64	11011000
+    65	11100001
+    66	11100010
+    67	11100100
+    68	11101000
+    69	11110000
+

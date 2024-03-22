@@ -1,0 +1,258 @@
+<!doctype html>
+<html>
+<head>
+ <title> Dist File Contents </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> 
+   .tabdata  td {padding: 5px 20px; text-align: center; border-color: black}
+   .tabdata2 td {padding: 5px 15px; text-align: center; border-color: black}
+   .tabdata3 td {padding: 1px 10px; text-align: right;  border-color: black}
+   .tabdata4 td {padding: 2px 20px; text-align: right;  border-color: black}
+   .tabdata5 td {padding: 1px 15px; text-align: right;  border-color: black}
+ </style>
+</head>
+<body>
+<center>
+<font size="+2"> Dist File Contents </font>
+<br><br>
+<p>The dist files contain solution lengths for all configurations of various
+components of the cube.
+The number of configs for each 3-color cube component is shown in the table
+below, the combination of components used in each dist file is shown in the
+second table.
+Edge Positions are reduced by symmetry, an accounting of how the reduction
+results in 782 configs can be found <a href=sym/index.html>here</a>, see the
+link for 3-Color Edge Positions on that page.<p>
+<br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr> 
+  <td style=border-color:white>3-Color Cube Component</td>
+  <td style=border-color:white>Abbrev</td>
+  <td style=border-color:white>Configs</td>
+ </tr>
+ <tr><td>Edge Positions</td><td>EP</td><td>34650</td></tr>
+ <tr><td>EP / (48 Syms)</td><td>EPSYM</td><td>782</td></tr>
+ <tr><td>Edge Twist</td><td>ET</td><td>2048</td></tr>
+ <tr><td>Corner Positions</td><td>CP</td><td>70</td></tr>
+ <tr><td>Corner Twist</td><td>CT</td><td>2187</td></tr>
+</table>
+<br><br>
+<p>In the following table, Dists 1 &amp; 2 each contain two configs per byte
+which allows a value in the range of 0-15 to be stored for each config although
+only 0-10 is actually used because the arrays are generated to depth 9 and the
+configs not reached are assigned a value of 10.
+The 418 MB Dist3 is a bit-array so it only indicates whether a config is
+solvable in 10 moves or not, if the bit is not set (which has 80% probability)
+then the minimum number of moves required to solve is at least 11.
+The 835 MB Dist3 contains four configs per byte which allows a value in the
+range of 0-4 to be stored for each config where the values 1, 2, 3 correspond
+to 9, 10, 11 and 0 is used as a catch-all for the remaining values of 1-8.
+Dist3 stores this information for 155 billion configs, Dists 1 &amp; 2 each
+store info for approximately 5 billion configs (counts include up to 48
+symmetries per stored config).
+Dist4 is intended to store information for the entire 3-color cube which
+is 11 trillion configs (226 billion symmetry reduced) but that is too much
+for the average device/computer to hold so it is reduced in size by using
+only 6 of 11 edge twist bits, it can be increased in size by adding the
+remaining 5 bits of which each doubles the array size.</p>
+<br>
+<table class=tabdata2 style=border-collapse:collapse;border-color:white border=1>
+ <tr> 
+  <td style=border-color:white>File Name</td>
+  <td style=border-color:white>Size (MB) </td>
+  <td style=border-color:white>Configs/Byte</td>
+  <td style=border-color:white>Cube Components</td>
+ </tr>
+ <tr><td style=text-align:left>Dist1_09F.dat</td><td>57</td><td>2</td><td style=text-align:left>EPSYM &nbsp; CP &nbsp; CT</td></tr>
+ <tr><td style=text-align:left>Dist2_09F.dat</td><td>53</td><td>2</td><td style=text-align:left>EPSYM &nbsp; ET &nbsp; CP</td></tr>
+ <tr><td style=text-align:left>Dist3_10F.dat</td><td>418</td><td>8</td><td style=text-align:left>EPSYM &nbsp; ET &nbsp; CT</td></tr>
+ <tr><td style=text-align:left>Dist3_10FQ.dat</td><td>835</td><td>4</td><td style=text-align:left>EPSYM &nbsp; ET &nbsp; CT</td></tr>
+ <tr><td style=text-align:left>Dist4_11F.dat</td><td>1827</td><td>4</td><td style=text-align:left>EPSYM &nbsp; ET &nbsp; CP &nbsp; CT</td></tr>
+</table>
+<br><br>
+<p>The file DistP2_08F.dat differs from the above files in that it only
+contains information for configs that are 3-color solutions (all facelets
+match the color of the center or the opposite face).
+The components for this file are shown in the following table, only EPR
+and CPR are needed because the 3-Color components are already solved and are
+factored out.
+There is no need for reduction by symmetry or by storing multiple configs
+per byte with this file because it is relatively small.
+A value in the range of 0-9 is stored for each config (array is generated to
+depth 8 and unreached configs are assigned 9).
+The file can store 8 million configs although parity eliminates the need for
+half of them.</p>
+<br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr> 
+  <td style=border-color:white>6-Color Cube Component</td>
+  <td style=border-color:white>Abbrev</td>
+  <td style=border-color:white>Configs</td>
+ </tr>
+ <tr><td>Edge Positions</td><td>EP6C</td><td>479001600</td></tr>
+ <tr><td>Corner Positions</td><td>CP6C</td><td>40320</td></tr>
+ <tr><td>EP6C / EP </td><td>EPR</td><td>13824</td></tr>
+ <tr><td>CP6C / CP </td><td>CPR</td><td>576</td></tr>
+</table>
+<br><br>
+<font size=+2>Dist Counts</font>
+<br><br>
+<p>The following table shows the number of configs at each depth for each
+dist array which are used to get the percentages shown in the second table.</p>
+<br>
+<table class=tabdata3 style=border-collapse:collapse;border-color:white border=1>
+ <tr>
+  <td style="border:1px solid white">Depth</td>
+  <td style="border:1px solid white">Dist1</td>
+  <td style="border:1px solid white">Dist2</td>
+  <td style="border:1px solid white">Dist3</td>
+  <td style="border:1px solid white">Dist4</td>
+ </tr>
+ <tr><td>  1</td><td>       1</td><td>       1</td><td>         1</td><td>         1</td></tr>
+ <tr><td>  2</td><td>       3</td><td>       3</td><td>         3</td><td>         3</td></tr>
+ <tr><td>  3</td><td>      23</td><td>      23</td><td>        23</td><td>        23</td></tr>
+ <tr><td>  4</td><td>     241</td><td>     237</td><td>       230</td><td>       241</td></tr>
+ <tr><td>  5</td><td>    2948</td><td>    2888</td><td>      2823</td><td>      2980</td></tr>
+ <tr><td>  6</td><td>   36359</td><td>   35002</td><td>     35462</td><td>     37867</td></tr>
+ <tr><td>  7</td><td>  433044</td><td>  401664</td><td>    444312</td><td>    480605</td></tr>
+ <tr><td>  8</td><td> 4641716</td><td> 4183059</td><td>   5449213</td><td>   6044379</td></tr>
+ <tr><td>  9</td><td>33429131</td><td>30828052</td><td>  62907892</td><td>  73314231</td></tr>
+ <tr><td> 10</td><td>69728531</td><td>62279903</td><td> 584924996</td><td> 756671390</td></tr>
+ <tr><td> 11</td><td>11305961</td><td> 5810832</td><td>2064988841</td><td>3882242180</td></tr>
+ <tr><td>Array</td><td>119716380</td><td>112107520</td><td>3502559232</td><td>7661848320</td></tr>
+ <tr><td>Adjusted</td><td>n/a</td><td>103751900</td><td>3241505790</td><td>7336072800</td></tr>
+</table>
+<br>
+<table><tr height=1><td></table>
+Percentages
+<table><tr height=10><td></table>
+<table class=tabdata4 style=border-collapse:collapse;border-color:white border=1>
+ <tr>
+  <td style="border:1px solid white">Depth</td>
+  <td style="border:1px solid white">Dist1</td>
+  <td style="border:1px solid white">Dist2</td>
+  <td style="border:1px solid white">Dist3</td>
+  <td style="border:1px solid white">Dist4</td>
+ </tr>
+ <tr><td> 6</td><td> 0.03</td><td> 0.03</td><td> 0.00</td><td> 0.00</td></tr>
+ <tr><td> 7</td><td> 0.36</td><td> 0.39</td><td> 0.01</td><td> 0.00</td></tr>
+ <tr><td> 8</td><td> 3.88</td><td> 4.03</td><td> 0.17</td><td> 0.08</td></tr>
+ <tr><td> 9</td><td>27.92</td><td>29.71</td><td> 1.94</td><td> 1.00</td></tr>
+ <tr><td>10</td><td>58.24</td><td>60.03</td><td>18.04</td><td>10.31</td></tr>
+ <tr><td>11</td><td> 9.44</td><td> 5.60</td><td>63.70</td><td>52.92</td></tr>
+ <tr><td>NR</td><td> 0.12</td><td> 0.20</td><td>16.13</td><td>35.68</td></tr>
+ <tr>
+  <td style="text-align:center;border:1px solid white" colspan=5>
+   NR = Not Reached
+  </td>
+ </tr>
+</table>
+<br>
+<p>The percentage of Dist3 configs that require at least 11 moves is:
+<br><br>
+63.70 + 16.13 = 79.83 = 80%
+<br><br>
+The adjusted totals are used for calculating the percentages, they account
+for the difference between the number of symmetry reduced 3-color edge
+positions combined with twist (782 * 2048 = 1601536) and the actual number
+of symmetry reduced 3-color edges (1482170).  Dist1 does not contain edge
+twist so no ajustment is needed.
+<br><br>
+Dist4 uses only 6 of 11 edge twist bits so the adjustment is 47920 vs. 50048
+as shown in the following calculation of the array size which also includes
+corner position (70) and twist (2187):
+<br><br>
+unadjusted:<br>
+70 * 50048 * 2187 = 7661848320  (50048 = 782 * 64, 64 = 6 bits)
+<br><br>
+adjusted:<br>
+70 * 47920 * 2187 = 7336072800  
+<br><br>
+The 47920 was computed by counting the actual number of symmetry reduced
+3-color edge configs using only 6 bits of edge twist.</p>
+<br><a id=distp2></a><br>
+DistP2
+<br><br>
+<p>DistP2 contains distances from intermediate 3-color solutions to the final
+6-color solution.
+The solver only uses depths 1-8 for suboptimal solutions of which there are
+117265 possible (cumulative total).
+Depths above 8 are not used because for those the total number of moves to
+solve is almost always more than 20 for random cubes.
+In the table, the Mins column is the number of configs reduced by symmetry
+(additional configs that are equivalent by rotation &amp; reflection are
+eliminated).
+The dist file for this array is not reduced by symmetry because it is already
+relatively small (8 MB).</p>
+<br>
+<table class=tabdata5 style=border-collapse:collapse;border-color:white border=1>
+ <tr>
+  <td style="border:1px solid white">Depth</td>
+  <td style="border:1px solid white">Mins</td>
+  <td style="border:1px solid white">Configs</td>
+  <td style="border:1px solid white">Percent</td>
+ </tr>
+ <tr><td>  0 </td><td>     1 </td><td>       1 </td><td>  0.00 </td><tr>
+ <tr><td>  1 </td><td>     1 </td><td>       6 </td><td>  0.00 </td><tr>
+ <tr><td>  2 </td><td>     2 </td><td>      27 </td><td>  0.00 </td><tr>
+ <tr><td>  3 </td><td>     5 </td><td>     120 </td><td>  0.00 </td><tr>
+ <tr><td>  4 </td><td>    18 </td><td>     519 </td><td>  0.01 </td><tr>
+ <tr><td>  5 </td><td>    62 </td><td>    2124 </td><td>  0.05 </td><tr>
+ <tr><td>  6 </td><td>   214 </td><td>    8188 </td><td>  0.21 </td><tr>
+ <tr><td>  7 </td><td>   693 </td><td>   27636 </td><td>  0.69 </td><tr>
+ <tr><td>  8 </td><td>  1871 </td><td>   78644 </td><td>  1.98 </td><tr>
+ <tr><td>  9 </td><td>  4114 </td><td>  175497 </td><td>  4.41 </td><tr>
+ <tr><td> 10 </td><td>  5702 </td><td>  248288 </td><td>  6.24 </td><tr>
+ <tr><td> 11 </td><td>  5614 </td><td>  252210 </td><td>  6.33 </td><tr>
+ <tr><td> 12 </td><td> 14444 </td><td>  685188 </td><td> 17.21 </td><tr>
+ <tr><td> 13 </td><td> 30935 </td><td> 1480040 </td><td> 37.17 </td><tr>
+ <tr><td> 14 </td><td> 18715 </td><td>  883908 </td><td> 22.20 </td><tr>
+ <tr><td> 15 </td><td>  3088 </td><td>  137200 </td><td>  3.45 </td><tr>
+ <tr><td> 16 </td><td>    77 </td><td>    1716 </td><td>  0.04 </td><tr>
+ <tr>
+  <td style="border:1px solid white"> Total </td>
+  <td style="border:1px solid white"> 85556 </td>
+  <td style="border:1px solid white"> 3981312 </td>
+  <td style="border:1px solid white"> 100.00 </td>
+</table>
+<br>
+<p>With the new Solver 2, depths above 8 are used for pruning which makes a
+significant difference in performance when solving configurations that are
+already solved as 3-color (presolved).</p>
+<br><a id=dist5></a><br>
+Dist5
+<br><br>
+<p> Also new with Solver 2 is Dist5 which contains distances to the 6-color
+corner configurations (components CP6C + CT as described above).
+Symmetry reduction is not used for this array but the dist file size is
+reduced by storing two configs per byte which makes it 42 MB.</p>
+<br>
+<table class=tabdata5 style=border-collapse:collapse;border-color:white border=1>
+ <tr>
+  <td style="border:1px solid white">Depth</td>
+  <td style="border:1px solid white">Configs</td>
+  <td style="border:1px solid white">Percent</td>
+ </tr>
+ <tr><td>  0 </td><td>        1 </td><td>  0.00 </td></tr>
+ <tr><td>  1 </td><td>       18 </td><td>  0.00 </td></tr>
+ <tr><td>  2 </td><td>      243 </td><td>  0.00 </td></tr>
+ <tr><td>  3 </td><td>     2874 </td><td>  0.00 </td></tr>
+ <tr><td>  4 </td><td>    28000 </td><td>  0.03 </td></tr>
+ <tr><td>  5 </td><td>   205416 </td><td>  0.23 </td></tr>
+ <tr><td>  6 </td><td>  1168516 </td><td>  1.33 </td></tr>
+ <tr><td>  7 </td><td>  5402628 </td><td>  6.13 </td></tr>
+ <tr><td>  8 </td><td> 20776176 </td><td> 23.56 </td></tr>
+ <tr><td>  9 </td><td> 45391616 </td><td> 51.48 </td></tr>
+ <tr><td> 10 </td><td> 15139616 </td><td> 17.17 </td></tr>
+ <tr><td> 11 </td><td>    64736 </td><td>  0.07 </td></tr>
+ <tr><td> Total </td><td> 88179840 </td><td> 100.0 </td></tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+</center>
+</body>
+</html>

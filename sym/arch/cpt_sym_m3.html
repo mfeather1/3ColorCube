@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Corner Symmetry - Method 3 </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../../mini_cube.png type=image/png>
+ <script src=../../rch.js></script>
+ <script src=../../rclib.js></script>
+ <script src=../symlib.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2> 3-Color Corner Symmetry <br> Method 3 </font>
+<br><br>
+<div id=status></div>
+<br>
+<a href="javascript: history.go(-1)">Back</a>
+<br><br>
+<script>
+"use strict";
+// This version is comparable to ept_sym_m3.html (for edges).
+
+var USE_CT_LR_UD = true;
+
+// Symmetry Arrays
+var cp_sym    = new Uint8Array(C_PRM * CUBE_SYM);     //   3 KB
+var ct_sym_m3 = new Uint16Array(C_TWIST * CUBE_SYM);  // 205 KB
+var ct_ud_fb  = new Uint16Array(C_PRM * C_TWIST);     // 300 KB 
+
+if (USE_CT_LR_UD)
+  var ct_ud_lr  = new Uint16Array(C_PRM * C_TWIST);   // 300 KB
+
+var count1 = new Uint32Array(C_PRM * C_TWIST);        // 600 KB
+var count2 = new Uint8Array(C_PRM * C_TWIST);         // 150 KB
+
+document.getElementById('status').innerHTML = 'Counts are running<br>';
+setTimeout(main, 100);
+
+function main(){
+  var time0 = Date.now();
+  init();
+  populate_ct_sym_m3();
+  populate_ct_ud_fb();
+  if (USE_CT_LR_UD)
+    populate_ct_ud_lr();
+  else
+    update_ct_sym_m3();
+  count_ct_mins_m3();
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  document.getElementById('status').innerHTML += 
+    '<br>Run Time: ' + time1 + '<br>';
+}
+
+function populate_ct_sym_m3() {
+  var s = new Int8Array(FACELETS);
+  populate_ct_op_type();
+  for (var ct=0; ct < C_TWIST; ct++)
+    ct_sym_m3[ct*CUBE_SYM] = ct;
+  int_to_strp(cp_b2[0], cps, 7, 2);
+  for (var ct=0, ix=0; ct < C_TWIST; ct++, ix+=CUBE_SYM) {
+    int_to_strp(ct, cts, 7, 3);
+    make_cubestr_cnr(cnr2);
+    for (var op=1; op < CUBE_SYM; op++) {
+      sym_op(s, cubestr, map[op]);
+      ct_sym_m3[ix+op] = get_ct(s);
+    }
+  }
+}
+
+function populate_ct_ud_fb() {
+  for (var cp=0, ix=0; cp < C_PRM; cp++, ix+=C_TWIST) {
+    int_to_strp(cp_b2[cp], cps, 7, 2);
+    for (var ct=0; ct < C_TWIST; ct++) {
+      int_to_strp(ct, cts, 7, 3);
+      var i = 0;
+      for (; i < 4; i++) if (cps[i] == 1) cts[i] = (cts[i]+2)%3;
+      for (; i < 8; i++) if (cps[i] == 0) cts[i] = (cts[i]+1)%3;
+      ct_ud_fb[ix+ct] = str_to_int(cts, 7, 3);
+    }
+  }
+  /* alternate way to make ct_ud_fb from ct_ud_lr
+  for (var cp=0, ix=0; cp < C_PRM; cp++, ix+=C_TWIST)
+    for (var ct=0; ct < C_TWIST; ct++)
+      ct_ud_fb[ix+ct] = ct_ud_lr[ix + ct_ud_lr[ix+ct]];
+  */
+}
+
+function populate_ct_ud_lr() {
+  for (var cp=0, ix=0; cp < C_PRM; cp++, ix+=C_TWIST) {
+    int_to_strp(cp_b2[cp], cps, 7, 2);
+    for (var ct=0; ct < C_TWIST; ct++) {
+      int_to_strp(ct, cts, 7, 3);
+      var i = 0;
+      for (; i < 4; i++) if (cps[i] == 1) cts[i] = (cts[i]+1)%3;
+      for (; i < 8; i++) if (cps[i] == 0) cts[i] = (cts[i]+2)%3;
+      ct_ud_lr[ix+ct] = str_to_int(cts, 7, 3);
+    }
+  }
+  /* alternate way to make ct_ud_lr from ct_ud_fb
+  for (var cp=0, ix=0; cp < C_PRM; cp++, ix+=C_TWIST)
+    for (var ct=0; ct < C_TWIST; ct++)
+      ct_ud_lr[ix+ct] = ct_ud_fb[ix + ct_ud_fb[ix+ct]];
+  */
+}
+
+function get_ct(s) {
+  for (var i=0, ix=0; i < 8; i++, ix+=3)
+    cts[i] = ((s[cnr_idx[ix]]==s[4])?0:((s[cnr_idx[ix+1]]==s[4])?1:2));
+  return str_to_int(cts, 7, 3);
+}
+
+function get_ctsym_m3c(cpsym, ct, op) {
+  var ctsym = ct_sym_m3[ct*CUBE_SYM+op];
+  if (ct_op_type[op] == 0)
+    return ctsym;
+  else if (ct_op_type[op] == 1)
+    return ct_ud_fb[cpsym*C_TWIST + ctsym];
+  else {
+    if (USE_CT_LR_UD)
+      return ct_ud_lr[cpsym*C_TWIST + ctsym];
+    else
+      return ct_ud_fb[(69-cpsym)*C_TWIST + ctsym];
+  }
+}
+
+function update_ct_sym_m3() {
+  var tmp = new Int16Array(C_TWIST);
+  for (var ct=0, ix=69*C_TWIST; ct < C_TWIST; ct++)
+    tmp[ct_ud_fb[ix+ct]]= ct;
+  for (var ct=0, ix=0; ct < C_TWIST; ct++, ix+=CUBE_SYM)
+    for (var op=0; op < CUBE_SYM; op++)
+      if (ct_op_type[op] == 2)
+        ct_sym_m3[ix+op] = tmp[ct_sym_m3[ix+op]];
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_cp_sym();
+  if (CT_SYM_METHOD == 1) {
+    populate_cpt_sym();
+    get_ctsym = get_ctsym_m1;
+  }
+  else if (CT_SYM_METHOD == 2) {
+    populate_op_tables();
+    populate_cpt_min();
+    populate_cpt_sym2();
+    get_ctsym = get_ctsym_m2;
+  }
+  else {
+    populate_ct_sym();
+    update_ct_sym();
+    get_ctsym = get_ctsym_m3;
+  }
+}
+
+function count_ct_mins_m3() {
+  for (var cp=0, n=0; cp < C_PRM; cp++) {
+    for (var ct=0; ct < C_TWIST; ct++) {
+      var cpt = cp*C_TWIST + ct; 
+      if (count1[cpt] == 0) {
+        count1[cpt] = cpt;
+        for (var op=1; op < CUBE_SYM; op++) {
+          var cpsym = cp_sym[cp*CUBE_SYM + op];
+          var ctsym = (CT_SYM_METHOD == 3) ?
+            get_ctsym(cpsym, ct, op) :
+            get_ctsym(cp*C_TWIST+ct, op);
+          var ctsym3 = get_ctsym_m3c(cpsym, ct, op);
+          if (ctsym != ctsym3)
+            n++;
+          count1[cpsym*C_TWIST + ctsym3] = cpt;
+        }
+      }
+    }
+  }
+  count_mins(C_PRM, C_TWIST);
+  if (n > 0)
+    console.log('mismatch = ' + n);
+}
+</script>
+</center>
+</html>

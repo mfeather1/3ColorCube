@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Edge Symmetry - Method 3</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../../mini_cube.png type=image/png>
+ <script src=../../rch.js></script>
+ <script src=../../rclib.js></script>
+ <script src=../symlib.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+  p { text-align: justify; margin-left: 10%; margin-right: 10%; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>3-Color Edge Symmetry <br> Method 3</font>
+<br><br>
+<div id=status></div>
+<a href="javascript: history.go(-1)">Back</a>
+<br><br>
+<script>
+"use strict";
+// This version is comparable to cpt_sym_m3.html (for corners).
+
+var USE_ET_FB_UD = true;
+
+// Symmetry Arrays
+var et_fb_lr = new Int16Array(SLICE_PRM * E_TWIST);    // 1980 KB
+var et_sym_m3 = new Int16Array(E_TWIST * CUBE_SYM);    //  192 KB
+var et_op_type = new Int8Array(CUBE_SYM);
+
+// this method can be implemented in the solver without ep_sym
+// by using min_ep[epmin] instead of ep_sym[ep][op]
+
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);        // 3248 KB
+
+if (USE_ET_FB_UD)
+  var et_fb_ud = new Int16Array(SLICE_PRM * E_TWIST);  // 1980 KB
+
+var epm = new Int8Array(E_PRM);                        //   34 KB
+var count1 = new Int32Array(24 * E_TWIST);             //  192 KB
+var count2 = new Int32Array(49);
+
+document.getElementById('status').innerHTML = 'Counts are running<br><br>';
+setTimeout(main, 100);
+
+function main() {
+  var time0 = Date.now();
+  console.log('USE_ET_FB_UD = ' + USE_ET_FB_UD);
+  init();
+  populate_et_sym_m3();
+  populate_et_fb_lr();
+  if (USE_ET_FB_UD)
+    populate_et_fb_ud();
+  else
+    update_et_sym_m3();
+  counts();
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  document.getElementById('status').innerHTML += 
+    '<br>Run Time: ' + time1 + '<br><br>';
+}
+
+function populate_et_sym_m3() {
+  var s = new Int8Array(FACELETS);
+  populate_et_op_type();
+  for (var et=0; et < E_TWIST; et++)
+    et_sym_m3[et*CUBE_SYM] = et;
+  int_to_strp(ep_b3[0], eps, 11, 3);
+  for (var et=0, ix=0; et < E_TWIST; et++, ix+=CUBE_SYM) {
+    int_to_strp(et, ets, 11, 2);
+    make_cubestr_edg(edg2);
+    for (var op=1; op < CUBE_SYM; op++) {
+      sym_op(s, cubestr, map[op]);
+      et_sym_m3[ix+op] = get_et(s);
+    }
+  }
+}
+
+function populate_et_fb_lr() {
+  var s = new Int8Array(FACELETS);
+  for (var i=0, ix=0; i < SLICE_PRM; i++, ix+=E_TWIST) {
+    var ep = slice_ep[i*3];
+    int_to_strp(ep_b3[ep], eps, 11, 3);
+    for (var et=0; et < E_TWIST; et++) {
+      int_to_strp(et, ets, 11, 2);
+      var j = 0;
+      for (; j < 4; j++)  if (eps[j] == 1) ets[j] ^= 1;
+      for (; j < 12; j++) if (eps[j] == 0) ets[j] ^= 1;
+      et_fb_lr[ix+et] = str_to_int(ets,11,2);
+    }
+  }
+  /* alternate way to make et_fb_lr from et_fb_ud
+  var epix = ep_slice[0] * E_TWIST;  // ep_slice[0][0];
+  for (var i=0, ix=0; i < SLICE_PRM; i++, ix+=E_TWIST)
+    for (var et=0; et < E_TWIST; et++)
+      et_fb_lr[ix+et] = et_fb_ud[epix + et_fb_ud[ix+et]];
+  */
+}
+
+function populate_et_fb_ud() {
+  var s = new Int8Array(FACELETS);
+  for (var i=0, ix=0; i < SLICE_PRM; i++, ix+=E_TWIST) {
+    var ep = slice_ep[i*3+1];
+    int_to_strp(ep_b3[ep], eps, 11, 3);
+    for (var et=0; et < E_TWIST; et++) {
+      int_to_strp(et, ets, 11, 2);
+      var j = 0;
+      for (; j < 4; j++)  if (eps[j] == 1) ets[j] ^= 1;
+      for (; j < 8; j++)  if (eps[j] != 1) ets[j] ^= 1;
+      for (; j < 12; j++) if (eps[j] == 1) ets[j] ^= 1;
+      et_fb_ud[ix+et] = str_to_int(ets,11,2);
+    }
+  }
+  /* alternate way to make et_fb_ud from et_fb_lr
+  var epix = ep_slice[1] * E_TWIST;  // ep_slice[0][1];
+  for (var i=0, ix=0; i < SLICE_PRM; i++, ix+=E_TWIST)
+    for (var et=0; et < E_TWIST; et++)
+      et_fb_ud[ix+et] = et_fb_lr[epix + et_fb_lr[ix+et]];
+  */
+}
+
+function populate_et_op_type() {
+  var op0 = new Int8Array([0,5, 6, 7, 8,21,22,23,24,29,30,31,32,45,46,47]); // FB -> FB
+  var op1 = new Int8Array([1,3, 9,11,14,16,18,20,25,27,33,35,38,40,42,44]); // FB -> LR
+  var op2 = new Int8Array([2,4,10,12,13,15,17,19,26,28,34,36,37,39,41,43]); // FB -> UD
+  for (var i=0; i < 16; i++) {
+    et_op_type[op1[i]] = 1;
+    et_op_type[op2[i]] = 2;
+  }  
+}
+
+function get_et(s) {
+  for (var i=0, ix=0; i < 12; i++, ix+=2) {
+    var x = s[edg_idx[ix]];
+    var y = s[edg_idx[ix+1]];
+    ets[i] = (x == s[4] || (x == s[25] && y == s[28])) ? 0 : 1;
+  }
+  return str_to_int(ets, 11, 2);
+}
+
+function get_etsym_m3(epsym, et, op) {
+  var etsym = et_sym_m3[et*CUBE_SYM + op];
+  if (et_op_type[op] == 0)
+    return etsym;
+  else if (et_op_type[op] == 1)
+    return et_fb_lr[ep_slice[epsym*3]*E_TWIST + etsym];
+  else {
+    if (USE_ET_FB_UD)
+      return et_fb_ud[ep_slice[epsym*3+1]*E_TWIST + etsym];
+    else
+      return et_fb_lr[ep_slice[epsym*3+1]*E_TWIST + etsym];
+   }
+}
+
+function update_et_sym_m3() {
+  var tmp = new Int16Array(E_TWIST);
+  var ep1 = ep_slice[1];  // ep_slice[0][1]
+  for (var et=0, ix=ep1*E_TWIST; et < E_TWIST; et++)
+    tmp[et_fb_lr[ix+et]] = et;
+  for (var et=0, ix=0; et < E_TWIST; et++, ix+=CUBE_SYM)
+    for (var op=0; op < CUBE_SYM; op++)
+      if (et_op_type[op] == 2)
+        et_sym_m3[ix+op] = tmp[et_sym_m3[ix+op]];
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_ep_sym();
+  populate_et_sym();
+}
+
+function counts() {
+  for (var ep=0; ep < E_PRM; ep++)
+    epm[ep] = -1;
+  var list = populate_list(E_PRM, ep_sym);  
+  for (var i=1; i < list.length; i++) {
+    var ep = list[i];
+    epm[ep] = 0;
+    var n = fill_epm(ep);
+    clear_count1(n);
+    do_et_sym(ep);
+    et_counts(n);
+  }
+  rpt2(list[0]*E_TWIST, 2);
+}
+
+function fill_epm(ep) {
+  var n = 1;
+  for (var op=1; op < CUBE_SYM; op++) {
+    var epsym = ep_sym[ep*CUBE_SYM + op];
+    if (epm[epsym] == -1)
+      epm[epsym] = n++;
+  }
+  return n;
+}
+
+function clear_count1(n) {
+  for (var i=0, ix=0; i < n; i++, ix+=E_TWIST)
+    for (var j=0; j < E_TWIST; j++)
+      count1[ix+j] = 0;
+} 
+
+function do_et_sym(ep) {
+  for (var et=0, n=0; et < E_TWIST; et++) {
+    if (count1[et] == 0) {
+      count1[et] = et;
+      for (var op=1; op < CUBE_SYM; op++) {
+        var epsym = ep_sym[ep*CUBE_SYM + op];
+        var etsym2 = get_etsym_m2(ep, et, op);
+        var etsym3 = get_etsym_m3(epsym, et, op);
+        if (etsym2 != etsym3)
+          n++;
+        count1[epm[epsym]*E_TWIST + etsym3] = et;
+      }
+    }
+  }
+  if (n > 0 )
+    console.log('mismatch = ' + n);
+}
+
+function et_counts(n) {
+  var tmp = new Int8Array(E_TWIST);
+  for (var i=0; i < n; i++)
+    for (var j=0; j < E_TWIST; j++)
+      tmp[count1[i*E_TWIST + j]]++;
+  for (var i=0; i < E_TWIST; i++)
+    if (tmp[i] != 0)
+      count2[tmp[i]]++;
+}
+</script>
+</center>
+</body>

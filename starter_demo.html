@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+ <title> Solving Demo - Starter Cube </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style>
+  .tabdata td { padding:4px 12px; border-color:black; text-align:center; }
+  div.wrap {padding-left:8%; padding-right:8%;}
+ </style>
+ <script src=AnimCube3.js></script>
+ <script src=corner_demo.js></script>
+ <script src=starter_seq.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Solving Demo <br> Starter Cube </font>
+<br>
+<table border=0>
+ <tr>
+  <td style=text-align:center valign=top>
+   <div id=cube style=width:200px;height:200px></div>
+   <table><tr height=8><td></table>
+   <table>
+    <tr>
+     <td><button class="btn dmw1" onclick="new_cube(1)">Random</button></td>
+     <td width=10>
+     <td><button class="btn dmw2" onclick="help()">Help</button></td>
+    </tr>
+   </table>
+  </td>
+  <td width=20>
+  <td valign=top style=text-align:center>
+   <br>
+   <table><tr height=2><td></table>
+   <div id=table></div>
+  </td>
+ </tr>
+</table>
+<br>
+<div id=starter_seq></div>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+<script>
+"use strict";
+var line;
+var acjs_removeListeners = [];
+var corners = [0,2,6,8,9,11,15,17,18,20,24,26,27,29,33,35,36,38,42,44,45,47,51,53];
+var facelets = 'LLLLRLLLLLLLLRLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL';
+new_cube(0);
+show_starter_seq();
+function new_cube(r) {
+  var rand = Math.floor(Math.random()*arr.length);
+  line = arr[rand].split(' ');
+  make_cube(r);
+  make_table();
+}
+function make_cube(r) {
+  var f = facelets.split('');
+  for (var i=0; i < 24; i++) 
+    f[corners[i]] = line[0][i];
+  f = f.join('');
+  f = f.replace(/[YWBG]/g, 'L');
+  f = f.replace(/O/g, 'R');
+  var move = line[1];
+  if (move.indexOf('Y') != 0)
+    move = move.substr(0, move.indexOf('Y'));
+  var params = 'config=AnimCube.txt&id=cube&edit=1&move=' + move + '&facelets=' + f;
+  if (r)
+    acjs_removeListeners['cube']();
+  AnimCube3(params);
+}
+function make_table() {
+  var table = line[2].split(',');
+  var s = '<table align=center class=tabdata style=border-collapse:collapse;border-color:white border=1>';
+  for (var i=0; i < table.length; i++) {
+    var v = table[i].split(':');
+    if (v[1] == 'A4')
+      break;
+    s += '<tr><td>' + repl(v[0]) + '</td><td style=text-align:left>' + repl(v[1]) + '</td></tr>';
+  }
+  s += '</table>';
+  document.getElementById('table').innerHTML = s;
+}
+function repl(s) { 
+  s = s.replace("A1", "Solve top face"); 
+  s = s.replace("A2", "Turn cube to match setup for "); 
+  s = s.replace("A3", "Apply sequence ");
+  s = s.replace("-", "&#8209;");
+  return (s);
+}
+function help() {
+  location = location.href.replace('demo', 'help');
+}
+</script>
+</center>
+</div>
+</body>
+</html>

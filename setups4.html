@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+ <title> Matching Two of Four Facelets (Page 4 of 6) </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <script src=hist.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Matching Two of Four Facelets <br> Page 4 of 6</font>
+<br><br>
+<p>In this example (first cube) only two of four misplaced facelets match the setup for
+Sequence 3C-E1 (second cube), the blue facelets on the front and back faces should be red. 
+Press Play on the first cube to see that the two yellow misplaced facelets get fixed and 
+the two blue ones remain misplaced.  
+The red misplaced facelets are not part of the setup and can be ignored.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&move=R'Um2'R&facelets=rrrrryrrrrrrrrrryrybyyyyyyyyyyyyyybybbbrbrbbbbbbbbbbbb")</script>
+   </div>
+  </td>
+  <td width=50> 
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R'Um2' R&colorscheme=rryybb")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<p>Here is an example for Sequence 3C-E3.
+On the first cube, the two yellow misplaced facelets on the left &amp; right 
+faces match the setup (second cube) but the red ones on the front face do not.
+Press Play to fix the two yellow misplaced facelets, the red ones remain misplaced. 
+The blue misplaced facelets on the bottom face are not part of the setup and can
+be ignored.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&move=R'UmL'D2LUm'R&facelets=rrrrrrrrrrrrbrbrrryryyyyyryyyyyyyyyybbbybbbbbbybbbbbbb")</script>
+   </div>
+  </td>
+  <td width=50> 
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&&move=R' Um L' D2 L Um' R&colorscheme=rryybb")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<p>Here is an example for Sequence 3C-E4.
+The two blue facelets match the setup but the yelow &amp; red ones do not.
+Press Play to fix the two blue misplaced facelets, the other two remain misplaced.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&move=R'UmLD2L'Um'R&facelets=rrrrrbrrrrrrrrrrrryyyyyyybyyyyyyyyyybbbbbbbbbbybrbbbbb")</script>
+   </div>
+  </td>
+  <td width=50> 
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&initrevmove=#&move=R'UmLD2L'Um'R&colorscheme=rryybb")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<p>The next step is to look at what happens if only one of the four misplaced 
+facelets can be matched.</p>
+<br>
+<script>
+  hst();
+  document.write('<table><tr>');
+  document.write(m(3, 'Prev') + '<td width=10>');
+  document.write(m(1, 1) + '<td width=10>');
+  document.write(m(2, 2) + '<td width=10>');
+  document.write(m(3, 3) + '<td width=10>');
+  document.write('<td>4</td><td width=10>');
+  document.write(m(5, 5) + '<td width=10>');
+  document.write(m(6, 6) + '<td width=10>');
+  document.write(m(5, 'Next'));
+  document.write('</tr></table>');
+  function m(n, s) {
+    var u = location.href.replace(/setups[1-6]/, 'setups' + n);
+    var n = u.indexOf('hist');
+    if (n > 0) u = u.substr(0, n-1);
+    var s = '<td><a href=' + u + '&hist=' + hist + '>' + s + '</a></td>';
+    return s.replace('html&', 'html?');
+  }
+  if (hist != 0) {
+    document.write("<br><a href=\"javascript: history.go(-" + hist + ")\">Back</a>");
+  }
+</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+ <title> Starter Advanced (Page 2 of 3) </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <style> td {text-align:center} </style>
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <script src=hist.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Starter Advanced <br> Page 2 of 3 </font>
+<br><br>
+<p>The possibilities for the 3-0 split cube are shown below.
+The first cube (30A) takes six moves to solve but it does not occur very
+often so rather than learn a new sequence, just convert it to another
+configuration that is already known.
+Press Play to see how to convert it to the fifth cube on the Starter page. 
+If you want to solve it in just six moves then a way to do that 
+is <a href=30A.html>here</a>.
+<br><br>
+To match a scrambled 3-0 split cube to the second cube below (30B) twist the
+bottom face so the misplaced facelets in the bottom row match, did you notice
+that step is not necessary for cube 30A?
+Press the Single-Step button (on 30B) to see that the first move makes 
+configuration 31B from the previous page with the opposite mirror-image.
+Press Play to complete the solution.</p>
+
+<table border=0>
+  <tr height=10>
+  <tr> 
+    <td colspan=3 align=center> Left Mirror</td>
+    <td width=50>
+    <td colspan=3 align=center> Right Mirror </td>
+  </tr> 
+  <tr> 
+    <td align=center> 30A </td> 
+    <td width=10>
+    <td align=center> 30B</td> 
+    <td>
+    <td align=center> 30A </td> 
+    <td width=10>
+    <td align=center> 30B</td> 
+  </tr>
+  <tr>
+    <td>
+      <div style="width:120px; height:120px; display:inline-block"> 
+        <script>AnimCube3("config=medium.txt&position=lluuu&initrevmove=FD2'R'F2'DF'&move=RZ2&facelets=rlrlrlrlrrlrlrlrlrllllllllllllllllllllllllllllllllllll")</script>
+      </div>
+    </td>
+    <td> 
+    <td>
+      <div style="width:120px; height:120px; display:inline-block"> 
+       <script>AnimCube3("config=medium.txt&position=lluuu&initrevmove=#&move=FR2D'R&facelets=rlrlrlrlrrlrlrlrlrllllllllllllllllllllllllllllllllllll")</script>
+      </div>
+    </td>
+    <td>
+    <td>
+      <div style="width:120px; height:120px; display:inline-block"> 
+       <script>AnimCube3("config=medium.txt&position=lluuu&initrevmove=R'D2FR2D'R&move=F'Z'&facelets=rlrlrlrlrrlrlrlrlrllllllllllllllllllllllllllllllllllll")</script>
+      </div>
+    </td>
+    <td>
+    <td>
+      <div style="width:120px; height:120px; display:inline-block"> 
+       <script>AnimCube3("config=medium.txt&position=lluuu&initrevmove=#&move=R'F2'DF'&facelets=rlrlrlrlrrlrlrlrlrllllllllllllllllllllllllllllllllllll")</script>
+      </div>
+    </td>
+  </tr>
+</table>
+<br><br>
+<p>The mirror-images of the 3-3 split cube are shown below.
+To match a scrambled 3-3 split cube, twist the bottom 
+face until the misplaced facelet in the bottom row is in the location
+shown on the appropriate cube below.
+Press the Single-Step button, the first move makes configuration 32A.
+Press Play to complete the solution.</p>
+<table>
+  <tr height=15>
+  <tr> 
+    <td align=center> 33L </td> 
+    <td width=50>
+    <td align=center> 33R </td> 
+  </tr>
+  <tr>
+    <td>
+      <div style="width:120px; height:120px; display:inline-block"> 
+       <script>AnimCube3("config=medium.txt&position=lluuu&initrevmove=#&move=RFD'F'&facelets=rlrlrlrlrrlrlrlrlrllllllllllllllllllllllllllllllllllll")</script>
+      </div>
+    </td>
+    <td>
+    <td>
+      <a name="33R"></a> 
+      <div style="width:120px; height:120px; display:inline-block"> 
+       <script>AnimCube3("config=medium.txt&position=lluuu&initrevmove=#&move=F'R'DR&facelets=rlrlrlrlrrlrlrlrlrllllllllllllllllllllllllllllllllllll")</script>
+      </div>
+    </td>
+  </tr>
+</table>
+<br>
+<p>The next page shows how to to improve the solutions for two of the 
+configurations from the Starter page.</p>
+<br>
+<script>
+  hst();
+  document.write('<table><tr>');
+  document.write(m(1, 'Prev') + '<td width=10>');
+  document.write(m(1, 1) + '<td width=10>');
+  document.write('<td>2</td><td width=10>');
+  document.write(m(3, 3) + '<td width=10>');
+  document.write(m(3, 'Next'));
+  document.write('</tr></table>');
+  function m(n, s) {
+    var u = location.href.replace(/starter_adv[1-3]/, 'starter_adv' + n);
+    var n = u.indexOf('hist');
+    if (n > 0) u = u.substr(0, n-1);
+    var s = '<td><a href=' + u + '&hist=' + hist + '>' + s + '</a></td>';
+    return s.replace('html&', 'html?');
+  }
+  if (hist != 0) {
+    document.write("<br><a href=\"javascript: history.go(-" + hist + ")\">Back</a>");
+  }
+</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

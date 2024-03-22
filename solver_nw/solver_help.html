@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+ <title> Cube Solver Help </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+</head>
+<body><center>
+<b>Cube Solver Help</b>
+<br><br>
+<p>To use the solver press the Random button and after a scrambled cube 
+appears press Solve.
+After a minute or so the solve will complete and a green bar appears under the
+cube which is the media player control panel, press the Play button (right
+arrow) to see the solution.
+Subsequent solves will run faster, more about that in the "Search Time"
+section below.</p>
+<br><br>
+<b> Entering Colors and Solving</b>
+<br><br>
+<p>To solve an actual scrambled cube press the Clear button and enter the
+colors by first clicking on a color in the palette (six squares above
+layout) then clicking on a square in the layout which changes it to the
+selected color.
+Press the Show button to update the cube on the right side of the screen 
+to see that it matches.
+<br><br>
+Press the Solve button after you have colored the entire layout.
+It will first verify that the cube is valid and if not it will give a message
+indicating what the problem is.  
+If you get an error, compare your cube to the one on the screen and find the
+square(s) that do not match and fix them, then press Solve again.
+Repeat until there are no more errors.
+<br><br>
+Once all the errors are fixed it will solve the cube and the green bar will
+appear, press the second button from the right to show the solution one move at
+a time.</p>
+<br><br>
+<b>Search Time</b>
+<br><br>
+<p>
+If a solution is more than 20 moves then a shorter one can be found by 
+increasing Search Time which is normally 5 seconds (by default).
+Search Time is just one part of the total processing time.
+Before the Solver can search it must first make several tables for moves &amp;
+symmetry operations in addition to making the large search arrays (dist).
+That takes a significant amount of time which can be seen in the log 
+where it shows "Init + Dist Time" which can be seen by pressing the Solve Log
+button after a solve completes.
+The total amount of time to solve a random cube varies depending on the 
+computing capability of the device you are running it on.
+Only the first solve within a session incurs the Init &amp; Dist Time, 
+subsequent solves take only the amount of time specified in the Search Time
+box.
+<br><br>
+Search performance can be improved by generating the dist arrays to Depth 9 
+which takes longer initially, anywhere from 17 seconds (on 3.7 Ghz processor)
+to two minutes or more depending on device performance.
+Generate time can be eliminated by using dist files as described in the next
+section.
+<br><br>
+Note:<br>
+In Firefox, if generating to depth 9 the browser will pop-up a message asking
+whether to stop the script or let it continue, likewise if Search Time is set to
+more than 10 seconds.
+This message can be ignored (which allows the solver to run) or eliminated 
+altogether by setting
+<a href="http://kb.mozillazine.org/Dom.max_script_run_time">dom.max_script_run_time</a>
+in <a href="http://kb.mozillazine.org/About:config">about:config</a>.</p>
+<br><br>
+<b>Using Dist Files</b>
+<br><br>
+<p>By saving the dist arrays to files they only have to be generated once,
+then the files can be loaded into the Solver instead of generating.
+The dist arrays can be saved to files <a href="../make_dist_files.html">here</a>
+or they can be downloaded at these links: 
+<a target=_blank href="https://drive.google.com/file/d/1LXrK-9F0kXLZu-3NZF8bsyIU45J0P-rz/view?usp=sharing">Dist1</a>
+<a target=_blank href="https://drive.google.com/file/d/1i6dtWUcOtkDZzwtFOWuYRSqvAzrE3bWp/view?usp=sharing">Dist2</a>
+<a target=_blank href="https://drive.google.com/file/d/1osKQ_jSdjeGfpO4o4AuQOBXA5z-UyH_x/view?usp=sharing">DistP2</a>.
+To use, click on the Dist Files button (on main page), then press the
+Load Dist Files button and select the files (that you generated or
+downloaded) then click Open.
+After a few seconds a message will appear under the cube indicating that the
+files have been loaded.
+Prior to loading, the list of files needed by the solver can be seen by
+pressing Solve.
+<br><br>
+Better performance can be achieved by using more memory.
+Devices with 2 GB of RAM can add the very large search array Dist3 (418 MB)
+which can be downloaded
+<a target=_blank href="https://drive.google.com/file/d/1XWknRdQVV7H_sDHqDyzCGb4reYGRhKum/view?usp=sharing">here</a>.
+To use, click the Dist 3 button and load the files as described above.
+</p>
+<br><br>
+<b>Searching For 20 Move Solutions</b>
+<br><br>
+<p>To stop the search based on solution length rather than search time 
+use the "s" option (append to Search Time as in 5s).
+With a sufficiently long search time the solver will stop at the first solution 
+of 20 moves or less but if it is too short then the search will be stopped before
+reaching the goal, in that case increase it.
+The "s" option will remain in effect for subsequent solves, to switch
+back to the normal search (stop based on time only) append "t" to Search
+Time (as in 5t).
+<br><br>
+With the "s" option, there will be a large variance in the amount of time
+it takes to find a solution (with 20 moves or less) so the wait may be long
+in some cases.
+After the solve completes the amount of search time used is shown below the
+Solve Log button.</p>
+<br>
+<a href="JavaScript:window.close()">Close</a>
+<br><br>
+</center>
+</body>
+</html>

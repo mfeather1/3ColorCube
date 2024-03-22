@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6-Color Corners - Parallel Sequence </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> 6-Color Corners <br> Parallel Sequence </font>
+<br><br>
+<p>For configurations where no faces can be solved with half-twists, another
+way of solving is to to place the cube so that there are  vertical pairs of
+parallel corners on the front face and horizontal pairs on the back face as
+shown below (turn cube with mouse to see back face).
+The color of the pair in the top row of the back face (white in this case) 
+must match the color of the pair on the right side of the front face, 
+if it matches the left side then half-twist the front face to make the setup.
+<br><br>
+The sequence does not solve the corners, it makes them solvable with
+half-twists.
+This is not a new sequence, it is the first
+<a href=starter.html>Starter Cube</a> sequence done twice with the
+second applied from the back.
+The centers are not part of the setup and can be ignored.
+The other faces can also be ignored (do not have to match cube below).</p>
+<br>
+Parallel Sequence
+<br>
+<div style="width:200px; height:200px; display:inline-block"> 
+ <script>AnimCube3("config=AnimCube.txt&textsize=16&edit=1&move=R D2 R D2 R L D2 L D2 L&facelets=RLOLLLRLROLOLLLOLRYLYLLLWLWWLYLLLWLYGLGLLLGLBBLGLLLBLB")</script>
+</div>
+<br><br><br>
+<p>If no faces have parallel pairs (all 3-1 splits) then half-twist the right
+face to make parallel pairs on either the front/back or top/bottom faces.
+On the first cube below, the first move makes parallel pairs on the front/back
+faces.
+The color of the pair in the top row of the back face is yellow so the front
+face is half-twisted (second move) to make the setup.
+An alternative would be to use the mirror-image sequence in which case the
+second move is not needed.
+<br><br>
+On the second cube, the first move makes parallel pairs on the top/bottom faces
+so the cube is turned (second move) so they are on the front/back faces with 
+the vertical pairs in front.
+The color of the pair in the top row of the back face is red which matches the
+right side of the front face so the setup is correct.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:200px; height:200px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&textsize=16&edit=1&move=R2 F2&facelets=RLRLLLOLRRLOLLLOLOYLYLLLWLYWLWLLLYLWGLGLLLBLGGLBLLLBLB")</script>
+   </div>
+  </td>
+  <td width=50>
+  <td>
+   <div style="width:200px; height:200px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&textsize=16&edit=1&move=R2 X&facelets=RLRLLLOLROLOLLLOLRYLYLLLWLYWLYLLLWLWGLBLLLGLGGLBLLLBLB")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<p>Like the waterwheel this sequence also misplaces edge facelets when
+used on a cube where edges are already solved as 3-color.
+In this case four edges get misplaced but they can easily be fixed as shown 
+<a href=corners_6c_4.html>here</a>, this can be avoided by solving 6-color
+corners before 3-color edges.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+ <title> Make Dist3 File</title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=rch.js></script>
+ <script src=solver/solve.js></script>
+ <script src=rclib.js></script>
+</head>
+<body>
+<center>
+<font size=+2> Make Dist3 File </font>
+</center>
+<br>
+<div id=title> </div>
+<br>
+<button onclick="make_dist_arrays()">Start</button> 
+<div id=status></div>
+<div id=status2></div>
+<div id=back></div>
+<a id=d1e></a>
+<br>
+
+<script>
+"use strict";
+
+USE_DIST3 = 1;
+
+var done = 0;
+var dl1_done = 0;
+var d1_url;
+var d1_blob;
+var time0;
+
+document.getElementById('status').innerHTML = 
+  '<br><center><a href="javascript: history.go(-1)">Back</a></center>';
+
+dist_gen_depth = null;
+
+var params = location.search.substr(1).split('&');
+for (var i=0; i < params.length; i++) {
+  var p = params[i].split('=');
+  window[p[0]] = p[1];
+}
+
+if (isNaN(dist_gen_depth))
+  dist_gen_depth = 10; 
+else {
+  if (dist_gen_depth == null)
+    dist_gen_depth = 10; 
+  else {
+    dist_gen_depth = parseInt(dist_gen_depth);
+    if (dist_gen_depth < 8)
+      dist_gen_depth = 8;
+    else if (dist_gen_depth > 10)
+      dist_gen_depth = 10;
+  }
+}
+
+var dep = ((dist_gen_depth < 10) ? '0' : '') + dist_gen_depth;
+var file_name = 'Dist3_' + dep + 'F.dat';
+var msg = '';
+
+if (dist_gen_depth == 10) {
+  var msg = 
+  'Generating Dist3 to depth 10 takes a while, the amount of time varies\
+  depending on the computing capability of the device you are running it on.\
+  You can get a time estimate by doing a test run to depth 9 which can be done\
+  <a href="make_dist3?dist_gen_depth=9">here</a>.\
+  Multiply the amount of time for depth 9 by 12.5 to get an estimate for\
+  depth 10.<br><br>\
+  There are no progress messages during the generate.\
+  The browser message "Page Unresponsive" can be ignored (if you want to\
+  cancel just close the tab).\
+  Upon completion there will be a prompt to save the file.<br><br>\
+  Press Start to make ' + file_name + '.';
+}
+
+if (dist_gen_depth == 8 || dist_gen_depth == 9)
+  var msg = 'Press Start to make ' + file_name + ' (test run).';
+
+document.getElementById('title').innerHTML = msg; 
+
+function make_dist_arrays()
+{
+  if (!done) {
+    done = 1;
+    document_write('<br>');
+    document.getElementById('status').innerHTML =  '<br>Initializing';
+    setTimeout(step1, 100);
+  }
+}
+
+function step1()
+{
+  time0 = Date.now();
+  init();
+  var s = document.getElementById('status').innerHTML;
+  document.getElementById('status').innerHTML =  s +
+    '<br>Generating Dist3 to Depth ' + dist_gen_depth;
+  setTimeout(step2, 100);
+}
+
+function step2()
+{
+  try {
+    dist3 = new Uint8Array(MIN_EP*C_TWIST*E_TWIST/8);  // 418 MB
+    mkd();
+    step3();
+  }
+  catch (e) {
+    alert(e);
+  }
+}
+
+function step3()
+{
+  var t1 = Date.now();
+  var t2 = ((t1-time0)/1000).toFixed(2);
+  var s = document.getElementById('status').innerHTML;
+  document.getElementById('status').innerHTML =
+     s + '<br><br>Run Time: ' + t2 + '<br><br>Save File:<br><br>' +
+     '<button onclick=dl1m()>Dist3</button>&nbsp;&nbsp;&nbsp;'; 
+  document.getElementById('back').innerHTML =
+     '<br><center><a href="javascript: history.go(-1)">Back</a> </center>';
+}
+
+function showUrl() {
+   alert(d1_url);
+}
+
+function dl1m() {
+  if (!dl1_done) {
+    document.getElementById('status2').innerHTML =
+      '<br>Preparing Download for ' + file_name + '<br>';
+    setTimeout(dl1, 100);
+  }
+}
+
+function dl1() {
+  try {
+    d1_blob = new Blob([dist3], {type: "octet/stream"});
+    d1_url = window.URL.createObjectURL(d1_blob);
+    d1e.href = d1_url;
+    d1e.download = file_name;
+    d1e.click();
+    dl1_done = 1;
+  }
+  catch (e) {
+    alert(e);
+  }
+}
+
+</script>
+</body>
+</html>

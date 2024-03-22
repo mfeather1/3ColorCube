@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+ <title> Make Dist Files </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=rch.js></script>
+ <script src=solver/solve.js></script>
+ <script src=rclib.js></script>
+</head>
+<body>
+<center><font size=+2> Make Dist Files </font></center>
+<br>
+<div id=title> </div>
+<button class="btn mdw1" onclick="make_dist_arrays()">Start</button> 
+<div id=status></div>
+<div id=status2></div>
+<div id=back></div>
+<a id=d1e></a>
+<a id=d2e></a>
+<a id=d3e></a>
+<br>
+<br><br>
+
+<script>
+"use strict";
+
+var done = 0;
+var dl1_done = 0;
+var dl2_done = 0;
+var dl3_done = 0;
+var dist_gen_depth = 9;
+var distp2_gen_depth = 8;
+var fn1 = 'Dist1_09F.dat';
+var fn2 = 'Dist2_09F.dat';
+var fn3 = 'DistP2_08F.dat';
+
+document.getElementById('status').innerHTML = 
+  '<br><center><a href="javascript: history.go(-1)">Back</a></center>';
+
+document.getElementById('title').innerHTML = 
+  'Press Start to make these files for the Solver:<br>' + 
+   fn1 + '<br>' + fn2 + '<br>' +  fn3 + '<br><br>' +
+  'This will run for up to two minutes and then prompt to save the files.' + 
+  '<br><br>';
+
+function make_dist_arrays()
+{
+  if (!done) {
+    done = 1;
+    document_write('<br>');
+    document.getElementById('status').innerHTML =  '<br>Initializing';
+    setTimeout(step1, 100);
+  }
+}
+
+function step1()
+{
+  init();
+  var s = document.getElementById('status').innerHTML;
+  document.getElementById('status').innerHTML =  s +
+    '<br>Generating Dists 1 & 2 to Depth ' + dist_gen_depth;
+  setTimeout(step2, 100);
+}
+
+function step2()
+{ 
+  try {
+    mkd();
+  }
+  catch (e) {
+    alert(e);
+  }
+  var s = document.getElementById('status').innerHTML;
+  document.getElementById('status').innerHTML =  s +
+    '<br>Generating DistP2 to Depth ' + distp2_gen_depth;
+  setTimeout(step3, 100);
+}
+
+function step3()
+{
+  mkdp2();
+  var s = document.getElementById('status').innerHTML;
+  document.getElementById('status').innerHTML =
+     s + "<br><br>Save Each File:<br><br>" +
+     '<button onclick=dl1m() class="btn mdw1">Dist1</button>&nbsp&nbsp;&nbsp;&nbsp;&nbsp;' +
+     '<button onclick=dl2m() class="btn mdw1">Dist2</button>&nbsp&nbsp;&nbsp;&nbsp;&nbsp;' +
+     '<button onclick=dl3m() class="btn mdw1">DistP2</button><br>';
+  document.getElementById('back').innerHTML =
+     '<br><center><a href="javascript: history.go(-1)">Back</a> </center><br><br>';
+}
+
+function dl1m() {
+  document.getElementById('status2').innerHTML =
+    '<br>Preparing to save file ' + fn1 + '<br>';
+  if (!dl1_done)
+    setTimeout(dl1, 100);
+}
+
+function dl2m() {
+  document.getElementById('status2').innerHTML =
+    '<br>Preparing to save file ' + fn2 + '<br>';
+  if (!dl2_done)
+    setTimeout(dl2, 100);
+}
+
+function dl3m() {
+  document.getElementById('status2').innerHTML =
+    '<br>Preparing to save file ' + fn3 + '<br>';
+  if (!dl3_done)
+    setTimeout(dl3, 100);
+}
+
+function dl1() {
+  try {
+    var d1_blob = new Blob([dist1], {type: "application/octet-stream"});
+    var d1_url = window.URL.createObjectURL(d1_blob);
+    d1e.href = d1_url;
+    d1e.download = fn1; 
+    d1e.click();
+    dl1_done = 1;
+  }
+  catch (e) {
+    alert(e);
+  }
+}
+
+function dl2() {
+  try {
+    var d2_blob = new Blob([dist2], {type: "application/octet-stream"});
+    var d2_url = window.URL.createObjectURL(d2_blob);
+    d2e.href = d2_url;
+    d2e.download = fn2;
+    d2e.click();
+    dl2_done = 1;
+  }
+  catch (e) {
+    alert(e);
+  }
+}
+
+function dl3() {
+  try {
+    var d3_blob = new Blob([distp2], {type: "application/octet-stream"});
+    var d3_url = window.URL.createObjectURL(d3_blob);
+    d3e.href = d3_url;
+    d3e.download = fn3;
+    d3e.click();
+    dl3_done = 1;
+  }
+  catch (e) {
+    alert(e);
+  }
+}
+
+</script>
+</body>
+</html>

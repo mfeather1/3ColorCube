@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+ <title> 4x4 Supercube Centers </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <script src=AnimCube4.js></script)</script>
+ <style> .tabdata td {
+   padding-left:5px; padding-right:5px; border-color:black; text-align:center; } 
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> 4x4 Supercube Centers </font>
+<br><br>
+<p>To solve the centers on the 4x4 Supercube first twist pairs of centers
+to get them all pointing in the same direction on each face using the
+method shown below and then complete the solve by using the 
+<a href=supercube.html>3x3 Supercube Sequences</a> to twist four
+centers (as one) on pairs of faces.
+<br><br> 
+The following two sequences are used together to fix centers on the supercube. 
+They are the same except that the sequence on the first cube twists both slices 
+between the front and back layers whereas the sequence on the second cube only
+twists one slice.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:160px; height:160px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&colorscheme=ROYWGB&move=Rm Fw R' Fw' Rm' Fw R Fw'")</script>
+   </div>
+  </td>
+  <td width=70>
+  <td>
+   <div style="width:160px; height:160px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&colorscheme=ROYWGB&move=Rm Fm R' Fm' Rm' Fm R Fm'")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<p>The following shows how the above two sequences are combined to 
+twist two centers (on front face) that are pointing in opposite directions
+so they point in the same direction.
+There is a half twist of the top face between the sequences and another at
+the end.
+This method also results in all four centers on the top face being twisted 
+but that does not matter because at this point the goal is just to get all 
+centers pointing in the same direction on each face.</p>
+<br>
+<table>
+ <tr>
+  <td>
+   <div style="width:240px; height:240px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&supercube=1&gabbacolors=1&initrevmove=#&colorscheme=ROYKGB&move=Rm Fw R' Fw' Rm' Fw R Fw' U2 Rm Fm R' Fm' Rm' Fm R Fm' U2")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<p>To use the above sequence it is only necessary that there are two centers 
+with arrows pointing in opposite directions in the locations shown on
+the front face.
+The direction of the arrows does not have to match the above cube nor do the
+rest of the arrows on the face.
+The result will be that the two arrows point in the same direction but not
+necessarily in the same direction as the rest of the arrows on the face
+(if the other two centers already point in the same direction then all four
+centers will point in the same direction after doing the sequence but they
+still may not match the rest of the face).
+<br><br>
+The following shows how the above sequence is used to get all centers pointing
+in the same direction on each face.
+In the table below the cube, "Make Setup" means to turn the cube so that there
+are two centers with arrows pointing in opposite directions in the locations
+shown on the above cube.</p>
+<br>
+<div style="width:240px; height:240px"> 
+ <script> 
+  var s = "Rm Fw R' Fw' Rm' Fw R Fw' U2 Rm Fm R' Fm' Rm' Fm R Fm' U2";
+  AnimCube4("config=AnimCube.txt&colorscheme=ROYKGB&supercube=1&gabbacolors=1" + 
+  "&superfacelets=000001300000000000000300010000000000001002100000000000000310000000000200002000000000002003300000" +
+  "&move=Y" + s + "X'" + s + "Y2" + s + "Z Y" + s + "Z'" + s + "X Y'" + s + "X" + s);
+ </script>
+</div>
+<br><br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td>1</td><td style=text-align:left>Make Setup</td></tr>
+ <tr><td>0-19</td><td style=text-align:left>Apply Sequence</td></tr>
+ <tr><td>20</td><td style=text-align:left>Move Green Face to front</td></tr>
+ <tr><td>21-38</td><td style=text-align:left>Apply Sequence</td></tr>
+ <tr><td>39</td><td style=text-align:left>Make Setup</td></tr>
+ <tr><td>40-57</td><td style=text-align:left>Apply Sequence</td></tr>
+ <tr><td>58-59</td><td style=text-align:left>Move Orange face to front and Make Setup</td></tr>
+ <tr><td>60-77</td><td style=text-align:left>Apply Sequence</td></tr>
+ <tr><td>78</td><td style=text-align:left>Move Black face to front</td></tr>
+ <tr><td>79-96</td><td style=text-align:left>Apply Sequence</td></tr>
+ <tr><td>97-98</td><td style=text-align:left>Move Blue face to front and Make Setup</td></tr>
+ <tr><td>99-116</td><td style=text-align:left>Apply Sequence</td></tr>
+ <tr><td>117</td><td style=text-align:left>Move Red face to front</td></tr>
+ <tr><td>118-135</td><td style=text-align:left>Apply Sequence</td></tr>
+</table>
+<br><br>
+<p>Complete the solve by using the 3x3 sequences.
+Turn the cube so both the front and top faces have centers that need to be 
+half-twisted and then apply the sequence to fix them as shown (moves 1-10).
+Then turn the cube so the remaining unsolved centers are on the front &amp;
+top faces, and apply the sequence to quarter-twist the front
+counter-clockwise and the top clockwise (11-20) which will fix the front
+but not the top.
+The centers on the top face are now half-twisted so fix those with the
+sequence that twists the top face only as shown (21-32).
+The last move turns the cube to the home position (all arrows point up).</p>
+<br>
+<div style="width:240px; height:240px"> 
+ <script> 
+  var s = "Rm Fw R' Fw' Rm' Fw R Fw' U2 Rm Fm R' Fm' Rm' Fm R Fm' U2";
+  var s2= "Rw Fw R2 Fw' Rw' Fw R2 Fw'";
+  AnimCube4("config=AnimCube.txt&colorscheme=ROYKGB&supercube=1&gabbacolors=1" +
+  "&superfacelets=000001300000000000000300010000000000001002100000000000000310000000000200002000000000002003300000" +
+  "&initmove=Y" + s + "X'" + s + "Y2" + s + "Z Y" + s + "Z'" + s + "X Y'" + s + "X" + s +
+  "&move=X Y'" +
+  "Rw Fw R2 Fw' Rw' Fw R2 Fw'" +
+  "X Y'" +
+  "Rw Fw R' Fw' Rw' Fw R Fw'" +
+  "R' L' U2 R L U R' L' U2 R L U" +
+  "X2");
+ </script>
+</div>
+<br>
+<p>You can try using the above sequences to solve
+<a href=sc_use_4x4.html>4x4 Supercubes With Random Centers</a>.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

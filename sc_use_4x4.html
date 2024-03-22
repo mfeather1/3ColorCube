@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+ <title> 4x4 Supercubes With Random Centers </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube4.js></script>
+ <script src=sc_rand.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> 4x4 Supercubes With Random Centers </font>
+<br>
+<div id=cube style=width:300px;height:300px></div>
+<table>
+ <tr height=16>
+ <tr>
+  <td><button class="btn cuw1" onclick="new_cube(1,1)">Random</button></td>
+  <td width=15>
+  <td><button class="btn cuw2" onclick="new_cube(0,1)">Reset</button></td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+<script>
+"use strict";
+var arrows = new Array(6);
+var sf = new Array(96);
+var acjs_removeListeners = [];
+new_cube(0, 0);
+function new_cube(n, r) {
+  for (var i=0; i < sf.length; i++)
+    sf[i] = 0;
+  if (n == 0)
+    var sfacelets = sf.join('');
+  else {
+    var rand = sc_rand();
+    for (i=0; i < arrows.length; i++) {
+      var line = arr[rand[i]];
+      arrows[i] = line.substr(0,4);
+    }
+    super_twist(0,  9, 10,  6,  5);  // U
+    super_twist(1, 70, 69, 73, 74);  // L
+    super_twist(2, 37, 41, 42, 38);  // F
+    super_twist(3, 85, 89, 90, 86);  // R
+    super_twist(4, 53, 57, 58, 54);  // B
+    super_twist(5, 21, 25, 26, 22);  // D
+    sfacelets = sf.join('');
+  }
+  var params = "id=cube&config=AnimCube.txt&edit=1&buttonbar=2&colorscheme=ROYKGB";
+  params += "&supercube=1&gabbacolors=1&superfacelets=" + sfacelets;
+  if (r)
+    acjs_removeListeners['cube']();
+  AnimCube4(params);
+}
+</script>
+</center>
+</div>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6-Color Edge Position Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=epr_sym.js></script>
+ <script src=symlib.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+  p { text-align: justify; margin-left: 10%; margin-right: 10%; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2> 6-Color Edge Position Symmetry </font>
+<br>
+<p>This program shows a comparison of symmetry counts for actual vs reduced
+3-color edge permutation (EP) configs combined with the 6-color subcomponent
+of permutation (EPR), see sc_method_doc.txt for description of "reduced".
+<br><br>
+With this combination of components there is a dependency between them.
+The value of EPR is dependent on EP when a cube rotation or reflection
+operation is applied which means that EPR can be different for the same
+operation depending on the value of EP.
+As a consequence, the lists of combined configs generated for counting
+symmetry for actual vs reduced EP are not directly comparable at the detail
+level (single EP combined with single EPR).
+The smallest comarable block of symmetry counts is for a single EP combined
+with all possible EPRs which is what this program shows (counts for each EP).
+There are no differences.
+<br><br>
+For the first occurrence of each new pattern (as described in
+sc_method_doc.txt) the value of EP and its corresponding reduced value will
+be the same hence EP = Reduced in many of the tables shown in the output.
+</p>
+<div id=status></div>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+/*
+  6-Color Edge Position Symmetry
+
+     Mins   Syms     Configs 
+  -------   ----   ---------
+  9972862    48    478697376 
+    12139    24       291336 
+      462    16         7392 
+      404    12         4848 
+       41     8          328 
+       47     6          282 
+        4     4           16 
+        6     3           18 
+        1     2            2 
+        2     1            2 
+  9985968          479001600 
+*/
+"use strict";
+var time0 = Date.now();
+var ELIST_SIZE = 103;
+var OSIZE = ELIST_SIZE;
+var elist = new Int32Array(ELIST_SIZE);
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);
+var ep_mins_with_48_syms;
+var syms = new Int8Array([48,24,16,12,8,6,4,3,2,1]);
+
+document.getElementById('status').innerHTML = 'Counts are running<br><br>';
+setTimeout(main, 100);
+
+function main() {
+  init();
+  count();
+}
+
+function count() {
+  var oix = 0;
+  var ulist = new Int32Array(CUBE_SYM);
+  var op_sym = new Int8Array(CUBE_SYM);
+  var sub_count1 = new Int32Array(CUBE_SYM + 1);
+  var sub_count2 = new Int32Array(CUBE_SYM + 1);
+  var osub_count1 = new Int32Array (OSIZE * 10);
+  var osub_count2 = new Int32Array (OSIZE * 10);
+  var olist = new Int32Array(OSIZE * 50);
+  var ocount = new Int32Array(OSIZE);
+  for (var eix=0; eix < ELIST_SIZE; eix++) {
+    var ep = elist[eix];
+    ulist[0] = ep;
+    var uix = 1;
+    op_sym[0] = 0;
+    for (var op=1; op < CUBE_SYM; op++) {
+      var epsym = ep_sym[ep*CUBE_SYM + op];
+      for (var i=0; i < uix; i++)
+        if (epsym == ulist[i])
+          break;
+      if (i == uix)
+        ulist[uix++] = epsym;
+      op_sym[op] = i;
+    }
+    for (var i=0; i < oix; i++) {
+      for (var j=0; j < CUBE_SYM; j++)
+        if (olist[i*50 + j] != op_sym[j])
+          break;
+      if (j == CUBE_SYM)
+        break;
+    }
+    ocount[oix] = 1;
+    var ep_reduced = ep;
+    if (i == oix) {
+      for (var i=0; i < CUBE_SYM; i++)
+        olist[oix*50 + i] = op_sym[i];
+      olist[oix*50 + CUBE_SYM] = ep;
+    }
+    else
+      ep_reduced = olist[i*50 + CUBE_SYM];
+    get_counts(ep, op_sym, sub_count1); 
+    get_counts(ep_reduced, op_sym, sub_count2); 
+    show_counts(ep, ep_reduced, sub_count1, sub_count2);
+    for (i=0; i < 10; i++) {
+      osub_count1[oix*10+i] = sub_count1[syms[i]];
+      osub_count2[oix*10+i] = sub_count2[syms[i]];
+    }
+    oix++;
+  }
+  rpt(oix, ocount, osub_count1, osub_count2);
+}
+
+function rpt(oix, ocount, osub_count1, osub_count2) {
+  var sym48 = ep_mins_with_48_syms * E_PRMr;
+  var s = '<br><font size=+1>Edge Symmetry Totals<br>';
+  s += '(using actual ep)</font><br><br>';
+  s += rpt3(oix, ocount, osub_count1, sym48, 2);
+  s += '<br><br><font size=+1>Edge Symmetry Totals<br>';
+  s += '(using reduced ep)</font><br><br>'; 
+  s += rpt3(oix, ocount, osub_count2, sym48, 2);
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  s += '<br>Runtime: ' + time1 + '<br><br>';
+  document.getElementById('status').innerHTML += s;
+}
+
+function get_counts(ep, op_sym, sub_count) {
+  var epr = new Int8Array(3);
+  var eprtmp = new Int8Array(3);
+  var arr = new Int8Array(E_PRMr);
+  var syma = new Int32Array(CUBE_SYM);
+  for (var i=0; i < E_PRMr; i++)
+    arr[i] = 0;
+  for (i=0; i < 10; i++)
+    sub_count[syms[i]] = 0;
+  for (epr[0]=0; epr[0] < 24; epr[0]++)
+   for (epr[1]=0; epr[1] < 24; epr[1]++)
+    for (epr[2]=0; epr[2] < 24; epr[2]++) {
+      var eprn = eprsum(epr);
+      if (arr[eprn] != 0)
+        continue;
+      arr[eprn] = 1;
+      syma[0] = eprn;
+      for (var op=1; op < CUBE_SYM; op++) {
+        get_eprsym2(eprtmp, ep, epr, op);
+        var eprsym = eprsum(eprtmp);
+        if (op_sym[op] == 0)
+          arr[eprsym] = 1;
+        syma[op] = op_sym[op]*E_PRMr + eprsym;
+      }
+      sub_count[uniq(syma)]++;
+    }
+}
+
+function show_counts(ep, ep_red, c1, c2) {
+  var s = '<table border=1>';
+  s += '<tr>';
+  s += '<td>Syms</td>';
+  s += '<td>EP=' + ep + '<br>Count</td>';
+  s += '<td>Reduced=' + ep_red + '<br>Count</td>';
+  s += '</tr>';
+  for (var i=CUBE_SYM; i > 0; i--) {
+    if (c1[i] != 0 || c2[i] != 0) {
+      var x = (c1[i] != c2[i]) ? '*' : '';
+      s += '<tr>';
+      s += '<td>' + i + '</td>';
+      s += '<td>' + c1[i] + '</td>';
+      s += '<td>' + c2[i] + x + '</td>';
+      s += '</tr>';
+    }
+  }
+  s += '</table>';
+  s += '<br>';
+  if (init.f) {
+    document.getElementById('status').innerHTML = '';
+    init.f = 0;
+  }
+  document.getElementById('status').innerHTML += s;
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_epr_sym2();
+  make_elist();
+  init.f = 1;
+}
+
+function make_elist() {
+  var arr1 = new Int32Array(E_PRM);
+  var arr2 = new Int32Array(E_PRM);
+  var tmpstr = new Int8Array(FACELETS);
+  assign_centers_3c();
+  for (var ep=0; ep < E_PRM; ep++) {
+    if (arr1[ep] == 0) {
+      arr1[ep] = ep;
+      int_to_strp(ep_b3[ep], eps, 11, 3);
+      make_cubestr_edg(edg2);
+      ep_sym[ep*CUBE_SYM] = ep;
+      for (var op=1; op < CUBE_SYM; op++) {
+        sym_op(tmpstr, cubestr, op);
+        var epsym = convert_edg_3c(tmpstr);
+        ep_sym[ep*CUBE_SYM+op] = epsym;
+        arr1[epsym] = ep;
+      }
+    }
+  }
+  for (var ep=0; ep < E_PRM; ep++)
+    arr2[arr1[ep]]++;
+  for (var ep=0, i=0, n=0; ep < E_PRM; ep++)
+    if (arr2[ep] != 0)
+      if (arr2[ep] < CUBE_SYM)
+        elist[i++] = ep;
+      else
+        n++;
+  ep_mins_with_48_syms = n;
+}
+</script>
+</center>
+</body>
+</html>

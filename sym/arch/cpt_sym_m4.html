@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Corner Symmetry - Method 4 </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../../mini_cube.png type=image/png>
+ <script src=../../rch.js></script>
+ <script src=../../rclib.js></script>
+ <script src=../symlib.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2> 3-Color Corner Symmetry <br> Method 4 </font>
+<br><br>
+<div id=status></div>
+<br>
+<a href="javascript: history.go(-1)">Back</a>
+<br><br>
+<script>
+"use strict";
+
+var USE_CT_SYM_UR = false;
+
+// Symmetry Arrays
+var cp_sym    = new Uint8Array(C_PRM * CUBE_SYM);     //   3 KB
+var ct_sym_m4 = new Uint16Array(C_TWIST * CUBE_SYM);  // 205 KB 
+var ct_sym_uf = new Uint16Array(C_PRM * C_TWIST);     // 300 KB 
+
+if (USE_CT_SYM_UR) 
+  var ct_sym_ur = new Uint16Array(C_PRM * C_TWIST);   // 300 KB 
+
+var count1 = new Uint32Array(C_PRM * C_TWIST);        // 600 KB
+var count2 = new Uint8Array(C_PRM * C_TWIST);         // 150 KB
+var op16c  = new Uint8Array(CUBE_SYM * 2);
+
+document.getElementById('status').innerHTML = 'Counts are running<br>';
+setTimeout(main, 100);
+
+function main() {
+  var time0 = Date.now();
+  init();
+  populate_ct_sym_m4();
+  populate_ct_sym_arr(ct_sym_uf, OP_UF, C_PRM);
+  if (USE_CT_SYM_UR) 
+    populate_ct_sym_arr(ct_sym_ur, OP_UR, C_PRM);
+  update_ct_sym_m4();
+  count_ct_mins_m4();
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  document.getElementById('status').innerHTML += 
+    '<br>Run Time: ' + time1 + '<br>';
+}
+
+function count_ct_mins_m4() {
+  for (var cp=0; cp < C_PRM; cp++) {
+    for (var ct=0; ct < C_TWIST; ct++) {
+      var cpt = cp*C_TWIST + ct; 
+      if (count1[cpt] == 0) {
+        count1[cpt] = cpt;
+        for (var op=1; op < CUBE_SYM; op++) {
+          var cpsym = cp_sym[cp*CUBE_SYM + op];
+          var ctsym = get_ctsym_m4(cp, ct, op);
+          count1[cpsym*C_TWIST + ctsym] = cpt;
+        }
+      }
+    }
+  }
+  count_mins(C_PRM, C_TWIST);
+}
+
+function populate_ct_sym_arr(arr, op, n) {
+  var tempstr = new Uint8Array(FACELETS);
+  for (var cp=0; cp < n; cp++) {
+    int_to_strp(cp_b2[cp], cps, 7, 2);
+    for (var ct=0; ct < C_TWIST; ct++) {
+      int_to_strp(ct, cts, 7, 3);
+      make_cubestr_cnr(cnr2);
+      sym_op(tempstr, cubestr, map[op]);
+      arr[cp*C_TWIST+ct] = cubestr_to_ct(tempstr);
+    }
+  }
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_cp_sym();
+  init_op16c();
+}
+
+function get_ctsym_m4(cp, ct, op) {
+  if (op16c[op*2] == 0) 
+    return ct_sym_m4[ct*CUBE_SYM + op];
+  else if (op16c[op*2] == OP_UF) 
+    return ct_sym_m4[ct_sym_uf[cp*C_TWIST + ct]*CUBE_SYM + op];
+  else { 
+    if (USE_CT_SYM_UR) 
+      return ct_sym_m4[ct_sym_ur[cp*C_TWIST + ct]*CUBE_SYM + op];
+    else
+      return ct_sym_m4[ct_sym_uf[(69-cp)*C_TWIST + ct]*CUBE_SYM + op];
+  }
+}
+
+function init_op16c() {
+  // symmetry operations that maintain consistent corner twist values 
+  // for all corner position values
+
+  var op_ud = new Uint8Array([0,1,3,5,7,9,11,22,24,25,27,29,31,33,35,46]);
+
+  /* for the symmetry operations that are not consistent, make the
+     equivalent from a pair of operations using one of either OP_UF or
+     OP_UR and one of the 16 consistent symmetries. 
+
+     OP_UF and OP_UR are defined in rch.js, any value from UF will work
+     for OP_UF, likewise for OP_UR.
+     UF: 2, 4, 10, 12, 13, 15, 17, 19, 26, 28, 34, 36, 37, 39, 41, 43
+     UR: 6, 8, 14, 16, 18, 20, 21, 23, 30, 32, 38, 40, 42, 44, 45, 47
+  */
+
+  for (var i=0; i < 2; i++) {
+    var op1 = (i) ? OP_UF: OP_UR;
+    for (var j=0; j < 16; j++) {
+      var op2 = op_ud[j];
+      op16c[op_op[op1*CUBE_SYM+op2]*2] = op1;
+      op16c[op_op[op1*CUBE_SYM+op2]*2+1] = op2;
+    }
+  }
+}
+
+function populate_ct_sym_m4() {
+  var tempstr = new Uint8Array(FACELETS);
+  int_to_strp(cp_b2[0], cps, 7, 2);
+  for(var ct=0; ct < C_TWIST; ct++)
+    for (var op=0; op < CUBE_SYM; op++)
+      if (op16c[op*2] == 0) {
+        int_to_strp(ct, cts,7, 3);
+        make_cubestr_cnr(cnr2);
+        sym_op(tempstr, cubestr, map[op]);
+        ct_sym_m4[ct*CUBE_SYM + op] = cubestr_to_ct(tempstr);
+      }
+}
+
+function update_ct_sym_m4() {
+  var tmp = new Uint16Array(C_TWIST);
+  populate_ct_sym_arr(tmp, OP_UR, 1);
+  for (var op=0; op < CUBE_SYM; op++) {
+    if (op16c[op*2] != 0) {
+      for (var ct=0; ct < C_TWIST; ct++) {
+        if (op16c[op*2] == OP_UF)
+          ct_sym_m4[ct*CUBE_SYM + op] = ct_sym_m4[ct*CUBE_SYM + op16c[op*2+1]];
+        else {  
+          if (USE_CT_SYM_UR)
+            ct_sym_m4[ct*CUBE_SYM + op] = ct_sym_m4[ct*CUBE_SYM + op16c[op*2+1]];
+          else {
+            var v1 = ct_sym_uf[69*C_TWIST + ct];
+            var v2 = tmp[ct];
+            ct_sym_m4[v1*CUBE_SYM + op] = ct_sym_m4[v2*CUBE_SYM + op16c[op*2+1]];
+          }
+        }
+      }
+    }
+  }
+}
+</script>
+</center>
+</body>
+</html>

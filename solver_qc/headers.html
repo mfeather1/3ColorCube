@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<body>
+<b>HTTP Response Headers:</b><br>
+<div id=status></div>
+<script>
+var req = new XMLHttpRequest();
+req.open('GET', document.location, false);
+req.send(null);
+var headers = req.getAllResponseHeaders().toLowerCase();
+document.getElementById('status').innerHTML = headers.replace(/\n/g, '<br>') +
+  '<br><b>Cross-Origin Isolation Status:</b>' +
+  '<br>isSecureContext = ' + isSecureContext +
+  '<br>crossOriginIsolated = ' + crossOriginIsolated;
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+edit=0
+speed=14
+fonttype=0
+bgcolor=38383D
+butbgcolor=baffc9
+repeat=0
+textsize=20
+buttonheight=17
+slidercolor=707070
+sliderbgcolor=dddddd
+snap=1

@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+ <meta name="author" content="Michael Feather"> 
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style>
+  textarea {
+    width:100%;
+    height:80vh;
+    white-space:pre;
+    background-color:#38383D;
+    color:white;
+  }
+ </style>
+</head>
+<body>
+<center>
+<div id=fn></div>
+<table><tr height=5></table>
+<textarea id=txt spellcheck=false readonly=true></textarea>
+<table><tr height=1><td></table>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+main();
+function main() {
+  var params = location.search.substr(1).split('&');
+  for (var i=0; i < params.length; i++) {
+    var p = params[i].split('=');
+    if (typeof(p[1]) != 'undefined')
+      window[p[0]] = p[1];
+  }
+  readFile(filename, show);
+}
+function show(t) {
+  fn.innerHTML = '<font size=+1>' + filename + '</font>';
+  txt.value = t;
+  if (typeof search != 'undefined') {
+    search = decodeURI(search);
+    var n = t.search(search);
+    // this works for firefox but chrome does not move the cursor 
+    setTimeout(function(){txt.setSelectionRange(n,n+search.length)},100);
+    // use a function to move the cursor for chrome
+    chrome(t, search);
+  }
+}
+function chrome(t, s) {
+  txt.focus();
+  var arr = t.split('\n');
+  for (var i=0; i < arr.length; i++) {
+    if (arr[i].search(s) >= 0) 
+      break;
+  }
+  txt.scrollTop = i / arr.length * (txt.scrollTop + txt.clientHeight);
+}
+function readFile(file) {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = handler;
+  xhr.open('GET', file, true);
+  xhr.send();
+  function handler() {
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200)
+        show(xhr.responseText);
+      else
+        console.log('Error loading file: ' + file);
+    }
+  }
+}
+</script>
+</center>
+</body>
+</html>

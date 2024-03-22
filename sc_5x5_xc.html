@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+ <title> 5x5 Supercube X-Centers</title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube4.js></script>
+ <script src=AnimCube5.js></script>
+ <style> .tabdata td {
+   padding-left:5px; padding-right:5px; border-color:black; text-align:center; } 
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> 5x5 Supercube <br> X-Centers </font>
+<br><br>
+<p>The X-Centers on the 5x5 Supercube are solved the same way as the 
+<a href=supercube_4x4.html>4x4 Supercube</a>.
+The following shows a comparison of the 4x4 and 5x5 cubes for the sequence which
+is used to get all centers on each face pointing in the same direction.</p>
+<br>
+<table>
+ <tr>
+  <td>
+   <div style="width:220px; height:220px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&supercube=1&gabbacolors=1&initrevmove=#&colorscheme=ROYKGB&move=Rm Fm Bm' R' Fm' Bm Rm' Fm Bm' R Fm' Bm U2 Rm Fm R' Fm' Rm' Fm R Fm' U2")</script>
+   </div>
+  </td>
+  <td width=30>
+  <td>
+   <div style="width:220px; height:220px; display:inline-block"> 
+    <script>AnimCube5("config=AnimCube.txt&edit=1&initrevmove=#&supercube=1&gabbacolors=1&colorscheme=ROYKGB&move=Rn Fn Bn' R' Fn' Bn Rn' Fn Bn' R Fn' Bn U2 Rn Fn R' Fn' Rn' Fn R Fn' U2")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<p> The final step of solving pairs of faces by twisting all four X-Centers on
+each face as one is also done with the same sequences as the 4x4 cube (which
+are the same as the 3x3 cube).
+However, if at the end of a solve there remains a single face with all four
+X-Centers half-twisted then the procedure is a bit different.
+<br><br>
+To half-twist all four X-Centers on a single face, first use the
+<a href=supercube.html#sc2>3x3 Supercube Sequence</a> to half-twist 
+all of the centers on the top face including the +Centers and Fixed Center
+(moves 1-12 on the cube below).
+At that point, the X-Centers are fixed but the +Centers and Fixed Center
+are half-twisted so turn the cube so the twisted centers are on the front
+face and use the sequence to half-twist just the +Centers (14-29).
+Finally, turn the cube so the twisted centers are on the top face and use the
+sequence to half-twist all the centers again but this time twist two layers
+together on each move so that only the Fixed Center is twisted (30-42).</p>
+<br> 
+   <div style="width:220px; height:220px; display:inline-block"> 
+    <script>AnimCube5("config=AnimCube.txt&edit=1&initrevmove=#&supercube=1&gabbacolors=1&colorscheme=ROYKGB" +
+"&move=" +
+"R' L' U2 R L U R' L' U2 R L U" +
+"X'" +
+"Rn Ln' F Rn Ln' Fm R2 Fm' Rn' Ln Fm R2 Fm' F' Rn' Ln" +
+"X" +
+"Rt' Lt' Ut2 Rt Lt Ut Rt' Lt' Ut2 Rt Lt Ut")
+    </script>
+   </div>
+<br><br><br>
+<p>The following shows another way to do the same thing as above.
+This uses the sequence shown on the second cube at the top of the page 
+(moves 1-22 on the cube below).
+The sequence is repeated (23-44) to complete the solve of the four
+half-twisted X-centers on the top face.</p>
+<br>
+<div style="width:220px; height:220px; display:inline-block"> 
+ <script>
+  var s = "Rn Fn Bn' R' Fn' Bn Rn' Fn Bn' R Fn' Bn U2 Rn Fn R' Fn' Rn' Fn R Fn' U2";
+  AnimCube5("config=AnimCube.txt&edit=1&initrevmove=#&supercube=1&gabbacolors=1&colorscheme=ROYKGB" +
+  "&move=" + s + s);
+</script>
+</div>
+<br><br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

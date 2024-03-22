@@ -1,0 +1,224 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Edge Symmetry - Method 2 </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../../mini_cube.png type=image/png>
+ <script src=../../rch.js></script>
+ <script src=../../rclib.js></script>
+ <script src=../symlib.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+  p { text-align: justify; margin-left: 10%; margin-right: 10%; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2> 3-Color Edge Symmetry <br> Method 2 </font>
+<br><br>
+<div id=status></div>
+<a href="javascript: history.go(-1)">Back</a>
+<br><br>
+<script>
+"use strict";
+/*
+  UPDATE_ET_SYM:
+    0 = do not update et_sym
+    1 = update so op can be used instead of op16e[op*2+1] in get_etsym()
+    2 = update so et_sym_UF not used in get_etsym()
+    3 = no update, use et_fr_uf (4 KB) instead of et_sym_UF in get_etsym()
+*/
+
+var UPDATE_ET_SYM = 3;
+
+if (UPDATE_ET_SYM < 2)
+  et_sym_UF = new Uint16Array(SLICE_PRM * E_TWIST);      // 1980 KB (2 MB)
+
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);          // 3248 KB (3 MB)
+var epm = new Int8Array(E_PRM);                          //   34 KB
+var count1 = new Int32Array(24 * E_TWIST);               //  192 KB
+var count2 = new Int32Array(49);
+
+// array to convert et_fr to et_uf 
+var et_fr_uf = new Uint16Array(E_TWIST);
+
+var get_etsym, update_etsym;
+
+document.getElementById('status').innerHTML = 'Counts are running<br><br>';
+setTimeout(main, 100);
+
+function main() {
+  var time0 = Date.now();
+  init();
+  counts();
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  document.getElementById('status').innerHTML += 
+    '<br>Run Time: ' + time1 + '<br><br>';
+}
+
+function counts() {
+  for (var ep=0; ep < E_PRM; ep++)
+    epm[ep] = -1;
+  var list = populate_list(E_PRM, ep_sym);  
+  for (var i=1; i < list.length; i++) {
+    var ep = list[i];
+    epm[ep] = 0;
+    var n = fill_epm(ep);
+    clear_count1(n);
+    do_et_sym(ep);
+    et_counts(n);
+  }
+  rpt2(list[0]*E_TWIST, 2);
+}
+
+function fill_epm(ep) {
+  var n = 1;
+  for (var op=1; op < CUBE_SYM; op++) {
+    var epsym = ep_sym[ep*CUBE_SYM + op];
+    if (epm[epsym] == -1)
+      epm[epsym] = n++;
+  }
+  return n;
+}
+
+function clear_count1(n) {
+  for (var i=0; i < n; i++)
+    for (var j=0; j < E_TWIST; j++)
+      count1[i*E_TWIST + j] = 0;
+} 
+
+function do_et_sym(ep) {
+  for (var et=0; et < E_TWIST; et++) {
+    if (count1[et] == 0) {
+      count1[et] = et;
+      for (var op=1; op < CUBE_SYM; op++) {
+        var epsym = ep_sym[ep*CUBE_SYM + op];
+        var etsym = get_etsym(ep, et, op);
+        count1[epm[epsym]*E_TWIST + etsym] = et;
+      }
+    }
+  }
+}
+
+function et_counts(n) {
+  var tmp = new Int8Array(E_TWIST);
+  for (var i=0; i < n; i++)
+    for (var j=0; j < E_TWIST; j++)
+        tmp[count1[i*E_TWIST + j]]++;
+  for (var i=0; i < E_TWIST; i++)
+    if (tmp[i] != 0)
+      count2[tmp[i]]++;
+}
+
+function get_etsym0(ep, et, op) {
+  // no et_sym update
+  if (op16e[op*2] == 0)
+    return et_sym[et*CUBE_SYM+op];
+  else if (op16e[op*2] == OP_FR)
+    return et_sym[et_sym_FR[ep_slice[ep*3]*E_TWIST+et]*CUBE_SYM + op16e[op*2+1]];
+  else 
+    return et_sym[et_sym_UF[ep_slice[ep*3+1]*E_TWIST+et]*CUBE_SYM + op16e[op*2+1]];
+}
+
+function get_etsym1(ep, et, op) {
+  // et_sym updated so op can be used instead of op16e[op*2+1]
+  if (op16e[op*2] == 0)
+    return et_sym[et*CUBE_SYM+op];
+  else if (op16e[op*2] == OP_FR)
+    return et_sym[et_sym_FR[ep_slice[ep*3]*E_TWIST+et]*CUBE_SYM + op];
+  else 
+    return et_sym[et_sym_UF[ep_slice[ep*3+1]*E_TWIST+et]*CUBE_SYM + op];
+}
+
+function get_etsym2(ep, et, op) {
+  // et_sym updated so op can be used instead of op16e[op*2+1] and
+  // et_sym_UF eliminated (replaced with et_sym_FR)
+  if (op16e[op*2] == 0)
+    return et_sym[et*CUBE_SYM+op];
+  else if (op16e[op*2] == OP_FR)
+    return et_sym[et_sym_FR[ep_slice[ep*3]*E_TWIST+et]*CUBE_SYM + op];
+  else 
+    return et_sym[et_sym_FR[ep_slice[ep*3+1]*E_TWIST+et]*CUBE_SYM + op];
+}
+
+function get_etsym3(ep, et, op) {
+  // eliminate et_sym_UF without updating et_sym (use et_fr_uf instead)
+  if (op16e[op*2] == 0)
+    return et_sym[et*CUBE_SYM+op];
+  else if (op16e[op*2] == OP_FR)
+    return et_sym[et_sym_FR[ep_slice[ep*3]*E_TWIST+et]*CUBE_SYM + op16e[op*2+1]];
+  else {
+    var et_fr = et_sym_FR[ep_slice[ep*3+1]*E_TWIST+et];
+    var et_uf = et_fr_uf[et_fr];  // convert et_fr to et_uf
+    return et_sym[et_uf*CUBE_SYM + op16e[op*2+1]];
+  }
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_ep_sym();
+  populate_et_sym_no_update()  // make et_sym but do not do update_et_sym()
+  populate_et_sym_FR();
+  if (UPDATE_ET_SYM == 0) {
+    populate_et_sym_UF_m1(); 
+    get_etsym = get_etsym0;
+  }
+  else if (UPDATE_ET_SYM == 1) {
+    populate_et_sym_UF_m1(); 
+    update_et_sym1();
+    get_etsym = get_etsym1;
+  }
+  else if (UPDATE_ET_SYM == 2) {
+    populate_et_sym_UF_m2(); 
+    update_et_sym2();
+    get_etsym = get_etsym2;
+  }
+  else if (UPDATE_ET_SYM == 3) {
+    populate_et_sym_UF_m2(); 
+    populate_et_fr_uf();
+    get_etsym = get_etsym3;
+  }
+}
+
+function update_et_sym1() {
+  for (var op=0; op < CUBE_SYM; op++) {
+    if (op16e[op*2] != 0) {
+      for (var et=0; et < E_TWIST; et++) {
+        if (op16e[op*2] != 0)
+          et_sym[et*CUBE_SYM + op] = et_sym[et*CUBE_SYM + op16e[op*2+1]];
+      }
+    }
+  }
+}
+
+function update_et_sym2() {
+  for (var op=0; op < CUBE_SYM; op++) {
+    if (op16e[op*2] != 0) {
+      for (var et=0; et < E_TWIST; et++) {
+        if (op16e[op*2] == OP_FR || ET_SYM_METHOD == 1)
+          et_sym[et*CUBE_SYM + op] = et_sym[et*CUBE_SYM + op16e[op*2+1]];
+        else {
+          // for ET_SYM_METHOD 2, update so et_sym_UF[] is no longer needed 
+          var et_fr = et_sym_FR[et];
+          var et_uf = et_sym_UF[et];
+          et_sym[et_fr*CUBE_SYM + op] = et_sym[et_uf*CUBE_SYM + op16e[op*2+1]];
+        }
+      }
+    }
+  }
+}
+
+function populate_et_fr_uf() {
+  for (var et=0; et < E_TWIST; et++)
+    et_fr_uf[et_sym_FR[et]] = et_sym_UF[et];
+}
+
+</script>
+</center>
+</body>

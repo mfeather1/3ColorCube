@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+ <title> Make Cubes From Solutions </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=../moves.js></script>
+</head>
+<body>
+<center>
+<font size=+2>Make Cubes From Solutions</font>
+<br><br>
+<p>To make cubes from a file containing a list of solutions, click on the
+button below to load the file (for available move codes, see bottom of 
+<a target=_blank href=../text_input_help.html>this</a> page).
+Copy/paste the results into another file for input to the solver (using
+the batch=1 param).</p>
+<br>
+<div id=status></div>
+<div id=btn></div>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+fc = [];
+var home_cube = 'RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO';
+document.getElementById('btn').innerHTML =
+  '<input type=file id=selectFile style="display:none;" ' +
+  'onchange="readFile(this.files)">' +
+  '<button class=btn style=width:140px onclick="document.getElementById(\'selectFile\').click()">Load File</button>';
+function readFile(files) {
+  function read(file) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      fc = e.target.result.split(/\r?\n/);
+      fc.length--;
+      document.getElementById('btn').innerHTML = '';
+      file_loaded();
+    }
+    reader.readAsText(file);
+  }
+  read(files[0]);
+}
+function file_loaded() {
+  var s = '';
+  for (var i=0; i < fc.length; i++)
+    s += do_moves(home_cube, fc[i], 1) + '<br>';
+  document.getElementById('status').innerHTML = s;
+}
+</script>
+</center>
+</body>
+</html>

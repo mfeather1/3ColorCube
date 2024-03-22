@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+ <title> 4x4 Cube - 6-Color Sequences </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube4.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> 4x4 Cube <br> 6-Color Sequences </font>
+<br><br>
+<p>These two sequences each fix four misplaced edge facelets on the front
+and back faces, use when at least three facelets match the setup.  
+The centers are not shown here because they are solved after the edges, 
+however, if they are already solved then minor modifications to these 
+sequences will preserve them as shown <a href=4x4_6C_3.html>here</a>.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&initrevmove=#&move=B2Dm2B2'&facelets=rrrrrllrrllrrrrrooooolloolloooooyyyyyllyyllyyyyywwwwwllwwllwwwwwgggggllggllgggggbbbbbllbbllbbbbb")</script>
+   </div>
+  </td>
+  <td width=70>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&initrevmove=#&move=Dm2R2Dm2R2Dm2&facelets=rrrrrllrrllrrrrrooooolloolloooooyyyyyllyyllyyyyywwwwwllwwllwwwwwgggggllggllgggggbbbbbllbbllbbbbb")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<p>These can be solved by doing both of the above two sequences in either order.
+One of the sequences is shown on each cube below (press play), the 
+result is the starting configuration for the other sequence.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&move=B2Dm2B2'&facelets=rrrrrllrrllrrrrrooooolloolloooooyywyyllyyllyywyywwywwllwwllwwywwgggggllggllgggggbbbbbllbbllbbbbb")</script>
+   </div>
+  </td>
+  <td width=70>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&move=Dm2R2Dm2R2Dm2&facelets=rrrrrllrrllrrrrrooooolloolloooooyywyyllyyllyywyywwywwllwwllwwywwgggggllggllgggggbbbbbllbbllbbbbb")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<a name=vv></a>
+<p>Same idea here but with two different color pairs, first the orange &amp; 
+red misplaced facelets must be moved to the proper positions to make the above
+starting configuration (moves 1-3).
+The first sequence is applied (4-6) then the inverse of the first 
+three moves (7-9) makes the configuration for the second sequence.
+The second sequence (10-14) then completes the solve.  
+For cases like this where two facelets must be moved to the proper locations
+to make the setup, the two sequences must be done in the order shown, 
+reversing the order does not work as it did in the above case.
+The two misplaced facelets on the top and bottom faces can be anywhere (do not
+have to exactly match this configuration) just twist the top and bottom faces
+so that the two misplaced facelets are on the left as the first two moves.</p>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&move=UD'LB2Dm2B2L'U'DDm2R2Dm2R2Dm2&facelets=rrorrllrrllrrrrroooorlloolloooooyyyyyllyyllyywyywwywwllwwllwwwwwgggggllggllgggggbbbbbllbbllbbbbb")</script>
+   </div>
+<br><br><br>
+<p>The sequence can also be used to move a pair of misplaced facelets to a
+different pair of opposite faces. 
+Press play to see how to move the white &amp; yellow misplaced facelets to
+the orange &amp; red faces.
+There is a quarter-twist of the left face before &amp; after the sequence.
+The result is the above starting configuration (after rotating cube on 
+last step).</p>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&move=LB2Dm2B2L'Uc'&facelets=rrrrrllrrllrrrrrooooolloolloooooyyyyyllyyllyyywywywwwllwwllwwwwwggggbllggllgggggbbbbbllbbllbbgbb")</script>
+   </div>
+<br><br><br>
+<a name=parity></a>
+<p>The following are "parity" configurations (each cube has one swapped
+pair of edge cubies), they are both solved the same way. 
+The slice containing the misplaced facelets is quarter-twisted and then all
+four edge cubies are flipped by using Sequence 
+<a href=edges.html#cube3>3C-E3</a> twice.
+On the second cube there is a half-twist of the front face to make the setup 
+which is undone on the last move.
+This solution method evolved from discussions with 
+<a target=_blank href=http://hlavolam.maweb.eu/parity-problem>Tadeáš Miler</a>,
+my original way of solving is <a href=4x4_6C_4.html>here</a>.
+This method is also used for the <a href=void_cube.html>Void Cube</a> and 
+<a href=mc4d_parity_config.html>Magic Cube 4D</a>.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&move=Dm' R' Dm' L' D2 L Dm R Uc2 R' Dm' L' D2 L Dm R&facelets=rrrrrllrrllrrrrrooooolloolloooooyywyyllyyllyyyyywwywwllwwllwwwwwgggggllgbllgggggbbbbbllbbllbbbgb")</script>
+   </div>
+  </td>
+  <td width=70>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&move=F2 Dm' R' Dm' L' D2 L Dm R Uc2 R' Dm' L' D2 L Dm R B2&facelets=rrrrrllrrllrrrrrooooolloolloooooyyyyyllyyllyywyywwywwllwwllwwwwwgggggllggllgggggbbbbbllbbllbbbbb")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<p> The above sequences misplace the centers within the slice so the following
+shows the additional moves to fix them.
+On the first cube below the last seven moves fix the centers.
+On the second cube moves 18-24 fix the centers (half-twist of back face
+moves to the end).</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&move=Dm' R' Dm' L' D2 L Dm R Uc2 R' Dm' L' D2 L Dm R Rw2 Dm' Rw2 Dm' Rm2 Dm2' Rm2&facelets=rrrrrrrrrrrrrrrrooooooooooooooooyywyyyyyyyyyyyyywwywwwwwwwwwwwwwggggggggbgggggggbbbbbbbbbbbbbbgb")</script>
+   </div>
+  </td>
+  <td width=70>
+  <td>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&move=F2 Dm' R' Dm' L' D2 L Dm R Uc2 R' Dm' L' D2 L Dm R Rw2 Dm' Rw2 Dm' Rm2 Dm2' Rm2 B2&facelets=rrrrrrrrrrrrrrrrooooooooooooooooyyyyyyyyyyyyywyywwywwwwwwwwwwwwwggggggggggggggggbbbbbbbbbbbbbbbb")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<p> After the edges are solved, solve the centers to complete the solution.
+Use this sequence if at least three facelets match the setup.
+If three match then the net result will be two less misplaced facelets 
+(otherwise four).
+It is ok to twist the back face to make this setup.</p>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&initrevmove=#&move=Rm2Dm2Rm2Dm2&colorscheme=ROYWGB")</script>
+   </div>
+<br><br><br>
+<p>The following sequence fixes misplaced facelets on the front and back faces.
+The first five moves make the above configuration.
+It is ok to twist the back face to make this setup.</p>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube4("config=AnimCube.txt&initrevmove=#&move=Rm2Dm2Rm2Dm2BRm2Dm2Rm2Dm2B'&colorscheme=ROYWGB")</script>
+   </div>
+<br><br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

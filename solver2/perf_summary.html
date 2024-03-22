@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+ <title> Solver 2 - Performance Summary</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> 
+   .tabdata td {padding: 4px 12px; border-color:black; text-align:center;}
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>Solver 2<br>Performance Summary</font>
+<br><br><br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td colspan=6 style=border-color:white>Suboptimal Solutions (20 moves or less)</td></tr>
+ <tr>
+  <td style=border-color:white>Random<br>Cubes</td>
+  <td style=border-color:white>Solves per<br>Second</td>
+  <td style=border-color:white>Longest<br>Solve</td>
+  <td style=border-color:white>Dist3<br>(MB)</td>
+  <td style=border-color:white>Dist4<br>(MB)</td>
+  <td style=border-color:white>Log<br>File</td>
+ </tr>
+ <tr><td>10000</td><td>3.24</td><td>39.89</td><td>0</td><td>0</td><td><a href="../show_log.html?filename=solver2/logs/subopt_random_10000.txt.lzma">view</a></tr>
+ <tr><td>10000</td><td>13.28</td><td>8.60</td><td>418</td><td>0</td><td><a href="../show_log.html?filename=solver2/logs/subopt_random_10000_D3_418MB.txt.lzma">view</a></tr>
+ <tr><td>10000</td><td>20.03</td><td>6.28</td><td>835</td><td>0</td><td><a href="../show_log.html?filename=solver2/logs/subopt_random_10000_D3_835MB.txt.lzma">view</a></td></tr>
+ <tr><td>10000</td><td>56.05</td><td>1.80</td><td>835</td><td>1827</td><td><a href="../show_log.html?filename=solver2/logs/subopt_random_10000_D3_D4.txt.lzma">view</a></tr>
+ <tr>
+</table>
+<br><br><br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td colspan=8 style=border-color:white>Optimal Solutions</td></tr> 
+ <tr>
+  <td style=border-color:white>Cubes</td>
+  <td style=border-color:white>Type</td>
+  <td style=border-color:white>Average<br>Solve</td>
+  <td style=border-color:white>Longest<br>Solve</td>
+  <td style=border-color:white>Log<br>File</td>
+ </tr>
+ <tr><td>1000</td><td>Random</td><td>13.26</td><td>123.19</td><td><a href=logs/optimal_random_1000_conc9.txt>view</a></td></tr>
+ <tr><td>100</td><td>19 Move</td><td>83.50</td><td>130.64</td><td><a href=logs/optimal_19_move_conc9.txt>view</a></tr>
+<tr>
+</table>
+<br><br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td colspan=3 style=border-color:white>Optimal Solutions<br>1000 Random Cubes</td></tr>
+ <tr>
+  <td style=border-color:white>Solution<br>Length</td>
+  <td style=border-color:white>Average<br>Solve</td>
+  <td style=border-color:white>Longest<br>Solve</td>
+ </tr>
+ <tr><td>15</td><td>0.02</td><td>0.03</td></tr>
+ <tr><td>16</td><td>0.20</td><td>0.93</td></tr>
+ <tr><td>17</td><td>2.77</td><td>15.53</td></tr>
+ <tr><td>18</td><td>14.58</td><td>112.91</td></tr>
+ <tr><td>19</td><td>86.26</td><td>123.19</td></tr>
+</table>
+<br><br id=presolved><br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td colspan=8 style=border-color:white>Presolved Optimal Solutions</td></tr> 
+ <tr>
+  <td style=border-color:white>Cubes</td>
+  <td style=border-color:white>Type</td>
+  <td style=border-color:white>Average<br>Solve</td>
+  <td style=border-color:white>Longest<br>Solve</td>
+  <td style=border-color:white>Log<br>File</td>
+ </tr>
+ <tr><td>1000</td><td>Random</td><td>0.37</td><td>18.61</td><td><a href=logs/optimal_presolved_1000.txt>view</a></td></tr>
+ <tr><td>77</td><td>16 Move</td><td>7.30</td><td>56.95</td><td><a href=logs/optimal_presolved_16_move.txt>view</a></td></tr>
+</table>
+<br><br>
+<p>Notes:
+<br><br>
+<p>In the above tables, Average Solve and Longest Solve are in seconds.
+<br><br>
+A frequency distribution for the presolved 1000 test is
+<a href=fdist2.html>here</a>.
+<br><br>
+For the presolved tests, url param use_dist9=1 was used which generates
+a small search array that significantly improves performance for presolved
+configs, see function populate_dist9 in
+<a href="../view-source?filename=solver2/solve.js&search=function%20populate_dist9">solve.js</a>
+for more info.
+<br><br>
+Also see the performance summary notes for the
+<a href="../solver_qc/perf_summary_notes.html">Quad-Core Solver</a>
+which also apply to Solver&nbsp;2.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+</center>
+</html>

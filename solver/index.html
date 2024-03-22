@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+ <title> Cube Solver </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style>
+  .link {
+   width:100px;
+   border-radius:15px;
+   background-color:#ffffff;
+   padding:3px 20px;
+   border:none;
+   outline:none;
+   color:black;
+   text-decoration:none;
+   font-family:sans-serif;
+   white-space:nowrap;
+  }
+  a.link {color:black}
+  a.link:visited {color:black}
+ </style>
+</head>
+<body>
+<center>
+<table><tr height=2><td></table>
+<font size="+2"> Cube Solver </font>
+<br><br>
+<p>For basic solver, press the first button below which generates the search
+arrays to Depth 8.
+For better solver, press the second button to generate Depth 9 which 
+takes longer initially but significantly improves search performance.
+Use of Dist Files eliminates generating the arrays, see
+<a target=_blank href=solver_help.html#udf>Solver Help</a> for details.</p>
+<br>
+<table>
+ <tr> 
+  <td><a class=link href='solve.html?stl=5s&snc=1' translate=no>Depth 8</a></td>
+  <td width=15>
+  <td><a class=link href='solve.html?dist_gen_depth=9&stl=5s&snc=1' translate=no>Depth 9</a></td>
+  <td width=15>
+  <td><a class=link href='solve.html?load_dist_files=1&stl=5s&snc=1' translate=no>Dist Files</a></td>
+ </tr>
+</table>
+<br>
+<font size=+2 translate=no>Dist3</font>
+<br>
+<table>
+ <tr height=5>
+ <tr>
+  <td><a class=link href='solve.html?use_dist3=1&stl=5s&snc=1' translate=no>418 MB</a></td>
+  <td width=15>
+  <td><a class=link href='solve.html?use_dist3=2&stl=5s&snc=1' translate=no>835 MB</a></td>
+ </tr>
+</table>
+<br><br>
+<font size=+2>Custom Cube Display</font>
+<br><br>
+<p>Here are the same links with an example of how the cube display can be
+customized with URL parameters, see
+<a target=_blank href=solver_help.html#custom>Help</a> for details.</p>
+<br>
+<table>
+ <tr>
+  <td><a class=link href='solve.html?stl=5s&snc=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=0&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1' translate=no>Depth 8</a></td>
+  <td width=15>
+  <td><a class=link href='solve.html?dist_gen_depth=9&stl=5s&snc=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=0&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1' translate=no>Depth 9</a></td>
+  <td width=15>
+  <td><a class=link href='solve.html?load_dist_files=1&stl=5s&snc=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=0&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1' translate=no>Dist Files</a></td>
+ </tr>
+</table>
+<br>
+<font size=+2 translate=no>Dist3</font>
+<br>
+<table>
+ <tr height=5>
+ <tr>
+  <td><a class=link href='solve.html?use_dist3=1&stl=5s&snc=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=0&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1' translate=no>418 MB</a></td>
+  <td width=15>
+  <td><a class=link href='solve.html?use_dist3=2&stl=5s&snc=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=0&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1' translate=no>835 MB</a></td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+</center>
+</body>
+</html>

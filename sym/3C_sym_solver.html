@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Cube Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <style>
+  table { border-collapse:collapse; border-color:white; }
+  .tabdata td { text-align:right; padding:2px 20px;  border-color:black; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>3-Color Cube Symmetry</font>
+<br><br>
+<table>
+ <tr><td><td><td style=text-align:right>Configs</td></tr>
+ <tr><td>EP = Edge Position (3-color)</td><td width=30><td style=text-align:right>34650</td></tr>
+ <tr><td>ET = Edge Twist</td><td><td style=text-align:right>2048</td></tr>
+ <tr><td>EPT = EP * ET</td><td><td style=text-align:right>70963200</td></tr>
+ <tr height=10></tr>
+ <tr><td>CP = Corner position (3-color)</td><td><td style=text-align:right>70</td></tr>
+ <tr><td>CT = Corner Twist</td><td><td style=text-align:right>2187</td></tr>
+ <tr><td>CPT = CP * CT</td><td><td style=text-align:right>153090</td></tr>
+</table>
+<br>
+<p>There are 2058 EP configs that do not have 48 unique symmetry values,
+the ratio is:
+<br><br>
+2058 / 35650 = .0594
+<br><br>
+So 6% of the time EP does not provide a unique symmetry min and the EPT 
+min must be determined.
+There are 170928 EPT configs that do not have 48 unique symmetry values,
+the ratio is:
+<br><br>
+170928 / 70963200 = .0024
+<br><br>
+So .24% of the time EPT does not provide a unique symmetry min and the CPT
+min must be determined dynamically by applying all sym ops that
+yield EPT min.
+The following table shows the distribution for EPT configs that do not have
+48 unique symmetries:</p>
+<br>
+<table border=1 class=tabdata>
+ <tr>
+  <td style=border-color:white> EPT<br>Mins </td>
+  <td style=border-color:white> Syms </td>
+  <td style=border-color:white> Total<br>Configs </td>
+ </tr>
+ <tr><td> 6896 </td><td> 24 </td><td> 165504 </td></tr>
+ <tr><td> 149 </td><td> 16 </td><td> 2384 </td></tr>
+ <tr><td> 220 </td><td> 12 </td><td> 2640 </td></tr>
+ <tr><td> 22 </td><td> 8 </td><td> 176 </td></tr>
+ <tr><td> 32 </td><td> 6 </td><td> 192 </td></tr>
+ <tr><td> 2 </td><td> 4 </td><td> 8 </td></tr>
+ <tr><td> 6 </td><td> 3 </td><td> 18 </td></tr>
+ <tr><td> 2 </td><td> 2 </td><td> 4 </td></tr>
+ <tr><td> 2 </td><td> 1 </td><td> 2 </td></tr>
+ <tr>
+  <td style="border:1px solid white"> 7331 </td>
+  <td style="border:1px solid white"> </td>
+  <td style="border:1px solid white"> 170928 </td>
+ </tr>
+</table>
+<br>
+<p>The distribution for the number of sym ops that need to be applied to CPT
+to get the symmetry min for the entire 3-Color configuration is shown in the
+table below.
+The average is 2.06 sym ops (351888/170928). <!-- so basically one more sym
+op than normal occurs .24% of the time, hence the overhead of dynamically
+computing the CPT symmetry minimum is practically negligible. -->
+The row with 48 Sym Ops can be ignored because for those two EPT configs (which
+are solved and superflip) the CPT min can be obtained by an array lookup (no
+need to apply 48 sym ops).</p>
+<br>
+<table border=1 class=tabdata>
+ <tr>
+  <td style=border-color:white> EPT<br>Configs </td>
+  <td style=border-color:white> Sym<br>Ops </td>
+  <td style=border-color:white> Total<br>Ops </td>
+ </tr>
+ <tr><td> 165504 </td><td> 2 </td><td> 331008 </td></tr>
+ <tr><td> 2384 </td><td> 3 </td><td> 7152 </td></tr>
+ <tr><td> 2640 </td><td> 4 </td><td> 10560 </td></tr>
+ <tr><td> 176 </td><td> 6 </td><td> 1056 </td></tr>
+ <tr><td> 192 </td><td> 8 </td><td> 1536 </td></tr>
+ <tr><td> 8 </td><td> 12 </td><td>  96 </td></tr>
+ <tr><td> 18 </td><td> 16 </td><td> 288 </td></tr>
+ <tr><td> 4 </td><td> 24 </td><td> 96 </td></tr>
+ <tr><td> 2 </td><td> 48 </td><td> 96 </td></tr>
+ <tr>
+  <td style="border:1px solid white"> 170928 </td>
+  <td style="border:1px solid white"> </td>
+  <td style="border:1px solid white"> 351888 </td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+</center>
+</body>
+</html>

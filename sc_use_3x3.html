@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+ <title> Supercubes With Random Centers </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <style> td {text-align:center} </style>
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> Supercubes With Random Centers </font>
+<br><br>
+<div id=status></div>
+<div id=cube style=width:280px;height:280px></div>
+<br>
+<table>
+ <tr>
+  <td><button class="btn cuw1" onclick="new_cube(1,1)">Random</button></td>
+  <td width=15>
+  <td><button class="btn cuw2" onclick="new_cube(0,1)">Reset</button></td>
+  <td width=15>
+  <td><button class="btn cuw2" onclick="help()">Help</button></td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+<script>
+"use strict";
+var acjs_removeListeners = [];
+var homeCube  = "RRRRRRRRROOOOOOOOOYYYYYYYYYKKKKKKKKKGGGGGGGGGBBBBBBBBB";
+var scubeHome = "000000000000000000000000000000000000000000000000000000";
+new_cube(0, 0);
+function new_cube(n, r) {
+  if (n == 0) {
+    var centers = "000000 0 Y";
+    var sfacelets = homeCube;
+  }
+  else {
+    var rand = randCenters();
+    centers = rand;
+    sfacelets = add_centers(scubeHome, centers);
+  }
+  document.getElementById('status').innerHTML = 'Centers: ' + centers;
+  var params = "id=cube&config=AnimCube.txt&edit=1&buttonbar=2&colorscheme=ROYKGB";
+  params += "&supercube=1&gabbacolors=1&superfacelets=" + sfacelets;
+  if (r)
+    acjs_removeListeners['cube']();
+  AnimCube3(params);
+}
+function randCenters() {
+  // solvable as in not getting single twisted center at the end
+  var solvable = 'A';   // N=not solvable, Y=solvable, A=all
+  var lda = [0, 1];
+  var ldy = [0, 3, 2, 1];
+  var ldn = [2, 1, 0, 3];
+  var sum = 0;
+  var str = '';
+  for (var i=0; i < 5; i++) {
+    var n = Math.floor(Math.random()*4);
+    sum += n;
+    str += n;
+  }
+  if (solvable == 'A')
+    n = lda[sum%2];
+  else if (solvable == 'Y')
+    n = ldy[sum%4];
+  else if (solvable == 'N')
+    n = ldn[sum%4];
+  sum += n;
+  str += n + ' ' + sum;
+  if ( sum == 0 || sum == 4 || sum == 8 || sum == 12 || sum == 16)
+    solvable = 'Y';
+  else 
+    solvable = 'N';
+  return(str + ' ' + solvable);
+}
+function add_centers(sfacelets, centers) {
+  var f = sfacelets.split('');
+  var c = centers.split('');
+  f[4]  = c[0];
+  f[40] = c[1];
+  f[22] = c[2];
+  f[49] = c[3];
+  f[31] = c[4];
+  f[13] = c[5];
+  return(f.join(''));
+}
+function help() {
+  location = location.href.replace('sc_use_3x3', 'supercube_3x3_help');
+}
+</script>
+</center>
+</div>
+</body>
+</html>

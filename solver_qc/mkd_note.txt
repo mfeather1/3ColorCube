@@ -1,0 +1,143 @@
+
+  The file mkd.tar.gz contains C programs that can be used to generate dist
+  files for the solver.  While it is mainly included so that Dist4 files
+  larger than 1827 MB can be generated, any of the dist files used by the
+  solver can be generated.  Dist4 can be increased to the size of the entire
+  3-color cube by adding bits to the edge twist component of which each
+  doubles the size.
+
+  The size also depends on the number of configs stored per byte (with the
+  associated limitations if more than two are stored, for example a bit-array
+  can only indicate whether or not a config can be solved in a given number
+  of moves (by a 0 or 1 value)).
+
+    Configs/Byte   Values   Array Type
+    ------------   ------   -----------
+          2          16     hexadecimal
+          4           4     quad
+          8           2     bit
+
+  The possible Dist4 array sizes (in MB) are shown in the following table.
+
+   Edge      Configs per Byte
+   Twist  ----------------------
+   Bits       2       4       8
+   ----   ----------------------
+    6       3653    1827     984
+    7       7307    3653    1827
+    8      14614    7307    3653
+    9      29228   14614    7307
+   10      58455   29228   14614
+   11     116911   58455   29228
+
+  Size calculation: 782 * 2^N * 70 * 2187
+
+  782 is 3-color edge positions (symmetry reduced)
+  N = edge twist bits
+  70 = 3-color corner positions
+  2187 = corner twist
+
+  ----------------------------------------------------------------------------
+  
+  To use Dist4 larger than 1827 MB with the Optimal Solver adjust the size
+  in solve.html, search_d4.js and readfiles.js, the following example shows
+  the mods for the 3653 MB size.
+
+  1. solve.html:
+
+    change:
+      dist4_shared = new SharedArrayBuffer(C_PRM_TW*MIN_EP*16);     // 1827 MB
+    to
+      dist4_shared = new SharedArrayBuffer(C_PRM_TW*MIN_EP*32);     // 3653 MB
+
+  2. search_d4.js:
+
+    replace the dist4 code:
+
+      if (depth-n <= 11 && depth-n >= 9) {
+        var rs = etsym>>5;
+        ix = (cpsym*2187+ctsym)*12512 + epmin*16 + (rs>>2);  // MIN_EP*16 = 12512 
+        var tmp = ((dist4[ix]>>((rs&3)<<1))&3);
+        dist = (tmp) ? tmp+9+n : 0;
+        if (dist > depth)
+          continue;
+      }
+
+    with one of the following based on array type:
+
+    bit-array:
+
+      if (depth-n == 11 || depth-n == 10) {
+        var rs = etsym>>3;
+        ix = (cpsym*2187+ctsym)*25024 + epmin*32 + (rs>>3);  // MIN_EP*32 = 25024 
+        var tmp = dist4[ix] & (1<<(rs&7));
+        dist = (tmp) ? 0 : 12+n;
+        if (dist > depth)
+          continue;
+      }
+
+    quad-array:
+
+      if (depth-n <= 11 && depth-n >= 9) {
+        var rs = etsym>>4;
+        ix = (cpsym*2187+ctsym)*25024 + epmin*32 + (rs>>2);  // MIN_EP*32 = 25024
+        var tmp = ((dist4[ix]>>((rs&3)<<1))&3);
+        dist = (tmp) ? tmp+9+n : 0;
+        if (dist > depth)
+          continue;
+      }
+
+    hexadecimal-array:
+
+      var rs = etsym>>5;
+      ix = (cpsym*2187+ctsym)*25024 + epmin*32 + (rs>>1);  // MIN_EP*32 = 25024
+      dist = n + ((rs&1) ? dist4[ix]>>4 : dist4[ix]&0xF);
+      if (dist > depth)
+        continue;
+
+  3. readfiles.js:
+
+    change:
+      var bufSize = file.size/32;
+    to:
+      var bufSize = file.size/64;
+
+  ----------------------------------------------------------------------------
+
+  At some point with the larger files, better performance wll be achieved by
+  generating to depth 12.  For bit or quad arrays, one of the following mods
+  will need to be made to search_d4.js, also change Dist4_11F.dat to
+  Dist4_12F.dat in readfiles.js.
+
+  bit-array:
+
+    change:
+      if (depth-n == 11 || depth-n == 10) {
+        ...
+        dist = (tmp) ? 0 : 12+n;
+        ...
+      }
+
+    to:
+      if (depth-n == 12 || depth-n == 11) {
+        ...
+        dist = (tmp) ? 0 : 13+n;
+        ...
+      }
+
+  quad-array:
+
+    change:
+      if (depth-n <= 11 && depth-n >= 9) {
+        ...
+        dist = (tmp) ? tmp+9+n : 0;
+        ...
+      }
+
+    to:
+      if (depth-n <= 12 && depth-n >= 10) {
+        ...
+        dist = (tmp) ? tmp+10+n : 0;
+        ...
+      }
+

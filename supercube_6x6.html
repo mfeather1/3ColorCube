@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6x6 Supercube - Arc Centers </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube6.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> 6x6 Supercube <br> Arc Centers </font>
+<br><br>
+<p>
+The only thing new needed for 6x6 is a way to solve the
+<a href=cube_diagram.html>Arc Centers</a> (the X-Centers 
+can be solved using the 4x4 sequences as shown 
+<a href=sc_6x6_xc.html>here</a>).
+The first step to solving the Arc Centers is to eliminate the ones that are
+are quarter-twisted by using the following mirror-image sequences.
+To use this sequence it is only necessary that there are two centers 
+with quarter-twisted arrows in the locations shown on the top face.
+The direction of the arrows does not have to match the setup nor do the rest
+of the arrows on the face. 
+The quarter-twisted pair will either be solved or half-twisted (as in no 
+longer quarter-twisted) as a result of the sequence.
+The half-twisted pair on the front face can be ignored while doing this
+step.
+This  is similar to the method used for the
+<a href=supercube_4x4.html>4x4 Supercube</a>,
+the eight move sequence is used twice (moves 2-9 and 12-19).</p>
+<br>
+<table>
+ <tr>
+  <td>
+   <div style="width:260px; height:260px; display:inline-block"> 
+    <script>AnimCube6("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=Fn Rn Fm R' Fm' Rn' Fm R Fm' Fn' Um' Rn Fm R' Fm' Rn' Fm R Fm' Um&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+  <td width=40>
+  <td>
+   <div style="width:260px; height:260px; display:inline-block"> 
+    <script>AnimCube6("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=Fn' Ln' Fm' L Fm Ln Fm' L' Fm Fn Um Ln' Fm' L Fm Ln Fm' L' Fm Um'&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+ </tr>
+</table> 
+<br><br>
+<p>Another way to do it is with the quarter-twisted centers on the front
+face (instead of top) as shown below.
+The following sequences are the inverse mirror-images of the above.
+This alternate method is used in the
+<a href=sc_6x6_solve_arc_centers.html>Example Solve of Arc Centers</a>.</p>
+<br>
+<table>
+ <tr>
+  <td>
+   <div style="width:260px; height:260px; display:inline-block"> 
+    <script>AnimCube6("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=Fm Um' R Um Rn' Um' R' Um Rn Fm' Un' Um' R Um Rn' Um' R' Um Rn Un&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+  <td width=40>
+  <td>
+   <div style="width:260px; height:260px; display:inline-block"> 
+    <script>AnimCube6("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=Fm' Um L' Um' Ln Um L Um' Ln' Fm Un Um L' Um' Ln Um L Um' Ln' Un'&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+ </tr>
+</table> 
+<br><br>
+<p>When only half-twisted Arc Centers remain, use 5x5 sequences to fix
+centers where possible like the following example where two pairs on the front
+face and another two pairs on the top face can be fixed.
+This can also be done if one face has only a single twisted pair (like
+top face on above cube).
+In that case the single twisted pair will be swapped with the other pair that
+is not twisted, the net result will be that there is no change in the number
+of twisted centers on that face but the two pairs on the other face will both
+be fixed.</p>
+<br>
+   <div style="width:260px; height:260px; display:inline-block"> 
+    <script>AnimCube6("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=Rn Ln' Fm Bm' R2 Fm' Bm Rn' Ln Fm Bm' R2 Fm' Bm&colorscheme=ROYKGB")</script>
+   </div>
+<br><br><br>
+<p>When no more Arc Centers can be fixed with 5x5 sequences use one of the
+following sequences (or mirror-image) to fix two twisted pairs.
+The first three fix pairs on the front and top faces, the fourth one fixes
+pairs on the front and back faces and the last one fixes two pairs on 
+the front face.
+The sequence on the first cube below can also be used to quarter-twist
+centers with a slight modification as shown <a href=sc_6x6.html>here</a>.</p>
+<br>
+<table>
+ <tr>
+  <td>
+   <div style="width:260px; height:260px; display:inline-block"> 
+    <script>AnimCube6("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=Fm' Rn Fm Bm Ln' Bm2' Fm R2 Fm' Bm2 Ln Bm' Fm' Rn' Fm2 Bm' R2 Fm' Bm&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+  <td width=40>
+  <td>
+   <div style="width:260px; height:260px; display:inline-block"> 
+    <script>AnimCube6("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=Fn' Rm Fn Bn Lm' Bn2' Fn R2 Fn' Bn2 Lm Bn' Fn' Rm' Fn2 Bn' R2 Fn' Bn&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+ </tr>
+ <tr height=20>
+ <tr>
+  <td>
+   <div style="width:260px; height:260px; display:inline-block"> 
+    <script>AnimCube6("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=U Fm' Rn Fm Bm Ln' Bm2' Fm R2 Fm' Bm2 Ln Bm' Fm' Rn' Fm2 Bm' R2 Fm' Bm U'&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+  <td>
+  <td>
+   <div style="width:260px; height:260px; display:inline-block"> 
+    <script>AnimCube6("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=B Rm' Lm U Fm' Rn Fm Bm Ln' Bm2' Fm R2 Fm' Bm2 Ln Bm' Fm' Rn' Fm2 Bm' R2 Fm' Bm U' Rm Lm' B'&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+ </tr>
+ <tr height=20>
+ <tr>
+  <td colspan=3 style=text-align:center>
+   <div style="width:260px; height:260px; display:inline-block"> 
+    <script>AnimCube6("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=Rm Lm' U Fm' Rn Fm Bm Ln' Bm2' Fm R2 Fm' Bm2 Ln Bm' Fm' Rn' Fm2 Bm' R2 Fm' Bm U' Lm Rm'&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+ </tr>
+</table> 
+<br>
+<p>You can try solving 
+<a href=sc_use_6x6.html>6x6 Supercubes With Random Arc Centers</a>.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

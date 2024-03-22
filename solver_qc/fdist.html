@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+ <title> Frequency Distribution - Optimal 1000</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> 
+   .tabdata  td {padding: 5px 15px; border-color:black; text-align:right;}
+   .tabdata2 td {padding: 1px 15px; border-color:black; text-align:right;}
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>Frequency Distribution<br>Optimal 1000</font>
+<br><br>
+<p>The following is a frequency distribution of solution lengths found for
+the 1000 random cubes that were solved optimally.
+Also shown are expected values based on distributions from much larger tests
+done by Herbert Kociemba and Tomas Rokicki as shown 
+<a target=_blank href=http://kociemba.org/moves20.htm>here</a>
+(see bar charts in section "Optimal Cube Solver").</p>
+<br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr>
+  <td colspan=2 style=border-color:white></td>
+  <td colspan=2 style=border-color:white;text-align:center>Expected</td>
+ <tr>
+  <td style=border-color:white>Length</td>
+  <td style=border-color:white>Count</td>
+  <td style=border-color:white>Kociemba</td>
+  <td style=border-color:white>Rokicki</td>
+ </tr>
+ <tr><td>15</td><td>3</td><td>1.97</td><td>2.063</td></tr>
+ <tr><td>16</td><td>31</td><td>27.10</td><td>26.448</td></tr>
+ <tr><td>17</td><td>265</td><td>266.73</td><td>267.027</td></tr>
+ <tr><td>18</td><td>669</td><td>670.99</td><td>670.407</td></tr>
+ <tr><td>19</td><td>32</td><td>33.03</td><td>33.868</td></tr>
+</table>
+<br><br>
+<p>Of the 18 move solutions, 73% were sub-optimal solutions found at a lower
+depth that were shown to be optimal by completion of depth 17.
+The percentage is calculated using the number of 18 move solutions (669) and
+the number of those that did not have a suboptimal solution (shown as [18+0]
+in the log) which is 179, the calculation is:
+<br><br>
+(1 - 179/669) * 100 = 73%
+<br><br>
+All of the 19 move solutions were sub-optimal solutions found at a lower
+depth that were shown to be optimal by completion of depth 18.
+Likewise for the 100 cubes in the 19 move test.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+</center>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+ <title>Interactive Cubes</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube2.js></script>
+ <script src=AnimCube3.js></script>
+ <script src=AnimCube4.js></script>
+ <script src=AnimCube5.js></script>
+ <script src=AnimCube6.js></script>
+ <script src=AnimCube7.js></script>
+ <style>
+  td {text-align:center}
+  .btn {
+    width:110px;
+    height:30px;
+    padding:0;
+    border:1px solid black;
+    border-radius:15px;
+    background-color:#ffffff;
+    outline:none;
+  } 
+  .inp {
+    border-radius:15px;
+    background-color:white;
+    width:46px;
+    height:26px;
+    padding:0px;
+    padding-left:8px;
+	border:1px solid black;
+    outline:none;
+  }
+  .btn2 {
+    border-radius:15px;
+    background-color:white;
+    border:1px solid black;
+    width:42px;
+    height:26px;
+    outline:none;
+  }
+  .btn:active {background-color: #aaaaaa;}
+  .btn2:active {background-color: #aaaaaa;}
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2>Interactive Cubes</font><br>
+<table><tr height=5><td></table>
+<select id=cubeType onchange="newCube('reset')"
+ style="height:32px; border-radius:12px;padding:0 10px 0; 
+        border:1px solid black; outline:none; background-color:#ffffff">
+ <option value=2>2x2 Regular</option>
+ <option value=3 selected>3x3 Regular</option>
+ <option value=4>4x4 Regular</option>
+ <option value=5>5x5 Regular</option>
+ <option value=6>6x6 Regular</option>
+ <option value=7>7x7 Regular</option>
+ <option value=8>2x2 Supercube</option>
+ <option value=9>3x3 Supercube</option>
+ <option value=10>4x4 Supercube</option>
+ <option value=11>5x5 Supercube</option>
+ <option value=12>6x6 Supercube</option>
+ <option value=13>7x7 Supercube</option>
+</select> 
+<br><br>
+<div id=cube style="width:280px; height:280px"></div>
+<table><tr height=1><td></table>
+<br>
+<table border=0>
+ <tr>
+  <td><button class=btn onclick="newCube('random')">Scramble</button></td>
+  <td width=10>
+  <td><button class=btn onclick="newCube('reset')">Reset</button></td>
+ </tr>
+</table>
+<table>
+ <tr height=20>
+ <tr>
+  <td> <button class=btn2 onclick="zoom('in')"> + </button> </td>
+  <td width=5>
+  <td> <button class=btn2 onclick="zoom('out')"> - </button> </td>
+  <td width=5>
+  <td> <input type=hidden onchange="zoom('change')" class=inp id=cubeHeight>
+       <button style=width:62px class=btn2 onclick="zoom('reset')">reset</button> </td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+
+<script>
+"use strict";
+var minHeight = 100;
+var prevType = 0;
+var acjs_removeListeners = [];
+var init = [0, 0, 200, 280, 360, 420, 480, 540];
+var params = '&buttonbar=0&bgcolor=38383D&edit=1&snap=1&buttonheight=18&colorscheme=ROYWGB';
+var sc = '&supercube=1&gabbacolors=1&scw=1';
+var rand = '&initmove=random';
+var dpr = devicePixelRatio;
+var div = document.getElementById('cube');
+var inp = document.getElementById('cubeHeight');
+var first = true;
+newCube('reset');
+function newCube(cmd) {
+  var size;
+  var supercube = 0;
+  var type = document.getElementById('cubeType').value; 
+  if (type < 8)
+    size = type;
+  else {
+    supercube = 1; 
+    size = type - 6; 
+  }
+  if (type != prevType) {
+    inp.value = init[size]; 
+    changeSize(inp.value);
+  }
+  var par = 'id=cube' + params;
+  if (supercube)
+    par += sc;
+  if (cmd == 'random')
+    par += rand;
+  if (first)
+    first = false;
+  else
+    acjs_removeListeners['cube']();
+  if      (size == 2) AnimCube2(par); 
+  else if (size == 3) AnimCube3(par); 
+  else if (size == 4) AnimCube4(par); 
+  else if (size == 5) AnimCube5(par); 
+  else if (size == 6) AnimCube6(par); 
+  else if (size == 7) AnimCube7(par); 
+  prevType = type;
+}
+function zoom(cmd) {
+  if (isNaN(inp.value) || inp.value == '') {
+    inp.value = div.height;
+    return;
+  }   
+  var cubeHeight = parseInt(inp.value);
+  if (cubeHeight < minHeight) {
+    cubeHeight = minHeight;
+    inp.value = minHeight;
+  }
+  if (div.height == minHeight && cubeHeight <= minHeight)
+    inp.value = minHeight; 
+  if (cmd == 'in')
+    cubeHeight += 20;
+  else if (cmd == 'out') 
+      cubeHeight -= 20;
+  else if (cmd == 'reset') {
+    var size = document.getElementById('cubeType').value;
+    cubeHeight = init[size>7?size-6:size];
+  }
+  if (!(div.height == minHeight && cubeHeight <= minHeight)) {
+    inp.value = cubeHeight;
+    changeSize(cubeHeight);
+  }
+  resizeEvent();
+}
+function changeSize(size) {
+  div.height = size * dpr;
+  div.width = size * dpr;
+  div.style.height = size + 'px';
+  div.style.width = size + 'px';
+}
+function resizeEvent() {
+  // window.dispatchEvent(new Event('resize'));
+  // the above line works for newer browser but to also support older
+  // browsers use the following code instead
+  var resizeEvent = window.document.createEvent('UIEvents'); 
+  resizeEvent.initUIEvent('resize', true, false, window, 0); 
+  window.dispatchEvent(resizeEvent);
+}
+</script>
+</center>
+</div>
+</body>
+</html>

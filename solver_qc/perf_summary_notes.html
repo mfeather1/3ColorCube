@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+ <title>Quad-Core Solver - Performance Summary Notes</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> 
+   .tabdata td {padding: 4px 12px; border-color:black; text-align:center;}
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>Quad-Core Solver<br>Performance Summary Notes</font>
+<br><br>
+<p>The file with 10000 random cubes used in the suboptimal tests is available
+<a target=_blank href="https://drive.google.com/file/d/1INu5AOhSeLAJhXYFX3kbfEvEUqNsiZbP/view?usp=share_link">here</a>
+(load with url parameter batch=1), the other files are built-in and selected
+with the batch param as shown in the logs. 
+<br><br>
+A frequency distribution for the optimal 1000 test is 
+<a href=fdist.html>here</a>.
+<br><br>
+For the 19 move optimal test the first 100 sequences with 19 moves were taken
+from Herbert Kociemba's list of 100000 optimally solved cubes linked in
+section "Optimal Cube Solver"
+<a target=_blank href=http://kociemba.org/moves20.htm>here</a>.
+<!-- <a href=http://kociemba.org/math/optman/100000optcubes.zip>here</a>) -->
+The cube configs were made by applying the solution sequences to a solved
+cube, so these are actually the inverse configs.
+<br><br>
+In this test of the Quad-Core Solver the presolved cubes were solved
+suboptimally, for optimal solutions see the performance summary for
+<a href=../solver2/perf_summary.html#presolved>Solver&nbsp;2</a>. 
+<br><br>
+The 77 cube presolved test is the set of configs that are 3-color solutions
+and at the maximum distance from 6-color solution which is 16 moves, this set
+is reduced by symmetry (see counts for
+<a href=../dist_file_contents.html#distp2>DistP2</a>).
+<br><br>
+<p>With the computer used in these tests (spec below) the solver defaults to
+8 concurrent processes (one per thread).  In the optimal tests, param conc=9
+was used which allows the 18 cube moves to be distributed evenly across
+9 processes for better load balancing which yields a small performance gain
+(~1 second for average solve).
+<br><br>
+All tests were done with Google Chrome on Fedora 34 on an AMD Ryzen 5 3400G,
+3.7Ghz Quad-Core/8 thread, 16 GB RAM (DDR4 2667MHz).</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+</center>
+</html>

@@ -1,0 +1,45 @@
+----------------------------------------------------------
+Optimal
+----------------------------------------------------------
+Solver2 Quad-Core   Diff
+2:19:10  2:32:54   13:44  optimal_19_move_conc9.txt
+2:28:56  2:45:25   16:29  optimal_19_move.txt
+3:41:00  4:03:44   22:44  optimal_random_1000_conc9.txt
+3:57:04  4:22:36   25:32  optimal_random_1000.txt
+  18:39    20:18   01:39  optimal_random_100_conc9.txt
+  20:47    22:52   02:05  optimal_random_100.txt
+
+Solver2 Quad-Core   Diff
+   8350     9174     824  optimal_19_move_conc9.txt
+   8936     9925     989  optimal_19_move.txt
+  13260    14624    1364  optimal_random_1000_conc9.txt
+  14224    15756    1532  optimal_random_1000.txt
+   1119     1218      99  optimal_random_100_conc9.txt
+   1247     1372     125  optimal_random_100.txt
+
+----------------------------------------------------------
+Suboptimal
+----------------------------------------------------------
+Solver2 Quad-Core   Diff
+  12:33    12:47   00:14  subopt_random_10000_D3_418MB.txt
+  08:19    08:32   00:13  subopt_random_10000_D3_835MB.txt
+  02:58    03:05   00:07  subopt_random_10000_D3_D4.txt
+  04:55    04:58   00:03  subopt_random_1000.txt
+
+Solver2 Quad-Core   Diff
+    753      767      14  subopt_random_10000_D3_418MB.txt
+    499      512      13  subopt_random_10000_D3_835MB.txt
+    178      185       7  subopt_random_10000_D3_D4.txt
+    295      298       3  subopt_random_1000.txt
+
+----------------------------------------------------------
+Presolved - Solver2 is Optimal, Quad-Core is Suboptimal
+----------------------------------------------------------
+Solver2 Quad-Core
+  06:08    01:31  optimal_presolved_1000.txt
+  09:22    00:09  optimal_presolved_16_move.txt
+
+Solver2
+    368       91  optimal_presolved_1000.txt
+    562        9  optimal_presolved_16_move.txt
+

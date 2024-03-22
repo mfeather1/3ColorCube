@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+ <title> Magic Cube 4D - Solving Corners on 4-Color Hypercube </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+</head>
+<body>
+<center>
+<font size="+2"> Magic Cube 4D <br> Solving Corners on 4-Color Hypercube </font>
+<br><br>
+<p> The first step is to solve one pair of oppposite
+cells using the instructions for the Starter Hypercube and then move them
+to the center and outside (the non-visible 4th dimension).
+The second pair of cells is solved the same way except that
+the quarter-twists (U or U' to front, right, back or left cells) are no 
+longer allowed because those would mess up the solved cells.
+After solving the second pair of cells turn the whole hypercube so they
+are on the right and left.
+<br><br>
+To solve the last two cell pairs use Sequence 4C-C2 which fixes the four 
+misplaced cubies on the front cell as can be seen on the following image
+(the four misplaced cubies on bottom cell also get fixed).
+Sequence 4C-C1 can not be used at this point because it also swaps another 
+pair of cubies on the left cell which up until now did not affect any of
+the already solved cells (this can be seen by doing the reverse sequence
+on a solved hypercube).</p>
+  <img src=img/mc4d_4C-C2.png style=width:220px>
+<br><br>
+<p>If the above setup can not be made with half-twists then just match three
+of the four locations (on front cell) which will result in two of them getting
+fixed (three fixed less one misplaced from bottom cell equals net of two fixed).
+When there are only two misplaced cubies remaining then make the usual setup 
+(shown below) and complete the corner solution with Sequence 4C-C3 which has 26
+moves (hence the reason you only want to use it once as opposed to using it
+several times to solve two misplaced cubies at a time).</p>
+  <img src=img/mc4d_4C-C3.png style=width:220px>
+<br><br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+</center>
+</body>
+</html>

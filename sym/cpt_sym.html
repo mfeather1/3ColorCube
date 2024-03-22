@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+ <title> 3-Color Corner Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=symlib.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2> 3-Color Corner Symmetry </font>
+<br><br>
+<div id=status></div>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+"use strict";
+
+/* 3-Color Corner Symmetry
+
+      Mins    Syms    Configs
+   -------    ----   --------
+      3020      48     144960
+       311      24       7464
+         8      16        128
+        35      12        420
+         9       8         72
+         6       6         36
+         1       4          4
+         1       3          3
+         1       2          2
+         1       1          1
+   -------           --------
+      3393             153090   Ratio: 45.12
+*/
+
+var count1 = new Uint32Array(C_PRM * C_TWIST);      // 600 KB
+var count2 = new Uint8Array(C_PRM * C_TWIST);       // 150 KB
+
+document.getElementById('status').innerHTML = 'Counts are running<br>';
+setTimeout(main, 100);
+
+function main() {
+  var time0 = Date.now();
+  init();
+  count_cpt_mins();
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  document.getElementById('status').innerHTML +=
+    '<br>Run Time: ' + time1 + '<br>';
+}
+
+function count_cpt_mins() {
+  for (var cp=0; cp < C_PRM; cp++) {
+    for (var ct=0; ct < C_TWIST; ct++) {
+      var cpt = cp*C_TWIST + ct;
+      if (count1[cpt] == 0) {
+        count1[cpt] = cpt;
+        for (var op=1; op < CUBE_SYM; op++) {
+          var cpsym = cp_sym[cp*CUBE_SYM+op];
+          if (CT_SYM_METHOD == 3)
+            var ctsym = get_ctsym(cpsym, ct, op);
+          else
+            var ctsym = get_ctsym(cpt, op);
+          count1[cpsym*C_TWIST+ctsym] = cpt;
+        }
+      }
+    }
+  }
+  count_mins(C_PRM, C_TWIST);
+}
+
+function init() {
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_cp_sym();
+  if (CT_SYM_METHOD == 1) {
+    populate_cpt_sym();
+    get_ctsym = get_ctsym_m1;
+  }
+  else if (CT_SYM_METHOD == 2) {
+    populate_op_tables();
+    populate_cpt_min();
+    populate_cpt_sym2();
+    get_ctsym = get_ctsym_m2;
+  }
+  else if (CT_SYM_METHOD == 3) {
+    populate_ct_sym();
+    update_ct_sym();
+    get_ctsym = get_ctsym_m3;
+  }
+}
+</script>
+</center>
+</body>

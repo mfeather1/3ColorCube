@@ -1,0 +1,13 @@
+# get numbers from the optimal 1000 log for display in perf_summary.html
+
+log=optimal_random_1000_conc9.txt
+
+f() {
+  avg=`grep $1f $log | awk '{s+=$NF}END{printf("%5.2f\n", s/NR)}'`
+  max=`grep $1f $log | awk '{print $NF}' | sort -n | tail -1`
+  echo $1 $avg $max
+}
+
+seq 15 19 | while read a; do f $a; done | 
+awk '{printf("%d %6.2f %7.2f\n", $1, $2, $3)}'
+

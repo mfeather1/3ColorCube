@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+ <title> Interactive Cubes - All Solving Stages </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> td {text-align:center} </style>
+ <script src=AnimCube3.js></script>
+ <script src=cube_move.js></script>
+ <script src=hto_edge.js></script>
+ <script src=corners2.js></script>
+ <script src=cpr.js></script>
+ <script src=randmoves.js></script>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2>Interactive Cubes - All Solving Stages </font>
+<table><tr height=10><td></table>
+<select id=type onchange="resetCube()"
+  style="height:30px; border-radius:12px;padding:0 10px 0; 
+         outline:none; background-color:#ffffff">
+  <option value="starter">Starter Cube</option>
+  <option value="corner">3-Color Corner Cube</option>
+  <option value="edge">3-Color Edge Cube</option>
+  <option value="3C">3-Color Regular Cube</option>
+  <option value="corner6c">6-Color Corner Cube</option>
+  <option value="corner6c_hto">6-Color Corners: Pre-Solved as 3-Color (HTO)</option>
+  <option value="corner6c_all">6-Color Corners: Pre-Solved as 3-Color (ALL)</option>
+  <option value="edge6c">6-Color Edges: Pre-Solved as 3-Color </option>
+  <option value="6C">6-Color Regular Cube</option>
+</select> 
+<table><tr height=1><td></table>
+<div id=cube style=width:300px;height:300px></div>
+<br>
+<table>
+ <tr>
+  <td><button type=button class="btn cuw1" onclick="randCube()">Random</button></td>
+  <td width=20>
+  <td><button type=button class="btn cuw1" onclick="resetCube()">Reset</button></td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+<script>
+"use strict";
+var facelets, type;
+var first = 1;
+var acjs_removeListeners = [];
+init();
+resetCube();
+function init() {
+  var params = location.search.substr(1).split('&');
+  for (var i=0; i < params.length; i++) {
+    var p = params[i].split('=');
+    window[p[0]] = p[1];
+  }
+  set_facelets();
+}
+function resetCube() {
+  if (first) {
+    if (typeof(type) == 'undefined')
+      type = 'starter';
+    else
+      if (val(type) == 0)
+        type = 'starter';
+    document.getElementById('type').value = type; 
+  }
+  else {
+    type = document.getElementById('type').value;
+    acjs_removeListeners['cube']();
+  }
+  set_facelets();
+  AnimCube3('id=cube&config=AnimCube.txt&buttonbar=0&edit=1&facelets=' + facelets);
+  first = 0;
+}
+function randCube() {
+  var move;
+  if (type == 'edge') {
+    move = randMoves(3, 20);
+    facelets = make_edge_cube(move);
+    show_cube();
+  }
+  else if (type == 'edge6c') {
+    facelets = make_edge6c_cube();
+    show_cube();
+  }
+  else if (type == 'corner6c_hto') {
+    facelets = make_corner6c_hto_cube();
+    show_cube();
+  }
+  else if (type == 'corner6c_all') {
+    facelets = make_corner6c_all_cube();
+    show_cube();
+  }
+  else {
+    move = randMoves(3, 20);
+    var params = 'id=cube&config=AnimCube.txt&buttonbar=0&edit=1&textsize=20';
+    params += '&initrevmove=' + move + '&facelets=' + facelets + '&fonttype=0';
+    acjs_removeListeners['cube']();
+    AnimCube3(params);
+  }
+}
+function show_cube() {
+  var params = 'id=cube&config=AnimCube.txt&buttonbar=0&edit=1&textsize=20';
+  params += '&facelets=' + facelets + '&fonttype=0';
+  acjs_removeListeners['cube']();
+  AnimCube3(params);
+}
+function make_edge_cube(move) {
+  var home = "RRRRRRRRRBBBYYYBBBYYYBBBYYYBBBYYYBBBYYYBBBYYYRRRRRRRRR";
+  var corners = "101010101101101101101000000000000101101101101101000101";
+  var rcube = cube_move(home, move, 0).split('');
+  for (var i=0; i < 54; i++)
+    if (corners[i] == '1')
+      rcube[i] = home[i];
+  return(cvt_to_anim(rcube));
+}
+function make_corner6c_hto_cube() {
+  var rand = Math.floor(Math.random()*corners2.length);
+  return(corners2[rand].substr(0,54));
+}
+function make_corner6c_all_cube() {
+  var rand = Math.floor(Math.random()*cpr.length);
+  return(cvt_to_anim(cpr[rand].substr(0,54)));
+}
+function make_edge6c_cube() {
+  var rand = Math.floor(Math.random()*hto_edge.length);
+  return(cvt_to_anim(hto_edge[rand]));
+}
+function set_facelets() {
+  var home_starter    = "RLRLRLRLRRLRLRLRLRLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
+  var home_corners    = "RLRLRLRLRRLRLRLRLRYLYLYLYLYYLYLYLYLYBLBLBLBLBBLBLBLBLB";
+  var home_corners_6c = "RLRLRLRLROLOLOLOLOYLYLYLYLYWLWLWLWLWGLGLGLGLGBLBLBLBLB";
+  var home_3c         = "RRRRRRRRRRRRRRRRRRYYYYYYYYYYYYYYYYYYBBBBBBBBBBBBBBBBBB";
+  var home_6c         = "RRRRRRRRROOOOOOOOOYYYYYYYYYWWWWWWWWWGGGGGGGGGBBBBBBBBB";
+  if      (type == 'starter')      facelets = home_starter;
+  else if (type == 'corner')       facelets = home_corners;
+  else if (type == 'edge')         facelets = home_3c;
+  else if (type == 'corner6c')     facelets = home_corners_6c;
+  else if (type == 'corner6c_hto') facelets = home_corners_6c;
+  else if (type == 'corner6c_all') facelets = home_corners_6c;
+  else if (type == 'edge6c')       facelets = home_6c;
+  else if (type == '3C')           facelets = home_3c;
+  else if (type == '6C')           facelets = home_6c;
+}
+function val()
+{
+  var f = 0;
+  if      (type == 'starter')       f = 1;
+  else if (type == 'corner')        f = 1;
+  else if (type == 'edge')          f = 1;
+  else if (type == 'corner6c')      f = 1;
+  else if (type == 'corner6c_hto')  f = 1;
+  else if (type == 'corner6c_all')  f = 1;
+  else if (type == 'edge6c')        f = 1;
+  else if (type == '3C')            f = 1;
+  else if (type == '6C')            f = 1;
+  return(f);
+}
+</script>
+</center>
+</div>
+</body>
+</html>

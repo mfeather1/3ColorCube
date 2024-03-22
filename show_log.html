@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <meta name="robots" content="noindex, nofollow">
+ <meta name="author" content="Michael Feather"> 
+ <script src="lzma.js"></script>
+</head>
+<body>
+<div id=text></div>
+<center>
+<script>
+var lzma = new LZMA("lzma_worker.js");
+var time0 = Date.now();
+main();
+function main() {
+  var params = location.search.substr(1).split('&');
+  for (var i=0; i < params.length; i++) {
+    var p = params[i].split('=');
+    if (typeof(p[1]) != 'undefined')
+      window[p[0]] = p[1];
+  }
+  readBinaryFile(filename, decomp);
+}
+function decomp(r) {
+  lzma.decompress(r, decompDone);
+}
+function decompDone(r) {
+  // console.log('Decompress: ' + (Date.now() - time0) + 'ms');
+  var s = '<pre>' + r + '</pre>';
+  document.getElementById('text').innerHTML = s;
+}
+function readBinaryFile(url, callback) {
+  var req = new XMLHttpRequest();
+  req.open('get', url);
+  req.responseType = 'arraybuffer';
+  req.onload = function () {
+    if (req.status != 200) {
+      console.log('Error loading file: ' + url + ', status = ' + req.status);
+      return;
+    }
+    var resp = new Int8Array(req.response);
+    callback(resp);
+  }
+  req.send();
+}
+</script>
+</center>
+</body>
+</html>
+

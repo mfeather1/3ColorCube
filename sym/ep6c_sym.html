@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6-Color Edge Position Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=symlib.js></script>
+ <script src=epr_sym.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+  p { text-align: justify; margin-left: 10%; margin-right: 10%; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>6-Color Edge Position Symmetry</font>
+<br>
+<p> This program may take a while to run on some devices so here are the
+results from a previous run.
+To actually run the counts, press the button below the table.</p>
+<table border=1>
+ <tr><td><b>Mins</b></td><td><b>Syms</b></td><td><b>Configs</b></td></tr>
+ <tr><td>9972862</td><td>48</td><td>478697376</td></tr>
+ <tr><td>  12139</td><td>24</td><td>   291336</td></tr>
+ <tr><td>    462</td><td>16</td><td>     7392</td></tr>
+ <tr><td>    404</td><td>12</td><td>     4848</td></tr>
+ <tr><td>     41</td><td> 8</td><td>      328</td></tr>
+ <tr><td>     47</td><td> 6</td><td>      282</td></tr>
+ <tr><td>      4</td><td> 4</td><td>       16</td></tr>
+ <tr><td>      6</td><td> 3</td><td>       18</td></tr>
+ <tr><td>      1</td><td> 2</td><td>        2</td></tr>
+ <tr><td>      2</td><td> 1</td><td>        2</td></tr>
+ <tr><td><b>9985968</b></td><td></td><td><b>479001600</b></td></tr>
+ <tr><td colspan=3 style=text-align:center>Ratio = 47.97</td></tr>
+</table>
+<br>
+<button onclick=run_counts()>Run Counts</button>
+<br><br>
+<div id=status></div>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+"use strict";
+
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);     // 3248 KB (3 MB)
+var epm = new Int8Array(E_PRM);                     //   34 KB
+var count1 = new Int32Array(24 * E_PRMr);           //  192 KB
+var count2 = new Int32Array(49);
+
+function run_counts() {
+  document.getElementById('status').innerHTML = 'Counts are running<br><br>';
+  setTimeout(main, 100);
+}
+
+function main() {
+  var time0 = Date.now();
+  init();
+  counts();
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  document.getElementById('status').innerHTML +=
+    '<br>Run Time: ' + time1 + '<br><br>';
+}
+
+function counts() {
+  for (var ep=0; ep < E_PRM; ep++)
+     epm[ep] = -1;
+  var list = populate_list(E_PRM, ep_sym);
+  for (var i=1; i < list.length; i++) {
+    var ep = list[i];
+    epm[ep] = 0;
+    var n = fill_epm(ep);
+    clear_count1(n);
+    do_epr_sym(ep);
+    epr_counts(n);
+  }
+  rpt2(list[0]*E_PRMr, 2);
+}
+
+function fill_epm(ep) {
+  var n = 1;
+  for (var op=1; op < CUBE_SYM; op++) {
+    var epsym = ep_sym[ep*CUBE_SYM + op];
+    if (epm[epsym] == -1)
+      epm[epsym] = n++;
+  }
+  return n;
+}
+
+function clear_count1(n) {
+  for (var i=0; i < n; i++)
+    for (var j=0; j < E_PRM; j++)
+        count1[i*E_PRMr + j] = 0;
+}
+
+function do_epr_sym(ep) {
+  var epr = new Uint8Array(3);
+  var eprsym = new Uint8Array(3);
+  for (epr[0]=0; epr[0] < 24; epr[0]++) {
+    for (epr[1]=0; epr[1] < 24; epr[1]++) {
+      for (epr[2]=0; epr[2] < 24; epr[2]++) {
+        var eprn = eprsum(epr);
+        if (count1[eprn] == 0) {
+          count1[eprn] = eprn;
+          for (var op=1; op < CUBE_SYM; op++) {
+            var epsym = ep_sym[ep*CUBE_SYM + op];
+            get_eprsym(eprsym, ep, epr, op);
+            count1[epm[epsym]*E_PRMr + eprsum(eprsym)] = eprn;
+          }
+        }
+      }
+    }
+  }
+}
+
+function epr_counts(n) {
+  var epm = new Int8Array(E_PRMr);
+  for (var i=0; i < n; i++)
+    for (var j=0; j < E_PRMr; j++)
+        epm[count1[i*E_PRMr + j]]++;
+  for (var i=0; i < E_PRMr; i++)
+    if (epm[i] != 0)
+      count2[epm[i]]++;
+}
+
+function init() {
+  if (ET_SYM_METHOD == 1)
+    get_etsym = get_etsym_m1;
+  else if (ET_SYM_METHOD == 2)
+    get_etsym = get_etsym_m2;
+  else
+    get_etsym = get_etsym_m3;
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_ep_sym();
+  populate_epr_sym();
+  populate_ep_min();
+  populate_ept_min_op();
+}
+</script>
+</center>
+</body>

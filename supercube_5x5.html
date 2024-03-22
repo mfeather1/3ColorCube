@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<head>
+ <title> 5x5 Supercube +Centers </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube5.js></script>
+ <style> .tabdata td {
+   padding-left:5px; padding-right:5px; border-color:black; text-align:center; } 
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size="+2"> 5x5 Supercube <br> +Centers </font>
+<br><br>
+<p>The only thing new needed for 5x5 is a way to solve the 
+<a href=cube_diagram.html>+Centers</a> (the X-Centers can be solved using
+the 4x4 sequences as shown <a href=sc_5x5_xc.html>here</a>).
+The first step to solving the +Centers is to eliminate those that are are 
+quarter-twisted, but before getting into that first look at sequences that
+fix pairs of half-twisted centers using slightly modified versions of the 
+<a href=supercube.html#sc>3x3 Supercube Sequences</a>.
+<br><br>
+On the first cube below the sequence fixes a pair of half-twisted +Centers 
+on the front face and another pair on the top face.
+On the second cube the two pairs are vertical instead of horizontal.
+The third cube has a horizontal pair on the front face and a vertical pair
+on the top face.
+The fourth cube has the second pair on the back face.
+The fifth cube has both pairs on the front face.</p>
+<br>
+<table>
+ <tr>
+  <td>
+   <div style="width:220px; height:220px; display:inline-block"> 
+    <script>AnimCube5("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=Rn Ln' Fm R2 Fm' Rn' Ln Fm R2 Fm'&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+  <td width=40>
+  <td>
+   <div style="width:220px; height:220px; display:inline-block"> 
+    <script>AnimCube5("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=Rm Fn Bn' R2 Fn' Bn Rm' Fn Bn' R2 Fn' Bn&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+ </tr>
+ <tr height=20>
+ <tr>
+  <td>
+   <div style="width:220px; height:220px; display:inline-block"> 
+    <script>AnimCube5("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=U Rn Ln' Fm R2 Fm' Rn' Ln Fm R2 Fm' U'&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+  <td width=40>
+  <td>
+   <div style="width:220px; height:220px; display:inline-block"> 
+    <script>AnimCube5("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=Rn2 Ln2' Um R2 Um' Rn2' Ln2 Um R2 Um'&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+ </tr>
+ <tr height=20>
+ <tr>
+  <td colspan=3 style=text-align:center>
+   <div style="width:220px; height:220px; display:inline-block"> 
+    <script>AnimCube5("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=Rn Ln' F Rn Ln' Fm R2 Fm' Rn' Ln Fm R2 Fm' F' Rn' Ln&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+</table> 
+<br><br>
+<a name=qtw></a>
+<p>The following shows how a slightly modified version of the sequence from the
+first cube at the top of the page can be used to eliminate +Centers that are 
+quarter-twisted as shown on the front face of the cubes below.
+On the first cube, the first three moves put the counter-clockwise piece in
+the proper position then the sequence is applied, the last three moves undo
+the first three.
+The third and fourth moves cancel each other so they can be eliminated and
+as shown on the second cube. 
+This sequence also results in two centers on the top face being half-twisted 
+but that does not matter because at this point the goal is just to eliminate
+quarter-twisted centers.</p>
+<br>
+<table>
+ <tr>
+  <td>
+   <div style="width:220px; height:220px; display:inline-block"> 
+    <script>AnimCube5("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=Rn F' Rn' Rn Ln' Fm R2 Fm' Rn' Ln Fm R2 Fm' Rn F Rn'&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+  <td width=30>
+  <td> 
+   <div style="width:220px; height:220px; display:inline-block"> 
+    <script>AnimCube5("config=AnimCube.txt&initrevmove=#&supercube=1&gabbacolors=1&move=Rn F' Ln' Fm R2 Fm' Rn' Ln Fm R2 Fm' Rn F Rn'&colorscheme=ROYKGB")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br><br>
+<p>To use this sequence it is only necessary that there are two +Centers with
+quarter-twisted arrows in the locations shown on the front face.
+The direction of the arrows does not have to match the setup nor do the rest
+of the arrows on the face.
+The quarter-twisted centers will either be solved or half-twisted (as in no 
+longer quarter-twisted) as a result of the sequence.
+<br><br>
+The following shows how the above sequence is used to eliminate
+quarter-twisted +Centers on all faces.
+In the table below the cube, "Make Setup" means to turn the cube so that there
+are two quarter-twisted centers in the locations shown on the above cube.</p>
+<br>
+<div style="width:240px; height:240px"> 
+ <script>
+  var s = "Rn F' Ln' Fm R2 Fm' Rn' Ln Fm R2 Fm' Rn F Rn'";
+  AnimCube5("config=AnimCube.txt&colorscheme=ROYKGB&supercube=1&gabbacolors=1&superfacelets=000000010003030001000000000000003000300000200000000000000200010200030000000000000010001020000000000000000001000102000000000000000000100010100010000000" +
+  "&move=" + s + "X'" + s + "Y2" + s + "Z Y" + s + "X" + s + "X" + s + "Y2" + s + "Z" + s);
+ </script>
+</div>
+<br><br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td>1-14</td><td style=text-align:left>Apply Sequence</td></tr>
+ <tr><td>15</td><td style=text-align:left>Move Red face to front</td></tr>
+ <tr><td>16-29</td><td style=text-align:left>Apply Sequence</td></tr>
+ <tr><td>30</td><td style=text-align:left>Make Setup</td></tr>
+ <tr><td>31-44</td><td style=text-align:left>Apply Sequence</td></tr>
+ <tr><td>45-46</td><td style=text-align:left>Move Green face to front and Make Setup</td></tr>
+ <tr><td>47-60</td><td style=text-align:left>Apply Sequence</td></tr>
+ <tr><td>61</td><td style=text-align:left>Move Orange face to front</td></tr>
+ <tr><td>62-75</td><td style=text-align:left>Apply Sequence</td></tr>
+ <tr><td>76</td><td style=text-align:left>Move Blue face to front</td></tr>
+ <tr><td>77-90</td><td style=text-align:left>Apply Sequence</td></tr>
+ <tr><td>91</td><td style=text-align:left>Make Setup</td></tr>
+ <tr><td>92-105</td><td style=text-align:left>Apply Sequence</td></tr>
+ <tr><td>106</td><td style=text-align:left>Move Black face to front</td></tr>
+ <tr><td>107-120</td><td style=text-align:left>Apply Sequence</td></tr>
+</table>
+<br><br>
+<p>Complete the solve by using the sequences for half-twisted +Centers.
+First use the one that fixes all four centers on the front face (moves 1-18).
+Turn the cube to move the Orange face to the front and do it again (19-37).
+Turn the cube so the last two pairs are on the top and front faces and then do
+the sequence to fix them (38-51).
+The last move turns the cube to the home position (all arrows point up).</p>
+<br>
+<div style="width:220px; height:220px"> 
+ <script>
+  var s = "Rn F' Ln' Fm R2 Fm' Rn' Ln Fm R2 Fm' Rn F Rn'";
+  var s2 = "Rn Ln' Fm R2 Fm' Rn' Ln F Rn Ln' Fm R2 Fm' Rn' Ln R2 F' R2"; 
+  AnimCube5("config=AnimCube.txt&colorscheme=ROYKGB&supercube=1&gabbacolors=1" +
+  "&superfacelets=000000010003030001000000000000003000300000200000000000000200010200030000000000000010001020000000000000000001000102000000000000000000100010100010000000" +
+  "&initmove=" + s + "X'" + s + "Y2" + s + "Z Y" + s + "X" + s + "X" + s + "Y2" + s + "Z" + s +
+  "&move=" + s2 + "X" + s2 + "Z' X" +
+  "U Rn Ln' Fm R2 Fm' Rn' Ln Fm R2 Fm' U'" +
+  "Y");
+</script>
+</div>
+<br><br>
+<p>You can try using the above sequences to solve
+<a href=sc_use_5x5.html>5x5 Supercubes With Random +Centers</a>.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

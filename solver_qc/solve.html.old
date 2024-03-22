@@ -1,0 +1,1174 @@
+<!doctype html>
+<html>
+<head>
+ <title> Quad-Core Solver </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=../AnimCube3.js></script>
+ <script src=rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=../verify.js></script>
+ <script src=readfiles.js></script>
+ <style> 
+  div.wrap {
+    height:100%;
+    overflow:auto;
+    padding:0px 5%;
+  }
+  .sbtn {
+    height:28px;
+    width:74px;
+    border-radius:15px;
+    background-color:#ffffff;
+    padding:0px;
+    border:none;
+    outline:none;
+  }
+  input {
+    height:22px;
+    width:22px;
+  }
+ </style>
+</head>
+<body ondblclick="fullScreen(event)">
+<div class=wrap>
+<center>
+<table>
+<tr><td height=8></tr>
+<tr><td valign=top>
+<font size=+2> <p id=title>Quad-Core Solver </p></font>
+<table border=0 style=line-height:0>
+  <tr height=8>
+  <tr>
+    <td colspan=4></td>
+    <td> <input id=f0 type=button onclick=set_color(this)> </td>
+    <td> <input id=f1 type=button onclick=set_color(this)> </td>
+    <td> <input id=f2 type=button onclick=set_color(this)> </td>
+    <td colspan=2>
+    <td colspan=5 rowspan=3 align=center>
+      <table border=0>
+        <tr height=5> </tr>
+        <tr>
+          <td width=3>
+          <td> <input type=button id=R onclick=select_color(this) 
+                      style="background-color:red;"> </td>
+          <td> <input type=button id=Y onclick=select_color(this) 
+                      style="background-color:yellow;"> </td>
+          <td> <input type=button id=B onclick=select_color(this) 
+                      style="background-color:blue;"> </td>
+        </tr>
+        <tr>
+          <td>
+          <td> <input type=button id=O onclick=select_color(this) 
+                      style="background-color:orange"> </td>
+          <td> <input type=button id=W onclick=select_color(this) 
+                      style="background-color:white"> </td>
+          <td> <input type=button id=G onclick=select_color(this) 
+                      style="background-color:green"> </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan=4></td>
+    <td> <input id=f3 type=button onclick=set_color(this)> </td>
+    <td> <input id=f4 type=button onclick=set_color(this)> </td> 
+    <td> <input id=f5 type=button onclick=set_color(this)> </td>
+  </tr>
+  <tr> 
+    <td colspan=4></td>
+    <td> <input id=f6 type=button onclick=set_color(this)> </td>
+    <td> <input id=f7 type=button onclick=set_color(this)> </td>
+    <td> <input id=f8 type=button onclick=set_color(this)> </td>
+  </tr>
+  <tr height=10> </tr>
+  <tr>
+    <td> <input id=f9 type=button onclick=set_color(this)> </td>
+    <td> <input id=f10 type=button onclick=set_color(this)> </td>
+    <td> <input id=f11 type=button onclick=set_color(this)> </td>
+    <td width=12> </td>
+    <td> <input id=f12 type=button onclick=set_color(this)> </td>
+    <td> <input id=f13 type=button onclick=set_color(this)> </td>
+    <td> <input id=f14 type=button onclick=set_color(this)> </td>
+    <td width=12> </td>
+    <td> <input id=f15 type=button onclick=set_color(this)> </td>
+    <td> <input id=f16 type=button onclick=set_color(this)> </td>
+    <td> <input id=f17 type=button onclick=set_color(this)> </td>
+    <td width=12> </td>
+    <td> <input id=f18 type=button onclick=set_color(this)> </td>
+    <td> <input id=f19 type=button onclick=set_color(this)> </td>
+    <td> <input id=f20 type=button onclick=set_color(this)> </td>
+  </tr>
+  <tr>
+    <td> <input id=f21 type=button onclick=set_color(this)> </td>
+    <td> <input id=f22 type=button onclick=set_color(this)> </td>
+    <td> <input id=f23 type=button onclick=set_color(this)> </td>
+    <td> </td>
+    <td> <input id=f24 type=button onclick=set_color(this)> </td>
+    <td> <input id=f25 type=button onclick=set_color(this)> </td>
+    <td> <input id=f26 type=button onclick=set_color(this)> </td>
+    <td> </td>
+    <td> <input id=f27 type=button onclick=set_color(this)> </td>
+    <td> <input id=f28 type=button onclick=set_color(this)> </td>
+    <td> <input id=f29 type=button onclick=set_color(this)> </td>
+    <td> </td>
+    <td> <input id=f30 type=button onclick=set_color(this)> </td>
+    <td> <input id=f31 type=button onclick=set_color(this)> </td>
+    <td> <input id=f32 type=button onclick=set_color(this)> </td>
+  </tr>
+  <tr>
+    <td> <input id=f33 type=button onclick=set_color(this)> </td>
+    <td> <input id=f34 type=button onclick=set_color(this)> </td>
+    <td> <input id=f35 type=button onclick=set_color(this)> </td>
+    <td> </td>
+    <td> <input id=f36 type=button onclick=set_color(this)> </td>
+    <td> <input id=f37 type=button onclick=set_color(this)> </td>
+    <td> <input id=f38 type=button onclick=set_color(this)> </td>
+    <td> </td>
+    <td> <input id=f39 type=button onclick=set_color(this)> </td>
+    <td> <input id=f40 type=button onclick=set_color(this)> </td>
+    <td> <input id=f41 type=button onclick=set_color(this)> </td>
+    <td> </td>
+    <td> <input id=f42 type=button onclick=set_color(this)> </td>
+    <td> <input id=f43 type=button onclick=set_color(this)> </td>
+    <td> <input id=f44 type=button onclick=set_color(this)> </td>
+  </tr>
+  <tr height=10> </tr>
+  <tr>
+    <td colspan=4></td>
+    <td> <input id=f45 type=button onclick=set_color(this)> </td>
+    <td> <input id=f46 type=button onclick=set_color(this)> </td>
+    <td> <input id=f47 type=button onclick=set_color(this)> </td>
+  </tr>
+  <tr>
+    <td colspan=4></td>
+    <td> <input id=f48 type=button onclick=set_color(this)> </td>
+    <td> <input id=f49 type=button onclick=set_color(this)> </td>
+    <td> <input id=f50 type=button onclick=set_color(this)> </td>
+  </tr>
+  <tr>
+    <td colspan=4></td>
+    <td> <input id=f51 type=button onclick=set_color(this)> </td>
+    <td> <input id=f52 type=button onclick=set_color(this)> </td>
+    <td> <input id=f53 type=button onclick=set_color(this)> </td>
+  </tr>
+</table>
+
+<table border=0>
+  <tr height=14>
+  <tr>
+    <td> <button class="btn svw1" onclick="home()">Home</button> </td>
+    <td width=5>
+    <td> <button class="btn svw1" onclick="show()">Show</button> </td>
+    <td width=5>
+    <td> <button class="btn svw2" onclick="rand()">Random</button> </td>
+    <td width=5>
+    <td> <button id=sbtn class="btn svw1" onclick="solve()">Solve</button> </td>
+  </tr>
+  <tr height=10>
+  <tr>
+    <td> <button class="btn svw1" onclick="clera()">Clear</button> </td>
+    <td width=5> </td>
+    <td> <button class="btn svw1" onclick="help()">Help</button> </td>
+    <td width=5> </td>
+    <td valign=top colspan=3 style=text-align:right>
+        Search Time
+        <input type=text name=stl id=stl maxlength=5
+         style="font-size:.9em; height:24px; width:40px; border:none;
+           border-radius:10px; padding-left:8px; border-radius:15px" value=5>
+    </td>
+  </tr>
+  <tr height=10>
+  <tr> 
+    <td colspan=8>
+      <div id=btn>
+      </div>
+     </td>
+  </tr>
+</table>
+
+</td><td width=5%><td id=tdc valign=top>
+<div id=cube style=width:290px;height:290px
+     ondblclick="event.stopPropagation()">
+</div>
+<div id=status style=width:300px;margin-top:18px></div>
+</td>
+</tr><tr height=8></tr></table>
+<div id=back> </div>
+<br><br>
+
+<script>
+
+"use strict";
+
+var stl;
+var color;
+var facelets_arr = [];
+var stoplen = 0;
+var stoplen_param = 0;
+var cloze = 0;
+var fnames = [];
+var dist_loaded = [0, 0, 0];
+var removeListeners = [];
+var solve_running = 0;
+var dist_files_loaded = 0;
+var sbtn_bgcolor_active = "#aaaaaa";    // should match btn:active in style2.css
+var sbtn_bgcolor_inactive = "#ffffff";  // should match btn background-color style2.css
+var facelets;
+var mp_done, opt_count;
+var USE_DIST3 = 0;
+var USE_DIST4 = 0;
+var dist_gen_depth = 0;
+var dist3_gen_depth = 0;
+var distp2_gen_depth = 0;
+var load_dist_files = 0;
+var gdone, gdone_shared;
+var show_deps = true; 
+var conc, conc_param, conc_mvlist = [];
+var worker = [], worker_status = [];
+var init_done = 0;
+var mkd_dep9_done = 0;
+var gtime0;
+var init_time;
+var color;
+// var perf = 0;
+var log_brief = 0
+var show_node_counts = 0;
+var use_p2seq = 0;
+var cancel;
+var CUBE_HOME   = "RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO";
+var CUBE_BLANK  = "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
+
+var dist1_shared, dist2_shared, dist3_shared, dist4_shared;
+var distp2_shared, dist9_shared;
+var ept_min_op_shared, ept_min_ops_shared, ept_op_idx_shared;
+var ept_ops_ix1_shared, ept_ops_ix2_shared;
+var ep_mov_shared, cp6c_mov_shared, cpt_min_shared;
+var et_sym_shared, et_sym_FR_shared, et_sym_UF_shared;
+var ep_slice_shared, epr_mov_shared;
+var cp_mov_shared, ct_mov_shared, et_mov_shared;
+var ep_min_shared, ep_min_op_shared, cp_sym_shared;
+var cpt_sym_shared, cpt_sym2_shared, ct_sym_shared, ct_ud_fb_shared;
+var ct_op_type_shared, op16e_shared, cp6c_cpr_shared;
+var ep_b3_shared, b3_ep_shared, op_op_shared, inv_op_shared;
+var cp6c_cp3c_shared;
+var p2seq_shared, p2idx_shared;
+
+main();
+
+function main() {
+
+  if (typeof(Worker) == "undefined") {
+    worker_error_handler();
+    return;
+  }
+
+  var params = location.search.substr(1).split('&');
+
+  for (var i=0; i < params.length; i++) {
+    var p = params[i].split('=');
+    if (typeof(p[1]) != 'undefined')
+      window[p[0]] = p[1];
+  }
+
+  if (typeof(conc) != 'undefined')
+    conc_param = conc;
+
+  init_conc();
+
+  try {
+    dist1_shared  = new SharedArrayBuffer(MIN_EP*C_PRM*1094);   // 57 MB
+  }
+  catch(e) {
+      shared_memory_error_handler(e);
+      return;
+  }
+
+  dist2_shared  = new SharedArrayBuffer(MIN_EP*C_PRM*1024);     // 53 MB
+  distp2_shared = new SharedArrayBuffer(C_PRMr*E_PRMr);         //  8 MB
+
+  worker[1] = new Worker('solve.js');
+
+  try {
+    worker[1].postMessage({'cmd': 'test', 'dist1': dist1_shared});
+  }
+  catch(e) {
+      shared_memory_error_handler(e);
+      return;
+  }
+
+  worker[1].addEventListener('message', ipc);
+
+  for (var i=2; i <= conc; i++) {
+    worker[i] = new Worker('solve.js');
+    worker[i].addEventListener('message', ipc);
+  }
+                                                                        //   KB
+  inv_op_shared      = new SharedArrayBuffer(CUBE_SYM);                 //   .1 
+  op16e_shared       = new SharedArrayBuffer(CUBE_SYM * 2);             //   .1
+  ept_ops_ix1_shared = new SharedArrayBuffer(MIN_EP);                   //    1
+  cp_mov_shared      = new SharedArrayBuffer(C_PRM * MOVES);            //    1
+  op_op_shared       = new SharedArrayBuffer(CUBE_SYM * CUBE_SYM);      //    2
+  cp_sym_shared      = new SharedArrayBuffer(C_PRM*CUBE_SYM);           //    3
+  ep_min_op_shared   = new SharedArrayBuffer(E_PRM);                    //   34
+  cp6c_cp3c_shared   = new SharedArrayBuffer(C_PERM);                   //   40
+  ep_min_shared      = new SharedArrayBuffer(E_PRM * 2);                //   68
+  ept_op_idx_shared  = new SharedArrayBuffer(E_PRM * 2);                //   68
+  et_mov_shared      = new SharedArrayBuffer(E_TWIST * MOVES * 2);      //   72
+  ct_mov_shared      = new SharedArrayBuffer(C_TWIST * MOVES * 2);      //   77 
+  cp6c_cpr_shared    = new SharedArrayBuffer(C_PERM * 2);               //   80 
+  ep_b3_shared       = new SharedArrayBuffer(E_PRM * 4);                //  135
+  et_sym_shared      = new SharedArrayBuffer(E_TWIST * CUBE_SYM * 2);   //  192
+  ep_slice_shared    = new SharedArrayBuffer(E_PRM * 3 * 2);            //  203
+  epr_mov_shared     = new SharedArrayBuffer(SLICE_PRM * 24 * MOVES);   //  209
+  b3_ep_shared       = new SharedArrayBuffer(B3_MAX * 2);               //  346
+  ept_min_ops_shared = new SharedArrayBuffer(N_EPT_MIN_OPS * 27 * 2);   //  387
+  ept_ops_ix2_shared = new SharedArrayBuffer(N_EPT_OPS_IX2*E_TWIST*2);  //  412
+  cpt_min_shared     = new SharedArrayBuffer(C_PRM_TW * 2 * 2);         //  600
+  ep_mov_shared      = new SharedArrayBuffer(E_PRM * MOVES * 2);        // 1218
+  cp6c_mov_shared    = new SharedArrayBuffer(C_PERM * MOVES * 2);       // 1418
+  et_sym_FR_shared   = new SharedArrayBuffer(SLICE_PRM * E_TWIST * 2);  // 1980 
+
+  /* Notes on array usage by the solver:
+
+     1. ept_min_op & ept_ops_ix2 are used 6% of the time (2058/34650)
+        34650 - 32592 = 2058 (see ep_sym.html in the sym dir)
+
+     2. ept_min_ops is used .24% of the time (170928/70963200)
+        70963200 - 70792272 = 170928 (see ept_sym.html in the sym dir)
+
+     3. cpt_min is only used when the search node is a 3-color solution unless
+        CT_SYM_METHOD=2 in which case it is used for every node
+
+     4. b3_ep & ep_b3 are not used during the search (b3_ep is used to convert
+        the edge position component of the cube string (54 facelets) to a
+        number, ep_b3 is only used during init)
+
+     5. cp6c_mov is only used for nodes that are not pruned by dists[1-3] which
+        is 8% on average for random cubes and 10% for presolved cubes (configs
+        that are 3-color solutions)
+  */
+
+  if (EPT_OP_METHOD == 1)                                               //   KB
+    ept_min_op_shared = new SharedArrayBuffer(EP_MULTI_MIN_OP*E_TWIST); // 4116
+  else
+    ept_min_op_shared = new SharedArrayBuffer(N_EPT_MIN_OP*E_TWIST);    // 2580
+
+  if (ET_SYM_METHOD == 1) 
+    et_sym_UF_shared = new SharedArrayBuffer(SLICE_PRM * E_TWIST * 2);  // 1980 
+  else
+    et_sym_UF_shared = new SharedArrayBuffer(E_TWIST * 2);              //    4
+
+  if (CT_SYM_METHOD == 1) 
+    cpt_sym_shared   = new SharedArrayBuffer(C_PRM_TW * CUBE_SYM * 2);  // 14352
+  else if (CT_SYM_METHOD == 2)
+    cpt_sym2_shared  = new SharedArrayBuffer(MIN_CPT * CUBE_SYM * 2);   //   318
+  else {
+    ct_sym_shared    = new SharedArrayBuffer(C_TWIST * CUBE_SYM * 2);   //   205 
+    ct_ud_fb_shared  = new SharedArrayBuffer(C_PRM * C_TWIST * 2);      //   300
+    ct_op_type_shared= new SharedArrayBuffer(CUBE_SYM);
+  }
+
+  if (use_p2seq == 1) {
+    // 117264 = distp2 nodes <= 8                                       //    KB
+    p2seq_shared = new SharedArrayBuffer(117264*8);                     //   916
+    p2idx_shared = new SharedArrayBuffer(117264*8);                     //   916
+  }
+
+  gdone_shared = new SharedArrayBuffer(2);
+  gdone = new Uint8Array(gdone_shared);
+
+  if (typeof(use_dist4) != 'undefined') {
+    if (use_dist4 == 1) {
+      document.title = 'Optimal Solver';
+      document.getElementById('title').innerHTML = 'Optimal Solver';
+      window.use_dist3 = 2;
+      USE_DIST4 = use_dist4;
+      load_dist_files = 1;
+      dist_loaded[dist_loaded.length] = 0;
+      try {
+        dist4_shared = new SharedArrayBuffer(C_PRM_TW*MIN_EP*16);     // 1827 MB
+        dist9_shared = new SharedArrayBuffer(C_PRMr*E_PRMr);          //    8 MB
+      }
+      catch(e) {
+        memory_allocation_error_handler(e);
+        return;
+      }
+    }
+  }
+
+  if (typeof(use_dist3) != 'undefined') {
+    if (use_dist3 == 1 || use_dist3 == 2) {
+      USE_DIST3 = use_dist3;
+      dist3_gen_depth = 10;
+      load_dist_files = 1;
+      dist_loaded[dist_loaded.length] = 0;
+      try {
+        if (use_dist3 == 1)
+          dist3_shared  = new SharedArrayBuffer(MIN_EP*C_TWIST*256);  //  418 MB
+        else
+          dist3_shared  = new SharedArrayBuffer(MIN_EP*C_TWIST*512);  //  835 MB
+      }
+      catch(e) {
+        memory_allocation_error_handler(e);
+        return;
+      }
+    }
+  }
+
+  if (isNaN(dist_gen_depth))
+    dist_gen_depth = ((load_dist_files == 1) ? 9 : 8) 
+  else {
+    if (dist_gen_depth == 0)
+      dist_gen_depth = ((load_dist_files == 1) ? 9 : 8) 
+    else {
+      var gen_max = ((load_dist_files == 1) ? 10 : 9);
+      if (dist_gen_depth < 8)
+        dist_gen_depth = 8;
+      else if (dist_gen_depth > gen_max)
+        dist_gen_depth = gen_max;
+    }
+  }
+
+  if (typeof dist_gen_depth == 'string')
+    dist_gen_depth = parseInt(dist_gen_depth);
+
+  if (isNaN(distp2_gen_depth))
+    distp2_gen_depth = 8;
+  else {
+    if (distp2_gen_depth == 0)
+      distp2_gen_depth = 8;
+    else {
+      var gen2_max = ((load_dist_files == 1) ? 15 : 10);
+      if (distp2_gen_depth < 8)
+        distp2_gen_depth = 8;
+      else if (distp2_gen_depth > gen2_max)
+        distp2_gen_depth = gen2_max;
+    }
+  }
+
+  if (load_dist_files == 1) {
+    init_fnames();
+    document.getElementById('btn').innerHTML =
+      '<input type=file id=selectFiles style="display:none;" ' +
+      'onchange="readfiles(this.files)" multiple>' +
+      '<button class="btn svw4" onclick="document.getElementById(\'selectFiles\').click()">Load Dist Files</button>';
+  }
+
+  if (typeof(stl) != 'undefined')
+    document.getElementById('stl').value = stl;
+  
+  if (typeof(facelets) == 'undefined')
+    facelets = CUBE_HOME;
+  else {
+    cloze = 1;
+    if (facelets.length > 54)
+      facelets = facelets.substr(0,54);
+    if (facelets.length < 54)
+      facelets = (facelets + CUBE_BLANK).substr(0,54);
+    facelets = facelets.toUpperCase();
+    var ftmp = facelets.split('');
+    for (var i=0; i < 54; i++)
+      if ('WYORGB'.indexOf(ftmp[i]) == -1)
+        ftmp[i] = 'L';
+    facelets = ftmp.join('');
+  }
+
+  /* if (typeof perf == 'string') {
+    if (perf == '1')
+      perf = 1;
+    else
+      perf = 0;
+  } */
+
+  if (typeof stoplen == 'string') {
+    stoplen = stoplen.substr(0,2);
+    if (!isnum(stoplen))
+      stoplen = 0;
+  }
+
+  stoplen_param = (stoplen != 0) ? stoplen : 20;
+
+  if (typeof snc == 'string')
+    show_node_counts = snc;
+
+  if (typeof show_node_counts == 'string') {
+    show_node_counts = show_node_counts.substr(0,1);
+    if (show_node_counts < '1' || show_node_counts > '3')
+      show_node_counts = '0';
+  }
+
+  if (typeof use_p2seq == 'string') {
+    if (use_p2seq == '1')
+      use_p2seq = 1;
+    else
+      use_p2seq = 0;
+  }
+
+  if (typeof log_brief == 'string') {
+    if (log_brief == '1')
+      log_brief = 1;
+    else
+      log_brief = 0;
+  }
+
+  update_layout();
+  show_cube(0);
+
+  if (cloze == 1)
+    document.getElementById('back').innerHTML = '<a href="JavaScript:window.close()">Close</a>';
+  else 
+    document.getElementById('back').innerHTML = '<a href="javascript: history.go(-1)">Back</a>';
+}
+
+function isnum(s) {
+  return /^\d+$/.test(s);
+}
+
+function update_layout()
+{
+  facelets_arr = facelets.split('');
+  for (var i=0; i < 54; i++) {
+    document.getElementById('f' + i).style.backgroundColor = color_str(facelets_arr[i]);
+  }
+}
+
+function select_color(f)
+{ 
+  color = f.id;
+}
+
+function set_color(f)
+{ 
+  if (typeof(color) != 'undefined') {
+    facelets_arr[f.id.substr(1)] = color;
+    f.style.backgroundColor = color_str(color);
+  }
+}
+
+function show() {
+  if (solve_running == 1)
+    return;
+  if (facelets != facelets_arr.join('')) {
+    facelets = facelets_arr.join('');
+    show_cube(1);
+  }
+  else {
+    if (msgtxt.length > 0)
+      clear_status();
+  }
+}
+
+function home()
+{
+  if (solve_running == 1)
+    return;
+  facelets = CUBE_HOME;
+  if (CUBE_HOME != facelets_arr.join('')) {
+    update_layout();
+    show_cube(1);
+  }
+  else {
+    if (msgtxt.length > 0)
+      clear_status();
+  }
+}
+
+function rand()
+{
+  if (solve_running == 1)
+    return;
+  facelets = randcube();
+  update_layout();
+  show_cube(1);
+}
+
+function clera()
+{
+  if (solve_running == 1)
+    return;
+  facelets = CUBE_BLANK;
+  if (CUBE_BLANK != facelets_arr.join('')) {
+    update_layout();
+    show_cube(1);
+  }
+  else {
+    if (msgtxt.length > 0)
+      clear_status();
+  }
+}
+
+function help()
+{
+  window.open('solver_help.html');
+}
+
+var first_time_solve = true;  // static local
+
+function solve() {
+  gtime0 = Date.now();
+  if (solve_running == 1)
+    return;
+  mp_done = 0;
+  opt_count = 0;
+  sbtn_active();
+  if (load_dist_files == 1) {
+    if (dist_files_loaded == 0) {
+      var need = '';
+      for (var i=0, n=0; i < fnames.length; i++) {
+        if (dist_loaded[i] == 0) { 
+          need += fnames[i] + '<br>'; 
+          n++;
+        }
+      }
+      var str = (n==1) ? "this file" : "these files";
+        document.getElementById('status').innerHTML = 
+          'Load ' + str + ' before solving:<br>' + need;
+        sbtn_inactive();
+      return;
+    }
+  }
+  stl = document.getElementById('stl').value + '';
+  stl = stl.toLowerCase();
+  var stlr = stl.replace(/ /g, '');
+  if (stlr.length != stl.length) {
+    document.getElementById('stl').value = stlr;
+    stl = stlr;
+  }
+  if (stl == '') {
+    stl = '5';
+    document.getElementById('stl').value = 5;
+  }
+  msgtxt.length = 0;
+  document.getElementById('status').style.textAlign = 'left';
+  if (facelets != facelets_arr.join('')) {
+    facelets = facelets_arr.join('');
+    show_cube(1);
+  }
+  var verif = verify_main(facelets);
+  if (verif == 0) {
+    logtxt.length = 0;
+    show_cube_layout(facelets);
+    document_write('Concurrent Processes = ' + conc + '<br>');
+    var n = (USE_DIST4) ? 11 : (USE_DIST3) ? 10 : dist_gen_depth;
+    document_write('Search Array Gen Depth = ' + n + '<br><br>');
+    var v = stl.substr(stl.length-1);
+    if (v == 's' || v == 't') {
+      stoplen = (v=='s') ? stoplen_param : 0;
+      stl = stl.substr(0, stl.length-1);
+    }
+    solve_running = 1;
+    gdone[0] = 0;
+    gdone[1] = 99;
+    cancel = 0;
+    if (first_time_solve) {
+      send_init_request_to_workers();
+      first_time_solve = false;
+    }
+    else
+      send_solve_request_to_workers();
+  }
+  else {
+    sbtn_inactive();
+    document.getElementById('status').innerHTML = msgtxt.join('');
+  }
+}
+
+function send_init_request_to_workers() {
+  var msg = {}; 
+  msg.cmd = 'init';
+  msg.dist1 = dist1_shared;
+  msg.dist2 = dist2_shared;
+  msg.dist3 = dist3_shared;
+  msg.dist4 = dist4_shared;
+  msg.distp2 = distp2_shared;
+  msg.ept_min_op = ept_min_op_shared;
+  msg.ept_min_ops = ept_min_ops_shared;
+  msg.ept_op_idx = ept_op_idx_shared;
+  msg.ept_ops_ix1 = ept_ops_ix1_shared;
+  msg.ept_ops_ix2 = ept_ops_ix2_shared;
+  msg.ep_mov = ep_mov_shared;
+  msg.cp6c_mov = cp6c_mov_shared;
+  msg.cpt_min = cpt_min_shared;
+  msg.et_sym = et_sym_shared;
+  msg.et_sym_FR = et_sym_FR_shared;
+  msg.et_sym_UF = et_sym_UF_shared;
+  msg.ep_slice = ep_slice_shared;
+  msg.epr_mov = epr_mov_shared;
+  msg.cp_mov = cp_mov_shared;
+  msg.ct_mov = ct_mov_shared;
+  msg.et_mov = et_mov_shared;
+  msg.ep_min = ep_min_shared;
+  msg.ep_min_op = ep_min_op_shared;
+  msg.cp_sym = cp_sym_shared;
+  msg.op16e = op16e_shared;
+  msg.cp6c_cpr = cp6c_cpr_shared;
+  msg.ep_b3 = ep_b3_shared;
+  msg.b3_ep = b3_ep_shared;
+  msg.op_op = op_op_shared;
+  msg.inv_op = inv_op_shared;
+  msg.cp6c_cp3c = cp6c_cp3c_shared;
+  msg.dist_files_loaded = dist_files_loaded;
+  msg.dist_gen_depth = dist_gen_depth;
+  msg.conc = conc;
+  msg.use_p2seq = use_p2seq;
+  msg.use_dist3 = USE_DIST3;
+  msg.use_dist4 = USE_DIST4;
+  if (CT_SYM_METHOD == 1)
+    msg.cpt_sym = cpt_sym_shared;
+  else if (CT_SYM_METHOD == 2)
+    msg.cpt_sym2 = cpt_sym2_shared;
+  else {
+    msg.ct_sym = ct_sym_shared;
+    msg.ct_ud_fb = ct_ud_fb_shared;
+    msg.ct_op_type = ct_op_type_shared;
+  }
+  if (use_p2seq == 1) {
+    msg.p2seq = p2seq_shared;
+    msg.p2idx = p2idx_shared;
+  }
+  if (USE_DIST4)
+    msg.dist9 = dist9_shared;
+  for (var i=1; i <= conc; i++) {
+    msg.worker = i;
+    worker[i].postMessage(msg);
+  }
+}
+
+function send_solve_request_to_workers() {
+  for (var i=1; i <= conc; i++)
+    worker[i].postMessage({
+      'worker': i,
+      'cmd': 'solve',
+      'facelets': facelets,
+      'stl': stl,
+      'stoplen': stoplen,
+      // 'use_dist3': USE_DIST3,
+      // 'use_dist4': USE_DIST4,
+      'mvlist': conc_mvlist[i],
+      'gdone': gdone_shared,
+      'show_node_counts': show_node_counts
+    });
+}
+
+function init_conc() {
+  var conc_val = [1,1,2,3,4,4,6,6,8,9,10,10,12,12,14,14,16,16,18];
+  conc = navigator.hardwareConcurrency;
+  conc = (conc > 18) ? 18 : conc_val[conc];
+  if (typeof(conc) == 'undefined')
+    conc = 1;
+  if (typeof(conc_param) != 'undefined') {
+    var valid_values = (['1','2','3','4','6','8','9','10','12','14','16','18']);
+    for (var i=0, valid=0; i < 12; i++)
+      if (conc_param == valid_values[i])
+        valid = 1;
+    if (valid == 1)
+      conc = conc_param;
+  }
+
+  var n = conc;
+
+  /* conc_mvlist assignments where n divides evenly into 18:
+     1: RRRLLLUUUDDDFFFBBB   (RRR = R R2 R', etc)
+     2: RRRLLLUUU DDDFFFBBB
+     3: RRRLLL UUUDDD FFFBBB
+     6: RRR LLL UUU DDD FFF BBB
+     9: RR RL LL UU UD DD FF FB BB
+    18: R R R L L L U U U D D D F F F B B B
+  */
+
+  if (n == 1)  icm(1, 1, 0, 18);
+  if (n == 2)  icm(1, 2, 0, 9);
+  if (n == 3)  icm(1, 3, 0, 6);
+  if (n == 6)  icm(1, 6, 0, 3);
+  if (n == 9)  icm(1, 9, 0, 2);
+  if (n == 18) icm(1, 18, 0, 1);
+
+  /* conc_mvlist assignments where n does not divide evenly into 18:
+     4: RRRL LLUU UDDDF FFBBB
+     8: RR RL LL UU UD DD FFF BBB
+    10: R R RL LL LU UU DD DF FF BB
+    12: R R R L L L UU UD DD FF FB BB
+    14: R R R L L L U U U D DD FF FB BB
+    16: R R R L L L U U U D D D F F FB BB 
+  */
+
+  // if (n == 4)  { icm(1, 2, 0, 4);  icm(3, 4, 8, 5);  }    // 2*4 + 2*5
+  // if (n == 8)  { icm(1, 6, 0, 2);  icm(7, 8, 12, 3); }    // 6*2 + 2*3
+  if (n == 10) { icm(1, 2, 0, 1);  icm(3, 10, 2, 2); }    // 2*1 + 8*2
+  if (n == 12) { icm(1, 6, 0, 1);  icm(7, 12, 6, 2); }    // 6*1 + 6*2
+  if (n == 14) { icm(1, 10, 0, 1); icm(11, 14, 10, 2); }  // 10*1 + 4*2
+  if (n == 16) { icm(1, 14, 0, 1); icm(15, 16, 14, 2); }  // 14*1 + 2*2
+
+  // L D B moves generate ~20% less nodes than R U F so to optimize for
+  // 8 workers switch F & D so worker 7 has D moves (goal is for workers
+  // with more moves to do the ones that generate less nodes)
+
+  if (n == 8) {
+    conc_mvlist[1] = [0,1,-1];       // RR    R R2
+    conc_mvlist[2] = [2,3,-1];       // RL    R' L
+    conc_mvlist[3] = [4,5,-1];       // LL    L2 L'        before
+    conc_mvlist[4] = [6,7,-1];       // UU    U U2      ------------- 
+    conc_mvlist[5] = [8,12,-1];      // UF    U' F      UD    U' D
+    conc_mvlist[6] = [13,14,-1];     // FF    F2 F'     DD    D2 D'
+    conc_mvlist[7] = [9,10,11,-1];   // DDD   D D2 D'   FFF   F F2 F'
+    conc_mvlist[8] = [15,16,17,-1];  // BBB   B B2 B'
+  }
+
+  // optimize 4 workers by switching F & L
+
+  if (n == 4) {
+    conc_mvlist[1] = [0,1,2,12,-1];        // RRRF    R R2 R' F
+    conc_mvlist[2] = [13,14,6,7,-1];       // FFUU    F2 F' U U2
+    conc_mvlist[3] = [8,9,10,11,3,-1];     // UDDDL   U' D D2 D' L
+    conc_mvlist[4] = [4,5,15,16,17,-1];    // LLBBB   L2 L' B B2 B'
+
+  /* before:
+    conc_mvlist[1] = [0,1,2,3,-1];         // RRRL    R R2 R' L
+    conc_mvlist[2] = [4,5,6,7,-1];         // LLUU    L2 L' U U2
+    conc_mvlist[3] = [8,9,10,11,12,-1];    // UDDDF   U' D D2 D' F
+    conc_mvlist[4] = [13,14,15,16,17,-1];  // FFBBB   F2 F' B B2 B'
+  */
+  }
+}
+
+function icm(row_start, rows, col_start, cols) {
+  for (var i=row_start, j=col_start; i <= rows; i++, j+=cols) {
+    conc_mvlist[i] = [];
+    for (var k=0; k < cols; k++)
+      conc_mvlist[i][k] = j+k;
+    conc_mvlist[i][k] = -1;
+  }
+}
+
+function ipc(e) {
+  var cmd = e.data.cmd;
+
+  if (cmd == 'init_done') {
+    init_done++;
+    if (init_done == conc) {
+      init_time = Date.now();
+      if (load_dist_files == 0)
+        worker[1].postMessage({'cmd': 'mkd_dep8'});
+      else
+        send_solve_request_to_workers(); 
+    }
+  }
+
+  if (cmd == 'mkd_dep8_done') {
+    if (dist_gen_depth == 8) {
+      // msg('Making DistP2');
+      worker[1].postMessage({'cmd': 'mkdp2'});
+    }
+    else if (dist_gen_depth == 9)
+      for (var i=1; i <= conc; i++)
+        worker[i].postMessage({'cmd': 'mkd_dep9', 'worker': i});
+  }
+
+  if (cmd == 'mkd_dep9_done') {
+    mkd_dep9_done++;
+    if (mkd_dep9_done == conc) {
+      msg('Making DistP2');
+      worker[1].postMessage({'cmd': 'mkdp2'});
+    }
+  }
+
+  if (cmd == 'mkdp2_done') {
+    var t1 = ((init_time - gtime0)/1000).toFixed(2);
+    var t2 = ((Date.now() - init_time)/1000).toFixed(2);
+    var t3 = ((Date.now() - gtime0)/1000).toFixed(2);
+    document_write('Init Time: ' + t1 + '<br>');
+    document_write('Dist  Time: ' + t2 + '<br>');
+    document_write('Init + Dist Time: ' + t3 + '<br><br>');
+    send_solve_request_to_workers(); 
+  }
+
+  if (cmd == 'show_solution') {
+    worker_status[e.data.worker] = e;
+    if (e.data.done == 1)
+      gdone[0] = 1;
+    if (e.data.done == 2) {
+      opt_count++;
+      if (e.data.moves.length < gdone[1])
+        gdone[1] = e.data.moves.length;
+    }
+    mp_done++;
+    if (mp_done == conc) {
+      for (var i=1, min=999, max=0, idx=1; i <= conc; i++) {
+        var n = worker_status[i].data.moves.length*30 +
+                worker_status[i].data.sol_dep1;
+        if (n != 0 && n < min) {
+          min = n;
+          idx = i;
+        }
+        var x = parseFloat(worker_status[i].data.search_time);
+        if (x > max)
+          max = x;
+      }
+      show_solution(worker_status[idx], idx, max.toFixed(2));
+      solve_running = 0;
+      sbtn_inactive();
+    }
+  }
+
+  if (cmd == 'msg')
+    document.getElementById('status').innerHTML = e.data.msg;
+
+  if (cmd == 'alert')
+    alert(e.data.msg);
+
+  if (cmd == 'dep9stat') {
+    var s = 'Making Search Arrays<br>Generating to Depth 9<br>Progress: ';
+    var count = e.data.count;
+    var len  = e.data.len;
+    var n = Math.round(count/(len/conc)*10)*10;
+    if (n > 100)
+      n = 100;
+    if (n >= 10) 
+      document.getElementById('status').innerHTML = s + n + '%';
+  }
+
+  if (cmd == 'solve_status')
+    if (e.data.msg < gdone[1]) {
+      gdone[1] = e.data.msg;
+      var s = 'Searching &nbsp; ';
+      s += '<button class="btn svw1" onclick=stop_search()>Stop</button><br>';
+      s += '<table><tr height=5><td></table>';
+      s += 'Current Solution: ' + e.data.msg + ' Moves';
+      msg(s);
+    }
+}
+
+function stop_search(s) {
+ cancel = 1;
+ gdone[1] = 1;
+}
+
+function msg(s) {
+  document.getElementById('status').innerHTML = s;
+}
+
+function combine_logs(log1, log2)
+{
+  for (var i=0; i < log2.length; i++)
+    log1.push(log2[i]);
+}
+
+var first_time_log = true;  //static local
+
+function show_solution(e, w, search_time)
+{
+  if (first_time_log == 1) {
+    if (dist_files_loaded == 1)
+      show_files_loaded();
+    else
+      show_dist_counts();
+    first_time_log = false;
+  }
+  var moves = e.data.moves;
+  for (var i=1; i <= conc; i++)
+    if (log_brief == 0 || worker_status[i].data.moves.length != 0)
+      combine_logs(logtxt, worker_status[i].data.logtxt);
+  var af = cvt_to_anim(facelets);
+  var params = animcube_params();
+  if (params != '')
+    af += params;
+  removeListeners['cube']();
+  AnimCube3("id=cube&config=../AnimCube.txt&edit=0&move=" + moves + "&facelets=" + af);
+  document.getElementById('status').style.textAlign = 'center';
+  var s = (show_deps) ? ' &nbsp; ' + e.data.sol_dep1 + '+' + e.data.sol_dep2 : '';
+  if (moves.length > 0)
+    s += ' &nbsp;&nbsp; W' + w;
+  if (opt_count == conc && cancel == 0)
+     s += '<br>Optimal';
+  document.getElementById('status').innerHTML = 
+    '<button class="btn svw3" onclick="show_log()">Solve Log</button> </td>' +
+    '<table><tr height=5><td></table>' + search_time + s;
+}
+
+function show_files_loaded() {
+  init_fnames();
+  document_write('Files Loaded:<br>');
+  for (var i=0; i < fnames.length; i++)
+    document_write(fnames[i] + '<br>');
+  document_write('<br>');
+}
+
+function show_dist_counts() {
+  var count1 = [], count2 = [], count3 = [];
+  var dist1 = new Uint8Array(dist1_shared);
+  var dist2 = new Uint8Array(dist2_shared);
+  var distp2 = new Uint8Array(distp2_shared);
+  for (var i=0; i < 12; i++) {
+    count1[i] = 0;
+    count2[i] = 0;
+    count3[i] = 0;
+  }
+  for (var i=0; i < dist1.length; i++) {
+    count1[dist1[i]&0xF]++;
+    count1[dist1[i]>>4]++;
+  }
+  for (var i=0; i < dist2.length; i++) {
+    count2[dist2[i]&0xF]++;
+    count2[dist2[i]>>4]++;
+  }
+  for (var i=0; i < distp2.length; i++)
+    count3[distp2[i]]++;
+  document_write('<table class=tabdata style="border-collapse:collapse;border-color:white" border=1>');
+  document_write('<tr><td colspan=4 style=text-align:center;border-color:white>Search Arrays</td></tr>');
+  document_write('<tr><td>Depth</td><td>Dist1</td><td>Dist2</td><td>DistP2</td></tr>');
+  for (i=1; i <= dist_gen_depth; i++) {
+    document_write('<tr><td>' + i + '</td><td>' + count1[i] + '</td><td>');
+    document_write(count2[i] + '</td><td>' + ((i<9)?count3[i]:'n/a') + '</td></tr>');
+  }
+  document_write('</table>'); 
+  document_write('<br>');
+}
+
+function show_cube(n)
+{
+  if (n) {
+    clear_status();
+    removeListeners['cube']();
+  }
+  var af = cvt_to_anim(facelets);
+  var params = animcube_params();
+  if (params != '')
+    af += params;
+  AnimCube3("id=cube&config=../AnimCube.txt&edit=0&facelets=" + af);
+}
+
+function clear_status()
+{
+  document.getElementById('status').innerHTML = '';
+  msgtxt.length = 0;
+  // solution.length = 0;
+}
+
+function cvt_to_anim(c)
+{
+  var ca = new Array(54);
+
+  var to_anim = [
+    6,7,8,3,4,5,0,1,2,45,48,51,46,49,52,47,50,53,12,24,
+    36,13,25,37,14,26,38,18,30,42,19,31,43,20,32,44,11,
+    10,9,23,22,21,35,34,33,15,27,39,16,28,40,17,29,41];
+
+  for (var i=0; i < 54; i++)
+    ca[i] = c[to_anim[i]];
+
+  return(ca.join(''));
+}
+
+function randcube()
+{
+  var cs = [];
+
+  init_conv();
+  copy(untwc,"021", 3, 0);  // for make_cubestr
+
+  for (var i=0; i < 20; i++) {
+    var ep = Math.floor(Math.random()*479001600);
+    var et = Math.floor(Math.random()*2048);
+    var cp = Math.floor(Math.random()*40320);
+    var ct = Math.floor(Math.random()*2187);
+
+    int_to_perm(cp, cps, 8);
+    int_to_perm(ep, eps, 12);
+    int_to_strp(ct, cts, 7, 3);
+    int_to_strp(et, ets, 11, 2);
+
+    if (parity(eps, 12) == parity(cps, 8))
+      break;
+  }
+  make_cubestr();
+  assign_centers_6c();
+  colorize(cs);
+  return(cs.join(''));
+}
+
+function colorize(cs)
+{
+  for (var i=0; i < 54; i++)
+    if      (cubestr[i] == 0) cs[i] = 'B';
+    else if (cubestr[i] == 1) cs[i] = 'Y';
+    else if (cubestr[i] == 2) cs[i] = 'R';
+    else if (cubestr[i] == 3) cs[i] = 'G';
+    else if (cubestr[i] == 4) cs[i] = 'W';
+    else if (cubestr[i] == 5) cs[i] = 'O';
+}
+
+function readfiles_done() {
+  if (use_p2seq == 1)
+    distp2_shared = new SharedArrayBuffer(C_PRMr*E_PRMr);
+  document.getElementById('status').innerHTML = 
+    'All Dist Files Loaded<br>Ready to Solve';
+  document.getElementById('btn').innerHTML = '';
+  dist_files_loaded = 1;
+}
+
+var fs = 0;
+
+function fullScreen(e) {
+  if (typeof e.target.type != 'undefined')
+    return;
+  var fse = getFullscreenElement();
+  if (typeof fse == 'undefined' || fse == null) {
+    fs = 1;
+    requestFullscreenFunc(document.body);
+  }
+  else {
+    fs = 0;
+    exitFullscreenFunc();
+  }
+}
+
+function sbtn_active() {
+  document.getElementById('sbtn').style.backgroundColor = sbtn_bgcolor_active;
+}
+
+function sbtn_inactive() {
+  document.getElementById('sbtn').style.backgroundColor = sbtn_bgcolor_inactive;
+}
+
+function worker_error_handler() {
+  document.getElementById('status').innerHTML = 
+    'This browser does not appear to support web workers, ' +
+    'try this link instead: <a href=../solver/index.html>Alt Solver</a>';
+  facelets = CUBE_HOME;
+  update_layout();
+  show_cube(0);
+  solve_running = 1;  // disable buttons
+}
+
+function memory_allocation_error_handler(e) {
+  document.getElementById('status').innerHTML = 'Cannot allocate memory.';
+  facelets = CUBE_HOME;
+  update_layout();
+  show_cube(0);
+  solve_running = 1;  // disable buttons
+}
+
+function shared_memory_error_handler(e) {
+  if (location.href.indexOf('netlify') < 0)
+    var s = 'There is a problem allocating shared memory, try running ' +
+      'the Quad-Core Solver from ' +
+      '<a href=https://3colorcube.netlify.app/solver_qc/index.html>here</a>.';
+  else
+    var s = 'This browser does not appear to support shared memory so ' +
+      'unfortunately the Quad-Core Solver cannot be used.'; 
+  document.getElementById('status').innerHTML = s;
+  facelets = CUBE_HOME;
+  update_layout();
+  show_cube(0);
+  solve_running = 1;  // disable buttons
+}
+
+</script>
+</center>
+</div>
+</body>
+</html>

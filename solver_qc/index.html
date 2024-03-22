@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+ <title> Quad Core Solver </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> 
+  .link {
+   width:100px;
+   border-radius:15px;
+   background-color:#ffffff;
+   padding:3px 20px;
+   border:none;
+   outline:none;
+   color:black;
+   text-decoration:none;
+   font-family:sans-serif;
+   white-space:nowrap;
+  }
+  a.link {color:black}
+  a.link:visited {color:black}
+ </style>
+</head>
+<body>
+<center>
+<table><tr height=2><td></table>
+<font size=+2> Quad-Core Solver </font>
+<br><br>
+<!--
+<p>The Quad-Core Solver is now served by
+<a target=_blank href=https://netlify.com/about>Netlify</a>
+which provides headers for
+<a target=_blank href=https://web.dev/why-coop-coep/>cross-origin isolation</a>
+which has become a requirement for using shared memory on some browsers (as can
+be seen <a target=_blank href=https://caniuse.com/sharedarraybuffer>here</a>).
+<br><br>
+-->
+<p>For basic solver, press the first button below which generates the search
+arrays to Depth 8.
+For better solver, press the second button to generate Depth 9 which 
+takes longer initially but significantly improves search performance.
+Use of Dist Files eliminates generating the arrays, see
+<a target=_blank href=solver_help.html#udf>Solver Help</a> for details.</p>
+<br>
+<table>
+ <tr>
+  <td><a class=link onclick=go('solve.html?stl=5s&snc=1&log_brief=1') translate=no>Depth 8</a></td>
+  <td width=15>
+  <td><a class=link onclick=go('solve.html?dist_gen_depth=9&stl=5s&snc=1&log_brief=1') translate=no>Depth 9</a></td>
+  <td width=15>
+  <td><a class=link onclick=go('solve.html?load_dist_files=1&stl=5s&snc=1&log_brief=1') translate=no>Dist Files</a></td>
+ </tr>
+</table>
+<br><font size=+2 translate=no>Dist 3</font><br>
+<table>
+ <tr height=5>
+ <tr>
+  <td> <a class=link onclick=go('solve.html?use_dist3=1&stl=5s&snc=1&log_brief=1') translate=no>418 MB</a></td>
+  <td width=15>
+  <td> <a class=link onclick=go('solve.html?use_dist3=2&stl=5s&snc=1&log_brief=1') translate=no>835 MB</a></td>
+ </tr>
+</table>
+<br><br>
+<font size=+2>Optimal Solver</font>
+<br><br>
+<p>To use the Optimal Solver you will need to download five files
+(Dist1-4 &amp; DistP2) as  described in the above linked help page.
+To find optimal solutions the solver will need more time to run so the
+default Search Time is set to 60 (with no "s") which allows searching
+for up to 60 seconds.
+If search time is sufficient the solver will show "Optimal" under the Solve
+Log button after the solve completes, otherwise Search Time will need to be
+increased.
+The amount of time to find optimal solutions varies widely by both the cube
+configuration and the amount of computing horsepower your computer has so
+for a benchmark from which you can guesstimate your performance,
+a Ryzen 5 3.7 Ghz Quad-Core averaged under 15 seconds to find optimal
+solutions in a test of 1000 random cubes (for more info see section
+"Optimal Solutions" <a href=perf_summary.html#optimal>here</a>).</p>
+<br>
+<a class=link onclick=go('solve.html?use_dist4=1&stl=60&snc=1') translate=no>Optimal</a>
+<br><br><br>
+<font size=+2>Custom Cube Display</font>
+<br><br>
+<p>Here are the same links with an example of how the cube display can be
+customized with URL parameters, see
+<a target=_blank href=solver_help.html#custom>Help</a> for details.</p>
+<br>
+<table>
+ <tr>
+  <td><a class=link onclick=go('solve.html?stl=5s&snc=1&log_brief=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=1&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1') translate=no>Depth 8</a></td>
+  <td width=15>
+  <td><a class=link onclick=go('solve.html?dist_gen_depth=9&stl=5s&snc=1&log_brief=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=1&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1') translate=no>Depth 9</a></td>
+  <td width=15>
+  <td><a class=link onclick=go('solve.html?load_dist_files=1&stl=5s&snc=1&log_brief=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=1&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1') translate=no>Dist Files</a></td>
+ </tr>
+</table>
+<br><font size=+2 translate=no>Dist 3</font><br>
+<table>
+ <tr height=5>
+ <tr>
+  <td><a class=link onclick=go('solve.html?use_dist3=1&stl=5s&snc=1&log_brief=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=1&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1&hintborder=1') translate=no>418 MB</a></td>
+  <td width=15>
+  <td><a class=link onclick=go('solve.html?use_dist3=2&stl=5s&snc=1&log_brief=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=1&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1&hintborder=1') translate=no>835 MB</a></td>
+ </tr>
+</table>
+<br><br>
+<a class=link onclick=go('solve.html?use_dist4=1&stl=60&snc=1&hint=12&scale=10&position=lluuu&edit=1&speed=20&buttonheight=19&bgcolor=ffffff&fonttype=1&textsize=18&align=35&movetext=1&hinthoriz=3.2&hintvert=4.1&hintborder=1') translate=no>Optimal</a>
+<table><tr height=20><td></table>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+  function go(s) {
+    // location = 'https://3colorcube.netlify.app/solver_qc/' + s;
+    location = s;
+  }
+</script>
+</center>
+</body>
+</html>

@@ -1,0 +1,27 @@
+# this makes the solver url for the specified batch run
+# call with no params for list
+
+dir=`basename ${PWD/logs}`
+
+if [ $dir = solver2 ]; then
+  list=util/mkt_list_s2
+else
+  list=util/mkt_list_qc
+fi
+
+if [ $# != 1 ]; then
+  echo -n "Usage: "
+  echo "`basename $0` {test #}"
+  grep batch $list | awk '{printf("%2d %-32s %-40s\n", $1, $2, $3)}'
+  exit 0
+fi
+
+# pre=http://localhost/~mike/github/3ColorCube-main/$dir/solve.html?
+pre=https://mfeather1.github.io/3ColorCube/$dir/solve.html?
+
+awk -v par=$1 -v pre=$pre -v dir=$dir '{
+  if ($1 == par || $2 == par)
+    printf("%s%s\nlog: %s\n", pre, $3, $2)
+  }' $list
+
+exit 0

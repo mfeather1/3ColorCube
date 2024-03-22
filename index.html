@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+ <title> Unique Solving Method for Rubik's Cube </title>
+ <meta name="author" content="Michael Feather">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <style> td {text-align:center} </style>
+ <style> div.wrap {padding-left:5%; padding-right:5%;} </style>
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <style>
+  .link {
+   width:100px;
+   border-radius:15px;
+   background-color:#ffffff;
+   padding:3px 20px;
+   border:none;
+   outline:none;
+   color:black;
+   text-decoration:none;
+   font-family:sans-serif;
+   white-space:nowrap;
+  }
+  a.link {color:black}
+  a.link:visited {color:black}
+  .sep1 {height:40px}
+  .sep2 {height:6px}
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2>Unique Solving Method for Rubik's Cube</font><br>
+<table><tr height=2><td></table>
+<font size=+1>By Michael Feather</font>
+<br><br>
+<font size=+2>Part 1: Solve The 3-Color Cube</font>
+<table border=0> 
+ <tr class=sep2>
+ <tr>
+  <td width=190><a class=link href=starter.html>Starter Cube</a></td>
+  <td width=190><a class=link href=corners.html>Corner Cube</a></td>
+  <td width=190><a class=link href=edges.html>Full Cube</a></td>
+ </tr>
+ <tr height=3>
+ <tr>
+  <td>
+   <div style=width:130px;height:130px;display:inline-block>
+    <script>AnimCube3("config=AnimCube.txt&buttonbar=0&facelets=rlrlrlrlrrlrlrlrlrllllllllllllllllllllllllllllllllllll")</script>
+   </div>
+  </td>
+  <td>
+   <div style=width:130px;height:130px;display:inline-block>
+    <script>AnimCube3("config=AnimCube.txt&buttonbar=0&facelets=rlrlrlrlrrlrlrlrlrylylylylyylylylylyblblblblbblblblblb")</script>
+   </div>
+  </td>
+  <td>
+   <div style=width:130px;height:130px;display:inline-block>
+    <script>AnimCube3("config=AnimCube.txt&buttonbar=0&colorscheme=rryybb")</script>
+   </div>
+  </td>
+ </tr>
+ <tr height=8>
+</table>
+<font size=+2> Part 2: Solve The 6-Color Cube </font> 
+<table border=0>
+ <tr class=sep2>
+ <tr>
+  <td><a class=link href=corners_6c.html>Corners</a></td>
+  <td width=30>
+  <td><a class=link href=edges_6c.html>Edges</a></td>
+ </tr>
+ <tr class=sep1>
+</table>
+<font size=+2> Interactive Cubes </font>
+<table border=0>
+ <tr class=sep2>
+ <tr>
+  <td><a class=link href=cube_use.html>All Stages</a></td>
+  <td width=30>
+  <td><a class=link href=interactive_cubes.html>All Sizes</a></td>
+ </tr>
+ <tr class=sep1>
+</table>
+<font size=+2> Corner Solving Demos </font>
+<table border=0>
+ <tr class=sep2>
+ <tr>
+  <td><a class=link href=starter_demo.html>Starter</a></td>
+  <td width=30>
+  <td><a class=link href=corner_demo.html>3-Color<a></td>
+  <td width=30>
+  <td><a class=link href=corner_6c_2_demo.html>6-Color</a></td>
+  <td width=30>
+  <td><a class=link href=corner_6c_demo.html>Complete</a></td>
+ </tr>
+ <tr height=25>
+</table>
+<font size=+2> Edge Solving Demos </font><br>
+<table border=0>
+ <tr class=sep2>
+ <tr>
+  <td><a class=link href=edge_demo.html>3-Color</a></td>
+  <td width=30>
+  <td><a class=link href=edge_6c_2_demo.html>6-Color</a></td>
+  <td width=30>
+  <td><a class=link href=edge_6c_demo.html>Complete</a></td>
+ </tr>
+ <tr class=sep1>
+</table>
+<font size=+2> Cube Solver </font>
+<table border=0>
+ <tr class=sep2>
+ <tr>
+  <td><a class=link href=solver/index.html>Single Core</a></td>
+  <td width=30>
+  <td><a class=link href="solver_qc/index.html">Quad-Core</a></td>
+  <td width=30>
+  <td><a class=link href="solver2/index.html">Solver 2</a></td>
+ </tr>
+ <tr class=sep1>
+</table>
+<font size=+2> Translation </font>
+<table>
+ <tr>
+  <td><div id=langdiv></div></td>
+  <td width=5>
+  <td><button class="btn tiw1" style=height:26px button onclick=go()>Go</button></td>
+ </tr>
+ <tr class=sep1>
+</table>
+<script src=lang.js></script>
+<font size=+1> Cube Animation Software is 
+<a target=_blank href=https://cubing.github.io/AnimCubeJS/animcubejs.html>AnimCubeJS</a>
+<br>
+<table>
+ <tr height=10>
+ <tr><td><font size=+1><a href=idx.html>Site Index</a></font></td></tr>
+ <tr height=10>
+ <tr>
+  <td>
+   <font size=+1>
+    <script>
+     if (location.href.indexOf('gitlab') > 0)
+      document.write('<a href=https://mfeather1.github.io/3ColorCube>Github Mirror</a>');
+     else
+      document.write('<a href=https://mfeather.gitlab.io/3ColorCube>Gitlab Mirror</a>');
+    </script>
+   </font>
+  </td>
+ </tr>
+</table>
+<br><br>
+</center>
+</div>
+</body>
+</html>

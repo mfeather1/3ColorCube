@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+ <title> When No Facelets Can Be Fixed (Page 6 of 6) </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=AnimCube3.js></script>
+ <script src=hist.js></script>
+ <style> .tabdata td {
+   padding-left:15px; padding-right:15px; border-color:black; text-align:center; } 
+ </style>
+</head>
+<body>
+<div class=wrap>
+<center>
+<font size=+2> When No Facelets Can Be Fixed <br>  Page 6 of 6 </font>
+<br><br>
+<p>The following is an example of a case for which no misplaced facelets can 
+be fixed, it is the only case of this type that will occur while solving a
+random cube (case means this configuration and all those that can be made by
+doing half-twists to it or rotating the cube).
+This case is distinguished as having six misplaced facelets with two per slice
+and one per <span translate=no> cubie</span>.
+While there are several different possible configurations for this case,
+Sequence 3C-E3 applied to any two misplaced facelets will relocate them so
+that the cube can then be solved.
+Note that after applying the sequence there are two more misplaced facelets
+than before, that is avoided with the alternate method shown on the second
+cube below but three sequences are needed to solve either way.</p>
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&edit=1&move=R'UmL'D2LUm'RZR2U2R'Um2'RY'F2R2U2R'Um2'R&facelets=rbrrrrrbrrrrrrrrrryryyyyyryyyyyyyyyybbbbbbbbbbbbybybbb")</script>
+   </div>
+<br><br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td> 1-7 </td><td style=text-align:left> Sequence 3C-E3 </td></tr>
+ <tr><td> 8-10 </td><td style=text-align:left> Make Setup For 3C-E1 </td></tr>
+ <tr><td> 11-13 </td><td style=text-align:left> Sequence 3C-E1 </td></tr>
+ <tr><td> 14-17 </td><td style=text-align:left> Make Setup for 3C-E1 </td></tr>
+ <tr><td> 18-20 </td><td style=text-align:left> Sequence 3C-E1 </td></tr>
+</table>
+<br><br>
+<p>This method uses an <a href=alt_setup.html>Alternate Setup</a>
+for Sequence 3C-E1.</p>
+<!--
+<p>Another way to solve is shown below.
+The first step makes the <a href=alt_setup.html>Alternate Setup</a>
+for Sequence 3C-E1.
+This method solves without increasing the number of misplaced facelets as does
+the above method which has eight misplaced after doing the first sequence.</p>
+-->
+   <div style="width:180px; height:180px; display:inline-block"> 
+    <script>AnimCube3("config=AnimCube.txt&edit=1&move=ZR2'U2R'Um2'RZYR'UmL'D2LUm'RU2L2'F2R'Um2'R&facelets=rbrrrrrbrrrrrrrrrryryyyyyryyyyyyyyyybbbbbbbbbbbbybybbb")</script>
+   </div>
+<br><br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td> 1-3 </td><td style=text-align:left> Make Alt Setup for Sequence 3C-E1 </td></tr>
+ <tr><td> 4-6 </td><td style=text-align:left> Sequence 3C-E1 </td></tr>
+ <tr><td> 7-8 </td><td style=text-align:left> Make Setup for Sequence 3C-E3 </td></tr>
+ <tr><td> 9-15 </td><td style=text-align:left> Sequence 3C-E3 </td></tr>
+ <tr><td> 16-18 </td><td style=text-align:left> Make Setup for Sequence 3C-E1 </td></tr>
+ <tr><td> 19-21 </td><td style=text-align:left> Sequence 3C-E1 </td></tr>
+</table>
+<br>
+<script>
+  hst();
+  document.write('<table><tr>');
+  document.write(m(5, 'Prev') + '<td width=10>');
+  document.write(m(1, 1) + '<td width=10>');
+  document.write(m(2, 2) + '<td width=10>');
+  document.write(m(3, 3) + '<td width=10>');
+  document.write(m(4, 4) + '<td width=10>');
+  document.write(m(5, 5) + '<td width=10>');
+  document.write('<td>6</td>');
+  document.write('</tr></table>');
+  function m(n, s) {
+    var u = location.href.replace(/setups[1-6]/, 'setups' + n);
+    var n = u.indexOf('hist');
+    if (n > 0) u = u.substr(0, n-1);
+    var s = '<td><a href=' + u + '&hist=' + hist + '>' + s + '</a></td>';
+    return s.replace('html&', 'html?');
+  }
+  if (hist != 0) {
+    document.write("<br><a href=\"javascript: history.go(-" + hist + ")\">Back</a>");
+  }
+</script>
+<br><br><br>
+</center>
+</div>
+</body>
+</html>

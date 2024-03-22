@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+ <title> Quad-Core Solver - Performance Summary</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> 
+   .tabdata td {padding: 4px 12px; border-color:black; text-align:center;}
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>Quad-Core Solver<br>Performance Summary</font>
+<br><br><br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td colspan=6 style=border-color:white>Suboptimal Solutions (20 moves or less)</td></tr>
+ <tr>
+  <td style=border-color:white>Random<br>Cubes</td>
+  <td style=border-color:white>Solves per<br>Second</td>
+  <td style=border-color:white>Longest<br>Solve</td>
+  <td style=border-color:white>Dist3<br>(MB)</td>
+  <td style=border-color:white>Dist4<br>(MB)</td>
+  <td style=border-color:white>Log<br>File</td>
+ </tr>
+ <tr><td>10000</td><td>3.24</td><td>40.52</td><td>0</td><td>0</td><td><a href="../show_log.html?filename=solver_qc/logs/subopt_random_10000.txt.lzma">view</a></tr>
+ <tr><td>10000</td><td>13.04</td><td>8.89</td><td>418</td><td>0</td><td><a href="../show_log.html?filename=solver_qc/logs/subopt_random_10000_D3_418MB.txt.lzma">view</a></tr>
+ <tr><td>10000</td><td>19.55</td><td>6.75</td><td>835</td><td>0</td><td><a href="../show_log.html?filename=solver_qc/logs/subopt_random_10000_D3_835MB.txt.lzma">view</a></td></tr>
+ <tr><td>10000</td><td>54.01</td><td>1.90</td><td>835</td><td>1827</td><td><a href="../show_log.html?filename=solver_qc/logs/subopt_random_10000_D3_D4.txt.lzma">view</a></tr>
+ <tr>
+</table>
+<br><br id=optimal><br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td colspan=8 style=border-color:white>Optimal Solutions</td></tr> 
+ <tr>
+  <td style=border-color:white>Cubes</td>
+  <td style=border-color:white>Type</td>
+  <td style=border-color:white>Average<br>Solve</td>
+  <td style=border-color:white>Longest<br>Solve</td>
+  <td style=border-color:white>Log<br>File</td>
+ </tr>
+ <tr><td>1000</td><td>Random</td><td>14.62</td><td>142.77</td><td><a href=logs/optimal_random_1000_conc9.txt>view</a></td></tr>
+ <tr><td>100</td><td>19 Move</td><td>91.74</td><td>145.60</td><td><a href=logs/optimal_19_move_conc9.txt>view</a></tr>
+ <tr>
+</table>
+<br><br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td colspan=3 style=border-color:white>Optimal Solutions<br>1000 Random Cubes</td></tr>
+ <tr>
+  <td style=border-color:white>Solution<br>Length</td>
+  <td style=border-color:white>Average<br>Solve</td>
+  <td style=border-color:white>Longest<br>Solve</td>
+ </tr>
+ <tr><td>15</td><td>0.01</td><td>0.03</td></tr>
+ <tr><td>16</td><td>0.23</td><td>1.16</td></tr>
+ <tr><td>17</td><td>3.05</td><td>17.43</td></tr>
+ <tr><td>18</td><td>16.05</td><td>125.42</td></tr>
+ <tr><td>19</td><td>95.94</td><td>142.77</td></tr>
+</table>
+<br><br><br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td colspan=8 style=border-color:white>Presolved Suboptimal (20 moves or less)</td></tr> 
+ <tr>
+  <td style=border-color:white>Cubes</td>
+  <td style=border-color:white>Type</td>
+  <td style=border-color:white>Solves per<br>Second</td>
+  <td style=border-color:white>Longest<br>Solve</td>
+  <td style=border-color:white>Log<br>File</td>
+ </tr>
+ <tr><td>1000</td><td>Random</td><td>11.03</td><td>0.41</td><td><a href=logs/subopt_presolved_1000.txt>view</a></td></tr>
+ <tr><td>77</td><td>16 Move</td><td>8.12</td><td>0.42</td><td><a href=logs/subopt_presolved_16_move.txt>view</a></td></tr>
+</table>
+<br><br>
+<p>In the above tables, Average Solve and Longest Solve are in seconds.
+Additional notes are <a href="perf_summary_notes.html">here</a>.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+</center>
+</html>

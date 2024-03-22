@@ -1,0 +1,252 @@
+<!doctype html>
+<html>
+<head>
+ <title> 6-Color Edge Symmetry </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=epr_sym.js></script>
+ <script src=symlib.js></script>
+ <style>
+  table { border-collapse: collapse; }
+  td { text-align: right; padding: 4px 10px 4px; }
+  p { text-align: justify; margin-left: 10%; margin-right: 10%; }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2> 6-Color Edge Symmetry </font>
+<br>
+<p> This program may take a little while to run on some devices so here are
+the results from a previous run.
+To actually run the counts, press the button below the table.</p>
+<table border=1>
+ <tr><td><b>Mins</b></td><td><b>Syms</b></td><td><b>Configs</b></td></tr>
+ <tr><td>20436960964</td><td>48</td><td>980974126272</td></tr>
+ <tr><td>     875138</td><td>24</td><td>    21003312</td></tr>
+ <tr><td>       3796</td><td>16</td><td>       60736</td></tr>
+ <tr><td>       6904</td><td>12</td><td>       82848</td></tr>
+ <tr><td>        166</td><td> 8</td><td>        1328</td></tr>
+ <tr><td>        358</td><td> 6</td><td>        2148</td></tr>
+ <tr><td>         16</td><td> 4</td><td>          64</td></tr>
+ <tr><td>         28</td><td> 3</td><td>          84</td></tr>
+ <tr><td>          2</td><td> 2</td><td>           4</td></tr>
+ <tr><td>          4</td><td> 1</td><td>           4</td></tr>
+ <tr><td><b>20437847376</b></td><td></td><td><b>980995276800</b></td></tr>
+ <tr><td colspan=3 style=text-align:center>Ratio = 47.9990</td></tr>
+</table>
+<br>
+<button onclick=run_counts()>Run Counts</button>
+<br><br>
+<div id=status></div>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+"use strict";
+var OSIZE = 103;
+var ELIST_SIZE = 103;
+var ELIST2_SIZE = 13106;
+var elist = new Int32Array(ELIST_SIZE);
+var elist2 = new Uint16Array(ELIST2_SIZE * 4);
+var ep_sym = new Uint16Array(E_PRM * CUBE_SYM);
+var syms = new Int8Array([48,24,16,12,8,6,4,3,2,1]);
+var ep_mins_with_48_syms;
+var ep6c_mins_with_48_syms;
+var time0;
+
+function run_counts() {
+  time0 = Date.now();
+  document.getElementById('status').innerHTML = 'Counts are running<br><br>';
+  setTimeout(main, 100);
+}
+
+function main() {
+  time0 = Date.now();
+  init();
+  step1();
+  step2();
+}
+
+function step1() {
+  var oix=0, eix2=0;
+  var epr = new Int8Array(3);
+  var eprtmp = new Int8Array(3);
+  var arr = new Int8Array(E_PRMr);
+  var ulist = new Int32Array(CUBE_SYM);
+  var op_sym = new Int8Array(CUBE_SYM);
+  var osub_count = new Int32Array (OSIZE * 10);
+  var sub_count = new Int32Array(CUBE_SYM + 1);
+  var syma = new Int32Array(CUBE_SYM);
+  for (var eix=0; eix < ELIST_SIZE; eix++) {
+    var ep = elist[eix];
+    ulist[0] = ep;
+    var uix = 1;
+    op_sym[0] = 0;
+    for (var op=1; op < CUBE_SYM; op++) {
+      var epsym = ep_sym[ep*CUBE_SYM + op];
+      for (var i=0; i < uix; i++)
+        if (epsym == ulist[i])
+          break;
+      if (i == uix)
+        ulist[uix++] = epsym;
+      op_sym[op] = i;
+    }
+    for (i=0; i < E_PRMr; i++)
+      arr[i] = 0;
+    for (i=0; i < 10; i++)
+      sub_count[syms[i]] = 0;
+    for (epr[0]=0; epr[0] < 24; epr[0]++)
+     for (epr[1]=0; epr[1] < 24; epr[1]++)
+      for (epr[2]=0; epr[2] < 24; epr[2]++) {
+        var eprn = eprsum(epr);
+        if (arr[eprn] != 0)
+          continue;
+        arr[eprn] = 1;
+        syma[0] = eprn;
+        for (var op=1; op < CUBE_SYM; op++) {
+          get_eprsym2(eprtmp, ep, epr, op);
+          var eprsym = eprsum(eprtmp);
+          if (op_sym[op] == 0)
+            arr[eprsym] = 1;
+          syma[op] = op_sym[op]*E_TWIST + eprsym;
+        }
+        var u = uniq(syma);
+        if (u < CUBE_SYM) {
+          elist2[eix2*4] = ep;
+          for (var i=0; i < 3; i++)
+            elist2[eix2*4+i+1] = epr[i];
+          eix2++;
+        }
+        sub_count[u]++;
+      }
+    for (i=0; i < 10; i++)
+      osub_count[oix*10+i] = sub_count[syms[i]];
+    oix++;
+  }
+  for (var i=0, sum=0; i < oix; i++)
+    sum += osub_count[i*10];
+  ep6c_mins_with_48_syms = sum + ep_mins_with_48_syms * E_PRMr;
+}
+
+function step2() {
+  var oix=0;
+  var epr = new Int8Array(3);
+  var eprtmp = new Int8Array(3);
+  var arr = new Int8Array(E_TWIST);
+  var ulist = new Int32Array(CUBE_SYM);
+  var op_sym = new Int8Array(CUBE_SYM);
+  var osub_count = new Int32Array(OSIZE * 10);
+  var sub_count = new Int32Array(CUBE_SYM + 1);
+  var olist = new Int8Array(OSIZE * CUBE_SYM);
+  var ocount = new Int32Array(OSIZE);
+  var syma = new Int32Array(CUBE_SYM);
+  for (var eix=0; eix < ELIST2_SIZE; eix++) {
+    var ep = elist2[eix*4];
+    for (var i=0; i < 3; i++)
+      epr[i] = elist2[eix*4+i+1];
+    var ep6c = ep*E_PRMr + eprsum(epr);
+    ulist[0] = ep6c;
+    var uix = 1;
+    op_sym[0] = 0;
+    for (var op=1; op < CUBE_SYM; op++) {
+      var epsym = ep_sym[ep*CUBE_SYM + op];
+      get_eprsym2(eprtmp, ep, epr, op);
+      var eprsym = eprsum(eprtmp);
+      var ep6csym = epsym*E_PRMr + eprsym;
+      for (var i=0; i < uix; i++)
+        if (ep6csym == ulist[i])
+          break;
+      if (i == uix) 
+        ulist[uix++] = ep6csym;
+      op_sym[op] = i;
+    }
+    for (var i=0; i < oix; i++) {
+      for (var j=0; j < CUBE_SYM; j++)
+        if (olist[i*50 + j] != op_sym[j])
+          break;
+      if (j == CUBE_SYM)
+        break;
+    }
+    if (i == oix) {
+      for (var i=0; i < CUBE_SYM; i++)
+        olist[oix*50 + i] = op_sym[i];
+      ocount[oix] = 1;
+    }
+    else {
+      ocount[i]++;
+      continue;
+    }
+    for (i=0; i < E_TWIST; i++)
+      arr[i] = 0;
+    for (i=0; i < 10; i++)
+      sub_count[syms[i]] = 0;
+    for (var et=0; et < E_TWIST; et++) {
+      if (arr[et] != 0)
+        continue;
+      arr[et] = 1;
+      var uix = 1;
+      for (var op=0; op < CUBE_SYM; op++) {
+        var etsym = get_etsym(ep, et, op);
+        if (op_sym[op] == 0)
+          arr[etsym] = 1;
+        syma[op] = op_sym[op]*E_TWIST + etsym;
+      }
+      sub_count[uniq(syma)]++;
+    }
+    for (i=0; i < 10; i++)
+      osub_count[oix*10+i] = sub_count[syms[i]];
+    oix++;
+  }
+  var sym48 = ep6c_mins_with_48_syms * E_TWIST; 
+  var s = rpt3(oix, ocount, osub_count, sym48, 4);
+  var time1 = ((Date.now()-time0)/1000).toFixed(2);
+  s += '<br>Runtime: ' + time1 + '<br><br>';
+  document.getElementById('status').innerHTML = s;
+}
+
+function init() {
+  if (ET_SYM_METHOD == 1)
+    get_etsym = get_etsym_m1;
+  else if (ET_SYM_METHOD == 2)
+    get_etsym = get_etsym_m2;
+  else
+    get_etsym = get_etsym_m3;
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_ep_sym();
+  populate_et_sym();
+  populate_epr_sym2();
+  make_elist();
+}
+
+function make_elist() {
+  var arr1 = new Int32Array(E_PRM);
+  var arr2 = new Int32Array(E_PRM);
+  for (var ep=0; ep < E_PRM; ep++) {
+    if (arr1[ep] == 0) {
+      arr1[ep] = ep;
+      for (var op=1; op < CUBE_SYM; op++) {
+        var epsym = ep_sym[ep*CUBE_SYM+op]; 
+        arr1[epsym] = ep;
+      }
+    }
+  }
+  for (var ep=0; ep < E_PRM; ep++)
+    arr2[arr1[ep]]++;
+  for (var ep=0, i=0, n=0; ep < E_PRM; ep++)
+    if (arr2[ep] != 0)
+      if (arr2[ep] < CUBE_SYM)
+        elist[i++] = ep;
+      else
+        n++;
+  ep_mins_with_48_syms = n;
+}
+</script>
+</center>
+</body>
+</html>

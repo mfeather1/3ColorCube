@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+ <title> Magic Cube 4D - Edge Parity Configuration </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+</head>
+<body>
+<center>
+<font size="+2"> Magic Cube 4D <br> Edge Parity Configuration </font>
+<br><br>
+<p>This hypercube has one pair of swapped edge cubies on both the outer and
+middle layers so each of the two orbits is a "parity" configuration.
+This can be solved using the same method as the
+<a href=4x4_6C.html#parity>4x4 Cube</a> &amp; the 
+<a href=void_cube.html>Void Cube</a>.
+The <a href=mc4d_macros.html>Parity</a> macro solves this config, it works by
+quarter-twisting the outer layer of the horizontal slice (QtrSlice macro) and
+then using Sequence 4C-E3 twice to flip all four edges in the slice.
+Sequence 4C-E1m swaps the center cubies and the rest is cleanup using the 
+8-color edge sequences (139 moves total).
+The setup for the Parity macro has the hypercube rotated so that the misplaced
+facelets are in the vertical slice as shown.</p>
+  <img src=img/mc4d_parity_problem.png style=width:220px>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+</center>
+</body>
+</html>

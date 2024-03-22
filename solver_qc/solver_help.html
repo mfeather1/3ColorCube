@@ -1,0 +1,288 @@
+<!doctype html>
+<html>
+<head>
+ <title> Cube Solver Help </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> .tabdata td {padding-left:10px; padding-right:10px;} </style>
+</head>
+<body><center>
+<b>Cube Solver Help</b>
+<br><br>
+<p>To use the solver press the Random button and after a scrambled cube 
+appears press Solve.
+After some time the solve will complete and a green bar appears under the
+cube which is the media player control panel, press the Play button (right
+arrow) to see the solution.
+Subsequent solves will run faster, more about that in the "Search Time"
+section below.</p>
+<br><br>
+<b>Entering Colors and Solving</b>
+<br><br>
+<p>To solve an actual scrambled cube press the Clear button and enter the
+colors by first clicking on a color in the palette (six squares above
+layout) then clicking on a square in the layout which changes it to the
+selected color.
+Press the Show button to update the cube on the right side of the screen 
+to see that it matches.
+<br><br>
+Press the Solve button after you have colored the entire layout.
+It will first verify that the cube is valid and if not it will give a message
+indicating what the problem is.  
+If you get an error, compare your cube to the one on the screen and find the
+square(s) that do not match and fix them, then press Solve again.
+Repeat until there are no more errors.
+<br><br>
+Once all the errors are fixed it will solve the cube and the green bar will
+appear, press the second button from the right to show the solution one move at
+a time.</p>
+<br><br>
+<b>Search Time</b>
+<br><br>
+<p>If a solution is more than 20 moves then a shorter one can be found by 
+increasing Search Time which is normally 5 seconds (by default).
+Search Time is just one part of the total processing time.
+Before the Solver can search it must first make several tables for moves &amp;
+symmetry operations in addition to making the large search arrays (dist).
+That takes a significant amount of time which can be seen in the log 
+where it shows "Init + Dist Time", only the first solve within a session
+incurs init &amp; dist time.
+The total amount of time to solve a random cube varies depending on the 
+computing capability of the device you are running it on.
+<br><br>
+After the solve completes the amount of search time used is shown below the
+Solve Log button.
+Also shown is the number of moves in each solve phase (phase
+1 is the intermediate 3-color solution, phase 2 is the final solution).
+The display is in the form N+N which normally sums to the number of moves shown
+in the cube area (for solved cube).
+In some cases the sum will be larger which means that the first move in phase
+2 was to the same face as the last move in phase 1 so the moves were either
+combined or if they cancel each other (R + R' for example) then both are
+removed from the sequence.
+Following the N+N display is the worker number that found the solution.
+<br><br>
+Search performance can be improved by generating the dist arrays to Depth 9 
+which takes longer initially, anywhere from 6 seconds (on 3.7 Ghz Quad-Core)
+to a minute or more depending on device performance.
+Generate time can be eliminated by using dist files as described in the next
+section.</p>
+<br><a id=udf></a><br>
+<b>Using Dist Files</b>
+<br><br>
+<p>By saving the dist arrays to files they only have to be generated once,
+then the files can be loaded into the Solver instead of generating.
+The dist arrays can be saved to files <a href="../make_dist_files.html">here</a>
+or they can be downloaded at these links: 
+<a target=_blank href="https://drive.google.com/file/d/1LXrK-9F0kXLZu-3NZF8bsyIU45J0P-rz/view?usp=sharing">Dist1</a>
+<a target=_blank href="https://drive.google.com/file/d/1i6dtWUcOtkDZzwtFOWuYRSqvAzrE3bWp/view?usp=sharing">Dist2</a>
+<a target=_blank href="https://drive.google.com/file/d/1osKQ_jSdjeGfpO4o4AuQOBXA5z-UyH_x/view?usp=sharing">DistP2</a>.
+The content of these files is described in more detail
+<a href=../dist_file_contents.html>here</a>.
+To use, click on the Dist Files button (on main page), then press the
+Load Dist Files button and select the files (that you generated or
+downloaded) then click Open.
+After a few seconds a message will appear under the cube indicating that the
+files have been loaded.
+Prior to loading, the list of files needed by the solver can be seen by
+pressing Solve.
+<br><br>
+Better performance can be achieved by adding search array Dist3
+(<a target=_blank href="https://drive.google.com/file/d/1XWknRdQVV7H_sDHqDyzCGb4reYGRhKum/view?usp=sharing">418 MB</a>
+or
+<a target=_blank href="https://drive.google.com/file/d/1Nudh_JxYJOCz55-AGFqAp8MEMHg96RSt/view?usp=sharing">835 MB</a>)
+or by adding both the larger Dist3 and Dist4 (<a target=_blank href=https://drive.google.com/file/d/1Uh5xfII9tklF2WaXXOnM5I461AuHLRsp/view?usp=sharing>1.8 GB</a>)
+for the Optimal Solver.
+Your device or computer needs to have enough RAM so that the dist arrays 
+fit into available memory.
+To use, download the file(s) of your choice and then click the appropriate button
+on the main page and load as described above.</p>
+<br><br>
+<b>Searching For 20 Move Solutions</b>
+<br><br>
+<p>To stop the search based on solution length rather than search time 
+use the "s" option (append to Search Time as in 5s which is now the default).
+With a sufficiently long search time the solver will stop at the first solution 
+of 20 moves or less but if it is too short then the search will be stopped before
+reaching the goal, in that case increase it.
+<br><br>
+The "s" option will remain in effect for subsequent solves, to switch back
+to the normal search (stop based on time only) append "t" to Search Time
+(as in 5t).
+With the "s" option, there will be a large variance in the amount of time
+it takes to find a solution (with 20 moves or less) so the wait may be long
+in some cases.
+It is possible to stop the search for solution lengths other than 20 moves by
+adding URL parameter stoplen=N where N is the desired number of moves.</p>
+<br><br>
+<b>Concurrent Processes (workers)</b>
+<br><br>
+<p>The Quad-Core Solver will normally run as many concurrent processes as your
+device has processors but the number can be set to: 1, 2, 3, 4, 6, 8, 9, 10,
+12, 14, 16 or 18 by adding parameter "conc=N" to the solver URL where N is the
+desired number of processes. 
+The number of concurrent processes being used by the solver is shown in the log.
+<br><br>
+Each solver process searches for a solution starting with one or more of the 18
+possible moves (R, R2, R', etc).
+With a conc setting of 2, 3, 6, 9 or 18, the 18 moves can be equally divided
+among the processes (to see the move assignments for all settings see function
+init_conc in
+<a href="../view-source?filename=solver_qc/solve.html&search=conc_mvlist%20assignments">solve.html</a>).
+The number of processes does not have to match the number of processors, the
+operating system will balance the load if needed. 
+While the conc parameter is available for experimenting, the default setting is 
+likely fine for most cases.
+<br><br>
+The log normally shows search results for each concurrent process but some
+workers may not have found a solution before the search ends so to suppress
+display of those workers add param log_brief=1 to the solver URL (which is
+now the default).</p>
+<br><a id=snc></a><br>
+<b>Node Counts</b>
+<br><br>
+<p>The number of nodes generated during the search can be shown in the log by
+adding URL parameter show_node_counts=N (or snc=N) where N=1 for phase 1, N=2
+for phase 2 or N=3 for both, the default is snc=1.
+For phase 1, three counts are shown at each depth which are the total number
+of nodes generated, the number of nodes that actually reached that depth (did
+not get pruned) and the number of 3-color solutions.
+Lower depths at which all nodes are immediately pruned (on first move) are
+excluded from the log.
+For phase 2, one line is shown after each solution which shows the totals for
+all depths searched to complete the solution from phase 1.
+<br><br>
+The phase 2 search can be eliminated by adding URL param use_p2seq=1 (which
+is now the default) which will store the move sequences for configs that can
+be solved in 8 moves or less (these are 6-color configs that are already
+solved as 3-color).
+The log will show 0 nodes for phase 2 if both params are used 
+(use_p2seq=1 &amp; show_node_counts=2 or 3).</p>
+<br><a id=custom></a><br>
+<b>Custom Cube Display</b>
+<br><br>
+<p>The following AnimCubeJS parameters can be passed to the solver to
+customize the cube display (click on any link to see documentation).</p>
+<br>
+<table class=tabdata border=0>
+ <tr>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#align>align</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#bgcolor>bgcolor</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#borderwidth>borderwidth</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#butbgcolor>butbgcolor</a></td>
+ </tr>
+ <tr>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#buttonheight>buttonheight</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#clickprogress>clickprogress</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#counter>counter</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#cubecolor>cubecolor</a></td>
+ </tr>
+ <tr>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#doublespeed>doublespeed</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#edit>edit</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#fonttype>fonttype</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#hint>hint</a></td>
+ </tr>
+ <tr>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#hintborder>hintborder</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#hinthoriz>hinthoriz</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#hintvert>hintvert</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#metric>metric</a></td>
+ </tr>
+ <tr>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#movetext>movetext</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#movetextspace>movetextspace</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#perspective>perspective</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#position>position</a></td>
+ </tr>
+ <tr>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#repeat>repeat</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#scale>scale</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#slidercolor>slidercolor</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#snap>snap</a></td>
+ </tr>
+ <tr>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#speed>speed</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#textsize>textsize</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#troughcolor>troughcolor</a></td>
+  <td><a href=https://cubing.github.io/AnimCubeJS/animcubejs.html#yz>yz</a></td>
+ </tr>
+</table>
+<!--
+  not allowed:
+  buttonbar colorscheme colors config demo facelets gabbacolors initmove
+  initrevmove move pos randmoves scramble scw supercube superfacelets
+-->
+<br>
+<p>The facelets parameter can be used with color codes: RGYBWO (Red, Green,
+Yellow, Blue, White, Orange), the Text Format is used (different from
+AnimCubeJS format) which can be entered using
+<a href=../text_input_cube.html>Text Input Cube</a>, see Help on that page
+for the layout.
+</p>
+<br><a id=batch><a><br>
+<b>Batch Solver</b>
+<br><br>
+<p>
+A file containing a list of cubes to solve can be loaded by adding URL
+parameter batch=1.
+The following is an example of three cubes as would be entered in a file
+(cube layout is text format as described above):
+<br><br>
+<font size=-1>
+YBBWRGGOWRGYRGRBYYOOBRGRWYYRBBYWGOYGYBRGWOBRGOWWOOOWBW<br>
+WRWYROOGBGBBYORYYRBGOBGWGYRWBYRWRGBGWBOBORYYORWWOOWYGG<br>
+WBWOROBYYOWRYOOBBRBYBBGRBYOGBYRWWOWGWGWGYYGGYRWOROGGRR<br>
+</font>
+<br>
+When the batch=1 parameter is used, press the Load Cube File button
+to select and load the desired file.
+The first cube in the file will be displayed.
+The Next and Prev buttons can be used to navigate through the cubes in the
+file.
+Press Solve to solve all cubes in the file starting from the current position,
+the cube display does not change while the solver is running.
+The solve results can be seen immediately in the console during the run
+(press F12 and select the Console tab).
+When the run completes the results can be viewed in the Solve Log which looks
+like this for optimal solutions:
+<br><br>
+Init Time: 1.68<br>
+1 B D R' L' D' L' U L2 U F U' L' D L D2 L' U' D2 [17+1] (18f*) 12.11<br>
+2 F U2 F' B' R D' L2 F B' U2 R' B' U2 L2 U' D2 R2 F2 [15+3] (18f*) 9.98<br>
+3 B2 U2 B D' F R U' L U2 F' B2 L' U' D B2 U R' D2 [17+1] (18f*) 11.26<br>
+Search Time: 33.35
+<br><br>
+Logging of solve results to the console as shown above can also be done
+without using a cube file by adding URL parameter log_result=1.
+<br><br>
+The batch parameter can also be used to load the built-in files that are used
+for the benchmark tests shown in the performance summaries
+(<a href=../solver_qc/perf_summary.html>quad-core</a>,
+<a href=../solver2/perf_summary.html>solver2</a>),
+the batches are:
+<br><br>
+  2 &nbsp; 100 random cubes<br>
+  3 &nbsp; 100 cubes with 19 move solutions<br>
+  4 &nbsp; 1000 random cubes<br>
+  5 &nbsp; 77 presolved cubes with 16 move solutions<br>
+  6 &nbsp; 1000 presolved cubes
+<br><br>
+A batch of random cubes of any size can be generated using
+<a href=make_random_cubes.html>this</a>, copy/paste the results to a file
+to use as input to the solver (with batch=1 param).
+A batch file can also be made from a file containing a list of solutions
+like the following example using <a href=make_cubes_from_solutions>this</a>.
+<br><br>
+D' R' F' U' B' L2 D R F' U' F' R2 L' D2 R F L2 D2<br>
+U2 F' D' L2 U R2 D2 F2 L' U F2 L2 B' L' U2 B L<br>
+R2 B2 D R' B U L' B2 L' B D F2 L2 B' L B2 R
+</p>
+<br>
+<center><script>document.write('<a href=javascript:window.close()>Close</a>')</script></center>
+<br><br>
+</center>
+</body>
+</html>
