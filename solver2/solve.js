@@ -251,8 +251,15 @@ function solve_cube(facelets)
   var search_depth = (stoplen == 0) ? 20 : stoplen;
   presolved_cube = 0;
   if (ep == 0 && et == 0 && cp == 0 && ct == 0) {
-    presolved_dist = distp2[cp6c_cpr[cp6c]*13824 + eprsum(epr)];
     presolved_cube = 1;
+    var cpr = cp6c_cpr[cp6c];
+    var eprn = eprsum(epr);
+    presolved_dist = distp2[cpr*13824 + eprn];
+    if (use_p2seq && presolved_dist < 9) {
+      if (worker == 1)
+        show_solution_from_p2seq(cpr, eprn);
+      return;
+    }
     if (stoplen)
       minmv = stoplen + 1;
     else
@@ -287,6 +294,25 @@ function solve_cube(facelets)
   var time2 = ((time1-stime0)/1000).toFixed(2);
   search_time = (time_format) ? convert_time(time2) : time2;
   document_write(search_time + ' Search Time<br><br>');
+}
+
+function show_solution_from_p2seq(cpr, epr) {
+  var x1 = bsearch_p2idx(cpr*13824+epr);
+  var x2 = p2idx[x1*2+1];
+  for (var j=0; j < 8 && p2seq[x2*8+j] != -1; j++) {
+    var v = p2seq[x2*8+j];
+    solution[j] = disp[Math.floor(v/3)] + disp2[v%3];
+  }
+  sol_dep1 = 0;
+  sol_dep2 = solution.length;
+  var s = solution.join(' ');
+  s += ' [0+' + sol_dep2 + '] (' + sol_dep2 + 'f*)';
+  document_write(s + '<br>');
+  var time = ((Date.now()-stime0)/1000).toFixed(2);
+  search_time = (time_format) ? convert_time(time) : time;
+  document_write(search_time + ' Search Time<br><br>');
+  done = 1;
+  gdone[2] = 1;
 }
 
 function show_moves()

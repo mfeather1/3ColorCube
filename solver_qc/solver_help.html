@@ -42,7 +42,8 @@ a time.</p>
 <b>Search Time</b>
 <br><br>
 <p>If a solution is more than 20 moves then a shorter one can be found by 
-increasing Search Time which is normally 5 seconds (by default).
+increasing Search Time which is normally 5 seconds (can be set as a URL
+parameter by using stl=N).
 Search Time is just one part of the total processing time.
 Before the Solver can search it must first make several tables for moves &amp;
 symmetry operations in addition to making the large search arrays (dist).
@@ -98,7 +99,11 @@ for the Optimal Solver.
 Your device or computer needs to have enough RAM so that the dist arrays 
 fit into available memory.
 To use, download the file(s) of your choice and then click the appropriate button
-on the main page and load as described above.</p>
+on the main page and load as described above.
+<br><br>
+The two new dist files needed for Solver 2 can be found
+<a href=../solver2/dist_files.html>here</a>.
+</p>
 <br><br>
 <b>Searching For 20 Move Solutions</b>
 <br><br>
@@ -145,7 +150,7 @@ now the default).</p>
 <br><br>
 <p>The number of nodes generated during the search can be shown in the log by
 adding URL parameter show_node_counts=N (or snc=N) where N=1 for phase 1, N=2
-for phase 2 or N=3 for both, the default is snc=1.
+for phase 2 or N=3 for both.
 For phase 1, three counts are shown at each depth which are the total number
 of nodes generated, the number of nodes that actually reached that depth (did
 not get pruned) and the number of 3-color solutions.
@@ -154,12 +159,10 @@ excluded from the log.
 For phase 2, one line is shown after each solution which shows the totals for
 all depths searched to complete the solution from phase 1.
 <br><br>
-The phase 2 search can be eliminated by adding URL param use_p2seq=1 (which
-is now the default) which will store the move sequences for configs that can
-be solved in 8 moves or less (these are 6-color configs that are already
-solved as 3-color).
-The log will show 0 nodes for phase 2 if both params are used 
-(use_p2seq=1 &amp; show_node_counts=2 or 3).</p>
+With recent improvements to the solver it is no longer necessary to do a phase
+2 search because stored sequences are used instead.  The original
+functionality can be obtained by adding URL param use_p2seq=0 (use with
+show_node_counts=2 or 3 to see phase 2 counts in the log).</p>
 <br><a id=custom></a><br>
 <b>Custom Cube Display</b>
 <br><br>
@@ -279,7 +282,9 @@ like the following example using <a href=make_cubes_from_solutions>this</a>.
 D' R' F' U' B' L2 D R F' U' F' R2 L' D2 R F L2 D2<br>
 U2 F' D' L2 U R2 D2 F2 L' U F2 L2 B' L' U2 B L<br>
 R2 B2 D R' B U L' B2 L' B D F2 L2 B' L B2 R
-</p>
+<br><br>
+In the same way, a batch file can also be made from a file containing a list
+of scrambles using <a href=make_cubes_from_scrambles>this</a>.</p>
 <br>
 <center><script>document.write('<a href=javascript:window.close()>Close</a>')</script></center>
 <br><br>

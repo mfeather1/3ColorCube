@@ -1473,7 +1473,8 @@ function readCubeFile(files) {
     var reader = new FileReader();
     reader.onload = function(e) {
       batch_cubes = e.target.result.split(/\r?\n/);
-      batch_cubes.length--;
+      if (batch_cubes[batch_cubes.length-1].length == 0)
+        batch_cubes.length--;
       document.getElementById('btn2').innerHTML = '';
       document.getElementById('td2').style.display = 'none';
       cube_file_loaded(file.name);
