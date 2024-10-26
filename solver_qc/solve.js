@@ -61,7 +61,7 @@ var b3_ep, ep_b3, op_op, inv_op, cp6c_cp3c;
 // from the sequence, setting show_combine=1 will show the sequence before
 // it is modified
 
-var show_combine = 0;
+var show_combine = 1;
 
 importScripts('rch.js');
 importScripts('../rclib.js');
@@ -248,6 +248,7 @@ function solve_cube(facelets)
     if (use_p2seq && presolved_dist < 9) {
       if (worker == 1)
         show_solution_from_p2seq(cpr, eprn);
+      show_time();
       return;
     }
   }
@@ -272,10 +273,7 @@ function solve_cube(facelets)
       if (minmv == depth+1 || depth >= gdone[1]-1)
         done = 2;
   }
-  var time1 = Date.now();
-  var time2 = ((time1-stime0)/1000).toFixed(2)
-  search_time = (time_format) ? convert_time(time2) : time2;
-  document_write(search_time + ' Search Time<br><br>');
+  show_time();
 }
 
 function show_solution_from_p2seq(cpr, epr) {
@@ -290,11 +288,13 @@ function show_solution_from_p2seq(cpr, epr) {
   var s = solution.join(' ');
   s += ' [0+' + sol_dep2 + '] (' + sol_dep2 + 'f*)';
   document_write(s + '<br>');
+  done = 1;
+}
+
+function show_time() {
   var time = ((Date.now()-stime0)/1000).toFixed(2);
   search_time = (time_format) ? convert_time(time) : time;
   document_write(search_time + ' Search Time<br><br>');
-  done = 1;
-  gdone[2] = 1;
 }
 
 function show_moves()
@@ -342,7 +342,9 @@ function show_moves()
   sol_dep1 = depth;
   sol_dep2 = depth2 - adj;
   var s = ' [' + sol_dep1 + '+' + sol_dep2 + '] ';
-  document_write(s + '(' + solution.length + 'f)<br>');
+  s += '(' + solution.length;
+  s += (sol_dep1 != 0 && sol_dep2 == 0) ? 'f*)' : 'f)' 
+  document_write(s + '<br>');
   if (minmv == depth)
     done = 2;
   if (minmv <= stoplen)
@@ -461,7 +463,7 @@ function show_optimal_solution() {
   sol_dep1 = depth;
   sol_dep2 = 0;
   var s = ' [' + sol_dep1 + '+' + sol_dep2 + '] ';
-  document_write(solution.join(' ') + s + '(' + depth + 'f)<br>');
+  document_write(solution.join(' ') + s + '(' + depth + 'f*)<br>');
 }
 
 // ----------------------------------------------------------------------------

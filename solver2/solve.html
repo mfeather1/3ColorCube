@@ -819,7 +819,6 @@ function solve() {
     solve_running = 1;
     gdone[0] = 0;
     gdone[1] = 99;
-    gdone[2] = 0;
     cancel = 0;
     if (first_time_solve) {
       send_init_request_to_workers();
@@ -1099,10 +1098,9 @@ function ipc(e) {
         if (x > max)
           max = x;
       }
-      if (worker_status[idx].data.moves.length > 0)
-        optimal = ((opt_count == conc && cancel == 0) || gdone[2] == 1);
-      else
-        optimal = false;
+      var d = worker_status[idx].data;
+      optimal = (d.moves.length > 0 && cancel == 0 && 
+        (opt_count == conc || d.sol_dep1 == 0 || d.sol_dep2 == 0)) ? 1 : 0;
       if (batch)
         show_solution_batch(worker_status[idx], idx, max.toFixed(2));
       else
@@ -1187,7 +1185,6 @@ function show_solution(e, w, search_time)
   if (params != '')
     af += params;
   acjs_removeListeners['cube']();
-
   if (moves.length > 0) {
     AnimCube3("id=cube&config=../AnimCube.txt&edit=0&move=" + moves + "&facelets=" + af);
     document.getElementById('status').style.textAlign = 'center';
@@ -1203,6 +1200,8 @@ function show_solution(e, w, search_time)
     AnimCube3("id=cube&config=../AnimCube.txt&edit=0&facelets=" + af);
     if (cancel)
       s = 'Search stopped, solution not found.';
+    else if (stoplen < 20)
+      s = 'Solution not found, increase stoplen.';
     else
       s = 'Solution not found, increase search time.';
     document.getElementById('status').innerHTML = s;
@@ -1214,7 +1213,7 @@ function show_solution(e, w, search_time)
     s += ' ' + e.data.moves.join(' ');
     s += ' [' + e.data.sol_dep1 + '+' + e.data.sol_dep2 + ']';
     s += ' (' + e.data.moves.length;
-    s += (optimal) ? 'f*)' : 'f)';
+    s += optimal ? 'f*)' : 'f)';
     s += ' ' + search_time;
     mconsole(s);
   }
@@ -1235,7 +1234,7 @@ function show_solution_batch(e, w, search_time) {
   s += ' ' + e.data.moves.join(' ');
   s += ' [' + e.data.sol_dep1 + '+' + e.data.sol_dep2 + ']';
   s += ' (' + e.data.moves.length;
-  s += (optimal) ? 'f*)' : 'f)';
+  s += optimal ? 'f*)' : 'f)';
   s += ' ' + search_time;
   mconsole(s);
   solve_running = 0;

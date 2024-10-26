@@ -241,6 +241,7 @@ var use_p2seq = 1;
 var next = 0;
 var cancel;
 var first_time_acjs = true;
+var optimal;
 var CUBE_HOME   = "RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO";
 var CUBE_BLANK  = "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
 
@@ -1064,6 +1065,9 @@ function ipc(e) {
         if (x > max)
           max = x;
       }
+      var d = worker_status[idx].data;
+      optimal = (d.moves.length > 0 && cancel == 0 && 
+        (opt_count == conc || d.sol_dep1 == 0 || d.sol_dep2 == 0)) ? 1 : 0;
       if (batch)
         show_solution_batch(worker_status[idx], idx, max.toFixed(2));
       else
@@ -1145,7 +1149,7 @@ function show_solution(e, w, search_time)
   var s = (show_deps) ? ' &nbsp; ' + e.data.sol_dep1 + '+' + e.data.sol_dep2 : '';
   if (moves.length > 0)
     s += ' &nbsp;&nbsp; W' + w;
-  if (opt_count == conc && cancel == 0)
+  if (optimal)
      s += '<br>Optimal';
   document.getElementById('status').innerHTML = 
     '<button class="btn svw3" onclick="show_log()">Solve Log</button> </td>' +
@@ -1157,7 +1161,7 @@ function show_solution(e, w, search_time)
     s += ' ' + e.data.moves.join(' ');
     s += ' [' + e.data.sol_dep1 + '+' + e.data.sol_dep2 + ']';
     s += ' (' + e.data.moves.length;
-    s += (opt_count == conc && cancel == 0) ? 'f*)' : 'f)';
+    s += optimal ? 'f*)' : 'f)';
     s += ' ' + search_time;
     mconsole(s);
   }
@@ -1178,7 +1182,7 @@ function show_solution_batch(e, w, search_time) {
   s += ' ' + e.data.moves.join(' ');
   s += ' [' + e.data.sol_dep1 + '+' + e.data.sol_dep2 + ']';
   s += ' (' + e.data.moves.length;
-  s += (opt_count == conc && cancel == 0) ? 'f*)' : 'f)';
+  s += optimal ? 'f*)' : 'f)';
   s += ' ' + search_time;
   mconsole(s);
   solve_running = 0;
@@ -1218,6 +1222,7 @@ function show_files_loaded() {
 }
 
 function show_dist_counts() {
+  /*
   var count1 = [], count2 = [], count3 = [];
   var dist1 = new Uint8Array(dist1_shared);
   var dist2 = new Uint8Array(dist2_shared);
@@ -1237,10 +1242,14 @@ function show_dist_counts() {
   }
   for (var i=0; i < distp2.length; i++)
     count3[distp2[i]]++;
+  */
+  var count1 = [0,1,3,23,241,2948,36359,433044,4641716,33429131];
+  var count2 = [0,1,3,23,237,2888,35002,401664,4183059,30828052];
+  var count3 = [0,6,27,120,519,2124,8188,27636,78644];
   document_write('<table class=tabdata style="border-collapse:collapse;border-color:white" border=1>');
   document_write('<tr><td colspan=4 style=text-align:center;border-color:white>Search Arrays</td></tr>');
   document_write('<tr><td>Depth</td><td>Dist1</td><td>Dist2</td><td>DistP2</td></tr>');
-  for (i=1; i <= dist_gen_depth; i++) {
+  for (var i=1; i <= dist_gen_depth; i++) {
     document_write('<tr><td>' + i + '</td><td>' + count1[i] + '</td><td>');
     document_write(count2[i] + '</td><td>' + ((i<9)?count3[i]:'n/a') + '</td></tr>');
   }
