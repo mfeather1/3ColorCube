@@ -61,7 +61,7 @@ var b3_ep, ep_b3, op_op, inv_op, cp6c_cp3c;
 // from the sequence, setting show_combine=1 will show the sequence before
 // it is modified
 
-var show_combine = 1;
+var show_combine = 0;
 
 importScripts('rch.js');
 importScripts('../rclib.js');
