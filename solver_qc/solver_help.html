@@ -108,7 +108,7 @@ The two new dist files needed for Solver 2 can be found
 <b>Searching For 20 Move Solutions</b>
 <br><br>
 <p>To stop the search based on solution length rather than search time 
-use the "s" option (append to Search Time as in 5s which is now the default).
+use the "s" option (append to Search Time as in 5s).
 With a sufficiently long search time the solver will stop at the first solution 
 of 20 moves or less but if it is too short then the search will be stopped before
 reaching the goal, in that case increase it.
@@ -119,8 +119,13 @@ to the normal search (stop based on time only) append "t" to Search Time
 With the "s" option, there will be a large variance in the amount of time
 it takes to find a solution (with 20 moves or less) so the wait may be long
 in some cases.
+<br><br>
 It is possible to stop the search for solution lengths other than 20 moves by
-adding URL parameter stoplen=N where N is the desired number of moves.</p>
+adding URL parameter stoplen=N where N is the desired number of moves.
+If stoplen is less than the minimum number of moves required to solve then it
+will show the best solution found before stopping at the specified depth hence
+the solution shown may be longer than stoplen which means that it is not
+possible to solve in the specified number of moves.</p>
 <br><br>
 <b>Concurrent Processes (workers)</b>
 <br><br>
@@ -143,8 +148,7 @@ likely fine for most cases.
 <br><br>
 The log normally shows search results for each concurrent process but some
 workers may not have found a solution before the search ends so to suppress
-display of those workers add param log_brief=1 to the solver URL (which is
-now the default).</p>
+display of those workers add param log_brief=1 to the solver URL.</p>
 <br><a id=snc></a><br>
 <b>Node Counts</b>
 <br><br>

@@ -290,10 +290,7 @@ function solve_cube(facelets)
       if (minmv == depth+1 || depth >= gdone[1]-1)
         done = 2;
   }
-  var time1 = Date.now();
-  var time2 = ((time1-stime0)/1000).toFixed(2);
-  search_time = (time_format) ? convert_time(time2) : time2;
-  document_write(search_time + ' Search Time<br><br>');
+  show_time();
 }
 
 function show_solution_from_p2seq(cpr, epr) {
@@ -308,11 +305,15 @@ function show_solution_from_p2seq(cpr, epr) {
   var s = solution.join(' ');
   s += ' [0+' + sol_dep2 + '] (' + sol_dep2 + 'f*)';
   document_write(s + '<br>');
+  show_time();
+  done = 1;
+  gdone[2] = 1;
+}
+
+function show_time() {
   var time = ((Date.now()-stime0)/1000).toFixed(2);
   search_time = (time_format) ? convert_time(time) : time;
   document_write(search_time + ' Search Time<br><br>');
-  done = 1;
-  gdone[2] = 1;
 }
 
 function show_moves()

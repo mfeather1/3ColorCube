@@ -245,6 +245,7 @@ var cancel;
 var first_time_acjs = true;
 var random_presolved = 0;
 var optimal;
+var presolved_len = 0;
 var CUBE_HOME   = "RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO";
 var CUBE_BLANK  = "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
 
@@ -1150,6 +1151,9 @@ function ipc(e) {
       s += 'Current Solution: ' + e.data.msg + ' Moves';
       msg(s);
     }
+
+  if (cmd == 'presolved')
+    presolved_len = e.data.len;
 }
 
 function stop_search(s) {
@@ -1177,6 +1181,11 @@ function show_solution(e, w, search_time)
     else
       show_dist_counts();
     first_time_log = false;
+  }
+  if (presolved_len > 0) {
+    var s = 'This config has a known optimal solution length of ';
+    s += presolved_len + ' moves.<br><br>';
+    logtxt.push(s);
   }
   var moves = e.data.moves;
   for (var i=1; i <= conc; i++)
@@ -1214,7 +1223,7 @@ function show_solution(e, w, search_time)
     s += ' ' + e.data.moves.join(' ');
     s += ' [' + e.data.sol_dep1 + '+' + e.data.sol_dep2 + ']';
     s += ' (' + e.data.moves.length;
-    s += (optimal) ? 'f*)' : 'f)';
+    s += optimal ? 'f*)' : 'f)';
     s += ' ' + search_time;
     mconsole(s);
   }
@@ -1235,7 +1244,7 @@ function show_solution_batch(e, w, search_time) {
   s += ' ' + e.data.moves.join(' ');
   s += ' [' + e.data.sol_dep1 + '+' + e.data.sol_dep2 + ']';
   s += ' (' + e.data.moves.length;
-  s += (optimal) ? 'f*)' : 'f)';
+  s += optimal ? 'f*)' : 'f)';
   s += ' ' + search_time;
   mconsole(s);
   solve_running = 0;
