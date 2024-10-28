@@ -255,6 +255,7 @@ function solve_cube(facelets)
     var cpr = cp6c_cpr[cp6c];
     var eprn = eprsum(epr);
     presolved_dist = distp2[cpr*13824 + eprn];
+    postMessage({'cmd': 'presolved', 'len': presolved_dist});
     if (use_p2seq && presolved_dist < 9) {
       if (worker == 1)
         show_solution_from_p2seq(cpr, eprn);
