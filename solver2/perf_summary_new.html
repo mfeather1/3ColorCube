@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+ <title>Performance Summary</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> 
+   .tabdata1 td {padding: 2px 15px; border-color:black; text-align:left}
+   .tabdata2 td {padding: 2px 15px; border-color:black; text-align:center}
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>Performance Summary</font>
+<br><br>
+<p>
+<table class=tabdata1 style="border-collapse:collapse; border-color:white;" border=1>
+ <tr><td>QC</td><td>Quad-Core Solver</td></tr>
+ <tr><td>S2</td><td>Solver2</td></tr>
+ <tr><td>R5</td><td>Ryzen 5 (spec below)</td></tr>
+ <tr><td>R7</td><td>Ryzen 7</td></tr>
+ <tr><td>THP</td><td><a target=_blank href=https://docs.kernel.org/admin-guide/mm/transhuge.html>Transparent Hugepages</a></td></tr>
+</table>
+</p>
+<br>
+<table class=tabdata2 style="border-collapse:collapse; border-color:white;" border=1>
+ <tr><td colspan=8 style=border-color:white>Optimal Solves<br>1000 Random Cubes</td></tr>
+ <tr>
+  <td style=border-color:white>Solver</td>
+  <td style=border-color:white>Platform</td>
+  <td style=border-color:white>THP</td>
+  <td style=border-color:white>Dist4<br>(GB)</td>
+  <td style=border-color:white>Average<br>Solve</td>
+  <td style=border-color:white>Longest<br>Solve</td>
+  <td style=border-color:white>Percent<br>Change</td>
+  <td style=border-color:white>Log<br>File</td>
+ </tr>
+ <tr><td>QC</td><td>R5</td><td>N</td><td>1.8</td><td>14.62</td><td>142.77</td><td>41.67</td><td><a href=logs/qc_r5_opt_rand_1000_d41.txt>view</a></td></tr>
+ <tr><td>QC</td><td>R5</td><td>Y</td><td>1.8</td><td>10.32</td><td>101.02</td><td>29.41</td><td><a href=logs/qc_r5_opt_rand_1000_d41_thp.txt>view</a></td></tr>
+ <tr><td height=10></tr>
+ <tr><td>QC</td><td>R7</td><td>N</td><td>1.8</td><td>4.53</td><td>44.21</td><td>14.97</td><td><a href=logs/qc_r7_opt_rand_1000_d41.txt>view</a></td></tr>
+ <tr><td>QC</td><td>R7</td><td>Y</td><td>1.8</td><td><font color=lime>3.94</font></td><td>38.28</td><td>13.02</td><td><a href=logs/qc_r7_opt_rand_1000_d41_thp.txt>view</a></td></tr>
+ <tr><td height=10></tr>
+ <tr><td>S2</td><td>R5</td><td>N</td><td>1.8</td><td>13.26</td><td>123.19</td><td>43.51</td><td><a href=logs/s2_r5_opt_rand_1000_d41.txt>view</a></td></tr>
+ <tr><td>S2</td><td>R5</td><td>Y</td><td>1.8</td><td>9.24</td><td>83.76</td><td>30.32</td><td><a href=logs/s2_r5_opt_rand_1000_d41_thp.txt>view</a></td></tr>
+ <tr><td height=10></tr>
+ <tr><td>S2</td><td>R5</td><td>N</td><td>3.6</td><td>10.02</td><td>95.08</td><td>48.89</td><td><a href=logs/s2_r5_opt_rand_1000_d42.txt>view</a></td></tr>
+ <tr><td>S2</td><td>R5</td><td>Y</td><td>3.6</td><td>6.73</td><td>62.29</td><td>32.83</td><td><a href=logs/s2_r5_opt_rand_1000_d42_thp.txt>view</a></td></tr>
+ <tr><td height=10></tr>
+ <tr><td>S2</td><td>R7</td><td>N</td><td>1.8</td><td>4.04</td><td>36.73</td><td>13.17</td><td><a href=logs/s2_r7_opt_rand_1000_d41.txt>view</a></td></tr>
+ <tr><td>S2</td><td>R7</td><td>Y</td><td>1.8</td><td>3.57</td><td>31.73</td><td>11.63</td><td><a href=logs/s2_r7_opt_rand_1000_d41_thp.txt>view</a></td></tr>
+ <tr><td height=10></tr>
+ <tr><td>S2</td><td>R7</td><td>N</td><td>3.6</td><td>3.12</td><td>27.98</td><td>18.18</td><td><a href=logs/s2_r7_opt_rand_1000_d42.txt>view</a></td></tr>
+ <tr><td>S2</td><td>R7</td><td>Y</td><td>3.6</td><td>2.64</td><td>23.51</td><td>15.38</td><td><a href=logs/s2_r7_opt_rand_1000_d42_thp.txt>view</a></td></tr>
+ <tr><td height=10></tr>
+ <tr><td>S2</td><td>R7</td><td>N</td><td>7.1</td><td>2.49</td><td>22.36</td><td>28.35</td><td><a href=logs/s2_r7_opt_rand_1000_d43.txt>view</a></td></tr>
+ <tr><td>S2</td><td>R7</td><td>Y</td><td>7.1</td><td><font color=lime>1.94</font></td><td>17.80</td><td>22.09</td><td><a href=logs/s2_r7_opt_rand_1000_d43_thp.txt>view</a></td></tr>
+ <tr>
+</table>
+<br>
+<p>The test platforms are both HP Pavilion desktop computers with processors
+from Advanced Micro Devices (AMD). 
+All tests were done using Google Chrome on the Fedora operating system.
+<!-- (version 40 for current testing and version 34 for for prior testing). -->
+The hardware specs for the two platforms are:</p>
+<p style=margin-top:15px>
+Ryzen 5: 3400G, 3.7 Ghz 4-Core/8-Thread, 16 GB RAM (DDR4 2667 MHz,
+dual-channel)</p>
+<p style=margin-top:10px>
+Ryzen 7: 5700G, 3.8 Ghz 8-Core/16-Thread, 64 GB RAM (DDR4 3200 MHz,
+dual-channel)</p>
+<br><hr><br>
+<p>Notes:<br>
+A frequency distribution for the 1000 random cubes tested is 
+<a href=fdist.html>here</a>.
+<br><br>
+<p>Url parameter "conc" was used as shown:<br>
+Ryzen 5: conc=9<br>
+Ryzen 7: conc=18<br>
+This allows the 18 cube moves to be distributed evenly across either 9 or 18
+processes for better load balancing which yields a small performance gain.
+<br><br>
+New parameter use_stl=0 was used to eliminate use of the Date.now function
+in the main search loop.
+This was done because Date.now, which is a Javascript built-in function,
+has recently become significantly slower on some platforms.
+This eliminates the search time limit which is not needed for these tests.
+<br><br>
+The 3.6 GB Dist4 is the largest that Chrome can load on the Ryzen 5, likewise
+for the 7.1 GB Dist4 on Ryzen 7.
+<br><br>
+Some additional information about transparent hugepages as it relates to
+these tests is <a href=thp.html>here</a>.
+<br><br>
+The previous version of this performance summary which had some additional 
+tests is <a href=../solver_qc/perf_idx.html>here</a>.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+</center>
+</html>

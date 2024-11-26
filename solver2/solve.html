@@ -202,6 +202,7 @@
 "use strict";
 
 var stl;
+var use_stl = 1;
 var color;
 var facelets_arr = [];
 var stoplen = 0;
@@ -246,10 +247,12 @@ var first_time_acjs = true;
 var random_presolved = 0;
 var optimal;
 var presolved_len = 0;
+var d4parts = 1;
+var d4arr =  [];
 var CUBE_HOME   = "RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO";
 var CUBE_BLANK  = "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";
 
-var dist1_shared, dist2_shared, dist3_shared, dist4_shared;
+var dist1_shared, dist2_shared, dist3_shared;
 var dist5_shared, dist9_shared, distp2_shared;
 var ept_min_op_shared, ept_min_ops_shared, ept_op_idx_shared;
 var ept_ops_ix1_shared, ept_ops_ix2_shared;
@@ -397,15 +400,25 @@ function main() {
   gdone = new Uint8Array(gdone_shared);
 
   if (typeof(use_dist4) != 'undefined') {
-    if (use_dist4 == 1) {
+    if (val_d4(use_dist4)) {
+      if (use_dist4 > 1)
+        d4parts = use_dist4.substr(1);
+      use_dist4 = use_dist4[0];
+    }
+    else
+      use_dist4 = 1;
+    if (use_dist4 > 0) {
       document.title = 'Optimal Solver 2';
       document.getElementById('title').innerHTML = 'Optimal Solver 2';
       window.use_dist3 = 2;
       USE_DIST4 = use_dist4;
       load_dist_files = 1;
-      dist_loaded[dist_loaded.length] = 0;
+      for (var i=0; i < d4parts; i++)
+        dist_loaded[dist_loaded.length] = 0;
       try {
-        dist4_shared = new SharedArrayBuffer(C_PRM_TW*MIN_EP*16);     // 1827 MB
+        var size = C_PRM_TW * MIN_EP * 16 * 2**(USE_DIST4-1)/d4parts;
+        for (var i=0; i < d4parts; i++)
+          d4arr[i] = new SharedArrayBuffer(size);
       }
       catch(e) {
         memory_allocation_error_handler(e);
@@ -487,6 +500,8 @@ function main() {
 
   if (typeof(stl) != 'undefined')
     document.getElementById('stl').value = stl;
+
+  use_stl = (use_stl == '0') ? 0 : 1;
   
   if (typeof(facelets) == 'undefined')
     facelets = CUBE_HOME;
@@ -602,6 +617,19 @@ function main() {
     document.getElementById('back').innerHTML = '<a href="JavaScript:window.close()">Close</a>';
   else 
     document.getElementById('back').innerHTML = '<a href="javascript: history.go(-1)">Back</a>';
+}
+
+function val_d4(s) {
+  if (isNaN(s))
+    return 0;
+  /* first digit is size in MB: 1=1827, 2=3653, 3=7307, 4=14614, 5=29228, 6=58455
+     second digit is parts (number of files) */
+  var v = [1,21,22,31,32,34,41,42,44,48,51,52,54,58,61,62,64,68];
+  var n = Number(s);
+  for (var i=0; i < v.length; i++)
+    if (v[i] == n)
+      return 1;
+  return 0;
 }
 
 function nav_btns() {
@@ -841,7 +869,7 @@ function send_init_request_to_workers() {
   msg.dist1 = dist1_shared;
   msg.dist2 = dist2_shared;
   msg.dist3 = dist3_shared;
-  msg.dist4 = dist4_shared;
+  msg.d4arr = d4arr; 
   msg.dist9 = dist9_shared;
   msg.distp2 = distp2_shared;
   msg.ept_min_op = ept_min_op_shared;
@@ -877,7 +905,7 @@ function send_init_request_to_workers() {
   msg.conc = conc;
   msg.use_p2seq = use_p2seq;
   msg.use_dist3 = USE_DIST3;
-  msg.use_dist4 = USE_DIST4;
+  msg.use_dist4 = '' + USE_DIST4 + d4parts;
   msg.use_dist5 = USE_DIST5;
   msg.use_dist9 = USE_DIST9;
   if (CT_SYM_METHOD == 1)
@@ -916,6 +944,7 @@ function send_solve_request_to_workers() {
       'worker': i,
       'cmd': 'solve',
       'facelets': facelets,
+      'use_stl': use_stl,
       'stl': stl,
       'stoplen': stoplen,
       // 'use_dist3': USE_DIST3,
@@ -1450,6 +1479,7 @@ function sbtn_inactive() {
 }
 
 function worker_error_handler() {
+  console.log(e.message);
   document.getElementById('status').innerHTML = 
     'This browser does not appear to support web workers, ' +
     'try this link instead: <a href=../solver/index.html>Alt Solver</a>';
@@ -1460,6 +1490,7 @@ function worker_error_handler() {
 }
 
 function memory_allocation_error_handler(e) {
+  console.log(e.message);
   // this occurs if there is insufficent memory available 
   document.getElementById('status').innerHTML = 'Cannot allocate memory';
   facelets = CUBE_HOME;
@@ -1469,6 +1500,7 @@ function memory_allocation_error_handler(e) {
 }
 
 function shared_memory_error_handler(e) {
+  console.log(e.message);
   // this occurs if coop/coep headers are not set
   document.getElementById('status').innerHTML = 'Cannot allocate shared memory';
   facelets = CUBE_HOME;

@@ -26,6 +26,7 @@ var disp2 = ['','2','\''];
 var stime0;
 var show_methods = 0;
 var stl = 5;
+var use_stl = 1;
 var stoplen = 0;
 var init_done = 0;
 var sol_dep1, sol_dep2;
@@ -170,6 +171,7 @@ function ipc(e) {
   if (cmd == 'solve') {
     var facelets = e.data.facelets;
     stl = e.data.stl;
+    use_stl = e.data.use_stl;
     stoplen = e.data.stoplen;
     // USE_DIST3 = e.data.use_dist3;
     // if (USE_DIST3 == 1)

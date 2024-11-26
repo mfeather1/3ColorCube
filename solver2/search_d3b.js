@@ -1,5 +1,4 @@
-// Search with 835 MB Dist3 (in addition to Dists 1-2)
-
+// Dist3: 835 MB
 function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
 {
   for (var i=0, mv=0; (mv=mvlist[i]) != -1; i++) {
@@ -55,18 +54,20 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
             return;
           }
           op = get_min_op_3c(cp, ct, op, ix2);
-          var time1 = Date.now();
-          if ((time1-stime0)/1000 >= stl) {
-            if (minmv == 99) {
-              if (auto_extend_search == 0) {
-                auto_extend_search = 1;
-                stl_msg(2);
+          if (use_stl) {
+            var time1 = Date.now();
+            if ((time1-stime0)/1000 >= stl) {
+              if (minmv == 99) {
+                if (auto_extend_search == 0) {
+                  auto_extend_search = 1;
+                  stl_msg(2);
+                }
               }
-            }
-            else {
-              if (auto_extend_search == 0)
-                stl_msg(1);
-              done = 1;
+              else {
+                if (auto_extend_search == 0)
+                  stl_msg(1);
+                done = 1;
+              }
             }
           }
         }

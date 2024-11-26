@@ -202,6 +202,7 @@
 "use strict";
 
 var stl;
+var use_stl = 1;
 var color;
 var facelets_arr = [];
 var stoplen = 0;
@@ -467,6 +468,8 @@ function main() {
   if (typeof(stl) != 'undefined')
     document.getElementById('stl').value = stl;
   
+  use_stl = (use_stl == '0') ? 0 : 1;
+
   if (typeof(facelets) == 'undefined')
     facelets = CUBE_HOME;
   else {
@@ -883,6 +886,7 @@ function send_solve_request_to_workers() {
       'cmd': 'solve',
       'facelets': facelets,
       'stl': stl,
+      'use_stl': use_stl,
       'stoplen': stoplen,
       // 'use_dist3': USE_DIST3,
       // 'use_dist4': USE_DIST4,

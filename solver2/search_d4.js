@@ -1,5 +1,4 @@
-// Search with 835 MB Dist3 and 1827 MB Dist4 (in addition to Dists 1-2)
-
+// Dist4: Search any combo of size & parts declared in val_d4 in solve.html
 function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
 {
   for (var i=0, mv=0; (mv=mvlist[i]) != -1; i++) {
@@ -55,18 +54,20 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
             return;
           }
           op = get_min_op_3c(cp, ct, op, ix2);
-          var time1 = Date.now();
-          if ((time1-stime0)/1000 >= stl) {
-            if (minmv == 99) {
-              if (auto_extend_search == 0) {
-                auto_extend_search = 1;
-                stl_msg(2);
+          if (use_stl) {
+            var time1 = Date.now();
+            if ((time1-stime0)/1000 >= stl) {
+              if (minmv == 99) {
+                if (auto_extend_search == 0) {
+                  auto_extend_search = 1;
+                  stl_msg(2);
+                }
               }
-            }
-            else {
-              if (auto_extend_search == 0)
-                stl_msg(1);
-              done = 1;
+              else {
+                if (auto_extend_search == 0)
+                  stl_msg(1);
+                done = 1;
+              }
             }
           }
         }
@@ -79,9 +80,12 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
         var ctsym = get_ctsym(cpt, op);
       }
       if (depth-n <= 11 && depth-n >= 9) {
-        var rs = etsym>>5;
-        ix = (cpsym*2187+ctsym)*12512 + epmin*16 + (rs>>2);  // MIN_EP*16 = 12512 
-        var tmp = ((dist4[ix]>>((rs&3)<<1))&3);
+        var rs = etsym >> d4rs;
+        ix = (cpsym*2187+ctsym)*d4m2 + epmin*d4m1 + (rs>>2);
+        // tmp = d4arr[Math.floor(ix/d4len)][ix%d4len];
+        var x = Math.floor(ix/d4len);
+        tmp = d4arr[x][ix-(x*d4len)];
+        tmp = (tmp>>((rs&3)<<1))&3;
         dist = (tmp) ? tmp+9+n : 0;
         if (dist > depth)
           continue;

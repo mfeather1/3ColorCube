@@ -27,6 +27,7 @@ var disp = ['R','L','U','D','F','B'];
 var disp2 = ['','2','\''];
 var stime0;
 var show_methods = 0;
+var use_stl = 1;
 var stl = 5;
 var stoplen = 0;
 var init_done = 0;
@@ -45,9 +46,13 @@ var show_node_counts = 0;
 var use_p2seq, inv_mv, p2seq, p2idx;
 var presolved_cube = 0;
 var presolved_dist;
+var d4parts;
+var d4rs, d4m1, d4m2;
+var d4arr = [];
+var d4len;
 
 // shared arrays
-var dist1, dist2, dist3, dist4, dist5, dist9, distp2;
+var dist1, dist2, dist3, dist5, dist9, distp2;
 var ept_min_op, ept_min_ops, ept_op_idx;
 var ept_ops_ix1, ept_ops_ix2;
 var ep_mov, cp6c_mov, cpt_min;
@@ -79,10 +84,36 @@ function ipc(e) {
   if (cmd == 'init') {
     worker = e.data.worker;
     postMessage({'cmd': 'msg', 'msg': 'Initializing'});
+    USE_DIST3 = e.data.use_dist3;
+    USE_DIST4 = e.data.use_dist4[0];
+    USE_DIST5 = e.data.use_dist5;
+    USE_DIST9 = e.data.use_dist9;
     dist1 = new Uint8Array(e.data.dist1);
     dist2 = new Uint8Array(e.data.dist2);
     dist3 = new Uint8Array(e.data.dist3);
-    dist4 = new Uint8Array(e.data.dist4);
+    if (USE_DIST4 > 0) {   
+      d4parts = e.data.use_dist4.substr(1);
+      for (var i=0; i < d4parts; i++)
+        d4arr[i] = new Uint8Array(e.data.d4arr[i]);
+      d4len = d4arr[0].byteLength;
+      // this splits the d4arr into dist400...dist4NN
+      // used by search_d4NN.js
+      for (var i=0; i < d4parts; i++) {
+        var s = i.toString().padStart(2,'0');
+        var s2 = 'self.dist4' + s + '=d4arr[' + i + ']';
+        eval(s2);
+      }
+      /* this makes p01..pNN for dist4 index
+      var k = C_PRM_TW * MIN_EP * 16 * 2**(USE_DIST4-1)/d4parts;
+      for (var i=1; i < d4parts; i++) {
+        var s = 'self.p' + i.toString().padStart(2,'0')  + '=' + k*i;
+        eval(s);
+      } */
+      // these are for computing the dist4 index in search_d4.js:
+      d4rs = [0,5,4,3,2,1,0][USE_DIST4];
+      d4m1 = (E_TWIST>>2) / 2**d4rs;
+      d4m2 = MIN_EP * d4m1;
+    }
     dist9 = new Uint8Array(e.data.dist9);
     distp2 = new Uint8Array(e.data.distp2);
     ept_min_op = new Int8Array(e.data.ept_min_op);
@@ -117,10 +148,6 @@ function ipc(e) {
     dist_gen_depth = e.data.dist_gen_depth;
     conc = e.data.conc;
     use_p2seq = e.data.use_p2seq;
-    USE_DIST3 = e.data.use_dist3;
-    USE_DIST4 = e.data.use_dist4;
-    USE_DIST5 = e.data.use_dist5;
-    USE_DIST9 = e.data.use_dist9;
     if (USE_DIST5)
       dist5 = new Uint8Array(e.data.dist5);
     if (CT_SYM_METHOD == 1)
@@ -175,6 +202,7 @@ function ipc(e) {
 
   if (cmd == 'solve') {
     var facelets = e.data.facelets;
+    use_stl = e.data.use_stl;
     stl = e.data.stl;
     stoplen = e.data.stoplen;
     // USE_DIST3 = e.data.use_dist3;
@@ -206,16 +234,18 @@ function ipc(e) {
   }
 }
 
-function load_search_code()
-{
-  if (USE_DIST3 == 0)
-    importScripts('search.js');
-  else if (USE_DIST4 == 1)
-    importScripts('search_d4.js');
-  else if (USE_DIST3 == 1)
-    importScripts('search_d3a.js');
-  else if (USE_DIST3 == 2)
-    importScripts('search_d3b.js');
+function load_search_code() {
+  if (USE_DIST3 == 0)      importScripts('search.js');
+  else if (USE_DIST4 > 0) {
+    var s = USE_DIST4;
+    var p = d4parts;
+    if      (s == 1)           importScripts('search_d411.js');
+    else if (s == 2 && p == 2) importScripts('search_d422.js');
+    else if (s == 3 && p == 4) importScripts('search_d434.js');
+    else                       importScripts('search_d4.js');
+  }
+  else if (USE_DIST3 == 1) importScripts('search_d3a.js');
+  else if (USE_DIST3 == 2) importScripts('search_d3b.js');
 }
 
 function solver_main(facelets, worker)

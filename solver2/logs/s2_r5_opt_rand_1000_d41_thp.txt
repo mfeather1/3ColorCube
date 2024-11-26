@@ -1,0 +1,1026 @@
+Solver 2 Log:
+
+Params: use_stl=0&use_dist4=1&conc=9&batch=4
+
+Concurrent Processes: 9
+
+Batch 4: 1000 random cubes
+
+Dist Files Loaded:
+Dist1_09F.dat
+Dist2_09F.dat
+Dist3_10FQ.dat
+Dist4_11F.dat
+Dist5_11F.dat
+DistP2_15F.dat
+
+Init Time: 0.97
+1 D' R' F' U' B' L2 D R F' U' F' R2 L' D2 R F L2 D2 [16+2] (18f*) 4.57
+2 U2 F' D' L2 U R2 D2 F2 L' U F2 L2 B' L' U2 B L [17+0] (17f*) 3.45
+3 R2 B2 D R' B U L' B2 L' B D F2 L2 B' L B2 R [17+0] (17f*) 2.26
+4 D' F' U2 B R' U R L F D R2 B' L' D2 F2 U2 B' R2 [17+1] (18f*) 4.75
+5 U' R U' F U F2 D R' F R' L D R' U2 F2 R2 F [17+0] (17f*) 0.64
+6 R U' L' D F2 R U2 B' U D2 F D' R L U2 L F2 R2 [16+2] (18f*) 4.95
+7 U2 R U2 D' L U F2 L' U L' F2 B2 R2 U' F B2 R [17+0] (17f*) 0.91
+8 B2 U2 B2 U F' R' F U B R2 D2 F' U' R2 F' L [16+0] (16f*) 0.57
+9 L U' L' F R' F R' L D' R' L2 B U' R F R2 D' [17+0] (17f*) 2.81
+10 F' D' L2 D2 B2 R2 B L U' B' L2 U L F B2 D B' U' [18+0] (18f*) 28.99
+11 L' F' R' U D' R U2 L' B2 U2 L' D L2 U D2 L2 B2 [14+3] (17f*) 0.47
+12 U2 B' D R B U' D R D' F2 U2 D' B2 R L D' B L' [18+0] (18f*) 32.59
+13 F2 B' R2 B' R F2 B R L2 F' R L2 F' R D' B2 L F' [18+0] (18f*) 35.31
+14 F2 R' F' U' R2 D' R' U' R2 U' B2 U F R2 U2 F' B2 U2 [16+2] (18f*) 6.64
+15 D2 F' U' L2 F' R2 F' L' U L2 U R2 L B2 U' L' B' [17+0] (17f*) 10.39
+16 B2 R F L U' L2 F' U' F R2 D2 L2 F D L' U2 B2 F2 [15+3] (18f*) 3.73
+17 F U R U2 R D' F2 R2 B U' L' U' D2 R' D' F2 U2 B2 [15+3] (18f*) 4.40
+18 D' F' L' U B R' D' L U' B U' R2 U F L2 D' F U2 [17+1] (18f*) 4.69
+19 R F U R U2 B D' F L2 F U' F2 U2 D2 B' U' D' [17+0] (17f*) 2.34
+20 R' L2 U' B2 U' L' D2 F U' R' B R2 D2 F2 L U D [17+0] (17f*) 0.71
+21 D2 L' U F' U' L' B2 L2 B2 D' F B R F' L' U R2 D2 [16+2] (18f*) 5.72
+22 U' R L' U' B U2 F2 D' R2 L' F2 L' D B R F' R F' [18+0] (18f*) 4.17
+23 D F D' B U2 B R F R' U D' R2 D B L' D' [16+0] (16f*) 0.28
+24 B2 R' F2 L D R' U' R U' R B R B2 D F R' B L2 [17+1] (18f*) 4.42
+25 F2 L2 U2 R D2 L' D' B R' F2 B2 L D' F' L2 D' R F2 [17+1] (18f*) 4.66
+26 F L D' L U B2 U' R' U2 B' R F' U R L' F [16+0] (16f*) 0.10
+27 D F' L' F' U L2 D' F B2 R F' B' L U2 D2 L2 B' [17+0] (17f*) 4.61
+28 U' F' R2 D L' B' L' B' D2 R2 U R2 F R' B' D2 L2 D2 [15+3] (18f*) 5.41
+29 F' D B2 R' B2 D2 R' U2 B' D' L D2 L F2 U B2 U B' [18+0] (18f*) 31.28
+30 F B L2 B L' B L2 B' U F2 B2 U F L2 U2 F R' D2 [17+1] (18f*) 6.23
+31 U2 F R B2 U R L2 U B' R' U F2 L2 D2 B' U' D' B' [18+0] (18f*) 16.96
+32 F' R' F' U R2 D2 L D L' F2 B D F' U2 F2 R F2 L2 [16+2] (18f*) 5.23
+33 D' R2 F2 R' F B2 D2 R' B D L2 U' F2 R2 D2 F2 R2 D2 [12+6] (18f*) 6.17
+34 R2 B2 D2 R2 B' D L2 B2 D2 R D' B' U' L' F L2 F2 [15+2] (17f*) 0.37
+35 U' R2 D2 B U F2 L D' R' F2 D2 R2 D' B' L U2 F' U2 [17+1] (18f*) 5.85
+36 D' B' L' F U D2 R' U' R L2 B2 U2 B2 L' F B2 L' B2 [17+1] (18f*) 5.60
+37 L' B' D F2 R2 D2 L B' D F' D' R' D2 B U D2 B2 U2 F2 [15+4] (19f*) 58.72
+38 F2 L F B' R L F' D' F2 R2 F2 D L' U' B D' R2 U2 [16+2] (18f*) 4.16
+39 L2 U2 L D2 F' R F' U2 B U F2 B U R F' [15+0] (15f*) 0.03
+40 U2 L' B' R' B' D R D2 B R2 D L2 F2 R2 F D R2 F2 [16+2] (18f*) 7.87
+41 F2 R2 B2 U R' U B U2 D' R2 U F' B L2 F U2 L2 [15+2] (17f*) 0.85
+42 B U R F' B' L B2 R2 U2 L2 U' F2 D B L D R [17+0] (17f*) 3.94
+43 B' U2 R' D2 B L F' B2 U' L F2 R' D R' B R F' [17+0] (17f*) 3.71
+44 L2 U L B' L U L' U L' D2 F U2 R F' B U2 R U2 [17+1] (18f*) 5.32
+45 D' L U2 D B2 L' F' D' F' U R2 B' L2 F D2 B' U [17+0] (17f*) 4.20
+46 R D2 R B' R' F B' R' D' L2 F' U D' L F D' B U2 [17+1] (18f*) 5.49
+47 D L' D L F R B2 U D' L' B L2 F L' F' R' B' R [18+0] (18f*) 42.16
+48 U2 B U' L2 U2 B' R2 L F L U' R2 B2 L2 U' R' U2 [16+1] (17f*) 0.67
+49 B2 L U2 F R2 U2 F' L' F D' R2 D L2 D L U2 L2 [15+2] (17f*) 0.73
+50 B2 U2 R2 L2 B' R U2 R2 U R F2 U' R U' F U2 B2 [15+2] (17f*) 0.57
+51 L' U2 R B' R2 F2 R U2 F' R2 D R2 D2 L U2 R D' R2 [17+1] (18f*) 8.05
+52 R' U D' F U F2 D F B L' D2 B2 R B2 U B2 D2 R2 [15+3] (18f*) 6.75
+53 L2 B2 D2 B2 D' R2 B R F' U F' R2 B' R2 F2 R D' [17+0] (17f*) 5.90
+54 R U2 R F U' L' U' L2 D2 F' L U2 R2 L F2 R U B [18+0] (18f*) 15.52
+55 F D' F U F2 D2 L' F2 B R' U' R D B D2 L' D2 U2 [16+2] (18f*) 4.14
+56 R2 L2 U R' D' R L2 B2 D2 R D F U' L2 B L F2 R2 [16+2] (18f*) 5.57
+57 B2 L B L2 F2 D2 R2 U' R2 U R' L U F L2 B' L2 [16+1] (17f*) 0.46
+58 R U B U D2 L' F D2 L D2 R' L2 B' U' L' B' F2 D2 [16+2] (18f*) 5.96
+59 R2 U' R2 L B U2 B2 R D R2 D' L2 F2 L2 D L2 U D [18+0] (18f*) 26.34
+60 F U' D' R' L2 F' D B L' F L2 U' D' F U D' R' [17+0] (17f*) 2.41
+61 F' U' F2 R' D L F R2 B U' B2 R L' U2 R2 B' U D' [18+0] (18f*) 19.29
+62 D L2 U L2 D R F L2 D' B' U2 L2 F R' L' F U' D2 [17+1] (18f*) 6.05
+63 D2 R2 B2 D R L D' L2 D L' F' B' R D R' L B2 F2 [16+2] (18f*) 4.48
+64 B D F' L' U' B' D L2 F L' U' F2 D2 R' U' R' D2 F' [18+0] (18f*) 45.31
+65 B L U D2 R' B2 D' L U D2 R2 B' L' B L' D2 B R [18+0] (18f*) 32.18
+66 B' D' B' D' L D F' D' F2 R F' L D L' U2 L2 R2 B2 [14+4] (18f*) 5.75
+67 D' F U2 D R' B' D' L D' L F U' L2 B D2 B' D2 [16+1] (17f*) 0.88
+68 B' U2 D F' D' F' U R U2 D' F D' R2 D L2 D U2 [16+1] (17f*) 0.59
+69 B D' B' D L2 F' R2 B R' L U' B2 L' U' B' R D2 [16+1] (17f*) 0.96
+70 B' U B R U' F2 L F' D2 B D L2 B2 D R' B2 [15+1] (16f*) 0.04
+71 U' L U' B L' B U D2 R B L2 F' L' B2 L' F U D2 [17+1] (18f*) 4.70
+72 F R F2 B L' B2 R' B R' L U L' B2 U F' B2 L2 [15+2] (17f*) 0.64
+73 R' F R' U2 L B R' F' D2 F' L' U' D' B' L2 U2 L' R2 [17+1] (18f*) 4.12
+74 F D2 L F' R B' R F U2 L F2 L2 U F U R [16+0] (16f*) 0.15
+75 U' F2 B' R' B2 L D R' U2 F' R' L' B' L2 B L' F2 U' [18+0] (18f*) 33.07
+76 B R2 B2 L2 B U' R2 F U2 R' U B2 D F D' L' D2 R2 [16+2] (18f*) 6.45
+77 U2 D2 R' L U L' D' B2 L2 D B2 D F2 L2 U2 L' F D2 [17+1] (18f*) 4.53
+78 U R2 B U' F U' R2 U D2 B2 R' B2 R2 F2 D R B U [18+0] (18f*) 6.88
+79 F2 R' U' L2 F2 U2 L2 D F B2 R2 D2 B' R2 D U2 L2 D2 [15+3] (18f*) 5.88
+80 L' B2 L U2 B2 D' B D F2 U L2 U2 D2 L F2 R' U2 F2 [16+2] (18f*) 6.71
+81 R' L B U' D2 F B L2 U' D2 B2 U2 F2 L U2 B D U2 [17+1] (18f*) 3.61
+82 R' U' R2 U' L' B2 U2 L F B' D2 B' R D' L2 U2 R2 B [18+0] (18f*) 21.32
+83 L' D2 F2 D' B2 R2 D B' R2 D L2 B2 L' D B' L B2 R2 [16+2] (18f*) 5.59
+84 U2 F B' U2 F2 D' R D F' D' F U F2 U2 L F2 U2 [15+2] (17f*) 0.30
+85 R B U' B' D' F2 R U' F R D2 L2 F2 L B' D2 R L2 [17+1] (18f*) 6.72
+86 R2 F2 L U' B2 U2 L D' L' D B D F2 U2 F2 B' U' [17+0] (17f*) 2.34
+87 F R2 L2 D2 F D2 B2 R2 U F R2 D L' B2 U2 B R2 D2 [16+2] (18f*) 6.57
+88 F D L2 B2 L' B L2 F' D F' D' L' U D2 L' B2 R U2 [17+1] (18f*) 4.57
+89 F U B2 L F U B D F B2 U B2 D' R' U F2 D B2 [17+1] (18f*) 4.56
+90 B' D2 R B U2 F U' B R D L2 B2 D' F U L' R2 [16+1] (17f*) 0.79
+91 D2 L2 B U F U' L' D B L' F2 U F' L' D F2 L' [17+0] (17f*) 4.02
+92 R2 L2 B' U' R' U' L' D2 R L' U' B' D' F U2 R2 D2 R' [18+0] (18f*) 8.63
+93 F2 D2 F' R' L2 D' R2 F' D B' D B2 D2 B L2 D2 L' [17+0] (17f*) 3.05
+94 R' U F2 U B2 D B' R' L B R F' D B' R2 L D L2 [17+1] (18f*) 5.31
+95 F' R' L D' F2 U L2 D R U B L U L' F L' B' R' [18+0] (18f*) 9.58
+96 F2 R' U R' U2 R B2 D' R2 F D2 R F' R F2 D2 F2 L2 [14+4] (18f*) 5.87
+97 D' B' L B R' U L' F2 B2 R' U' R' F2 D F2 R2 D [17+0] (17f*) 5.24
+98 F2 U R2 B' L D' R' L' F2 R2 U' F B L' D2 F' R' L' [18+0] (18f*) 10.55
+99 D2 F' L' D' L F2 D F' L2 D F L F R F B2 D2 [15+2] (17f*) 0.56
+100 L F' U' D F U2 L' B2 D2 R L2 U F L B2 L2 U D [18+0] (18f*) 52.55
+101 D F' L2 D2 L' B2 L2 F2 D R' U' D B' L B2 R U' R2 [17+1] (18f*) 5.37
+102 F R' L U2 D' R' F2 U' B U2 F R' U2 F2 R D R2 [16+1] (17f*) 0.25
+103 R2 D L U D R' U' F B2 L2 D' L2 F2 D B2 L D2 U2 [16+2] (18f*) 6.13
+104 R2 F2 D F' R2 L2 D' R D' F2 U2 D' R' D B' L2 B2 U2 [15+3] (18f*) 9.38
+105 D' L2 B R2 F B2 U R' U' B2 R2 U' L F2 U' B2 D' U' [15+5] (18f*) 3.56
+106 R U2 B R' D F U' F2 B' U2 F2 B2 R2 F L D2 B' R' [18+0] (18f*) 12.38
+107 R' B L' D' R' F R B D R U2 D2 F' D' L2 D [16+0] (16f*) 0.38
+108 L2 D' B L2 B D' R' L2 F D2 L2 D' L D F B L [17+0] (17f*) 5.25
+109 R' L' D' B2 U R2 U' D2 L' U2 F U B2 U' L B' D2 [16+1] (17f*) 1.04
+110 B R2 F L' F B' U R2 D' R U' F D' R F2 D' F2 U2 [16+2] (18f*) 6.55
+111 B2 R' L2 B D' B2 D' F' L D2 B' R L2 U R' U' D2 B [18+0] (18f*) 34.11
+112 F2 D2 B U2 R' L' B' D2 B' D' B2 U F' D2 F2 R2 L2 D' [18+0] (18f*) 22.26
+113 U' B L' D' R F R' L F' D2 B' D2 R D' L2 F D2 B2 [16+2] (18f*) 4.66
+114 U' R' B2 U L2 B' L2 F' D' L' U2 B2 D R L B' L2 [16+1] (17f*) 0.76
+115 D2 R2 F2 B R' F2 U2 R2 F2 L2 F' R2 D' R F' B' L' R2 [17+1] (18f*) 6.51
+116 R L' B L2 D2 R L D L D B2 L' F' R2 L' D R' L2 F2 [17+2] (19f*) 57.56
+117 B U' L B' D2 R2 F' U' F L B' R F B' U2 D2 R [17+0] (17f*) 4.54
+118 F R' L' F R2 B R U F' B2 U B' D' L F' R' B2 [16+1] (17f*) 0.40
+119 F2 L2 F' B2 L D R L' B' L2 B2 R2 D L' U2 R F R2 [17+1] (18f*) 5.50
+120 L2 D' R' U2 F2 U2 F2 D B R2 F2 R' F2 B U B2 D2 R2 [15+3] (18f*) 4.61
+121 U2 B' U' F2 R' U' L' U2 L' U' F' U' R2 D2 B' F2 U2 F2 R2 [15+4] (19f*) 66.78
+122 F D F2 L' U L F' R2 U' F U2 R2 B' L' B F2 U2 F2 [15+3] (18f*) 8.19
+123 U' R2 B L U2 D' F D F2 D' R' U F' D' B2 D2 L' D' [18+0] (18f*) 9.56
+124 U F' B' R L2 D' L2 B L' D' F2 L D L U' R B L2 [17+1] (18f*) 4.46
+125 U' R F' D' L F2 L' F2 B' L2 D F R' D F L [16+0] (16f*) 0.09
+126 B' L' B2 U D2 F B' U2 D' R D2 F B2 L2 F2 U' B2 R2 [16+2] (18f*) 5.37
+127 B L F' D2 F U D R L2 F U' D2 R' F' D2 R B [17+0] (17f*) 3.67
+128 L' F U F2 B U B D' L' U' D L2 U B' L U L' [17+0] (17f*) 4.04
+129 B R' L' F2 R2 U2 D' B U' B2 R' U2 F' R' B U' B2 [16+1] (17f*) 0.39
+130 R2 U2 F2 B U' L B D2 R' D2 F2 U2 F' D2 F' R2 F2 L2 [15+3] (18f*) 8.81
+131 L D' L2 D2 R D2 B U2 F' U R D' F' D' L2 U2 L' D2 [17+1] (18f*) 3.86
+132 L2 D F B' L F' R' L2 U' R' D2 R2 L' D2 F D2 R2 F2 [15+3] (18f*) 4.21
+133 R2 D2 B' L U2 D' F2 L' F D R' L' D' L' D' B' U' L2 [17+1] (18f*) 5.15
+134 U2 B2 D' R F' R D B' R' D R U L' F' B2 R F' L2 [17+1] (18f*) 3.65
+135 U' L' D2 R2 B R2 B2 D2 B' L' B2 D' L B R U B2 R [18+0] (18f*) 17.20
+136 L2 F' U2 R' U2 R2 U L2 U' R F2 B2 L' F R2 U2 B [17+0] (17f*) 5.24
+137 L2 D' L2 D L B' R2 B R D F D' L2 U2 F2 L' [16+0] (16f*) 0.23
+138 D2 R' D L2 D' R2 B2 R2 B R L2 B' U2 D' R2 D' R2 [16+1] (17f*) 0.40
+139 F2 R U' F' L2 F B U B2 R' D2 L' D' B' U' B2 F2 R2 [15+3] (18f*) 6.29
+140 U2 D' R B2 U2 R2 F R' L' B2 U' R D B' D F B2 [16+1] (17f*) 0.76
+141 R B2 D' F' R F' U R' B' D' L F' B2 D B2 R' D2 B2 [16+2] (18f*) 4.38
+142 R' U L2 B' R U' F' L2 F2 D R F D F L' U L2 R2 [16+2] (18f*) 5.93
+143 R2 U R B D2 B D2 L2 B D' L' B2 R' F D' F2 D2 B2 [15+3] (18f*) 4.98
+144 R2 U2 L2 F L F D' R2 U2 L2 F B2 R2 L U F' U' L2 [17+1] (18f*) 4.50
+145 F U' B U' B' D2 F' L2 F R' F2 U B2 L D F' B' D2 [17+1] (18f*) 5.75
+146 R2 D' R' D2 R' D' R2 F2 D' L' B U2 R2 U F L F R2 [17+1] (18f*) 5.42
+147 F2 U' R L' U R2 F R2 F2 D' B' D B L2 U2 B R' D2 [17+1] (18f*) 5.38
+148 R2 L2 B' D2 R2 U2 L' D' F' R2 F2 D2 L2 U' F' D2 F' [17+0] (17f*) 0.52
+149 F2 U' R' B D L' F2 R2 D' R' B' R B' F U2 R2 B' F' [12+6] (18f*) 6.33
+150 U2 F' D F2 U' R' B' R2 B R F2 D B' D' F' U B' [17+0] (17f*) 3.39
+151 R2 U2 L D F U2 R' U' D F' U' L2 D B' L2 U' R2 D2 [16+2] (18f*) 5.38
+152 F D2 F R' F R2 L D' R2 D2 R' U' L' U D B U' [17+0] (17f*) 2.06
+153 L B2 L F R' B' R2 U' B' U2 B' D F L U2 L2 D2 F2 [14+4] (18f*) 5.96
+154 R' L B U R2 D' R F R' U R' B' R' F D' R B2 R' [18+0] (18f*) 8.55
+155 R2 B L2 U' R D' L' B2 L B U R' F2 R2 B2 D2 R [17+0] (17f*) 5.71
+156 L2 B' U2 R U2 L2 F2 D' L U' R B2 U2 R B' U B [17+0] (17f*) 6.72
+157 D F' R2 F R' D2 F B U' D F U' B' D2 R2 B' D' B [18+0] (18f*) 58.68
+158 D2 L2 B' U' L D B' R2 L F' R2 L F' U' L2 B D R2 [17+1] (18f*) 4.84
+159 D' L2 U2 D L' B' R2 D2 F2 U' F2 B R L D2 B2 R2 B2 [14+4] (18f*) 6.10
+160 B U L D2 B R' B U2 F B2 U D2 R D' L R2 F2 R2 B2 [15+4] (19f*) 53.30
+161 B R' B2 R' D' F2 R2 F2 R' F2 D B2 D' F2 B D R2 [16+1] (17f*) 0.87
+162 L' F B' D2 F2 D L U' R2 L F U R' F' U2 F D' U2 [17+1] (18f*) 6.40
+163 R' L2 D F' R' U2 B2 L D2 R2 F' R' U' F2 U' D' B' [17+0] (17f*) 0.93
+164 F2 R2 D2 L' D' R D2 F R2 F2 B' R B' U2 D' R D B2 [17+1] (18f*) 6.00
+165 L2 B2 U L2 F2 B' L' B R' L2 D' B2 R' U' B2 R F2 D2 [16+2] (18f*) 7.79
+166 F' U' F2 B' D2 R L' D L2 B' R B' U2 D' L D R2 [16+1] (17f*) 0.69
+167 L' D2 R2 F2 D2 L D F' U B R' B' L B D2 L' D' L2 [17+1] (18f*) 4.93
+168 L2 D B R' U' R' U' D2 R' L' B R2 U D F' L' D2 F2 [16+2] (18f*) 4.18
+169 F2 D' F U2 R' B' U' R' B2 U L F' U D2 L D2 F' [17+0] (17f*) 2.69
+170 D R' D' R2 F R' L' B R' U L' D L F2 R2 D2 [13+3] (16f*) 0.05
+171 U2 B D2 R U' D' R D R' D B' L2 D' R2 L F R2 D2 [16+2] (18f*) 5.89
+172 B U R2 D' F L' D' L2 F2 R2 U B2 L F2 B2 R F2 R2 [16+2] (18f*) 8.26
+173 L U R D2 F B2 R D' B2 R' L B L' D2 B D2 F' B2 [17+1] (18f*) 6.20
+174 F' U2 F2 L' B2 L2 D F' U2 R2 F U' F2 D L B R2 D2 [16+2] (18f*) 6.91
+175 D F U' D2 B2 U' B U D L' D2 F2 D R' L2 B L' [17+0] (17f*) 4.17
+176 F R U2 F2 U R D2 R2 F U' R' L' D L2 B2 L R2 B2 [16+2] (18f*) 4.83
+177 U R D B' R' F' L D F' R2 B' U L U' L U' F' R2 [17+1] (18f*) 4.77
+178 F U F' B' L' U' L D' R D B2 L' U' R2 B' U2 B2 U2 [15+3] (18f*) 5.34
+179 R2 D' R2 F U' D L2 B U2 D2 R' B' R' U R2 U F [17+0] (17f*) 0.77
+180 R F D L2 U' D B' R B2 D B' U B U' D' B' [16+0] (16f*) 0.26
+181 L F L B U2 L' B R' D2 F U2 L' B' U' B U D' R2 [17+1] (18f*) 5.07
+182 R' U2 B' D' L B R' D B U' R U2 B' D' L D2 L' [17+0] (17f*) 3.20
+183 F' U2 L F' U R L' D2 B2 R D F' U2 F L B' L2 R2 [16+2] (18f*) 5.82
+184 L F' R2 F L2 F D' B2 L B U F' L D2 L B2 D2 [15+2] (17f*) 0.44
+185 U D' B D F2 B L' F R F R2 D' F U' B' L2 B' R' [18+0] (18f*) 15.50
+186 F2 U' D2 B' U' F2 L' F' B' L2 D B2 R2 L' U2 B' F2 L2 [16+2] (18f*) 5.30
+187 B2 R2 F L' F2 B' D2 L U2 L D R B2 R F' R2 D [17+0] (17f*) 2.86
+188 L U2 L' B2 L2 F' L2 D L D2 B2 U2 F2 D F R U2 [16+1] (17f*) 1.05
+189 R2 F B2 D' B2 U2 R U L2 B L B R B' L2 F B2 R2 [16+2] (18f*) 5.35
+190 R' D2 L B' U2 L2 B2 R2 B2 D L2 U R F2 R2 D' F' D2 [17+1] (18f*) 4.38
+191 L D R' L F' B L2 D2 R' D2 F' D2 R2 U' L D' B R2 [17+1] (18f*) 5.47
+192 U' L F2 U2 L F2 D B' L2 F' U B U F' L U2 F2 D2 [15+3] (18f*) 5.51
+193 R L' B R B2 D F L2 B' L' F' R U' B2 R U2 B' R' [18+0] (18f*) 11.20
+194 U2 R' F' U' R2 B2 R U2 F' B D B' R L' F U' D2 [16+1] (17f*) 0.41
+195 U R F B R' U' B' R' B L F U' F L2 D L U2 R2 [16+2] (18f*) 5.96
+196 D' R2 B D2 L' B R D' B' D B' R' U' D' B' R' F U' [18+0] (18f*) 39.78
+197 U D2 L2 D2 R D' F2 B D L U2 F' D' B U' R B2 R2 [16+2] (18f*) 3.18
+198 R F' R' L2 B D' L U2 L' F B' L' B2 U' R B R B2 [17+1] (18f*) 7.71
+199 L2 F B2 U2 B D2 F' R2 B U' B' U2 L2 D R D' B2 [16+1] (17f*) 0.48
+200 B2 U L' F2 D' F L2 B R F U D2 L U F2 D' U' B2 F2 [14+7] (19f*) 54.09
+201 L2 B2 R' L' D' B2 D' L2 F D' R L B U R L' F B2 [17+1] (18f*) 5.88
+202 L U' B' U' L' F' D2 R F' B2 R2 B U R F2 U R L2 [17+1] (18f*) 9.09
+203 F L' F2 L2 D' R' L' D L2 F' R2 B' U F2 R' F2 B' L' [18+0] (18f*) 13.35
+204 R D2 R B U' B U2 F2 R' D2 F' R2 L2 U B D R' F [18+0] (18f*) 13.90
+205 U R F2 U B2 D' L' F2 U F2 R2 L2 F D R' U' B' [17+0] (17f*) 0.42
+206 U B U2 R' F L2 D L2 U F2 L2 U' D R U R U F2 [17+1] (18f*) 6.72
+207 R D R L' U R F2 U2 L2 U F R B2 L F' R2 D [17+0] (17f*) 1.63
+208 B2 U' D' F R' B' R D' B R' F R2 F U' L D2 B2 F2 [15+3] (18f*) 4.53
+209 F R L2 B2 U B L' U2 R U F' R' F2 R2 U' D2 L' R2 [17+1] (18f*) 4.54
+210 D2 B2 L' F' U' L F U2 D' R2 D2 R B R2 B2 L D2 L2 [16+2] (18f*) 5.03
+211 R' F' R F D F' D2 F2 B R2 B U' R2 L U2 L2 U [17+0] (17f*) 6.42
+212 D2 F' D' B L U' D' R2 D B' L2 F2 R2 B' L B' U' L [18+0] (18f*) 52.93
+213 R2 F2 R' L F U D' R F U B2 R2 D' F2 U2 L2 F [17+0] (17f*) 1.90
+214 L' U F D' L' F U F2 D2 L2 B2 L' B U D2 F2 U L2 [17+1] (18f*) 4.78
+215 L' F2 L2 F2 U' D2 F' B U B' R2 B' U2 R' B L D F2 L2 [17+2] (19f*) 47.77
+216 R2 F L2 F2 R F' U F L2 U' F2 D R' U B L U' F2 [17+1] (18f*) 4.20
+217 B' D' L D2 F' R2 L2 F R D F' U' L' F2 L F2 R B2 [17+1] (18f*) 3.53
+218 R' D2 F' R2 D R B R2 F' U2 D' B2 R2 L B L D2 U2 [16+2] (18f*) 3.70
+219 L U2 B L2 U2 F2 D' B L2 B R D B2 U B' U B' [17+0] (17f*) 2.73
+220 B R' U' D2 L2 D2 L U' F B U' R U B L2 B' D2 [16+1] (17f*) 0.65
+221 D F' L U2 R F2 R2 D2 F R2 L' D' B' D' L F L2 B2 [16+2] (18f*) 3.96
+222 L U B2 R U B L B D2 L2 F B2 U2 L' F2 L2 D2 L2 [14+4] (18f*) 7.13
+223 U D2 L2 U B D2 B R2 U L' B L F' R U2 F L' D2 [17+1] (18f*) 4.64
+224 F B' D' F U F' R2 D B2 R2 F' U' L2 F' R F' U2 B2 [16+2] (18f*) 7.17
+225 L F D2 F B2 R2 D2 B' U2 F B2 D' B D2 R2 U2 L2 [13+4] (17f*) 1.44
+226 R2 U F' U2 D2 L' U L2 D' B D' B2 L2 D' R U2 B L' [18+0] (18f*) 10.96
+227 U R L2 F' U' R D2 R2 F L B2 L' D F2 R B2 F2 L2 [15+3] (18f*) 5.68
+228 R2 D B U R' U' F U F U B' D F L' F L2 F D2 [17+1] (18f*) 7.32
+229 R L' U' R2 L B' R2 F2 B' U L F2 R2 F R2 F L2 D [18+0] (18f*) 9.71
+230 B D2 R' L F U' F2 L' D2 B' L D R L' F L2 F D2 [17+1] (18f*) 3.89
+231 B2 U' L2 F' D' L2 F U L U F' D' R2 F' L' R2 D2 [15+2] (17f*) 0.38
+232 B' U F L2 U2 D L' D' L F' U F2 R' L2 D R2 D [17+0] (17f*) 4.48
+233 U2 R' F' R' F' U' L' F' U' B2 U' L' F2 R2 B2 L B F2 [17+1] (18f*) 6.96
+234 R U' L2 B' U2 R L2 F R' U2 F D R2 F2 L F R D2 L2 [17+2] (19f*) 52.95
+235 R F U D2 F2 U2 F2 B' U' F D' B2 U2 L2 B' L' F2 U2 [16+2] (18f*) 6.71
+236 R F2 L2 D L' F' R2 U2 R B D' L F U2 D2 F L D2 [17+1] (18f*) 4.36
+237 D B D' F D F' B R' U R2 F L' U R' F D R [17+0] (17f*) 3.59
+238 U D' R' D R2 L' U2 D' F2 R' L F D2 F' D2 L D' L2 [17+1] (18f*) 5.52
+239 R D' R2 U' R2 U F2 R' B U2 L' D' F B R2 L2 U' B2 [17+1] (18f*) 7.57
+240 F R' U' L2 B D2 B2 D' B' R2 L' D2 R' D F' L' R2 B2 [16+2] (18f*) 8.90
+241 B L' U F' D B D2 F R' F' B L' U' F2 D F' B2 R2 F2 [16+3] (19f*) 83.76
+242 L' F D' F2 R2 F' L2 D2 F2 L' D2 B R2 U2 F' L D2 B2 [16+2] (18f*) 5.25
+243 L U D R' F R' F D2 B2 U L B2 U R2 F2 D B [17+0] (17f*) 2.34
+244 U L' B2 L2 D2 L B R F' U2 D R' U D2 B2 U L2 F' [18+0] (18f*) 23.89
+245 L F' L2 F2 L' F L' B' L2 F U R2 U2 L B U R L2 [17+1] (18f*) 6.31
+246 D2 B' R2 U2 B' U D B R' D B2 L D2 R F B' U2 R2 [16+2] (18f*) 5.33
+247 L2 U' B' L U' B' R' U L2 D' B R D2 B F2 R2 B2 L2 [14+4] (18f*) 4.28
+248 R' U R2 L' F' L' D L B D2 F2 R U2 D2 L' F' R B2 [17+1] (18f*) 6.02
+249 R' L' U' F2 L' B D R F2 U' R' L2 F2 R B' L B' F2 [17+1] (18f*) 6.72
+250 F' B' R' L U D R D L2 B L U' L2 F2 L D B [17+0] (17f*) 3.60
+251 R L2 B L' F D2 B2 U' D' R L2 U B U D2 L2 D' [17+0] (17f*) 0.64
+252 F2 D2 B' L' B L' U R D R2 L2 B2 U R' L F D B2 [17+1] (18f*) 4.49
+253 F2 L F' U L' D B U R L2 B2 U2 F R L2 B' D' U2 [17+1] (18f*) 4.76
+254 R F2 D B R2 U R' F R' U L' D' R2 F L F B [17+0] (17f*) 2.21
+255 U' B' D' F' U L U2 F' D' F L' D F U L' F2 U2 R [18+0] (18f*) 29.45
+256 F R B' L' D L' D B2 R D' L' F' B D' F R D' U2 [17+1] (18f*) 5.20
+257 L D' L2 U' B2 L2 F' L2 D F U F U' F' B U R2 D2 [16+2] (18f*) 10.17
+258 R2 B R B' U' R' U' L F B' L' D' B2 U' F L2 B F [15+5] (18f*) 5.22
+259 D' F B2 R2 U2 B L' D2 L B R U2 L2 U2 R D' R' [17+0] (17f*) 6.57
+260 U2 L2 F' R2 L U' R' L D2 F R2 F2 D R2 D' B2 U' L2 [17+1] (18f*) 5.76
+261 F' L' D B2 L2 B R2 U2 B' D2 B D' F D' B' R2 F2 D2 [15+3] (18f*) 7.94
+262 F2 D2 R B2 U2 B U2 D2 L2 F' R U' L D F U2 L' U2 [17+1] (18f*) 3.86
+263 U' L B' U' D' B L U R D2 L' B2 U2 F2 D F' U2 R2 [16+2] (18f*) 4.27
+264 D R2 U' F2 R B U' R' L2 F2 U R' D L2 U' B2 U2 F2 [15+3] (18f*) 5.78
+265 U' L' U2 R' U F2 B' L2 F' L' F2 D2 R' L U2 R' B U2 [17+1] (18f*) 6.46
+266 D2 B' L' U' D2 F' D L U' D2 F' R2 D2 F L' U D' R2 [17+1] (18f*) 5.36
+267 U' B' U2 F B D F B L F2 D2 F D' R L D F2 L2 [16+2] (18f*) 4.54
+268 L F2 U R2 L' B2 L2 D2 R' U2 F R' F B2 U2 F U' D2 [17+1] (18f*) 7.39
+269 B U2 F' B2 L2 F' D' L D2 R' D2 F' D2 R' B2 U R [17+0] (17f*) 4.65
+270 R U L' B U2 F' U' F' R' D2 R' L F2 L2 D L2 D' L2 [17+1] (18f*) 3.75
+271 F B2 D R' F U F' R2 D' F R' F' R' F R' B' L' B2 [17+1] (18f*) 5.46
+272 R' F2 R U2 F2 U' F' D' L D2 F L2 D' F2 D' U2 [15+1] (16f*) 0.10
+273 F2 R F2 B' U F' L' U' R' U D2 L B R' L2 B2 [14+2] (16f*) 0.04
+274 R D' B D2 L U' B' D2 R L D F' B D' R' F2 D2 R2 D2 [15+4] (19f*) 71.31
+275 B' L2 F R2 U' R2 U L' F' D2 R2 U' R D' B L2 F2 D2 [15+3] (18f*) 5.26
+276 U2 D' F2 B U F' L' F' U2 R' U F' L B U B L2 R2 [16+2] (18f*) 6.54
+277 B R' D' B R2 B U2 B2 D2 L' D' L' U' D' L2 B' L2 U' [18+0] (18f*) 38.38
+278 B' R2 U' L2 U D2 F2 D2 F' B2 R F' R B2 U2 L U [17+0] (17f*) 5.29
+279 U' B' L2 U L2 D F2 D2 R2 F R' B2 U2 F' U' F' L2 D2 [16+2] (18f*) 4.77
+280 F' R2 F R' B D' R2 L2 B U2 B L' B' D' L F R L [18+0] (18f*) 9.68
+281 D2 L2 F L2 F U F' D F L F' L2 U R F D' R2 U2 [16+2] (18f*) 5.03
+282 F' D2 R B U' B2 U' B' D' R2 L2 B U R' F2 D L2 R2 [16+2] (18f*) 5.71
+283 U' L F2 U2 R' L U' F U' D2 F' R' U' R' D L2 F2 D2 [15+3] (18f*) 6.56
+284 F' B2 D' F2 B' U R F B2 U R2 F U R B' U2 R2 U2 [15+3] (18f*) 4.95
+285 U R' U2 F2 U' F L' B' U D2 L' F2 R U2 D2 L B2 [16+1] (17f*) 0.56
+286 L' U' R2 F' L2 D F2 R' B R2 U2 R' F U D' R2 U2 [15+2] (17f*) 0.85
+287 R' U R D' F U' R2 D B' R2 L2 U2 B' R B2 D2 F B2 [17+1] (18f*) 3.14
+288 D R2 U L D' F R' U2 B' D' F' U F2 R2 D2 F D F2 [17+1] (18f*) 3.48
+289 R2 D' F2 B L2 B' U2 L2 U L' U' R' D L B' R' L2 U2 [16+2] (18f*) 5.53
+290 F' L2 D' B2 R2 B' U F L D F2 U' R' L2 U2 D' L' [17+0] (17f*) 0.87
+291 F' B' D F2 B L' D' B2 D' F2 D2 B R' L F' L U' L2 [17+1] (18f*) 5.34
+292 F B2 L' F L U R B D2 R' U2 L B D F2 U B R2 [17+1] (18f*) 7.52
+293 U L F L' U2 D2 F2 R2 B' D2 R' D' L2 F2 L' D' B' [17+0] (17f*) 1.10
+294 U2 F' L' U' L' F' B L' D2 L' D' F2 D' L2 F B' D2 L2 [16+2] (18f*) 8.58
+295 R2 B2 R L2 F2 R' F2 L' D2 R2 F' L2 D R B2 L2 [14+2] (16f*) 0.09
+296 U' F' B L2 D R' L2 D L' F2 D2 L B R F2 B2 D' F [18+0] (18f*) 46.89
+297 F' L2 U' F' U' D R2 B' D L U2 L B L D R' D' [17+0] (17f*) 1.27
+298 F2 D B' D F' U D2 L2 F' U' R' U' B2 L' D' U2 [15+1] (16f*) 0.05
+299 B2 U B R2 L' B' R' F' U2 R2 F2 R' D2 F' R' D F2 R2 [16+2] (18f*) 5.36
+300 U D' L2 F R' U' R D2 L D B R' F' B2 U2 L' F2 R2 [16+2] (18f*) 3.72
+301 U R U L F2 L2 B' D2 B' U' R2 F' L2 B' D' F L2 B' [18+0] (18f*) 9.78
+302 U L' F L2 U2 B R2 U2 D2 L D' R B2 L D' F' U L [18+0] (18f*) 14.88
+303 B D L U' B U' R' D' R D F2 D L' D' R D L F2 [17+1] (18f*) 6.34
+304 R' F' B D' F' U L D L2 U2 D F' R' F2 U2 L' R F2 [13+7] (18f*) 8.22
+305 F U D' F' B' R D2 L U' B2 R2 U D2 B' D2 L' B2 R2 [16+2] (18f*) 5.06
+306 F U2 B2 U' R F' B D2 L' B U F R' U2 B L2 D L' [18+0] (18f*) 16.35
+307 L' U' L' D B' R2 D' L2 U L F2 R' F' U' B L F D2 [17+1] (18f*) 4.11
+308 D2 R L D2 L U R B R2 D2 R U2 R F L D L' B2 [17+1] (18f*) 4.53
+309 U F' B2 U' B2 L' U R U F2 D' L U2 R' B2 R2 D2 [14+3] (17f*) 0.60
+310 U2 L2 F2 D2 R U F L D' B U2 D' B' R' B' R U D' [18+0] (18f*) 12.98
+311 F2 B2 D' L' F2 U2 B2 U D R D L2 D L2 F' D2 R2 D2 [15+3] (18f*) 9.61
+312 B2 U D2 L2 B' R L2 U F' B' D L' F' D' F2 U2 L U' [18+0] (18f*) 46.26
+313 L2 B' R B2 U2 L' B R U' L' F' R D R2 U D' R2 U2 [16+2] (18f*) 7.16
+314 B2 R2 L' U D L2 D' R2 U' L' B L F' U2 L' D F' [17+0] (17f*) 3.28
+315 R' B R' B2 D2 B' L' F U D2 L' B R D L F2 D F2 [17+1] (18f*) 6.25
+316 L U F B2 U2 B R F R D' B2 U2 L2 F B R U [17+0] (17f*) 3.21
+317 R F R2 F' D F' L D' L F U' L' U' L' F' R2 B2 F2 [15+3] (18f*) 8.24
+318 D F' U R' D F' L' U F' R U2 L' U B D2 R2 B2 D2 [14+4] (18f*) 6.56
+319 R U2 F R F L2 F R L2 B2 U' L' U F R D' L2 R2 [16+2] (18f*) 5.29
+320 R F R2 U' R L2 D2 B' U' L U' R' B' L2 U2 B L2 [16+1] (17f*) 0.37
+321 D R2 F' R B' U2 F R' D R' F2 D2 B' U L D' F2 D2 [16+2] (18f*) 4.28
+322 R2 D L D2 L' U R U L2 D2 R' L' F' L D F U2 F' [18+0] (18f*) 20.52
+323 F2 U' F L' F2 L2 D2 B U R' F' D R2 F2 R2 L' U' [17+0] (17f*) 1.47
+324 R U2 D B2 U' B' L F' U2 B R' U' D' L2 F B2 U' F2 [17+1] (18f*) 5.00
+325 R2 D2 B' U L2 B' R B2 U' R' F R' D2 F2 B D' L [17+0] (17f*) 2.09
+326 B U2 L F U' B2 D F' B2 U B D2 L' D2 F R B2 U2 [16+2] (18f*) 9.32
+327 R' D R2 B2 D2 R' F' R2 L2 D F' D F R D' L' D2 B' [18+0] (18f*) 16.39
+328 L D2 F2 D' F2 B2 D2 B2 U' B R' B R2 L F R2 U2 [15+2] (17f*) 0.65
+329 R2 L F' R2 D2 R' F R2 U2 R2 B2 D F D R2 D' R [17+0] (17f*) 0.33
+330 F' U R F2 R F D L U' F' L2 F' R F' R L2 F2 R2 [15+3] (18f*) 4.59
+331 F R' B' D' F' B' L' U' R2 L2 F' U' F B L' B U [17+0] (17f*) 1.26
+332 U' L D' L B' L B2 D' B2 D L2 F U' B2 L' D F2 D2 [16+2] (18f*) 5.39
+333 D F R L' D' L B' U L D2 R' L2 U' D' F' U2 F' L2 [17+1] (18f*) 5.64
+334 U R' D2 B2 D' F' U2 L' U F R' B2 U2 B' D' F2 D' R2 [17+1] (18f*) 9.86
+335 F U B U F U' D2 F' D2 L' U' R' D2 F2 L2 F R' [17+0] (17f*) 1.45
+336 R B' R2 U D2 L U2 B2 L2 D' L' D' R' B L2 B' R2 [16+1] (17f*) 0.53
+337 R U F2 B2 D F2 L' D' B2 U F' D' F' B' R' F R' U' [18+0] (18f*) 11.76
+338 U2 R' F2 D R B2 U L2 D2 R U2 R B2 R' L2 F' L [17+0] (17f*) 1.50
+339 R2 U2 F B R2 B2 R2 U2 B U2 R F' U2 B L2 U D2 F2 [16+2] (18f*) 7.96
+340 R U2 R' F R' F U2 D' F2 L F' R' F' D' F2 D2 F B' [18+0] (18f*) 11.03
+341 L' F U F2 R B' U2 F' R' L2 D R2 U' R U2 L U2 L2 [16+2] (18f*) 4.12
+342 U' F' B' R B' R2 U' B2 R2 L' D R2 U2 F B' R' D2 [16+1] (17f*) 0.48
+343 U2 D L2 B R' U2 L' B2 D2 B2 R U L' U2 F B' D' R' [18+0] (18f*) 16.90
+344 F2 R' F2 L F2 D R2 U2 D' F' L' F' D' F B2 D2 R' B [18+0] (18f*) 9.99
+345 F' D2 L' B L2 D2 B D' F2 L2 F B2 D L D' F2 R' D2 [17+1] (18f*) 5.04
+346 F' R' F2 B2 U' R U2 F L' F D2 L2 D2 B' U' L2 R2 F2 [15+3] (18f*) 5.01
+347 R' D L' D2 L2 F' D2 R' D R' F2 U2 D' B R2 B2 R B [18+0] (18f*) 23.89
+348 B' U' R' L' B' U B2 L' D' R2 B2 U2 R' F B2 U B' [17+0] (17f*) 3.19
+349 D' L U' F2 L' D2 L' F2 U' D2 F' L U R2 F2 B L B2 [17+1] (18f*) 7.35
+350 R' U B2 L F R2 B R L D2 B' L2 F' B' L D' F' [17+0] (17f*) 1.46
+351 L2 D2 B2 U' R' D2 L2 U B D' R L2 D2 R B' R2 D' L2 [17+1] (18f*) 4.13
+352 R2 U2 L' D2 L' D' F2 L2 D F U2 L2 B R' L2 D L F2 [17+1] (18f*) 7.74
+353 F' U' D' R2 B' U' R B' D2 B2 U2 D' R' B' D2 B2 D' L [18+0] (18f*) 34.75
+354 D R U' R2 U' L B2 L' U R' B' U R2 L2 B' U2 [15+1] (16f*) 0.05
+355 B' R' F R2 L2 D2 B' U2 L D' R2 U R2 L' B2 U' D2 F2 [16+2] (18f*) 4.58
+356 D2 B U B2 L F R B2 R2 L F2 B' U2 R2 B2 R2 U L2 [17+1] (18f*) 6.29
+357 U' R2 B2 D2 B' U2 F R2 D L' U2 B D L F' U2 R' [17+0] (17f*) 1.12
+358 U2 L F' L2 U2 B' R2 B R D2 F' R' L' F' U D B R2 [17+1] (18f*) 4.74
+359 F' U R2 L2 B2 L D' F D B2 R' F D B R' U F' U [18+0] (18f*) 12.80
+360 D R2 B R' B' R2 D2 R B' U B' D' F' U2 B U R' B2 [17+1] (18f*) 6.87
+361 R D' F' D R L F2 R D F' R U' F U D2 R' U D2 [17+1] (18f*) 4.25
+362 U R' B U B2 D' L' B D2 R' F' R2 U2 B' U2 F2 L2 R2 [14+4] (18f*) 5.13
+363 U D2 F' B2 L' B' D' L' U B2 L2 B2 L' B L2 U2 B U' R2 [18+1] (19f*) 46.27
+364 F2 L D2 R2 B2 U2 D' F' U F2 D' R F' B2 U' L' D2 [16+1] (17f*) 0.64
+365 L F R' D' R L2 U F U2 R' L' U2 F' R U2 B' F2 U2 [16+2] (18f*) 5.61
+366 B2 R D L U2 F2 R U' L D' F2 B2 L2 U' D B D' U2 [17+1] (18f*) 5.85
+367 D' F R U' B2 U2 B2 L2 U2 F L' U2 B L' U F2 U' R2 [17+1] (18f*) 3.72
+368 R U2 L2 D L2 D R2 F L' U2 B2 R D2 F2 L' R2 U2 [15+2] (17f*) 0.85
+369 F2 U R' D2 B U R F' B D' R' U B' L' D B' U2 [16+1] (17f*) 0.55
+370 U' R U R' D2 L' F2 L2 B L2 U L F U2 B2 L' B2 [16+1] (17f*) 0.66
+371 R2 U' L2 U' D2 R' B D2 L2 D' F' L' U2 R B' R' F2 [16+1] (17f*) 0.56
+372 R' B' U' F D' R B R' L' U' L F L' F' U B2 L2 D U [15+6] (19f*) 56.65
+373 U' R2 F2 L F' R U2 F' B2 D' B' R' U B L F2 U2 B2 [15+3] (18f*) 4.94
+374 B L' B R F2 U2 B' R B D B2 R' L' B' R F' L [17+0] (17f*) 6.48
+375 U B R L' F' R' U2 F D F L D B R B' U' D B2 [17+1] (18f*) 4.97
+376 U2 D' F' D2 R' L D2 B' U F2 R B' U' F2 B R' L2 B [18+0] (18f*) 24.80
+377 D R2 D B2 U' F2 U F2 B' U2 L' U L D' F B' R' F2 [17+1] (18f*) 5.52
+378 F2 U' L F2 D' L B U L2 U' R' L D' F' R2 D2 U2 [14+3] (17f*) 0.42
+379 L F U2 B R D' F L U2 F U D F' R2 L F L2 B2 D2 [16+3] (19f*) 73.26
+380 R' B2 R2 L F' B2 R' D R2 F R B U' F2 B2 D R2 U2 [16+2] (18f*) 7.67
+381 F' L B U' B' R D' L2 F2 R B2 L' B' U L2 F' U D [18+0] (18f*) 14.46
+382 U R2 F U2 D2 F D' R' U2 L B2 U F B L D R2 [16+1] (17f*) 0.25
+383 B U' F L F D2 R2 L2 U' B2 R' L F R2 L2 U D2 L2 [16+2] (18f*) 4.92
+384 L D R' U' B' D' B2 U' B2 D' R2 B2 U2 L U' D' B R [18+0] (18f*) 32.66
+385 U R D F D F B' R2 L F D2 B D' B' L2 F2 R F' [18+0] (18f*) 6.00
+386 U2 R' U B' U B' U2 B' D R2 F2 D B2 D L' F [16+0] (16f*) 0.07
+387 U2 R2 F' D' L2 U2 B R2 U B U2 R2 U' D2 R' U' F' D [18+0] (18f*) 10.96
+388 L' B U D' B' U2 L2 F' D L' U2 F' D R B2 L2 D B2 [17+1] (18f*) 4.67
+389 U' R F' R2 F2 U F B' L' D2 B D2 R' F L F2 U2 [15+2] (17f*) 0.28
+390 U' R' U' D' L U L' F' B' U' R' D' B U' D B' U' D' [18+0] (18f*) 19.44
+391 U' D' L U R2 D B D B' R2 U' D R D F D2 F2 L2 [15+3] (18f*) 4.25
+392 R B2 U' R2 L D2 F B R' L2 F' D2 B2 D F2 U' R' D2 [17+1] (18f*) 5.33
+393 L2 D F' R' U R U L U2 R2 F L2 B2 D L2 B D U2 [17+1] (18f*) 6.04
+394 U2 D L U' F U' F R D L D R' F' R2 D F' U' [17+0] (17f*) 2.71
+395 L' D2 F2 D B D2 L D2 F2 U2 D' F D' B' L2 D F' L2 [17+1] (18f*) 4.50
+396 U R L2 D' L' U R' D R U2 F' U F' R' L' U2 D B [18+0] (18f*) 6.14
+397 R2 F U R2 U R2 L U2 F2 B U2 L D' B R L2 F [17+0] (17f*) 2.79
+398 B2 D2 L B' L2 D B2 L U' F' U2 D R2 F2 U F R2 B [18+0] (18f*) 45.18
+399 U R2 B' U' F L2 F' B' R U B2 R B' L F' D R' B' [18+0] (18f*) 7.60
+400 D2 B' L2 B R2 U2 B U' B' R2 L2 F' R' F L2 F B2 [16+1] (17f*) 1.16
+401 U2 R2 B L B2 U' F' B' R B2 D' L' U D2 L B2 U2 F2 [15+3] (18f*) 4.96
+402 F' R F' L2 B' U R2 F R2 L D B' D' R U2 L2 F L' [18+0] (18f*) 6.18
+403 U' F2 U' D2 R' L B' L' F' D L' D B R2 U2 R' D L2 [17+1] (18f*) 3.89
+404 F' B2 D R U2 B2 U R' F2 L' D R F' L F D L R2 [17+1] (18f*) 4.66
+405 D F2 R' F2 U2 R2 F L' U F2 U2 L2 U D' L' U D' [17+0] (17f*) 5.03
+406 L2 F' B2 R U D B2 U2 B U2 F L2 U' D' B' R D2 B2 [16+2] (18f*) 6.36
+407 R' F L2 B' R2 F2 D' B' D' B' U F2 U' B' D B2 L [17+0] (17f*) 2.29
+408 R D' L2 D' B2 R' F' D2 L B' D2 R2 F2 R2 L F' U' R [18+0] (18f*) 22.66
+409 U' B2 D' B2 R B' L' U F2 B2 U2 F2 R' F2 U F' D B' [18+0] (18f*) 31.86
+410 L2 U' F2 R U2 B U2 B D' F R' D' R2 U' D2 B D2 [16+1] (17f*) 0.63
+411 F B R' B2 D R' U2 B R2 F B2 D2 L B2 R' U2 F2 [15+2] (17f*) 0.45
+412 F' D2 B' U' R D R2 F U B U' B2 U2 B2 R D B' L' [18+0] (18f*) 21.63
+413 R2 F' B2 U L' F B L2 U' L' D F2 U2 D' L' B L2 [16+1] (17f*) 0.38
+414 R B2 L U2 D' F R2 B2 L2 U' D' B' R' F2 B R L2 D2 R2 [16+3] (19f*) 51.67
+415 F2 L F2 U' L2 B D2 L D L2 D2 F R F D L D F' [18+0] (18f*) 9.89
+416 R B U' B' R2 B2 R' D2 F2 B' U' L2 D2 B D' B' U R2 [17+1] (18f*) 5.25
+417 L F' U2 R2 F' D2 L U F B' D2 R2 D R' L2 U' D2 R [18+0] (18f*) 41.68
+418 D F' D2 B' D2 L' U2 B' D2 R2 B2 R D' L D B' R [17+0] (17f*) 4.98
+419 F2 R2 D' B' L2 D' B R2 L U2 D2 F U L F2 L R2 [16+1] (17f*) 0.77
+420 D' F2 U' F R2 D' R U2 B' D2 R' U B2 L' U' B L B2 [17+1] (18f*) 5.08
+421 R B R B2 D B2 D R2 L2 B2 L F' B2 L2 F U' F R2 [17+1] (18f*) 6.37
+422 L U2 D B' D' R' B U' B' R2 U2 R F B2 L' D B U2 [17+1] (18f*) 4.80
+423 F2 L2 B2 R2 D' B' R B2 L2 F2 D' L F' D2 R' F' D2 [16+1] (17f*) 0.42
+424 L' D2 B' U' B L' F2 B2 D2 B D' R' B U D2 L' U' [17+0] (17f*) 4.03
+425 L U2 F R' F B' U2 R' U' L B' R' D2 B D' R2 F2 L2 [15+3] (18f*) 3.68
+426 U2 R B' R F2 L U2 R' F2 L' U F D B R L2 U F [18+0] (18f*) 5.92
+427 B' R' F B2 R F2 R' U2 R' U D B2 R D' B2 L2 F2 R' [18+0] (18f*) 37.17
+428 F' U2 B2 R U B2 D' L' D' F' D2 F' B2 L D R' L U [18+0] (18f*) 23.73
+429 F B2 U' L U2 B2 U2 B' U' D' F2 R2 D L2 B' U2 L F2 [17+1] (18f*) 5.32
+430 F2 L' F2 B' L2 U2 F2 D F' D F2 L2 U B' R2 F2 D R' [18+0] (18f*) 16.18
+431 B D' R2 F2 R U D' B' L' U2 B2 R2 F' L' B2 D' B U2 [17+1] (18f*) 4.38
+432 B2 R' L B' R2 L' F2 R2 U' R' B D2 B2 R' F' R U' L [18+0] (18f*) 32.45
+433 L' U R2 U2 F2 U R' U' R B2 U L' U' R' U' F' D2 U2 [16+2] (18f*) 4.74
+434 U B' U2 F L D2 L B2 U' B' D' F' U D2 R' B2 L2 [15+2] (17f*) 0.44
+435 D B' D2 B2 D' L F2 B' D F' B' L2 B D2 L' U F' L2 [17+1] (18f*) 4.23
+436 D F2 U D2 F L2 B U F2 U R' U F2 U L U L2 F2 [16+2] (18f*) 3.84
+437 B' U' B R' U2 B' U F B2 R D B2 R2 F' D' L' D F' [18+0] (18f*) 48.62
+438 L2 D2 R' B D2 F' B2 U2 R' D2 B2 D2 L' B' D R2 U' F2 [17+1] (18f*) 5.22
+439 U2 L2 U' F' B U2 F D R' B R2 U2 F2 U' L2 D2 U2 [14+3] (17f*) 0.50
+440 D' F' R2 D' F R2 D' L' B R D' B' R D R' U B R' [18+0] (18f*) 54.42
+441 U2 F2 R' B' L2 F2 B' L F' B R L2 F2 D2 R' F2 U R2 [17+1] (18f*) 5.29
+442 U' D' F' L2 D2 F L' B2 U F2 L' F2 U' L2 D2 L2 U B' [18+0] (18f*) 21.80
+443 F' D F' B' R F D' B' L2 U D R' U2 B D2 B' U [17+0] (17f*) 2.17
+444 U R' B2 D B D2 B U' L2 B D2 L' B D2 R2 F B2 [16+1] (17f*) 0.41
+445 L F B' D F L' B' U2 R2 L F' U L D' B2 D2 L' B [18+0] (18f*) 50.51
+446 L B2 R B L F R D' B2 U2 R' B' D2 F' D2 F2 D2 R2 [14+4] (18f*) 7.34
+447 R' D F B' U2 D' F2 U2 L U' F' R' U B' R B' U B' [18+0] (18f*) 18.63
+448 F' L' F' R2 F2 R2 D R' F2 U F2 D' F U F2 U' B R' [18+0] (18f*) 17.83
+449 F2 B' D2 B2 R' F' R' U2 L U' B L B R' D' F' U2 B2 [16+2] (18f*) 5.35
+450 R F2 U2 R' L F' D B' R2 L F U' D' B' U2 B R L2 [17+1] (18f*) 4.94
+451 R F2 D2 L F' U2 R2 B L2 U D' R' U' B2 D' R2 [15+1] (16f*) 0.05
+452 U D F2 B' L F U2 L' D' L2 U2 D2 B' R U' B' D2 F2 [16+2] (18f*) 5.03
+453 L F2 B2 R F2 B' U' R' L2 D B' D2 B2 U D2 R L F2 [17+1] (18f*) 6.03
+454 U F' U' D2 F' U' F2 B' U2 F2 L B L2 F2 R2 D' L' U2 [17+1] (18f*) 5.50
+455 F2 D' R' F' U' F2 U2 L B U2 B' D' F2 U' R2 U' R2 F2 D2 [16+3] (19f*) 62.33
+456 U' B U2 F B' D R L D B R' L2 B U' F' L2 [15+1] (16f*) 0.04
+457 F' D' F' D' F2 R' B' D2 R' U' L' D' R' L D L2 F [17+0] (17f*) 1.45
+458 L F R' L B' R' B' D B D' F' B' L2 B U' D' F2 L2 [16+2] (18f*) 5.79
+459 D2 R F2 U2 R D B2 U' F2 B' R' D R2 B' R L U' R2 [17+1] (18f*) 6.87
+460 F R' D2 R' B2 D2 B R2 D2 L U D B2 D L2 U' F' U' [18+0] (18f*) 11.85
+461 R2 U' R' B R2 F U B2 D L' F' R L U2 F2 R B2 D [18+0] (18f*) 17.23
+462 D B' R' L' B2 U' F D2 F2 L' F' R' L B2 R2 L U' L2 [17+1] (18f*) 6.07
+463 R2 B' R D' L2 F2 U R U R2 D B' R U2 L F' R2 [16+1] (17f*) 0.35
+464 F R' L B2 R2 D R' L2 F U' R' U D' R D2 L' F' R' [18+0] (18f*) 20.98
+465 U' F2 U' B R2 U2 R F2 R F' D L2 B L' F D' F L2 [17+1] (18f*) 4.31
+466 U L2 F' U' B2 R' L' B R' F' B R2 U2 R B' R2 D2 L2 [15+3] (18f*) 4.75
+467 F' L F' R2 U D2 B D' F B2 R D2 L U' F' B R2 [16+1] (17f*) 0.39
+468 F U' F2 R2 L' B2 R' D' B U' R' B U' L2 B U2 F R2 [17+1] (18f*) 6.34
+469 B U' R2 L2 B R2 U2 L U2 B' U' B D' R' F U2 B2 F2 [15+3] (18f*) 4.15
+470 D L2 F L F2 D' B L U2 F' B' R' B L U2 R2 D2 B2 [14+4] (18f*) 8.41
+471 R B2 R B D' B' L B R' B' D' F' R' L F2 B2 D' R [18+0] (18f*) 24.09
+472 D2 R F2 L B2 D2 R F2 B' D F' U' L2 F' R' D R' B2 [17+1] (18f*) 4.76
+473 F U' R2 D F U L' F R' F' U L' D' R' F2 D B2 L2 [16+2] (18f*) 3.38
+474 D L U2 L' F' D2 L' F2 L F' R B' U' B2 U' F L2 [16+1] (17f*) 1.13
+475 U' R2 F2 U' B U2 F' D' L D R2 L' U2 D2 L' U' B2 U2 [16+2] (18f*) 5.18
+476 F L2 U' R' U' B U D2 F2 B R F2 R' B2 L2 B U B2 [17+1] (18f*) 7.17
+477 R2 L B2 U R' F2 R2 U L' F' B' L2 U D F2 L F' D [18+0] (18f*) 6.19
+478 U' R2 L2 D' B' R2 D R D' L2 U2 L U2 B' R' U2 F2 U2 [15+3] (18f*) 4.75
+479 F' D' R2 U' D' B' U2 L2 U' L B R' L U F2 L2 D2 F' [18+0] (18f*) 29.78
+480 U R U D2 L2 D' F2 B' U' F' D B' D' B' R2 B2 D R2 [17+1] (18f*) 4.16
+481 R D B2 R' U D' B' R' D2 R2 U' F2 D2 L F' R2 U' D2 [17+1] (18f*) 5.77
+482 L D F U' L F2 B2 R2 D' L2 U2 B2 U R2 B U' L2 D2 [16+2] (18f*) 5.14
+483 B L F' B2 D' B2 U2 F2 D' R' B U2 D' L2 U2 D L' [17+0] (17f*) 2.53
+484 L' D2 B D2 B2 L' B2 D R' D' B U2 B' R U F D2 L2 [16+2] (18f*) 5.15
+485 L2 D' F' U2 D L2 B2 R' B' D F2 B D2 U' L2 D U L2 [13+6] (18f*) 12.84
+486 F L2 F2 R U2 F2 D F U2 R U' L2 U2 R F2 R2 B' F2 [17+1] (18f*) 6.30
+487 U' B2 R' B' U B L2 U' B U F R' U' D2 R' B D2 L2 [16+2] (18f*) 6.22
+488 D L' U L2 B2 D2 B' D2 L U' B2 L' B' R2 L' D' B2 [16+1] (17f*) 0.37
+489 L' F D2 B U' F' U' L B R' D' L U2 F R L2 U [17+0] (17f*) 4.59
+490 F L2 F2 R L D L2 U' L2 B' D' B' U2 F' L B' L B2 [17+1] (18f*) 5.67
+491 B L F' R U' F U D F D B2 L F2 D R D [16+0] (16f*) 0.68
+492 L2 U' D' B' L2 B' U R' F2 D2 L' U2 L2 B2 R' U' R2 [16+1] (17f*) 0.47
+493 R2 L' B D' R' U2 R F D L B' R2 U D' R2 L2 D' [17+0] (17f*) 0.97
+494 F L' U2 R2 U F' U2 R2 B' L2 F2 B' R U' L' B2 D2 L2 [15+3] (18f*) 5.14
+495 R2 U F2 U' D B U F B2 L F U' L' D' F2 R D [17+0] (17f*) 1.22
+496 L' B L2 D F' U' R L D' F2 D' F B2 D2 R' B' L2 [16+1] (17f*) 0.35
+497 R2 D' L' F' L2 F2 B U2 R' D' L U' L F R2 F' R L2 [17+1] (18f*) 4.59
+498 F R' F D2 F' R' U2 B2 D2 R' F' R B' U' F D L2 U2 R2 [16+3] (19f*) 53.63
+499 R L' U' F' U2 L2 F2 D F' D L2 U' L B2 R D' F D2 [17+1] (18f*) 4.60
+500 F2 U2 F' R2 F U F' U2 L' F' L B2 U' R' D L2 B' [17+0] (17f*) 1.94
+501 U2 L' D' B L2 U' R D2 R2 D' B' L F' D' L D F2 R2 [16+2] (18f*) 6.94
+502 L' B L B2 D' R' F U2 L2 U F' R2 F D F2 U' R [17+0] (17f*) 3.90
+503 L2 F' B2 U2 L' B' L D2 R' U B' D' R' U F' D U2 [16+1] (17f*) 0.68
+504 U2 D' R2 F' L' U R' F L' D L U F D2 F D B F2 [17+1] (18f*) 5.48
+505 U B' L' U F' D F R2 F' L2 B U' F D' F R U' F2 [17+1] (18f*) 5.01
+506 B' L U2 R' U' B2 U L2 F B2 D2 B' R2 U D F L2 [16+1] (17f*) 0.26
+507 D' B' R' F' L2 D2 R' F2 L' U L2 F' D2 F2 R U2 L F2 [17+1] (18f*) 4.90
+508 D' R2 B D2 L' B2 R' F R2 L2 D' R' B U R' L' U' F2 [17+1] (18f*) 5.84
+509 U2 F' R2 D L U2 F2 B U R' F2 R F B2 L2 U' F2 D2 [16+2] (18f*) 3.68
+510 U R2 B2 R' L' F2 U B' D2 R' L' D L' F U L2 B2 D2 [15+3] (18f*) 7.25
+511 L B D R F' L U F' B D F R U2 R' U R2 U' R2 [17+1] (18f*) 4.95
+512 D R B' R B D2 R' F' B' U R' L2 U2 B' R' F R2 B' [18+0] (18f*) 38.59
+513 F2 U L B' D R2 U F2 U2 B' L B2 D' B R' U2 R2 F2 U2 [15+4] (19f*) 78.74
+514 D B2 U2 R2 L F D' F U R2 F R' U2 B L' F B2 R' [18+0] (18f*) 52.08
+515 U' L F2 B' D L2 U F L D F R2 D' F2 R' D' B2 D [18+0] (18f*) 9.98
+516 D' L2 U2 B2 R' B' R2 L D2 F2 B D2 B2 D R' D2 U2 L2 [15+3] (18f*) 5.84
+517 U2 F2 U' B' R2 F R' B' R L' F' L' D2 R L' F L2 F2 [16+2] (18f*) 5.53
+518 F L U L2 B R D2 R' F2 R F' B' D B2 R' U F2 D2 L2 [16+3] (19f*) 54.87
+519 U2 R' F R' B U' D2 B2 U' L B D F' D2 F2 R F [17+0] (17f*) 1.05
+520 B2 L' F2 D' L2 B2 R L' F L2 U L D' R2 D B2 R F2 [17+1] (18f*) 5.62
+521 U D' F2 U L U2 F' B D' B U2 R' U' R2 U F2 R2 [15+2] (17f*) 0.59
+522 B2 R' F' R' F B U F' U R2 F B' R' D B' U R2 D2 [16+2] (18f*) 6.87
+523 B D F R2 D' R' U' F' U L' F' U D' R' L F L' F2 [17+1] (18f*) 4.86
+524 F R' B' R' D B R2 L2 B U' L F2 B D' L U2 R2 [15+2] (17f*) 0.51
+525 F2 R2 U2 B2 R2 U2 D F' R' U' L2 D2 F B L' F2 L2 U [18+0] (18f*) 8.70
+526 U F U2 R2 F' B' R2 D' B' L' F' R2 U B' L' D2 [15+1] (16f*) 0.07
+527 R D2 R U L U B2 R' L F U F' R' D' F2 D' R2 [16+1] (17f*) 1.04
+528 D2 R2 D2 F2 U2 D L' U' B L2 U' R2 L' F B U R' D2 [17+1] (18f*) 6.85
+529 D F2 L B' D' R2 L' D F' R' L U D' B D' L D' F2 [17+1] (18f*) 5.15
+530 D' R2 L2 U' R' D F2 B' U2 R2 D2 L' U B' L2 D R' [17+0] (17f*) 4.10
+531 F B' L2 F B2 R2 F R B' R2 L' U2 R B' U R F' R2 [17+1] (18f*) 7.89
+532 F2 L U F2 B' R U B2 L2 F' U2 R2 U B2 L' B2 D2 F2 [15+3] (18f*) 3.76
+533 F2 U' L2 B R D R2 L D' R L2 F' U2 B U' R U B' [18+0] (18f*) 26.32
+534 U F' U L B' U R D2 L2 F2 R' F D B U2 R2 B2 L [18+0] (18f*) 22.65
+535 L F L' U2 F2 D R2 B2 U R2 L B2 R' F2 B' U' R2 [16+1] (17f*) 0.59
+536 L U F2 U' R2 B2 D F U2 D' B U R L D L U' R2 [17+1] (18f*) 5.62
+537 D2 L B U' D' F B' L F' B L F' U' L B2 D2 F [17+0] (17f*) 4.71
+538 L D' F' L2 B' D2 B2 D B' D2 R' U2 R2 U' R2 B2 U2 R2 [14+4] (18f*) 6.88
+539 U' B R B' L D L' U' F2 R' L U2 L2 D' B2 R2 B2 L [18+0] (18f*) 36.50
+540 F' D2 L' F' U2 L' F' B' L' B2 L' F2 R D' L F R B2 [17+1] (18f*) 6.18
+541 F R' U2 F' D2 B R B D F R L' D F2 U' B2 F2 L2 [15+3] (18f*) 6.39
+542 F2 L' B R F D B' U' D2 R2 U' B2 D2 F' D' R U' [17+0] (17f*) 1.97
+543 B' U' D' R U2 B' U2 L2 U L' U' R2 D B L2 D F2 U2 [16+2] (18f*) 2.87
+544 D R2 U2 L2 D' R2 F' U' F2 R' F2 U R' D2 R' L2 D' B' [18+0] (18f*) 37.56
+545 R2 F' L2 U2 R2 L D B R' L B2 L2 F2 U' B R' F' D2 [17+1] (18f*) 5.78
+546 U L' U R' F' B D2 B2 R' F U2 D' B' R2 U' R2 U [17+0] (17f*) 1.39
+547 R2 U2 F' D' B2 U D B R' L' U' R D2 B' D R2 D U2 [17+1] (18f*) 4.41
+548 B U2 B R L2 D L2 F' D F2 L D' B L2 F' U' F' [17+0] (17f*) 3.00
+549 F2 U2 D R D F L' U F L2 F U2 F' D2 F B2 L' U2 [17+1] (18f*) 5.16
+550 U2 D2 L2 U F' R B L2 U L' U B2 D' F L2 D' F U [18+0] (18f*) 17.57
+551 F' L' B D R U' R2 D' R' L' D' L' F R' B' R' B' U [18+0] (18f*) 16.13
+552 D2 L U2 L' F U' F' L' D2 L B U' F R' D2 R U2 [16+1] (17f*) 0.87
+553 R F' L' B L' U2 D L2 F R D' B' R' D' R' B2 D' F [18+0] (18f*) 22.52
+554 D B2 U B2 L U F' B D F' D2 L D2 R' L2 B' L' B2 [17+1] (18f*) 4.92
+555 F R L' F2 U R B2 U' R' U D L' U B D2 L2 U2 B2 [14+4] (18f*) 5.17
+556 F R' B U2 D2 B R U2 F D' F' D R D' F' L2 D' F2 [17+1] (18f*) 5.36
+557 U D' F' R' B' L2 B' L' U' F2 B' L B2 L2 D' L U B2 [17+1] (18f*) 4.41
+558 R' F2 U B' D' L B2 U' R2 U L' F2 D F2 L U2 R2 F [18+0] (18f*) 15.20
+559 B2 U' B' L' F' U2 R L F R' U2 L U' D2 L2 F2 L D2 [17+1] (18f*) 7.47
+560 F' D L U2 L2 F2 R B2 U' B D R F U' D B D' B' [18+0] (18f*) 18.44
+561 L B' U' L F2 L D L' B' R B2 L2 U2 R F' D2 L' U2 [17+1] (18f*) 4.52
+562 D R' U2 B D' F D2 F2 L2 B2 R' U2 F2 D R2 F' R' B2 [17+1] (18f*) 5.87
+563 U2 F' L' D' F2 B L' B U' D' L B' D R2 F R' F D2 [17+1] (18f*) 5.91
+564 R F R B' R' D R' F U R' F2 U2 R2 L2 F' D F2 L2 [16+2] (18f*) 5.96
+565 R U2 B' U' R U' D' R' U' R2 B' L F2 D' B' L' U [17+0] (17f*) 0.99
+566 B2 R2 F2 D B2 U' B D L' F' R2 B' R F' U' D2 F [17+0] (17f*) 2.70
+567 R' U B2 U2 R2 U F R2 U' R2 F D' L' B D2 F' D2 R [18+0] (18f*) 12.04
+568 R2 F' R' D F R2 B2 R' F2 R' B2 D B' L U' B' F2 [16+1] (17f*) 0.41
+569 B R' B L' B2 R B2 U' L' F2 D2 L2 B2 D2 R F' B' U' [18+0] (18f*) 38.86
+570 D B2 R2 B' R2 L2 D L' B U' D R' L2 B' R2 B' L D2 [17+1] (18f*) 4.63
+571 L D' R2 B R2 F2 B' D' B' U2 F2 B2 L' D2 F' L' R2 D2 [16+2] (18f*) 4.54
+572 U L2 U2 F' B U' R D R' L B' D L F L U' L [17+0] (17f*) 1.37
+573 L2 B L F' L2 F2 D' F' U2 R' L U2 D F B2 D' U2 B2 [16+2] (18f*) 3.72
+574 F' D R B R' L2 B' U2 R2 U' B2 R D' B U' F' R' D [18+0] (18f*) 21.67
+575 D F' R' B2 R' L B2 R D' B U' F L D' R2 B2 D2 R2 [14+4] (18f*) 4.09
+576 U R' D' R2 D2 L F' L2 D B L' U' F2 B R L [16+0] (16f*) 0.03
+577 R F D2 R2 F' U' D' B2 D R' D2 R2 U2 B2 L D2 F U2 [17+1] (18f*) 5.81
+578 U D' B' D B2 D' B2 L' F' U2 B2 D2 R' U2 D' R' [16+0] (16f*) 0.14
+579 R U2 L F U2 L2 D B2 D' R2 F' D B L2 B2 U' F' [17+0] (17f*) 1.47
+580 U' D' F2 D' R F2 U2 B' D R U D2 L2 U L F2 L2 F2 [15+3] (18f*) 4.77
+581 D R' L F2 R2 F R' B2 L U' F2 B R L2 U R B [17+0] (17f*) 4.05
+582 D F D R2 F2 U D' F' D2 F R' F2 D B' U2 R' B2 L2 [16+2] (18f*) 5.03
+583 L F2 D F' B2 L' U' R' D' L' D' B R2 D' R' D2 F D2 [17+1] (18f*) 4.15
+584 U' B R D F' R D' R2 L F' B' R' F2 D L' R2 U2 F2 [15+3] (18f*) 3.83
+585 B R' F2 L B L' B R' L2 B' D' L' F U' R2 B D B2 [17+1] (18f*) 6.08
+586 U' D2 L2 B' L B' U2 R' U R' F U' L F' B R B L' [18+0] (18f*) 23.19
+587 R' U' D L B' D' B2 R F L' B' U' F2 L' B' U D2 B' [18+0] (18f*) 14.77
+588 D F B' D' L D2 R2 B' L B U2 F2 B2 R' U2 B' L2 [16+1] (17f*) 0.70
+589 U2 B D R' B2 U' F' D2 L B2 R L2 F' L U' L F L [18+0] (18f*) 28.24
+590 R U2 B2 R' F' B U2 B' D' L2 F' R B2 U2 B U L' D2 [17+1] (18f*) 6.35
+591 U' D B' D R' U2 B2 U' B U' L D2 R2 L2 D' L F' U2 [17+1] (18f*) 5.88
+592 R U2 R2 U R2 D F U F B' U2 L' B' R' B R' L2 U [18+0] (18f*) 14.26
+593 R' B U' R' L D' B U' D2 F U2 B' R L F B L2 U2 [16+2] (18f*) 3.86
+594 F' R' F' R B D B' R2 L D B2 U' B L B' R2 F2 [15+2] (17f*) 0.64
+595 L2 B' D2 L' U' F2 L2 D2 R F D' B' L' D2 F2 U' L B2 [17+1] (18f*) 5.61
+596 R' B2 U F2 L2 F U' B D' F L' D2 R' D' B F2 R2 F2 [15+3] (18f*) 4.41
+597 R' U' L2 B2 R L2 D R2 F' U' B2 L2 B' L' D F U2 L2 D2 [16+3] (19f*) 63.29
+598 F L' B2 L B R U2 L2 F U2 B' R2 U' R U' D2 L2 R2 [15+3] (18f*) 6.67
+599 U L B2 R' F R2 L2 B2 U' B' D2 B2 D' F2 B U R2 F2 [16+2] (18f*) 4.80
+600 U D R F B' U' D2 B' L2 D F2 B2 U L2 D' F' L' U2 [17+1] (18f*) 4.76
+601 L2 U L F2 U2 D B2 D2 R2 B' R' L2 F' L' U' B R2 [16+1] (17f*) 0.42
+602 U B2 U2 R2 U' R' U2 L B2 U' B R F D2 F' D' B2 R2 [16+2] (18f*) 6.49
+603 U2 L B U' F' U R2 L B' D' F D L B' R L2 B F2 [17+1] (18f*) 3.88
+604 U2 B' R L F2 U' F U D2 F' L U2 B2 L B R' B2 [16+1] (17f*) 0.94
+605 L2 B' U' F2 U D F R' F L' F' L' F' D' B L D2 U2 [16+2] (18f*) 6.35
+606 D F' U B2 R U2 R2 U2 L F D' F L' D2 B L' U D2 [17+1] (18f*) 3.63
+607 R U' D2 L' D2 F2 D2 R' U' R' F R2 U2 F2 B' L2 U F [18+0] (18f*) 19.12
+608 D B L2 B D F B D' F U F' D2 R D2 R2 F' R2 B' [18+0] (18f*) 52.54
+609 L' B L' F2 D R F B R' F' B R' L U' L2 F' D2 U2 [16+2] (18f*) 5.25
+610 R' L D' B2 R' U2 F R2 D' B' L' U2 R' U L B' F2 R2 [16+2] (18f*) 4.00
+611 U F' L B R2 F U B L' B D R' L2 U2 D F' U2 R [18+0] (18f*) 28.36
+612 B' U' R L2 F' B2 U D R U2 R' D F B2 D2 L' F [17+0] (17f*) 3.74
+613 D2 R2 D2 B2 U F' U B D' F2 B U' L F2 R U' B2 [16+1] (17f*) 0.50
+614 R2 B U' R' F' L D R F B2 U B L' F2 B' U2 F L2 [17+1] (18f*) 8.37
+615 B2 L' D' F2 B2 D B2 L2 D' F U' D' F' R2 D' L2 U2 B2 [15+3] (18f*) 8.35
+616 L2 F' B2 D R B2 R2 F L' B' L' F2 U F2 U' F2 U' R2 [17+1] (18f*) 8.32
+617 D F2 B' D2 R' L2 F D F' L2 B2 L F' R F2 B R' [17+0] (17f*) 3.91
+618 B D B2 L' F2 R D2 R' U' F2 D' R' U2 D' F' R2 B2 L2 [15+3] (18f*) 5.18
+619 F' U2 D' B' U' B' U' D' F' R2 D' L' D' F2 R2 U' D' L [18+0] (18f*) 19.90
+620 D' F2 B2 L D2 F2 B' L2 D R2 U D2 R' D2 L' D' B F2 [17+1] (18f*) 4.25
+621 F U2 D F2 U2 B' R' F' R U' L B D B' R' F U2 R2 F2 [16+3] (19f*) 48.53
+622 R B' U2 R' B2 R B D' F B D' B D L' U B' D' [17+0] (17f*) 5.09
+623 B' U D2 R U' R2 F R2 D B2 D F D' F D R' F L2 [17+1] (18f*) 6.11
+624 D' F2 U' L' F2 D' R U' F' U' F U' B' D R' U2 R F2 [17+1] (18f*) 5.57
+625 R' B' L D2 R' B L2 U2 B' U2 R F2 D F U' L' U B2 [17+1] (18f*) 9.39
+626 D F2 L B' L2 D2 F R D' L D' F2 D F' R' B2 U2 L2 [15+3] (18f*) 6.32
+627 B R D2 L U' F D2 B U' D L' D2 R B R2 D' U2 [16+1] (17f*) 0.56
+628 R' F L2 U' D' R U F' L2 U B D2 R' F U' D' [16+0] (16f*) 0.13
+629 D2 L D L D2 B2 R U' R2 U2 F B2 D L2 U' B U' D2 [17+1] (18f*) 5.39
+630 D B L U2 F L2 U R L' U' F' B2 U R' F2 U R' D2 [17+1] (18f*) 3.61
+631 B' U F R U D' F R' U L2 F U D' R F' D F2 R2 [16+2] (18f*) 4.95
+632 D' R' D2 R B' U2 B L B' R U2 D L2 F' U' B' D B [18+0] (18f*) 31.00
+633 U' B' R2 U2 B L U R' D2 F2 U' B D' R2 F2 L B2 U2 [16+2] (18f*) 5.41
+634 U F' U' D2 F L U' B' U2 L2 B' D B D2 B' D R2 [16+1] (17f*) 0.59
+635 U B R' F2 R' U B2 U L B2 L U2 L F' U F' L B2 [17+1] (18f*) 11.30
+636 F' R2 U D' R2 D2 R F2 D' B2 R L' B R' D' L F' U [18+0] (18f*) 7.23
+637 L2 F2 L' F2 R' F' B R' D F U2 L F2 U L2 U F' [17+0] (17f*) 3.38
+638 L D L2 F B' U' B2 D' B' D2 B' L2 B D' F D2 R' [17+0] (17f*) 4.34
+639 U2 B2 R2 D B R' U' F2 D2 F2 D2 F' U F2 B D L R2 [17+1] (18f*) 5.71
+640 R' L2 F2 D' L2 F R U D2 R2 B R U L U' B' L2 F2 [16+2] (18f*) 7.56
+641 L' B D' F D' F2 R U' D' B R' L2 B2 D F2 R L2 F2 [16+2] (18f*) 6.00
+642 R' L2 D2 L' U2 D' R' F L2 B U' D R2 B' R' L2 D R' [18+0] (18f*) 5.49
+643 R D2 B2 R' L' D2 B D2 F2 B2 D B' L2 U' B2 L2 B2 L2 [14+4] (18f*) 8.29
+644 B2 R2 U2 L B2 L F L2 F U R' F B2 U' B L2 R2 F2 [15+3] (18f*) 5.27
+645 F2 U B2 L2 B' L F' B' U L' F' U' B2 U F' L' R2 [16+1] (17f*) 0.34
+646 U' L' F' L D2 B U2 F L' D' L2 F2 D2 B' U2 R2 D2 [14+3] (17f*) 0.33
+647 B' L' D2 L2 B' R2 L F' R L2 U' L2 F L' U R' D2 F2 [16+2] (18f*) 7.05
+648 U F2 R2 D2 F D2 B2 U' B R2 U2 B' L' F' B2 D' L D2 [17+1] (18f*) 3.55
+649 U2 R' L F R F R' U L U2 F2 D F2 R B' L U' R [18+0] (18f*) 9.06
+650 R2 U2 B' L D2 L D L' F' U R L' B2 D F2 R' L2 [16+1] (17f*) 0.37
+651 F' R' L' F U R' F' R' F' D' B L2 U D' R' F2 D2 L2 U2 [15+4] (19f*) 81.18
+652 F2 U2 F2 U2 B U' L' B U2 F2 B' R2 B2 L U' L2 [15+1] (16f*) 0.04
+653 D2 B' U2 F D' R B2 L' F D R B R2 D L F' L [17+0] (17f*) 5.18
+654 F2 R L' B' D2 L2 U R2 L' D' R F2 R' B2 U R2 B2 L2 [15+3] (18f*) 5.54
+655 L D' R2 U2 L' U' F2 R' U2 B' L' F' L2 B' D R2 D2 F2 [15+3] (18f*) 5.19
+656 D' R D' R U2 L' D2 B R2 U R B R D B2 R2 F2 R2 [14+4] (18f*) 5.22
+657 R D R' D B L2 U2 F R2 U2 F U' D' B2 L' U L2 [16+1] (17f*) 0.65
+658 D' R' L D B' D R2 F2 D' R2 D' L' U' D2 B D2 [15+1] (16f*) 0.04
+659 U2 L B R2 U D' B L2 D2 F L2 B D L2 B R2 B' R [18+0] (18f*) 17.13
+660 R2 F L2 U' D R U' B2 R' D L2 B' D F' U2 B2 R' D [18+0] (18f*) 23.28
+661 B' U L' D' F' B2 L' B' L2 F R2 B U' D' B L F D2 [17+1] (18f*) 3.43
+662 R2 D2 F U D' L U' F L D2 R2 D F2 R2 L F' L2 F2 [16+2] (18f*) 5.16
+663 R2 D' L2 U2 R2 U2 F2 U B U B U2 R' F2 B R L' [17+0] (17f*) 4.07
+664 F2 L' B2 L F' R D2 B U2 B2 L B U F R U F' R' [18+0] (18f*) 16.70
+665 L' U2 L2 B2 D' L U B2 D R D' R2 B2 U' R F' L2 [16+1] (17f*) 1.10
+666 U B2 U2 L F B2 L2 B U2 D B' U F' R L D' B' [17+0] (17f*) 2.00
+667 L' D' F2 D' L' D2 R' F B' D2 F' L B' U2 D2 B L D2 [17+1] (18f*) 5.57
+668 D2 F2 U' D F' L2 D F' U2 R L F' U L2 U' L2 R2 [15+2] (17f*) 0.72
+669 F L' U2 R U B2 L2 F2 R F2 B' D F2 U' R U D' R2 [17+1] (18f*) 4.06
+670 L2 F' D F' B' R F' D' F2 R' D F2 L2 U2 D' F2 L D2 [17+1] (18f*) 7.02
+671 R' U B2 D F B L F L U2 B D L B' R' U [16+0] (16f*) 0.24
+672 U2 F2 D2 L' U D2 R2 L2 F U' R2 D B2 L' F2 L B2 F2 [16+2] (18f*) 5.82
+673 R' U B2 U2 R B2 R2 F2 B L U R F2 L' B' U2 L2 B2 [15+3] (18f*) 6.15
+674 R U' D' B L2 F2 R D' R2 L2 U' D' R2 D L' F' D2 F2 [16+2] (18f*) 4.94
+675 F' B U R L D' F2 D' R' B2 U B2 U' F' L' R2 [15+1] (16f*) 0.06
+676 U D' R L2 B' U2 B2 D R F2 D F2 B2 D R2 B2 U' D2 [17+1] (18f*) 5.00
+677 F' U F2 B U2 R U2 L F' U' L D F' L B2 F2 L2 U2 [14+4] (18f*) 6.24
+678 R' F2 D' B R U2 B2 U2 B2 L2 U' R2 F' B D R2 D2 L' [18+0] (18f*) 33.42
+679 L2 U F B' U' L' F R' U F2 R' L B2 D F2 B2 U F2 [17+1] (18f*) 5.53
+680 R L U2 L U L2 F B R2 L' F' B R' F L' F2 R D [18+0] (18f*) 6.21
+681 F B U' F B' L2 B' L U2 R F2 L' F' B' L' B' R' [17+0] (17f*) 4.24
+682 L B L D L' U D' F D2 B2 U' F L' B2 D' L' B2 F2 [16+2] (18f*) 4.59
+683 F2 L B' U' B2 L' U' B' L' U' L D F' B' U F B2 D2 [16+2] (18f*) 5.64
+684 F U R F2 L B2 U2 L2 B2 L F2 D R' L D R' F' [17+0] (17f*) 1.48
+685 U R' F2 R' B2 D2 F R' D' R2 F D2 R B2 R2 F' L' U2 [17+1] (18f*) 4.80
+686 L2 F' D F2 L B D' F2 R2 U' D L2 B2 R U' B L' B2 [17+1] (18f*) 4.86
+687 R F' D' B U B R2 U' F R B' U2 D L' D' L2 D [17+0] (17f*) 2.68
+688 R2 B' L' D' R' D2 L2 D' R2 F U' B L2 B' R2 U' L [17+0] (17f*) 3.33
+689 F R F2 D F2 L U B2 D' R U R B D2 B R2 D' F [18+0] (18f*) 5.39
+690 F2 R' L U F' R' F' R' F R' D R L' D' R' D2 F2 [15+2] (17f*) 0.48
+691 L U2 R' L2 U' L2 D' B L U2 R' L' U2 D' R2 B' U2 [16+1] (17f*) 0.67
+692 F2 U' B U D F' D' B2 R' F' L D' F2 B' R' F2 L2 F2 D2 [15+4] (19f*) 45.96
+693 F R' L D' L' D' F B2 L2 F2 U2 L F' U2 L2 B U' B' [18+0] (18f*) 9.86
+694 U L B2 R' B' U2 D' R' D2 L' U R U F2 R2 B' R' F2 [17+1] (18f*) 4.49
+695 F' D' L2 D' L' D2 R U B2 R' F' D2 R2 F U2 D2 F D [18+0] (18f*) 23.13
+696 L D' L2 F' R2 F2 R L2 U' B2 D F' D' R2 B R U' F2 [17+1] (18f*) 5.25
+697 R2 D2 B2 D F U2 L B U' R2 F B2 R B R B2 U2 B' [18+0] (18f*) 21.77
+698 R2 F' D R B L U' F B' U D F2 U2 F2 B' L' F U [18+0] (18f*) 27.96
+699 R' F B2 R2 D2 B2 U L2 F D F2 B L' D2 R U' R U2 [17+1] (18f*) 3.69
+700 R' L U' L F R D2 F2 L' B2 R2 U2 R2 F L' D2 U2 F2 U2 [15+4] (19f*) 70.25
+701 L' U2 D R' D' R' F' L2 B' U2 B' L' U L U' B2 D' L2 [17+1] (18f*) 6.55
+702 R2 U' B U' D' R' D L2 U' R U' D2 F R2 B D' B2 R' [18+0] (18f*) 15.14
+703 F2 R L B2 U R' F2 U R L F' B2 L' B' U2 R' U F2 [17+1] (18f*) 4.90
+704 U' L' U D F R2 D' R' B' D' F' U F2 D2 R' B R' B [18+0] (18f*) 12.15
+705 U2 F2 L2 U2 L F' L2 F' R B U B2 D L D R2 U2 B2 D2 [15+4] (19f*) 83.37
+706 L2 F2 L2 U D R2 F R2 B' L' F' D2 L D' R U' R' [17+0] (17f*) 4.07
+707 F R2 F' U R' F' U F D' F2 U' F2 R B' D R2 B2 F2 [15+3] (18f*) 5.86
+708 B L' D' B' R' B2 D' L2 F' R' U R' L2 D' F' R2 B U2 [17+1] (18f*) 3.74
+709 F' L2 B' L' D2 B' U' R B' R2 L' U' R L2 F' L' D [17+0] (17f*) 1.50
+710 B2 R F' B U L D' B L2 B D' R' F B2 R F R2 B2 F2 [16+3] (19f*) 54.73
+711 U2 R D2 F2 D R L2 U L F' B L2 U' R D L' D2 B' [18+0] (18f*) 4.24
+712 F U2 R' L2 B' R' D2 B2 U' D2 R F2 B2 R2 U R2 F U' [18+0] (18f*) 24.27
+713 D' F L D' B' L' U2 L' D' R' U' L2 U' D' L2 B' U2 F2 [16+2] (18f*) 6.35
+714 D' R2 U D R' B' U2 R' B U F' B L D' R' D' R2 F2 L2 [16+3] (19f*) 50.92
+715 F2 U2 R L2 U F' D B L' B' R' D' B R2 F' L2 U' L2 [17+1] (18f*) 5.08
+716 B R U' D2 B2 D2 F U2 R2 U' L' D2 R' L' B L' R2 F2 [16+2] (18f*) 3.55
+717 R2 D2 F L D2 B' L2 U2 F L' D L' U F2 L B2 U L2 [17+1] (18f*) 5.88
+718 U2 R' D' B' L' U' D' L2 B2 D F' R U F2 R U R' D2 [17+1] (18f*) 4.94
+719 L D2 F' D' R F L F2 R2 B' U2 F U D2 L B2 L2 R2 [15+3] (18f*) 5.14
+720 B R' F2 D2 B' R2 U L2 B' L' U F2 L D2 F D B R2 [17+1] (18f*) 5.31
+721 B L B U' B L2 U F' R2 B' D F2 R U2 F R F2 D2 [16+2] (18f*) 5.71
+722 D F2 D R U F R F' U2 B' U2 F' R' D B2 L2 U R2 [17+1] (18f*) 6.68
+723 L2 F2 R2 L U R' F D' B2 U' R' L' B R' U2 L' F R2 [17+1] (18f*) 4.80
+724 F R B D' R U' R2 D R2 B D F D L U2 R2 U' D2 R2 [17+2] (19f*) 44.75
+725 F2 L' U2 F2 R' L' F R2 L' B' U D F B D' R' B' U [18+0] (18f*) 13.78
+726 F L2 U R' D2 R2 D2 F B D' L' U2 B' D R' B F2 [16+1] (17f*) 0.41
+727 D R' B U' L2 B R2 F' R' B2 R2 U L2 F D2 R2 U R2 [17+1] (18f*) 4.24
+728 U R2 L B R' D2 F2 B L' U2 B' L2 D' R2 B L B2 R' [18+0] (18f*) 7.38
+729 F U' B2 L' U L F' D L D2 L' D2 L2 F2 D' F' B2 [16+1] (17f*) 0.70
+730 B2 D' R2 D2 B L D' R' L2 D B' L2 D2 F B' U' D' R2 [17+1] (18f*) 4.69
+731 U2 L' U2 D' R' U2 F' B U' L2 U' F L2 F B2 U R2 F2 [16+2] (18f*) 3.62
+732 U2 L' U' D B U2 R L U' D2 B' U R' F' B R U2 F2 [16+2] (18f*) 4.23
+733 F' D' B D2 L2 U2 B2 D' R' L2 U' D' L2 U' F' L2 D [17+0] (17f*) 2.29
+734 B2 L' F' B2 U R U' D' F L' U B2 R2 U R' U' L2 D2 [16+2] (18f*) 10.50
+735 B' R' B R L2 D2 F' L' U2 L' B2 D L D2 F' B2 L [17+0] (17f*) 2.94
+736 R' U' R L2 U2 R2 F' D R' B R F' L2 B' U F D' F2 [17+1] (18f*) 6.87
+737 U2 L' F2 D2 B2 U F' B U D2 R D F' D2 L' F2 R L2 [17+1] (18f*) 5.54
+738 U2 L' F2 R2 D R L2 D R F R D2 L B' U' R U' R2 [17+1] (18f*) 4.35
+739 F2 R D L B U2 R2 F R' D2 B R' F' B L D2 L B2 [17+1] (18f*) 9.07
+740 F2 L' D' B2 L2 F2 D' B R' D R' D2 F2 U' L B2 U2 L2 [15+3] (18f*) 7.47
+741 U R2 F2 U2 L U2 B2 L D' F L F R' D R U B2 D2 [16+2] (18f*) 6.35
+742 F' B' R U R' D2 B' U R2 U' L U' R L2 F D B' U2 [17+1] (18f*) 5.95
+743 R L F2 B2 R D2 F2 B' U2 D2 L' B D L' F2 R' B L2 [17+1] (18f*) 5.14
+744 U' F2 B' D2 L2 U D2 R' D F2 L' F B2 R D' F' R F2 [17+1] (18f*) 3.63
+745 U F2 U' R F2 B L B R2 U2 R L2 B R2 L' B2 L' R2 [17+1] (18f*) 7.09
+746 F U2 B R' F2 U2 B L B' U' F L' D B U L U2 [16+1] (17f*) 0.37
+747 R' B D' B' U2 F' D' B' D' F' R L U' B2 U2 D' B' L2 [17+1] (18f*) 6.63
+748 L U2 F R U D' B R B' R2 F2 B' D' B F2 D2 U2 [14+3] (17f*) 0.57
+749 F' U B R2 U2 B' U2 D' F2 D2 B2 D B' U B R B' R2 [17+1] (18f*) 6.02
+750 U2 B2 D' R L B' D F' R' U2 F' D L' F2 U D F' R2 [17+1] (18f*) 5.43
+751 U2 L2 D' F' R2 B L F D' B2 R F' L U R2 F2 D2 L2 [14+4] (18f*) 5.70
+752 R2 D' F2 U2 B' U L F R' D R L' F L B2 [14+1] (15f*) 0.00
+753 U' B U F2 R' U' D R U' D' L U' F' L2 U' L' D2 [16+1] (17f*) 0.68
+754 B2 U' D2 R2 U' D' R B' D' F D2 L2 B' D2 R2 B' D' F2 [17+1] (18f*) 7.22
+755 F2 D' B' U' D F D F' U' R2 D L' U' R' F B2 U D2 [17+1] (18f*) 4.97
+756 F2 U2 L2 B2 D' B' U B' R2 L' U F2 B2 R F B' U2 [16+1] (17f*) 0.59
+757 B2 U2 R2 L B L2 F2 U' D2 B D2 F R2 L F R U' B2 [17+1] (18f*) 6.64
+758 R2 F U2 D2 L F' B2 D R2 B R L F' D' F' U' L2 B2 [16+2] (18f*) 4.89
+759 L' F U2 R L2 B2 R2 F' D2 F' U R' B L' U2 R' U F2 [17+1] (18f*) 6.74
+760 D2 B' L' U' F D' B' L' U' D2 L2 U F' R' B' L' D [17+0] (17f*) 4.06
+761 F D B U2 F2 R' L D' F' R2 L2 U B' R' L F D2 R2 [16+2] (18f*) 6.30
+762 R' F L' D' R2 F' U' B' U R2 U F' B' L F U2 L' U [18+0] (18f*) 21.05
+763 U F U2 B D2 R2 B' L D2 L2 U2 F' U' D' R B D2 L2 [16+2] (18f*) 2.85
+764 B2 L' U2 R F U R' B' R2 B' R2 D B2 L' B2 R2 [14+2] (16f*) 0.07
+765 U' R' U2 B2 U2 L' F2 U' D2 R' B2 R B2 D2 F D B2 R2 [16+2] (18f*) 6.26
+766 D2 B2 U L F' L B' R2 U2 R F2 U2 F' L2 B2 L D2 R2 [16+2] (18f*) 5.38
+767 F' D' R2 F B2 L' F' B' U F2 L' U' R2 B U R' L2 [16+1] (17f*) 0.50
+768 U2 D B R' U' L' F' U' F U R2 F D R2 B' L2 F2 [15+2] (17f*) 0.33
+769 B' R2 B2 R2 U' L2 F U' D2 F2 U F' B R2 U R B2 F2 [16+2] (18f*) 7.76
+770 R D' B2 U2 L2 B' D2 R F D2 F R F2 U2 L U2 B' [17+0] (17f*) 3.51
+771 L2 D2 R' U B' U D B2 L2 B D R B2 R2 F2 D2 B [17+0] (17f*) 2.98
+772 F2 D' R B' L F' R B' U2 L' D2 B U2 D' L F L U' [18+0] (18f*) 20.39
+773 L D2 L B2 U' B' L F' U D F R2 D F' R' B' L R2 [17+1] (18f*) 3.91
+774 D2 R2 U R' L F' D B' D' B2 U L F2 D2 B' D' B2 R [18+0] (18f*) 23.22
+775 F U' L2 B' R' L2 F' L' B2 U2 F2 D F R' L2 B2 U2 R [18+0] (18f*) 21.52
+776 F' U R' D' R2 F R2 F2 B' U2 B R2 L' U' L2 B [16+0] (16f*) 0.19
+777 D' R2 F' B R F' D2 R2 D F' B' U R B' D R F' L2 [17+1] (18f*) 4.14
+778 L F2 R2 B' U' B2 R' F R2 F2 L2 D R' D' F' R2 D' R2 [17+1] (18f*) 3.28
+779 F D R U2 L' D' F U' R2 D B L D F D F' D' B [18+0] (18f*) 17.37
+780 U2 D F2 D' F' R' B' U F L' D' R' B R B U F2 L2 [16+2] (18f*) 5.17
+781 D' B' R2 B L B2 R' D' B D F2 U2 R' U' B' L2 F' [17+0] (17f*) 5.29
+782 R F L' B R U F D2 L2 U B D F B2 L2 D' F D2 [17+1] (18f*) 5.92
+783 L2 F U L U' B D' L F U2 D2 R' L2 U' F2 R L2 U2 [16+2] (18f*) 4.14
+784 L2 B' R D' R2 B' L' B' U B2 D' R' U' F' R B' R2 [16+1] (17f*) 0.63
+785 L' F U D2 R2 L2 B' R' D2 L2 D2 R2 B' D' B' L' B' U2 [17+1] (18f*) 5.54
+786 B' U' L2 B2 D R2 L2 U F U B2 D L F B D' R' D2 [17+1] (18f*) 5.63
+787 F' U2 L' B' U2 B' R2 F2 B' D B R2 D2 F R U D2 [16+1] (17f*) 1.11
+788 R' F2 L' D' R2 B' L U2 B2 D L F' D' F2 L' F' L2 F2 [16+2] (18f*) 5.59
+789 D2 L' B' R D2 B' L2 B D' R U D F2 B L B2 L B2 [17+1] (18f*) 7.25
+790 F' R B L2 F' B2 L' B R2 B L F2 B R' B' U2 [15+1] (16f*) 0.19
+791 D2 R B2 D L' D2 B' U2 R B R L' D L D' F' R' [17+0] (17f*) 4.57
+792 F D2 F' D B U' R' L2 U' D' R2 D L2 U' B' U D F [18+0] (18f*) 31.15
+793 D L' D2 F R2 L2 D F2 L B R' B U' R' L U' L [17+0] (17f*) 6.13
+794 F2 R F' D' L' B' L' D F' B2 R2 D' R' F' L2 B' R' F2 L2 [17+2] (19f*) 47.86
+795 F' L B2 D' F2 D L2 F U2 B R' D B' L U D L' F' [18+0] (18f*) 11.99
+796 F2 U2 R F' U2 D' L2 F2 U2 R2 L2 F' B2 R2 U F' L' B' [18+0] (18f*) 22.44
+797 L2 F D' R2 L' U L' F L' U R' D B R U2 L2 F U2 [17+1] (18f*) 13.37
+798 D' F2 U' D R U' L D B' R2 U R' F' B' D' L2 F R2 [17+1] (18f*) 4.89
+799 R D' B' D2 L D' F' U R' D2 F' B2 R2 L' F2 R' U D2 [17+1] (18f*) 5.31
+800 U L B D' B' U2 R' F2 U2 F' R D2 R U' D' L2 U2 B2 [15+3] (18f*) 5.68
+801 D' F U' L D' F2 U2 L' D' R F' L2 U' R B D2 R2 [15+2] (17f*) 0.63
+802 D L2 D R2 U2 D B' R' B U' B2 L U2 F' R' D' R2 F2 [16+2] (18f*) 8.42
+803 R2 F B2 R2 D R2 B L F' U2 L F' L2 D2 L U' D' R2 [17+1] (18f*) 5.72
+804 U' F R D L U R2 B2 D' R' L D' L B U D F' B' [18+0] (18f*) 24.64
+805 U2 F' R' U' F2 L F U R' B2 D B R2 L' U' F B' L2 [17+1] (18f*) 6.28
+806 D' F2 R2 F L2 F2 U D B R B2 L2 D F B L U' B2 [17+1] (18f*) 5.07
+807 U2 R L F2 L' D F' L' D2 F B U' L U2 R D R F [18+0] (18f*) 4.35
+808 F U R2 B L D2 R' U2 B U' F2 B2 R B D' F R' B [18+0] (18f*) 14.24
+809 B' U2 B L' F' D B' U' R2 L' B' L F' U L2 F2 L B2 [17+1] (18f*) 4.75
+810 D' F' B U F2 R2 L' F' B D' L2 U B2 D L D B [17+0] (17f*) 6.64
+811 L2 B2 L' U' D F2 L' F U' D F' R D L2 F' R2 U F2 [17+1] (18f*) 5.27
+812 L' F U2 L2 U' B2 U' L2 D2 F' U2 D B U F' D U2 [16+1] (17f*) 0.77
+813 F L2 F2 D2 F' L U' B' R2 U D B2 U B L2 U2 L F2 [17+1] (18f*) 5.50
+814 L F2 U' D2 L U D2 F R' U L2 F' U R2 F' L' F2 L2 [16+2] (18f*) 6.08
+815 R2 D' L D' B' D L D' F D2 F' D R U B2 U B' [17+0] (17f*) 1.68
+816 F B L F B2 L' F U L' U' F2 U' D2 F R B2 L' R' U2 [15+6] (19f*) 56.49
+817 B2 L D2 R U' R D L2 U' F' D2 R' L' F' L2 B' U [17+0] (17f*) 3.34
+818 F B2 D2 R D L' D F2 L B D' R2 F B' D' L' B' [17+0] (17f*) 3.61
+819 B R L D' L U F B D' R' F2 D2 R2 F B' U2 B2 [15+2] (17f*) 0.50
+820 R F' D2 R2 L' U' F R2 L2 D R2 B2 R F' U' R L2 U2 [16+2] (18f*) 5.16
+821 U2 R' F2 B' R F' B2 D2 L2 B' U2 D' B' L' U R L2 U [18+0] (18f*) 7.29
+822 L2 B L B2 R2 U F' U B R2 F2 R2 D B' L2 D' L' F2 [17+1] (18f*) 6.38
+823 U F2 L' F2 R' F' U F2 R' F2 B R2 D2 L2 D' F L2 D2 R2 [16+3] (19f*) 46.21
+824 D' F R' D2 F' B2 D' L' U' R2 L2 B U' F2 R2 D2 U2 R2 [13+5] (18f*) 9.69
+825 U' D' L' U2 B2 U2 B2 R F' L' B2 D' B R B2 F2 L' R' [14+6] (18f*) 4.66
+826 F2 U2 R2 U' R2 D' R2 F' U R B' D' L F2 R' B2 L [17+0] (17f*) 1.70
+827 R U2 D' R' F' U2 L' F' B' R B U' B U' R B2 U' F2 [17+1] (18f*) 4.17
+828 F U' L2 B' U' R D' L' B' D2 F' L' B2 U D' B2 R2 D2 [15+3] (18f*) 3.59
+829 R F' U R2 U' L2 B U D2 R' B2 R' L' U F D' B F2 [17+1] (18f*) 5.91
+830 F2 B' D' B L2 D2 F' L2 B L2 D2 R B U2 D' L2 B' F2 [17+1] (18f*) 6.03
+831 F2 B2 L2 D' R' U' D' R2 F2 R F B' D2 R L2 U' L' [17+0] (17f*) 2.10
+832 U R2 F2 B' L D' F' U' D' F' R' U' B' R' U2 L' R U2 B2 [14+7] (19f*) 79.24
+833 U B L U F R2 F D L' U' D R B' L2 B U' B U [18+0] (18f*) 22.24
+834 L' B2 R2 B' R' U F D2 L2 U R2 F' L' D' L' U B2 R2 [16+2] (18f*) 5.37
+835 B2 U' F' R2 D' R2 U' R' F2 U B' U R2 L D' F' B [17+0] (17f*) 3.03
+836 U' R2 B' L2 F2 B R2 L' B R F' R2 D' B D' F' L' F [18+0] (18f*) 13.62
+837 B' R U B2 L U2 B2 L F D B2 R' F2 B2 U L' D B' [18+0] (18f*) 38.48
+838 B' U' D' B2 R L' F' D2 B2 D' R D2 F D B' U' D2 [16+1] (17f*) 0.30
+839 U2 F2 R' L F' L F' D' B L U B R' B2 D B2 L' U2 [17+1] (18f*) 6.26
+840 U2 D2 F2 R F' D L' D2 B2 U2 L' B U B2 R2 L2 U [17+0] (17f*) 2.05
+841 U D2 R2 U L' U' B L' U2 L F' L2 D' L' B D' R2 [16+1] (17f*) 0.52
+842 R2 B' L2 B' U' F L' F' D' R2 F' R' L' U2 L' U' F2 [16+1] (17f*) 0.43
+843 U' F' B2 U2 R2 U' D2 L' F2 U' F' D L2 F B' R2 B2 U2 [15+3] (18f*) 6.23
+844 B2 U F' U' R L U' L2 B' U' F2 U2 D' L' B' R L' [17+0] (17f*) 4.40
+845 F' L2 F R2 D R2 F D2 B' R2 U2 L2 U R D2 B2 R2 [14+3] (17f*) 0.50
+846 L2 B U2 L B2 L2 D L2 F' L2 D2 R B' L D' L D B' [18+0] (18f*) 42.71
+847 L2 F' R2 L' B2 D' F L2 B2 D R' F U B' D B2 R' F [18+0] (18f*) 57.90
+848 B U' R2 L' D' R2 U2 R F R D2 R F' L' D2 R' D2 [16+1] (17f*) 0.47
+849 B U2 B R L2 B2 L2 F B2 U' F L2 B2 R' L2 B L' [17+0] (17f*) 4.96
+850 F2 R F2 U2 R2 U' B' D B D R2 F R' U2 F R' U' D' [18+0] (18f*) 7.68
+851 R U2 D2 B' D2 L' F U D' B R2 B2 L B' D2 B' R' B [18+0] (18f*) 12.89
+852 F' U R U2 L F' L' D' L' B U B R2 U' B2 D2 R U' [18+0] (18f*) 17.49
+853 U2 R2 F' R2 L F R F U2 D B D2 F2 D2 F2 U' F B' [18+0] (18f*) 6.28
+854 U2 B R D B' L2 B R' B L' B D2 B2 L D2 R2 D2 B2 [14+4] (18f*) 10.34
+855 U2 R B2 L2 U2 D L U' B2 R' L' F U' R2 D F2 L2 B2 [15+3] (18f*) 6.23
+856 R2 B U2 L2 B2 U D2 B2 R2 F L' U' D R' L B' U2 B' [18+0] (18f*) 22.93
+857 F' D2 B' D2 R' B L2 F' B2 D' L2 D' L' F2 R2 D' F D2 [17+1] (18f*) 5.19
+858 B2 U2 F2 U B U2 R B2 U2 F2 D' B2 U L2 F B L2 [16+1] (17f*) 0.65
+859 B L D' L F' U F' R' F' B' L' F D2 F2 U' B R L2 [17+1] (18f*) 3.68
+860 D2 F L' U' D' R2 D' F R' U2 F2 U2 L B D L F' [17+0] (17f*) 5.51
+861 B2 D2 L' F' L U B' L F2 D F' L2 B' R2 F2 R2 U' [17+0] (17f*) 5.01
+862 F B R2 B2 U' B' D2 B' D' R' L' F' B2 L' F' D2 F2 U2 [15+3] (18f*) 5.96
+863 B2 R2 U' L' F' B2 L' B2 U R' B' L' U2 L2 F2 U2 R F [18+0] (18f*) 28.85
+864 R' F2 U2 R2 F D R D2 F2 L' B2 D' F2 D2 L2 F2 D2 R2 [12+6] (18f*) 6.06
+865 B2 L2 F U F2 B U R2 B' R F' D F' U' F' U B L2 [17+1] (18f*) 5.75
+866 F B2 R F' B' U L2 U F2 U2 R' U' L F D2 L D2 L2 [16+2] (18f*) 4.63
+867 F' R2 D F2 L D F' L2 F L2 D2 R2 D2 R B' U R2 B2 [16+2] (18f*) 5.44
+868 L F U2 B D2 R' F' D' B D' R' U' L' D2 R B2 U2 F2 [15+3] (18f*) 3.77
+869 U' F R U' D2 L F2 B D' R2 B2 R2 U B' U B L U2 [17+1] (18f*) 4.39
+870 L U' R' U2 L2 F2 U' B2 U2 D R' L2 U B D2 F2 U2 B2 L2 [14+5] (19f*) 72.00
+871 L F U2 L' D2 B' D B' R' D' B' D' R2 U R B2 R2 U2 [15+3] (18f*) 4.45
+872 L2 D' L' B2 D' B' D' L F R2 B2 R L' F' U B2 L2 U2 [15+3] (18f*) 3.82
+873 F' B' U' B2 R' U L' F' B2 R' L2 D' L F U2 F2 U F [18+0] (18f*) 39.02
+874 U D2 R' U L2 F2 R2 D' F2 L' F2 B' D' F R B L [17+0] (17f*) 1.58
+875 B D' B D' F' R F L' U' D L U' B' U' D R F' U [18+0] (18f*) 51.64
+876 B2 L2 U2 D' F' L B2 D B' D F B' D2 R F2 D2 L R [14+6] (18f*) 5.76
+877 U2 D F2 R2 L U2 F' R' D' B2 R B D' L' B2 D2 L D [18+0] (18f*) 23.94
+878 R2 U R2 U F U L D2 L U2 F L D' F L B R F [18+0] (18f*) 9.58
+879 R' U2 F U2 F2 U2 L' B2 D B' R U' B U2 B2 L R2 U2 [16+2] (18f*) 4.65
+880 U L' U2 F' U' F2 R2 U F U2 R2 U' R2 L' F B' D2 F2 [16+2] (18f*) 4.82
+881 R L2 U R' U2 D' L F D' F2 U2 B U2 D' R F2 L' F2 [17+1] (18f*) 4.74
+882 R' F R' L U2 R2 B U2 R' B2 D2 L2 U' R' L B F2 R2 [16+2] (18f*) 7.20
+883 U2 R2 F2 U F' B2 D2 B2 L B D2 R2 L2 B R' D F D [18+0] (18f*) 6.24
+884 L B2 R' L' F D' B U F D2 L' F R2 L' B' R' B2 D2 [16+2] (18f*) 5.69
+885 F' D F2 D2 R2 F L' F' R F' U' D L2 B2 L B' R2 U2 [16+2] (18f*) 3.44
+886 B2 D' B2 R' U' R2 U' L' D2 F' U L' D L' F' R U2 R2 [16+2] (18f*) 5.48
+887 R' B2 D2 R2 B2 L' U2 D' F2 R' B' L2 B D' L' F L2 [16+1] (17f*) 0.43
+888 R F' D2 R L B2 U' L D2 R' F2 L' D2 B2 L' B U' L [18+0] (18f*) 31.01
+889 U2 R2 D2 B2 L B2 D R' L2 B L2 D' L' U L F R2 D2 [16+2] (18f*) 6.57
+890 R' D' L' U' L2 B R' L2 D2 F' U L F' L F' L2 U R2 [17+1] (18f*) 6.58
+891 R' B2 D F' B2 D F' R2 F2 U F' L2 F2 B R B2 R2 B [18+0] (18f*) 48.09
+892 B2 D' F2 L2 F' B U' F2 L2 B2 R2 U' R2 B L' F U' [17+0] (17f*) 6.01
+893 B2 R D B' D2 L' D2 F' U' B' U2 B' R2 U B2 U2 B2 R2 [14+4] (18f*) 4.15
+894 B' D L' B' U2 R D' F2 D' R' U F2 U B2 D R' L2 [16+1] (17f*) 1.04
+895 B U2 F2 D2 F2 R2 F' U' B2 R' D2 L D' F2 R' U2 L2 D2 [15+3] (18f*) 5.52
+896 R F U2 F2 L' F D R U F R' D F L' B R2 B [17+0] (17f*) 2.35
+897 R L U2 D R F' D2 B2 R D L' U' R2 B2 D2 B R D [18+0] (18f*) 3.55
+898 B' U B' L' F D' R F U' D2 F' B2 U' D B D' F2 R2 [16+2] (18f*) 4.89
+899 F L' D2 F L F' U R' B D B' D2 F' R2 B2 D2 L2 D2 [13+5] (18f*) 5.42
+900 B2 U R' D B L U2 B' L' B' D2 R2 L U F' B' L B2 [17+1] (18f*) 5.20
+901 L' D' F U L' B' D2 R D' R2 F L D' L B U2 R' [17+0] (17f*) 3.50
+902 B R2 B2 U B L' D R' U' L B D2 B' L' F2 L2 [14+2] (16f*) 0.05
+903 L' B2 L B D' F' R' U' R' U B D' L' F2 D L2 B [17+0] (17f*) 4.36
+904 R B2 D R2 U2 D' B' U L U' D2 F R2 L U' R2 D2 [15+2] (17f*) 0.35
+905 D B R2 F R U2 L U B2 D' F' R' D2 B' R2 U F' D' [18+0] (18f*) 48.05
+906 U2 R' F2 U' B' D' F' D F2 B D R' L2 F2 B' U2 L' F [18+0] (18f*) 9.53
+907 R' D2 B L2 D2 B' D2 F R2 L F2 U R2 U' B' U B [17+0] (17f*) 1.93
+908 R2 U2 F2 D F2 B2 L2 D' F' B' L F R' U L2 F B2 L [18+0] (18f*) 16.85
+909 U' D2 L B2 R' D' F' R' B D2 F R' L2 U F B U B' [18+0] (18f*) 19.64
+910 U2 D' L' F2 R2 U2 F' D F B U2 B R2 B U' L' U' B2 [17+1] (18f*) 4.91
+911 R2 U B2 D2 B2 R2 B D B' D2 R2 F' L U B' U2 B' F2 [17+1] (18f*) 5.54
+912 R' L D B U2 L' U2 R2 L' D2 L' D2 F D U2 F2 L2 D2 L2 [14+5] (19f*) 47.15
+913 F2 R U2 F L' F B' U D F L D R2 D L2 F' D' [17+0] (17f*) 0.83
+914 D' L F U' D' B' R D B2 U F L U' F2 U B U2 [16+1] (17f*) 0.65
+915 B' U' F2 U2 L' U F' L' U' R U' R' D L2 B' L2 F [17+0] (17f*) 4.08
+916 D' F B2 D B2 R F R' L2 F' L F D R F' R2 U [17+0] (17f*) 4.51
+917 R2 F2 B2 U2 F B' R' D R' U' D2 L2 D L' U2 B' R' L2 [17+1] (18f*) 6.07
+918 F' L' B2 U' D2 B2 D2 L' D' R' F2 U' F' U' F L2 B2 D2 [15+3] (18f*) 6.01
+919 B R' U' D' B' R2 F' B2 R2 U2 F R' D B' L F2 B D [18+0] (18f*) 52.45
+920 F L2 F' B2 D F U R F2 D B2 R2 U2 L2 D' L B' L' [18+0] (18f*) 16.47
+921 L' B L B D' B' R L2 B L2 F' D B L B R B [17+0] (17f*) 4.26
+922 U L' D' R L2 U' L' D' F2 B L2 D F' U F2 D2 R2 F2 [14+4] (18f*) 4.29
+923 D' F2 B R L' F' R2 U F' L' D2 R2 L D' R' B2 L' R [15+5] (18f*) 4.28
+924 R2 L U2 D' B' U' D B' U' D' L' D R2 D R2 D2 F' [17+0] (17f*) 0.55
+925 R' D' F' U' F' U2 B U2 L2 U D R2 F2 L F' R U [17+0] (17f*) 2.74
+926 R F2 L D2 F R' L2 F' B U' F B2 D' L' U' R F D' [18+0] (18f*) 16.85
+927 U' L' D2 R2 U B2 R' U F U R2 B L U2 L' U2 R2 F2 [15+3] (18f*) 9.04
+928 R2 F R2 L2 U' D L U' B2 R' L' D2 B2 R' B D2 B2 R2 [15+3] (18f*) 5.65
+929 R' D B' R2 B' L' D' R' U R U2 B U' R2 U2 F L F2 [17+1] (18f*) 4.51
+930 F2 U' R' B D' L F D L2 U' F' U' D' F2 U' F' R' [17+0] (17f*) 1.43
+931 L F2 B2 R' B2 L' D2 R' U F2 L B' D F2 L' D' F' [17+0] (17f*) 3.39
+932 U F R' F R' L' D F R L U B' L' U' R2 L2 D' F [18+0] (18f*) 14.57
+933 B' R F2 U B' L U' D B L U2 R2 L' D' R D B R2 [17+1] (18f*) 4.52
+934 U2 F D L U2 B' L B U R' D2 B2 U2 L2 U2 R' B L2 [17+1] (18f*) 5.64
+935 F L' B2 R L' F2 L F' L F2 D' B D' B2 L F U F' [18+0] (18f*) 18.03
+936 U2 F2 B R2 U' L' F2 L' F' D2 B2 R2 B' L D2 B2 L B2 [17+1] (18f*) 5.74
+937 F U L U B' D2 B' D' L2 D' R2 L' F2 B' R2 F2 U [17+0] (17f*) 1.64
+938 U2 D F' L U' D' R' U L2 B' U2 F' D2 F' B2 L2 B2 [14+3] (17f*) 0.59
+939 L2 F' B2 R D R2 D F' L' B' R D2 R2 L' D F2 D2 [15+2] (17f*) 0.52
+940 L U' L F2 U' F L D R' L' B' R U' F B' U' F2 L2 [16+2] (18f*) 8.46
+941 R B2 U L2 B2 L D' R L D2 B' U R F B2 U' D' B2 [17+1] (18f*) 3.93
+942 U' R F U R' U' B2 L D' L U B2 L' B2 R L U2 F2 [16+2] (18f*) 5.87
+943 F' D R' U' L' D F D B D F' B R D F' B U' [17+0] (17f*) 1.88
+944 L B U D F B2 R' U' D2 L2 F' B' L U2 L U B L2 [17+1] (18f*) 5.13
+945 D R2 B U2 R2 U2 L U L F' D2 B' L U R L F' L2 [17+1] (18f*) 5.75
+946 F2 U B2 R' U2 F' L' D2 L U' R' L' B' U' R F2 B2 R [18+0] (18f*) 18.38
+947 B' D2 F2 D2 R' B' U' L F2 B2 U2 B' L' U L2 R2 B2 U2 [14+4] (18f*) 9.68
+948 U2 B2 U2 R' F D2 R D' L' D' F2 D' F U R L D' B [18+0] (18f*) 39.22
+949 D2 F2 U2 D2 B L2 B R U2 B' L U2 R' U F' B U2 B [18+0] (18f*) 77.51
+950 B' D2 B' R2 L' F' L' F' D F U' L2 U L F D L2 [16+1] (17f*) 1.18
+951 D' F R D L2 U F' R' F2 U2 B2 D' L2 U' L' B D' [17+0] (17f*) 4.18
+952 U' L' D F R' U2 D2 L D' B R2 F R2 D2 F R2 D R2 [17+1] (18f*) 4.52
+953 L2 U F' R' F L' U2 D' L2 D' R' D2 B U2 B D' F2 D2 [16+2] (18f*) 7.15
+954 D' L B R' L B U' R2 U L U2 B D' B L U' L' D2 [17+1] (18f*) 5.07
+955 U2 F L F2 U' D' F2 R L U2 R D' F R2 F D' F' R [18+0] (18f*) 31.74
+956 B2 R' L2 U2 B2 R2 U' R2 F' U2 F' R2 L F' R B R2 [16+1] (17f*) 0.49
+957 B U L2 D L B U F2 B L2 F2 B U2 B' L' F B' U2 [17+1] (18f*) 5.89
+958 B' U B' U B2 R2 B D' F2 R L F' U' R' F' R2 F2 L2 [15+3] (18f*) 7.50
+959 R' U L2 D2 F2 B' D2 L U' B U' D F L' F2 D' B2 D [18+0] (18f*) 9.88
+960 U L D L' B U2 L' B2 D2 B2 L2 B' L' F' D' [15+0] (15f*) 0.01
+961 R2 L F2 R' B' R' L' B L D' R F' B' R2 U2 R B2 R2 [16+2] (18f*) 13.81
+962 U' F' D' R F2 L F2 D' R' B' D2 B' U' L D' B' D [17+0] (17f*) 2.10
+963 R2 U R' B U D F' L' F' B' L D' F2 D' B' U2 L' [17+0] (17f*) 1.63
+964 F2 R B' D2 L U R' B2 U L2 U F' B2 U B2 D R' [17+0] (17f*) 0.88
+965 R' U' F2 R' D2 B R2 L2 U' R U F' R2 U2 R2 B F' [12+7] (17f*) 0.51
+966 D2 F2 L2 F' R2 B2 L' F B' R' D' F U2 B U F' R' F2 [17+1] (18f*) 4.85
+967 B2 U2 D B2 D' B D F' U2 D B' R2 U D' B' D' R U2 [17+1] (18f*) 6.42
+968 R' F' D2 F2 D' R2 F L2 U' F2 D2 F' B D F' L2 U2 [15+2] (17f*) 1.50
+969 R' D L' B D2 R2 L U2 B' D2 R F2 U' B R B2 R D' [18+0] (18f*) 13.68
+970 B2 D' L U R2 L2 D2 R2 U B2 D2 L U' D2 B' L2 D' [17+0] (17f*) 4.08
+971 R U' R F' D' B2 R' L F D R F2 L B R D U2 [16+1] (17f*) 0.52
+972 B' D R L' D2 F' U' D B' D2 R L B U' L' U' B R2 [17+1] (18f*) 4.69
+973 U2 F2 D2 B D R2 L F' L' F2 L2 B D F B L2 B2 D2 [15+3] (18f*) 6.97
+974 F' U2 D R2 D F' B2 R B R F' L2 F2 D L' D R2 [16+1] (17f*) 0.71
+975 L2 D L2 F2 U D' R2 U' L' U' D' R F D2 F' D2 B' [17+0] (17f*) 2.67
+976 F U' R2 D2 L' F' U2 R2 U2 L' U R' B' L2 U2 L U2 L [18+0] (18f*) 32.67
+977 F U2 D B2 L' D2 F' L2 B' R2 U' R2 F2 L' B' D' F2 [16+1] (17f*) 0.59
+978 U' L U L2 U F' B' L2 D' L2 F2 B2 R' U2 D' L' U2 [16+1] (17f*) 0.81
+979 B R' F' B2 R2 U' D2 L2 D B2 R' F2 R U' F L' U' R2 [17+1] (18f*) 4.51
+980 B' R B U2 D2 B D2 F2 R F2 R U R' D2 B' R2 B' F2 [17+1] (18f*) 5.45
+981 B2 L2 U' F B2 U B' D2 L D L2 D R L2 B' D' F2 U2 [16+2] (18f*) 4.03
+982 B U2 D' L2 B D' R' D F2 L' D2 F2 R2 F U D2 B R2 [17+1] (18f*) 6.07
+983 L2 F' U R F B2 D' L U B L2 F' L' F2 U B R2 U2 [16+2] (18f*) 8.15
+984 F' L2 B R' B U2 D' R U' R2 D B' R2 L F2 L' F2 [16+1] (17f*) 1.65
+985 R2 U2 B' L F D B' R U R D' R' B' L B R D' F [18+0] (18f*) 14.56
+986 U L U L2 D2 F2 R L' U' F U' D' F' D B' L B' U2 [17+1] (18f*) 5.54
+987 D2 R2 D' F2 L' F' U' D2 B' U2 F D2 R' B2 L' F' B2 L2 [16+2] (18f*) 3.91
+988 U' D L' D2 F U2 D B R' L2 F B' L B L D F2 U2 [16+2] (18f*) 4.54
+989 B' U D2 F2 D2 L2 B R2 L F2 D' R2 B' R' D L B2 R2 [16+2] (18f*) 3.72
+990 L2 F L F' L' B L2 D R2 F U2 L' F R F2 L' B D2 [17+1] (18f*) 4.55
+991 F' L' U D F2 U' F2 L' U D L D' F' U2 R B D [17+0] (17f*) 0.98
+992 L' B R' U R B D' L' U L' B' D L' U' F' R2 B' D2 [17+1] (18f*) 6.26
+993 F R F2 L' F D B' L' U' R' D F' B' D' F' D' L' [17+0] (17f*) 0.32
+994 F' L' D2 R' F' D R2 U' R2 F2 L' B' D' F2 B' R2 B' [17+0] (17f*) 1.24
+995 R2 D' L U2 R U F2 R L2 B U2 L2 B D' L' B L' B2 [17+1] (18f*) 4.55
+996 R' B D2 F2 U2 L' F' B' L B2 R U' B2 D' R' L B2 U [18+0] (18f*) 27.86
+997 R U' D2 F L' U B R D F2 U2 F' D R2 B' R D2 U2 [16+2] (18f*) 4.81
+998 U F2 B2 L' F2 D F2 D L' U' B D2 L B2 L2 F' L' D2 [17+1] (18f*) 8.72
+999 U R F2 D' B L D' F U B' D' B2 D' F2 D R' L [17+0] (17f*) 0.63
+1000 R2 L U2 R2 D' F' B U2 D2 R' B U' L D R' L' F' B' [18+0] (18f*) 10.62
+Search Time: 9244.68
+
+/proc/3923/smaps:AnonHugePages:     55296 kB
+/proc/3923/smaps:AnonHugePages:     51200 kB
+/proc/3923/smaps:AnonHugePages:     40960 kB
+/proc/3923/smaps:AnonHugePages:   1867776 kB
+/proc/3923/smaps:AnonHugePages:    851968 kB
+                         Total:   2867200 kB (2.73 GB)
+

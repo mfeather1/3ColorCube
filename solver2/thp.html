@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+ <title>Transparent Hugepages</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style>pre {text-align:left}</style>
+</head>
+<body>
+<center>
+<font size=+2>Transparent Hugepages</font>
+<br><br>
+<p>Use of transparent hugepages on the test platforms is enabled by doing
+this command as root:
+<br><br>
+echo always &gt; /sys/kernel/mm/transparent_hugepage/enabled
+<br><br>
+To show that the search arrays are actually using hugepages, the following
+shell script is run after loading dist files into the solver:
+<pre>
+ps aux | grep chrome | awk '{print $2}' |
+while read pid; do
+  grep AnonH /proc/$pid/smaps 2&gt;/dev/null |
+  awk '{if ($2 &gt; 4096) print}'
+done
+</pre>
+<p>An example of the output listing:</p>
+<pre>
+/proc/250780/smaps:AnonHugePages:     55296 kB
+/proc/250780/smaps:AnonHugePages:     51200 kB
+/proc/250780/smaps:AnonHugePages:     40960 kB
+/proc/250780/smaps:AnonHugePages:   1867776 kB
+/proc/250780/smaps:AnonHugePages:    851968 kB
+</pre>
+<p>The above shows that the allocations match the dist files below
+after adjusting the file sizes as shown.</p>
+<pre>
+    File                 Hugepage Allocation
+--------------  ------------------------------------
+Dist1_09F.dat   floor(58548/2048-1)*2048 = 55296
+Dist2_09F.dat   floor(54800/2048-1)*2048 = 51200
+Dist5_11F.dat   floor(43084/2048-1)*2048 = 40960
+Dist4_11F.dat   floor(1870576/2048-1)*2048 = 1867776
+Dist3_10FQ.dat  floor(855124/2048-1)*2048 = 851968
+</pre>
+<p>If any of the hugepage allocations are less than the adjusted file size
+then the following commands can be used (as root) after closing the browser
+to make more hugepages available.
+<br><br>
+sync<br>
+echo 3 &gt; /proc/sys/vm/drop_caches
+<br><br>
+More info about that command is 
+<a target=_blank href=https://www.kernel.org/doc/Documentation/sysctl/vm.txt>here</a>.
+To clarify, that does not remove the caches it just clears them and they
+continue to function normally.
+There is a discussion of that 
+<a target=_blank href=https://unix.stackexchange.com/questions/17936/setting-proc-sys-vm-drop-caches-to-clear-cache>here</a>.
+<br><br>
+Another command to make more hugepages available is:
+<br><br>
+echo 1 &gt; /proc/sys/vm/compact_memory
+<br><br>
+There are many temporary allocations that occur while the dist files are
+loading, those will be cleared by the JavaScript garbage collector as a
+normal course of operation.
+This means that the above shell script may show more allocations than just
+the search arrays but they should clear eventually.</p>
+<br>
+<script>
+a=Math.floor(58548/2048-1)*2048
+b=Math.floor(54800/2048-1)*2048;
+c=Math.floor(43084/2048-1)*2048;
+d=Math.floor(855124/2048-1)*2048;
+e=Math.floor(1870576/2048-1)*2048;
+console.log(a,b,c,d,e);
+</script>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+</center>
+</html>
+

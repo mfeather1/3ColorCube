@@ -1,4 +1,4 @@
-// Search with Dists 1 & 2 only
+// Dist4: 1.8 GB in 1 part
 function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
 {
   for (var i=0, mv=0; (mv=mvlist[i]) != -1; i++) {
@@ -79,6 +79,21 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
         var cpt = cp*2187 + ct;
         var ctsym = get_ctsym(cpt, op);
       }
+      if (depth-n <= 11 && depth-n >= 9) {
+        var rs = etsym>>5;
+        var ix = (cpsym*2187+ctsym)*12512 + epmin*16 + (rs>>2);  // MIN_EP*16 = 12512 
+        var tmp = (dist400[ix]>>((rs&3)<<1))&3;
+        var dist = (tmp) ? tmp+9+n : 0;
+        if (dist > depth)
+          continue;
+      }
+      if (depth-n <= 10 && depth-n >= 8) {
+        ix = epmin*1119744 + ctsym*512 + (etsym>>2);  // C_TWIST*512 = 1119744
+        var tmp = ((dist3[ix]>>((etsym&3)<<1))&3);
+        dist = (tmp) ? tmp+8+n : 0;
+        if (dist > depth)
+          continue;
+      }
       if (depth-n <= 9) {
         ix = epmin*76580 + cpsym*1094 + (ctsym>>1);  // C_PRM*1094 = 76580
         var dist = n + ((ctsym&1) ? dist1[ix]>>4 : dist1[ix]&0xF);
@@ -105,17 +120,11 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
       }
       if (ep == 0 && et == 0 & cp == 0 && ct == 0) {
         ix = cp6c_cpr[cp6c]*13824 + eprsum(epr);
-        if (stoplen) {
-          if (distp2[ix] + n > depth)
-            continue;
-        }
-        else
-          if (distp2[ix] + n >= minmv)
-            continue;
+        if (distp2[ix] + n > depth)
+          continue;
       }
       seq[n] = mv;
       solver_search(ep, et, cp, ct, cp6c, epr, n+1, seq_gen[mv]);
     }
   }
 }
-
