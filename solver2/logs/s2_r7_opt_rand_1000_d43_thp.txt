@@ -1020,6 +1020,14 @@ Init Time: 0.60
 1000 R2 L U2 R2 D' F' B U2 D2 R' B U' L D R' L' F' B' [18+0] (18f*) 2.38
 Search Time: 1944.53
 
+Moves    Avg     Max
+----- ------  ------
+  15    0.00    0.00
+  16    0.03    0.10
+  17    0.40    2.71
+  18    2.18   14.43
+  19   11.76   17.80
+
 /proc/5286/smaps:AnonHugePages:     55296 kB
 /proc/5286/smaps:AnonHugePages:     51200 kB
 /proc/5286/smaps:AnonHugePages:     40960 kB

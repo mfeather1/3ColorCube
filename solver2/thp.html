@@ -13,10 +13,11 @@
 <center>
 <font size=+2>Transparent Hugepages</font>
 <br><br>
-<p>Use of transparent hugepages on the test platforms is enabled by doing
-this command as root:
+<p>Transparent hugepages are enabled on the test platforms by doing these
+commands as root:
 <br><br>
-echo&nbsp;always&nbsp;&gt;&nbsp;/sys/kernel/mm/transparent_hugepage/enabled
+echo&nbsp;always&nbsp;&gt;&nbsp;/sys/kernel/mm/transparent_hugepage/enabled<br>
+echo&nbsp;always&nbsp;&gt;&nbsp;/sys/kernel/mm/transparent_hugepage/defrag
 <br><br>
 To show that the search arrays are actually using hugepages, the following
 shell script is run after loading dist files into the solver:
@@ -35,8 +36,8 @@ done
 /proc/250780/smaps:AnonHugePages:   1867776 kB
 /proc/250780/smaps:AnonHugePages:    851968 kB
 </pre>
-<p>The above shows that the allocations match the dist files below
-after adjusting the file sizes as shown.</p>
+<p>The above shows that the allocations match the dist file sizes below
+(from du&nbsp;&#8209;k) after adjusting as shown.</p>
 <pre>
     File                 Hugepage Allocation
 --------------  ------------------------------------
