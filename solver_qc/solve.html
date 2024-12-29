@@ -34,7 +34,7 @@
   }
  </style>
 </head>
-<body ondblclick="fullScreen(event)">
+<body ondblclick="fullScreen(event)" onbeforeunload="clear_arrays()">
 <div class=wrap>
 <center>
 <table>
@@ -572,6 +572,10 @@ function main() {
     show_cube();
   }
 
+  back_button();
+}
+
+function back_button() {
   if (cloze == 1)
     document.getElementById('back').innerHTML = '<a href="JavaScript:window.close()">Close</a>';
   else 
@@ -1429,6 +1433,16 @@ var mlog = [];
 function mconsole(s) {
   mlog.push(s);
   setTimeout(console.log.bind(console, s));
+}
+
+function clear_arrays() {
+  for (var i=1; i < worker.length; i++)
+    worker[i].terminate();
+  if (typeof SharedArrayBuffer != 'undefined') {
+    for (let v in window)
+      if (window[v] instanceof SharedArrayBuffer)
+        window[v] = null;
+  }
 }
 </script>
 </center>

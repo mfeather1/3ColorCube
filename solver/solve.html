@@ -28,7 +28,7 @@
   }
  </style>
 </head>
-<body ondblclick="fullScreen(event)">
+<body ondblclick="fullScreen(event)" onbeforeunload="terminate_worker()">
 <div class=wrap>
 <center>
 <style> input { height:22px; width:22px;} </style>
@@ -660,6 +660,10 @@ function sbtn_active() {
 
 function sbtn_inactive() {
   document.getElementById('sbtn').style.backgroundColor = sbtn_bgcolor_inactive;
+}
+
+function terminate_worker() {
+  worker.terminate();
 }
 </script>
 </center>

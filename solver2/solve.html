@@ -34,7 +34,7 @@
   }
  </style>
 </head>
-<body ondblclick="fullScreen(event)">
+<body ondblclick="fullScreen(event)" onbeforeunload="clear_arrays()">
 <div class=wrap>
 <center>
 <table>
@@ -613,6 +613,10 @@ function main() {
     show_cube();
   }
 
+  back_button();
+}
+
+function back_button() {
   if (cloze == 1)
     document.getElementById('back').innerHTML = '<a href="JavaScript:window.close()">Close</a>';
   else 
@@ -1487,6 +1491,7 @@ function worker_error_handler() {
   update_layout();
   show_cube();
   solve_running = 1;  // disable buttons
+  back_button();
 }
 
 function memory_allocation_error_handler(e) {
@@ -1497,6 +1502,7 @@ function memory_allocation_error_handler(e) {
   update_layout();
   show_cube();
   solve_running = 1;
+  back_button();
 }
 
 function shared_memory_error_handler(e) {
@@ -1507,6 +1513,7 @@ function shared_memory_error_handler(e) {
   update_layout();
   show_cube();
   solve_running = 1;
+  back_button();
 }
 
 function readCubeFile(files) {
@@ -1530,6 +1537,18 @@ var mlog = [];
 function mconsole(s) {
   mlog.push(s);
   setTimeout(console.log.bind(console, s.replace('<br>','')));
+}
+
+function clear_arrays() {
+  for (var i=1; i < worker.length; i++)
+    worker[i].terminate();
+  if (typeof SharedArrayBuffer != 'undefined') {
+    for (let v in window) 
+      if (window[v] instanceof SharedArrayBuffer)
+        window[v] = null;
+  }
+  for (var i=0; i < d4arr.length; i++)
+    d4arr[i] = null;
 }
 </script>
 </center>
