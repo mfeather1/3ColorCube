@@ -1392,6 +1392,7 @@ function worker_error_handler() {
   update_layout();
   show_cube();
   solve_running = 1;  // disable buttons
+  back_button();
 }
 
 function memory_allocation_error_handler(e) {
@@ -1401,6 +1402,7 @@ function memory_allocation_error_handler(e) {
   update_layout();
   show_cube();
   solve_running = 1;
+  back_button();
 }
 
 function shared_memory_error_handler(e) {
@@ -1410,6 +1412,7 @@ function shared_memory_error_handler(e) {
   update_layout();
   show_cube();
   solve_running = 1;
+  back_button();
 }
 
 function readCubeFile(files) {
