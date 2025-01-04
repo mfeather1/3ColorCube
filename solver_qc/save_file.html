@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+ <title> Save File </title>
+ <meta name="author" content="Michael Feather">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <style>
+  body {margin-left: 10%; margin-right: 10%;}
+  p { margin:0; text-align: justify;}
+  input {height:24px; width:200px; border-radius:10px; border:1px solid black;}
+  textarea {width:100%; height:300px; border-radius:10px;}
+  .btn {
+    width:80px; height:26px; border-radius:10px; background-color:#dddddd;
+    padding:0px; border:1px solid black;}
+  .btn:active { background-color: #aaaaaa;}
+ </style>
+</head>
+<body>
+<center><font size=+2> Save File </font></center>
+<br>
+<p>The purpose of this program is to save text to a file on a mobile
+device if a text editor is not available.
+<br><br>
+To save text to a file:<br>
+1. Enter file name (including extension) in box next to Save button<br>
+2. Enter text in the large text area<br>
+3. Press Save button<br>
+<br>
+The file will be saved to your default download directory.
+Files can also be opened but if you edit an existing file it cannot
+be overwritten, each save will create a new file.</p>
+<br>
+<table>
+ <tr>
+  <td><button class=btn onclick=saveFile()>Save</button></td>
+  <td width=1>
+  <td><input id=fname></td>
+  <td><input type=file id=selectFiles style="display:none;" 
+             onchange="openFile(this.files)"></td>
+  <td width=15>
+  <td><button class=btn onclick="selectFiles.click()">Open</button>
+  </td>
+ </tr>
+ <tr height=16px>
+</table>
+<textarea id=text></textarea>
+<a id=dl></a>
+<br>
+<center>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+</center>
+<br>
+<script>
+"use strict";
+function openFile(files) {
+  function read(file) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('text').value = e.target.result;
+      document.getElementById('fname').value = file.name;
+    }
+    reader.readAsText(file);
+  }
+  read(files[0]);
+}
+function saveFile() {
+  var fname = document.getElementById('fname').value;
+  if (fname.length == 0) {
+    alert('File name is blank, enter filename.');  
+    return;
+  }
+  try {
+    var text = document.getElementById('text').value;
+    var blob = new Blob([text], {type: "octet/stream"});
+    dl.href = window.URL.createObjectURL(blob); 
+    dl.download = fname;
+    dl.click();
+  }
+  catch (e) {
+    alert(e);
+  }
+}
+// not possible to overwrite an existing file according to this:
+// https://stackoverflow.com/questions/39453992/how-to-overwrite-an-existing-file-while-saving-using-javascript
+</script>
+</body>
+</html>
+

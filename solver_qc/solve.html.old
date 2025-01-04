@@ -13,11 +13,6 @@
  <script src=../verify.js></script>
  <script src=readfiles.js></script>
  <style> 
-  div.wrap {
-    height:100%;
-    overflow:auto;
-    padding:0px 5%;
-  }
   .sbtn {
     height:28px;
     width:74px;
@@ -34,7 +29,6 @@
  </style>
 </head>
 <body ondblclick="fullScreen(event)">
-<div class=wrap>
 <center>
 <table>
 <tr><td height=8></tr>
@@ -1169,6 +1163,5 @@ function shared_memory_error_handler(e) {
 
 </script>
 </center>
-</div>
 </body>
 </html>
