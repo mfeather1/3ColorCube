@@ -2318,21 +2318,10 @@ function AnimCube2(params) {
   var offsetX, offsetY;
   var mouseIsDown = false;
   var showContextMenu = true;
-  var divs = document.getElementsByTagName('div');
-  var wrapDiv = (divs.length > 0 && divs[0].className == 'wrap') ? true : false;
-
-  function touchfunc(s) {
-    if (wrapDiv)
-      divs[0].style.overflow = s;
-    else
-      document.body.style.overflow = s;
-  }
 
   function mouseup(e) {
-    if (mouseIsDown && typeof e.touches != 'undefined') {
+    if (mouseIsDown && typeof e.touches != 'undefined')
       e.preventDefault();
-      touchfunc('auto');
-    }
     if (mouseIsDown)
       setTimeout(function() {
         showContextMenu = true
@@ -2383,8 +2372,6 @@ function AnimCube2(params) {
     e.preventDefault();
     mouseIsDown = true;
     showContextMenu = false;
-    if (typeof e.touches != 'undefined')
-      touchfunc('hidden');
     offsetX = left;
     offsetY = top;
     lastDragX = lastX = getX(e);

@@ -1,33 +1,36 @@
 a:link {color:#4B80FE}
 a:visited {color:#854ABB}
 body {
-  background-color: #38383D;
-  color: white;
+  background-color:#38383D;
+  color:white;
   margin-left:10%;
   margin-right:10%;
+  margin-bottom:0;
 }
 table {
   border-style:solid; 
   border-color:#38383D; 
 }
-td { text-align: justify; }
+td {
+  text-align:justify;
+}
 p {
   margin:0;
-  text-align: justify; 
+  text-align:justify; 
 }
-.ixw1 { width:140px; }
-.ixw2 { width:100px; }
-.ixw3 { width:200px; }
-.svw1 { width:74px; }
-.svw2 { width:100px; }
-.svw3 { width:120px; }
-.svw4 { width:161px; }
-.dmw1 { width:106px; }
-.dmw2 { width:70px; }
-.tiw1 { width:62px; }
-.cuw1 { width:108px; }
-.cuw2 { width:80px; }
-.asw1 { width:50px; }
+.ixw1 {width:140px;}
+.ixw2 {width:100px;}
+.ixw3 {width:200px;}
+.svw1 {width:74px;}
+.svw2 {width:100px;}
+.svw3 {width:120px;}
+.svw4 {width:161px;}
+.dmw1 {width:106px;}
+.dmw2 {width:70px;}
+.tiw1 {width:62px;}
+.cuw1 {width:108px;}
+.cuw2 {width:80px;}
+.asw1 {width:50px;}
 .btn {
   height:28px;
   border-radius:15px;
@@ -35,6 +38,5 @@ p {
   padding:0px;
   border:none;
   outline:none;
-  /* cursor:pointer; */
 }
-.btn:active { background-color: #aaaaaa; }
+.btn:active {background-color:#aaaaaa;}

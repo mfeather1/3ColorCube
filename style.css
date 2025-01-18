@@ -1,24 +1,25 @@
 a:link {color:#4B80FE}
 a:visited {color:#854ABB}
 body {
-    background-color: #38383D;
-    color: white;
-    margin-left: 10%; 
-    margin-right: 10%;
+  background-color:#38383D;
+  color:white;
+  margin-left:10%; 
+  margin-right:10%;
+  margin-bottom:0;
 }
 table {
   border-style:solid; 
   border-color:#38383D; 
 }
 td {
-    text-align: justify;
+  text-align:justify;
 }
 p {
-    margin:0;
-    text-align: justify; 
+  margin:0;
+  text-align:justify; 
 }
-iframe { border: 0; }  
-.mdw1 { width:120px; }
+iframe {border: 0;}  
+.mdw1 {width:120px;}
 .btn {
   height:28px;
   border-radius:15px;
@@ -26,6 +27,4 @@ iframe { border: 0; }
   padding:0px;
   border:none;
   outline:none;
-  /* cursor:pointer; */
 }
-
