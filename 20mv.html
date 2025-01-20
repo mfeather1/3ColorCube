@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+ <title> About Optimal Solutions </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+</head>
+<body>
+<center>
+<font size=+2> About Optimal Solutions </font>
+<br><br>
+<p>
+While it is true that every configuration of a Rubik's cube can be solved
+in 20 moves or less, relatively few of them actually require that many.
+The number of configs that require 20 moves is as yet unknown, the estimate
+is 490 million as can be seen in the third table shown
+<a href=https://cube20.org>here</a>.
+While that may seem like a lot, as a fraction of the 43 quintillion total
+it is quite small: 
+<pre>490,000,000 / 43,252,003,274,489,856,000 = 0.0000000001 
+                                            (rounded)</pre>
+<!-- 490000000 / 4325200327448985600 = 0.00000000011328955028 -->
+<p>Hence the odds that any given random cube actually requires 20 moves
+to solve are slim to none.
+For a better idea of what to expect for an optimal solution see the bar
+charts <a href=http://kociemba.org/moves20.htm>here</a> which show that a 17-18
+move solution is the most likely.
+<br><br>
+While it is possible to get a solution in the optimal range with a two-phase
+solver relatively quickly, establishing that it is actually optimal can be
+much more time consuming.
+For example, consider an 18 move solution with search depths of 10+8 which 
+means that the solution was found at depth 10 in phase 1.
+To establish that the solution is optimal requires completing the search
+through depth 17 to show that no shorter solution exists.
+Each higher depth takes 13.35 times longer to search than the previous so
+the expected time to go from depth 10 to 17 is 13.35^7 = 75,573,382 times
+longer than the amount of time required to search depth 10 (note: the 13.35
+growth rate can be seen 
+<a target=_blank href=https://sequencedb.net/s/A333298>here</a>).
+<br><br>
+The performance of solving algorithms can be evaluated on both ends of the
+spectrum.
+On one end is the use of minimal computing resources for quick startup and
+immediate solutions that are at or near optimal but without the ability to
+establish optimality in a timely manner.
+On the other end of the spectrum is maximizing use of computing resources
+to get optimal solutions as quickly as possible on the available hardware 
+but having significant startup time and/or requiring loading of large data
+files.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+</center>
+</body>
+</html>
