@@ -30,12 +30,12 @@ charts <a href=http://kociemba.org/moves20.htm>here</a> which show that a 17-18
 move solution is the most likely.
 <br><br>
 While it is possible to get a solution in the optimal range with a two-phase
-solver relatively quickly, establishing that it is actually optimal can be
-much more time consuming.
+solver relatively quickly, proving that it is actually optimal can be much
+more time consuming.
 For example, consider an 18 move solution with search depths of 10+8 which 
 means that the solution was found at depth 10 in phase 1.
-To establish that the solution is optimal requires completing the search
-through depth 17 to show that no shorter solution exists.
+To prove that the solution is optimal requires completing the search through
+depth 17 to show that no shorter solution exists.
 Each higher depth takes 13.35 times longer to search than the previous so
 the expected time to go from depth 10 to 17 is 13.35^7 = 75,573,382 times
 longer than the amount of time required to search depth 10 (note: the 13.35
