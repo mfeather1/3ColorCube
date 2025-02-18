@@ -1,11 +1,11 @@
 <!doctype html>
 <html>
 <head>
- <title> Solver 2 </title>
+ <title> Solver 2 - All Phase 2 Sequences </title>
  <meta name="author" content="Michael Feather">
  <meta name="robots" content="nofollow">
- <link rel=icon href=../mini_cube.png type=image/png>
- <link rel="stylesheet" type="text/css" href="../style.css">
+ <link rel=icon href=../../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../../style.css">
  <meta name=viewport content="width=device-width, initial-scale=1">
  <style> 
   .link {
@@ -26,22 +26,21 @@
 </head>
 <body>
 <center>
-<font size=+2> Solver 2 </font>
+<font size=+2> Solver 2<br>All Phase 2 Sequences </font>
 <br><br>
-<p>This version of the solver was made for presolved cubes (see section at
-bottom) but it can also be used for regular cubes.
-It has similar peformance to the Quad-Core Solver when using same size dist
-files but it can also handle larger files for even better performance as can
-be seen in the <a href=perf_summary_new.html>Performance Summary</a>.
+<p>This slightly modified version of the solver loads all sequences for
+phase 2 which allows instant solving for any of the four million presolved
+cubes.
 <br><br>
-With this solver, all options require loading dist files as described 
-<a href=dist_files.html>here</a>.
-You can also see the file requirements by clicking on any link below and
-then clicking the Solve button which will list the files that need to be
-loaded.
-To run the basic solver click on the Solver button.
-For better performance, use additional dist files with the appropriate 
-button.</p>
+For random cubes, it shows more solutions in the log which are the ones
+excluded by the eight move limit for phase two in the regular version of
+the solver.
+However, those solutions are at the higher end of the range in terms of
+overall length which means that they are of no benefit if searching for 
+solutions with 20 moves or less.
+If searching for instant solutions (with search time set to 0) then it
+may in some cases provided a faster resonse albeit with more moves.
+</p>
 <br>
 <table>
  <tr>
@@ -64,7 +63,7 @@ button.</p>
 <br><br>
 <p>Here are the same links with an example of how the cube display can be
 customized with URL parameters, see
-<a target=_blank href=../solver_qc/solver_help.html#custom>Help</a> for details.</p>
+<a target=_blank href=../../solver_qc/solver_help.html#custom>Help</a> for details.</p>
 <br>
 <table>
  <tr>
@@ -92,9 +91,6 @@ a few times.</p>
 <table><tr><td height=18></table>
 <a class=link onclick=go('solve.html?stl=30&snc=1&log_brief=1&random_presolved=1&use_dist9=1') translate=no>Presolved</a>
 <table><tr height=20><td></table>
-<p>With a minor modification, any presolved config can be solved 
-instantly as shown <a href=p2all/index.html>here</a>.</p>
-<br>
 <script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
 <br><br>
 <script>function go(s){location=s}</script>
