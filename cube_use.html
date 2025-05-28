@@ -10,7 +10,7 @@
  <style> td {text-align:center} </style>
  <script src=AnimCube3.js></script>
  <script src=cube_move.js></script>
- <script src=hto_edge.js></script>
+ <script src=hto_edges.js></script>
  <script src=corners2.js></script>
  <script src=cpr.js></script>
  <script src=randmoves.js></script>
@@ -128,8 +128,8 @@ function make_corner6c_all_cube() {
   return(cvt_to_anim(cpr[rand].substr(0,54)));
 }
 function make_edge6c_cube() {
-  var rand = Math.floor(Math.random()*hto_edge.length);
-  return(cvt_to_anim(hto_edge[rand]));
+  var rand = Math.floor(Math.random()*hto_edges.length);
+  return(cvt_to_anim(hto_edges[rand].substr(0,54)));
 }
 function set_facelets() {
   var home_starter    = "RLRLRLRLRRLRLRLRLRLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL";

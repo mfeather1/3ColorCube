@@ -1,0 +1,7 @@
+File demos.tar.gz contains the original cgi demo programs that require
+server-side processing which github pages does not support.
+These programs have been reimplemented using javascript on the 3ColorCube
+website with one difference which is that the solutions are hardcoded as
+opposed to being generated on the fly which is what these cgi programs do.
+These programs have been updated to use AnimCubeJS and can be run locally
+on a linux web server that is configured to run cgi.

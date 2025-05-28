@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<title> 6-Color Corner Cubes (pre-solved as 3-Color)- All 10 Possible Configurations </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> td {text-align:center; border-color:black} </style>
+ <style> .tabdata td {
+  padding-left:6px; padding-right:6px; text-align:center;}
+ </style>
+ <script src=AnimCube3.js></script>
+ <script src=hto_corners.js></script>
+</head>
+<body>
+<center>
+<font size=+2> 6-Color Corner Cubes (pre-solved as 3-Color) </font><br>
+<font size=+2> Reduced by Symmetry to 10 Possible Configurations </font>
+<br><br>
+<p> This shows how all possible corner configs that are solvable with 
+half-twists can be solved.
+The list of configs is reduced by symmetry which means that each cube shown
+represents all 48 configs that can be made by rotating or reflecting.</p>
+<br>
+<div id=text></div>
+<table border=0 id=t1></table>
+<script>document.write('<a href=javascript:history.go(-hist)>Back</a>')</script>
+<br><br><br>
+<script>
+"use strict";
+var rows = 10;
+var cols = 4;
+var tablen = hto_corners.length; 
+main();
+function main() {
+  getParams();
+  var table = document.getElementById('t1');
+  for (var i=0; i < 10; i++) {
+    var r = table.insertRow(-1);
+    for (var j=0; j < cols; j++) {
+      var ix = i*cols + j;
+      if (ix >= 10 )
+        break;
+      var id = 'c' + ix;
+      var div = document.createElement('div');
+      div.style.width = '150px';
+      div.style.height = '150px';
+      div.style.margin = '12px';
+      div.id = id;
+      var mvStr = hto_corners[ix].substr(55);
+      var mvArr = mvStr.split(' ');
+      var cell = r.insertCell(j);
+      cell.innerHTML = (ix+1);
+      cell.appendChild(div);
+      var f = hto_corners[ix].substr(0,54);
+      var p = 'id=' + id;
+      p += '&config=AnimCube.txt';
+      p += '&edit=1';
+      p += '&move=' + mvStr;
+      p += '&facelets=' + cvt_to_anim(f);
+      AnimCube3(p);
+    }
+    // spacer row
+    if (i < 2) {
+      var r = table.insertRow(-1);
+      r.style.height = '45px';
+      var cell = r.insertCell(0);
+    }
+  }
+}
+function cvt_to_anim(c) {
+  var m = [];
+  var anim = [
+    6,7,8,3,4,5,0,1,2,45,48,51,46,49,52,47,50,53,12,24,
+    36,13,25,37,14,26,38,18,30,42,19,31,43,20,32,44,11,
+    10,9,23,22,21,35,34,33,15,27,39,16,28,40,17,29,41];
+  for (var i=0; i < 54; i++)
+    m[i] = c[anim[i]];
+  return(m.join(''));
+}
+function getParams() {
+  var params = location.search.substr(1).split('&');
+  for (var i=0; i < params.length; i++) {
+    var p = params[i].split('=');
+    if (typeof(p[1]) != 'undefined')
+      window[p[0]] = p[1];
+  }
+  if (typeof hist == "undefined")
+    window.hist = 1;
+  if (typeof hist == 'string')
+    hist = (isNaN(hist)) ? 0 : Number(hist);
+}
+</script>
+</center>
+</body>
+</html>
