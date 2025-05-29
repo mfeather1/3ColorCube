@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<title>6-Color Corners (pre-solved as 3-color) - All 576 possible configurations</title>
+<title>6-Color Corners (pre-solved as 3-color) - Symmetry reduced to 28 configs</title>
  <meta name="robots" content="noindex, nofollow">
  <link rel=icon href=mini_cube.png type=image/png>
  <link rel="stylesheet" type="text/css" href="style2.css">
@@ -12,50 +12,33 @@
   .tabdata td {padding-left:6px; padding-right:6px; text-align:center;}
  </style>
  <script src=AnimCube3.js></script>
- <script src=cpr.js></script>
+ <script src=cpr_min.js></script>
 </head>
 <body>
 <center>
 <font size=+2>6-Color Corners (pre-solved as 3&#8209;color)</font><br>
-<font size=+2>All 576 possible configurations</font>
+<font size=+2>Symmtery reduced to 28 configurations</font>
 <br><br>
-<div id=text></div>
-<table>
- <tr>
-  <td><button class="btn ixw2" onclick=prev()>Prev</button></td>
-  <td width=30>
-  <td><button class="btn ixw2" onclick=next()>Next</button></td>
- </tr>
- <tr height=12>
-</table>
-<table border=0 id=t1></table>
-<table style=margin-top:10px>
- <tr>
-  <td><button class="btn ixw2" onclick=prev()>Prev</button></td>
-  <td width=30>
-  <td><button class="btn ixw2" onclick=next()>Next</button></td>
- </tr>
-</table>
+<p>This list is reduced by symmetry which means that each cube shown
+represents all 48 configs that can be made by rotating or reflecting,
+this significantly changes the proportion of each type (10 WW, 7 Parallel,
+11 neither).</p>
 <br>
-<script>document.write('<a href=javascript:history.go(-hist)>Back</a>')</script>
+<table border=0 id=t1></table>
+<table><tr height=5></table>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
 <br><br><br>
 <script>
 "use strict";
 var rows = 10;
 var cols = 4;
-var page = 1;
-var start = 1;
-var tablen = cpr.length; 
 main();
 function main() {
   var ww_seq="R' D2' L2' F2 R F2' L2 D2 R";
   var par_seq="R D2 R D2 R L D2 L D2 L";
   getParams();
-  if (page == 1)
-    showText();
   var table = document.getElementById('t1');
-  start = (page > 1) ? (page-1)*rows : 0; 
-  for (var i=start; i < start+rows && i*cols < tablen; i++) {
+  for (var i=0; i < 7; i++) {
     var r = table.insertRow(-1);
     for (var j=0; j < cols; j++) {
       var ix = i*cols + j;
@@ -111,7 +94,7 @@ function main() {
       AnimCube3(p);
     }
     // spacer row
-    if (i+1 < start+rows && i+1 < tablen/cols) {
+    if (i < 6) {
       var r = table.insertRow(-1);
       r.style.height = '45px';
       var cell = r.insertCell(0);
@@ -135,47 +118,10 @@ function getParams() {
     if (typeof(p[1]) != 'undefined')
       window[p[0]] = p[1];
   }
-  if (typeof page == 'string') {
-    if (isNaN(page))
-      page = 1;
-    page = Math.floor(page);
-    if (page < 1)
-      start = 1;
-    if (page > Math.floor(576/rows))
-      page = Math.floor(576/rows);
-  }
   if (typeof hist == "undefined")
     window.hist = 1;
   if (typeof hist == 'string')
     hist = (isNaN(hist)) ? 0 : Number(hist);
-}
-function showText() {
-document.getElementById('text').innerHTML = 
-`<p> This shows how to solve all 6-color corner configurations (that
-are 3-color solutions) using the sequences.
-There are three steps, first the setup is made for the appropriate
-sequence using half-twists or rotation of the cube.
-If one pair of opposite faces can be solved then the Waterwheel (WW)
-sequence is used, if no faces can be solved then the Parallel
-sequence is used.
-The last step is to complete the solve with half-twists.
-There are 288 configs that use the WW sequence, 192 that use the Parallel
-sequence &amp; 96 that use neither (already solvable with half-twists).
-The list can be reduced to 28 by using symmetry as shown
-<a href=cpr_min.html>here</a>.</p>
-<br>`;
-}
-function prev() {
-  if (page > 1) {
-    var s = '?page=' + (page-1) + '&hist=' + (hist+1);
-    window.location.search = s; 
-  }
-}
-function next() {
-  if (page*rows*cols < tablen) {
-    var s = '?page=' + (page+1) + '&hist=' + (hist+1);
-    window.location.search = s; 
-  }
 }
 </script>
 </center>
