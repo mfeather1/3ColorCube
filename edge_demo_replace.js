@@ -20,6 +20,7 @@
     s = s.replace("A3", "Restore corners");
     s = s.replace("E", "3C-E");
     s = s.replace("-", "&#8209;");
+    s = s.replace("MAS", "Make alt setup");
     return (s);
   } 
   function repl2(s) { 
