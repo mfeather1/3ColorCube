@@ -50,7 +50,7 @@ function solve_cube(cs)
   for (depth=1; depth <= search_depth; depth++)
   {
     if (solution_found == 1 || depth > minmv || 
-       (!show_all_solutions && depth >= minmv))
+       (!show_all_solutions && (depth >= minmv || depth > stoplen)))
       break;
     count[0] = count[1] = count[2] = 0;
     solver_search (cp, ct, cp6c, 1, mvlist2);
