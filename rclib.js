@@ -1678,6 +1678,20 @@ function show_cube_layout(s)
   document_write('</pre>');
 }
 
+function show_cube_layout2(s)
+{
+  document_write('<pre>');
+  document_write('   ' + s[0] + s[2]);
+  document_write('   ' + s[6] + s[8]);
+  document_write(s[9]  + s[11] + ' ' + s[12] + s[14] + ' ' + 
+                 s[15] + s[17] + ' ' + s[18] + s[20]);
+  document_write(s[33] + s[35] + ' ' + s[36] + s[38] + ' ' +
+                 s[39] + s[41] + ' ' + s[42] + s[44]);
+  document_write('   ' + s[45] + s[47]);
+  document_write('   ' + s[51] + s[53]);
+  document_write('</pre>');
+}
+
 function animcube_params() {
   var p = '';
   if (typeof align != 'undefined')         p += '&align=' + align;

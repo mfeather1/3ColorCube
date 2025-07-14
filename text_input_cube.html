@@ -190,7 +190,8 @@ function format(s) {
 }
 function show_solver_link() {
   var n = list_uniq(facelets).length;
-  var prog = (n==3) ? "solve_3c.html" : "solver/solve.html";
+  // var prog = (n==3) ? "solve_3c.html" : "solver/solve.html";
+  var prog = (n==3) ? "solve_3c.html" : "https://mfeather1.github.io/m2p/solve.html";
   var s = "<table><tr height=5><td></table>" +
     "<a target=_blank href=" + prog + "?facelets=" + facelets + ">Cube Solver</a>";
   document.getElementById('status').innerHTML = s;

@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+ <title> Help - Corner HTR Solver </title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+</head>
+<body><center>
+<br><b>Help - Corner HTR Solver</b>
+<br><br>
+<p>Press the Random button then press Solve and a solution will be shown.
+Below the Solve Log button there will be two numbers shown in the form N + N.
+The first N is the number of moves in the phase one solution which is a
+half-turn reduction (HTR).
+The second N is the number of moves in phase two which makes the final 
+solution using half-twists.
+<br><br>
+In the log it can be seen that the search finds progressively shorter
+solutions until it reaches Stop Len, in many cases it will be the first/only
+solution found.
+Stop Len can be reduced to search for a shorter solution but if it is set
+below the optimal length for a given config then there are two possible
+outcomes depending on if any HTR solutions are found, if so then the best
+one is shown.
+This means that if the solution is longer than Stop Len then none exist at
+that length.
+If no HTR solutions are found then a message appears indicating to increase
+Stop Len. 
+<br><br>
+Stop Len can also be used to find optimal solutions by setting it to 0.
+The log will show all solutions at each length until all minimum length
+(optimal) solutions are found.
+The number of solutions found varies widely, anywhere from one to dozens.
+<br><br>
+The url parameter "facelets" can be used to enter a config which can be in
+either 2x2 or 3x3 format (edges &amp; centers will be removed if in 3x3
+format).
+See Help on <a href=../text_input_cube.html>Text Input Cube</a> for 3x3
+layout.</p>
+<br>
+<script>document.write('<a href="javaScript:window.close()">Close</a>')</script>
+<br><br>
+</center>
+</body>
+</html>
