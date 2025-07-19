@@ -192,12 +192,23 @@ function allocate_dist_arrays()
 }
 
 function populate_dist_arrays()
-{
+{ /* 
+  moves  count
+    0       1
+    1       1
+    2       2
+    3      11
+    4      53
+    5     263
+    6     886
+    7    1167
+    8     154
+  total  2538
+  */
   mvlist1[1] = NIL;
   dist1[0] = 1;
   for (depth = 1; depth <= dist_gen_depth; depth++)
     {
-      cfg_idx = 0;
       count[1] = count[2] = 0;
       mkd_search (0, 0, 1, mvlist1);
     }
@@ -211,19 +222,6 @@ function populate_dist_arrays()
 
 function mkd_search (cpn, ctn, n, mvlist)
 {
-  /* 
-  moves  count
-    0       1
-    1       1
-    2       2
-    3      11
-    4      53
-    5     263
-    6     886
-    7    1167
-    8     154
-  total  2538
-  */
   for (var i=0, mv=0; (mv=mvlist[i]) != NIL; i++) 
   {
     if (skip_mv[mv])  // skip DBL moves
@@ -245,14 +243,6 @@ function mkd_search (cpn, ctn, n, mvlist)
   }
 }
 
-function show_line_mkd (mv)
-{
-  document_write('<tr>');
-  document_write('<td style=text-align:center>' + mv + '</td>');
-  document_write('<td>' + count[1] + '</td>');
-  document_write('</tr>');
-}
-
 // ----------------------------------------------------------------------------
 // Populate Search Array Distp2
 // ----------------------------------------------------------------------------
@@ -262,8 +252,7 @@ var distp2 = new Uint8Array(C_PRMr);
 var p2seq = new Int8Array(C_PRMr*4);
 
 function populate_distp2()
-{
-  /*
+{ /*
   moves  count 
     0      1
     1      3
