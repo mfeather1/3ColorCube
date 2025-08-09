@@ -130,26 +130,26 @@ function init()
 
 function populate_dist1()
 {
-  /*       cpt  cptmin  cptmin
-  moves    all     all     ufr
-    0        1       1       1
-    1        6       1       1
-    2       63       3       2
-    3      468      15      11
-    4     3068      71      53
-    5    15438     357     263
-    6    53814    1183     886
-    7    71352    1548    1167
-    8     8784     210     154
-    9       96       4       2
-  total 153090    3393    2540
+  /*        cpt    cpt  cptmin  cptmin
+  moves     all    ufr     all     ufr
+    0         1      1       1       1
+    1         6      3       1       1
+    2        63     18       3       2
+    3       468     96      15      11
+    4      3068    561      71      53
+    5     15438   2630     357     263
+    6     53814   9062    1183     886
+    7     71352  11752    1548    1167
+    8      8784   1376     210     154
+    9        96     16       4       2
+  total  153090  25515    3393    2540
   */
   dist1[0] = 1;
   for (depth = 1; depth <= dist_gen_depth; depth++)
     {
       count[1] = count[2] = 0;
       mkd_search (0, 0, 1, mvlist2);
-      // console.log(depth, count);
+      // console.log(depth, count[1]);
     }
   for (var i=0; i < MIN_CPT; i++) {
     if (dist1[i] == 0)

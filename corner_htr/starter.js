@@ -11,11 +11,13 @@ var solution_found = 0;
 var dist1;
 var ccw_mv = [0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1];
 var inv_mv = new Int8Array([2,1,0,5,4,3,8,7,6,11,10,9,14,13,12,17,16,15]);
+var fs = [];
 
 function solver_main()
 {
   var cs = facelets;
   solve_cube(cs);
+  cp_sol(solution, fs, fs.length);
 }
 function solve_cube(cs)
 {
@@ -43,6 +45,8 @@ function solver_search(ctn, n, mvlist)
         if (!ccw_mv[mv]) {
           seq[n] = mv;
           show_moves();
+          if (solution_found == 0)
+            cp_sol(fs, solution, n);
           solution_found++;
         }
       }
@@ -66,6 +70,12 @@ function show_moves() {
 
 function get_move(n) {
   return disp[Math.floor(n/3)] + disp2[n%3];
+}
+
+function cp_sol(s, t, n) {
+  for (var j=0; j < t.length; j++)
+    s[j] = t[j];
+  s.length = n;
 }
 
 // ----------------------------------------------------------------------------

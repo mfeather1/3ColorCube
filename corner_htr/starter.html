@@ -159,6 +159,7 @@ else {
   }
   else
     facelets = ftmp.join('');
+  convert_to_starter();
 }
 
 function isnum(s) {
@@ -175,8 +176,7 @@ else
 
 function update_layout()
 {
-  var f = facelets.replace(/Y/g,'L').replace(/B/g,'L');
-  facelets_arr = f.split('');
+  facelets_arr = facelets.split('');
   for (var i=0; i < 54; i++) {
     if (document.getElementById('f' + i))
     document.getElementById('f' + i).style.backgroundColor = color_str(facelets_arr[i]);
@@ -223,35 +223,14 @@ function home()
 function rand()
 {
   facelets = randcube();
-  facelets = facelets.replace(/O/g,'R').replace(/W/g,'Y').replace(/G/g,'B');
-  var L = facelets[33];
-  var B = facelets[44];
-  var D = facelets[51];
-  recolor(D);  // make the top & bottom faces always red when solved
-  // facelets = facelets.replace(/Y/g,'L').replace(/B/g,'L');
+  convert_to_starter();
   update_layout();
   show_cube(1);
 }
 
-function recolor(D) {
-  if (D == 'B')
-    facelets = facelets.replace(/R/g,'Z').replace(/B/g,'R').replace(/Z/g,'B');
-  if (D == 'Y')
-    facelets = facelets.replace(/R/g,'Z').replace(/Y/g,'R').replace(/Z/g,'Y');
-}
-
-function blank_edges(f) {
-  var a = f.split('');
-  for (var i=0; i < 24; i++)
-    a[edges[i]] = 'L';
-  return a.join('');
-}
-
-function blank_centers(f) {
-  var a = f.split('');
-  for (var i=0; i < 6; i++)
-    a[centers[i]] = 'L';
-  return a.join('');
+function convert_to_starter() {
+  facelets = facelets.replace(/O/g,'R').replace(/W/g,'Y').replace(/G/g,'B');
+  facelets = facelets.replace(/Y/g,'L').replace(/B/g,'L');
 }
 
 function clera()
@@ -280,7 +259,7 @@ function solve()
     facelets = facelets_arr.join('');
     show_cube(1);
   }
-  facelets = assign_centers_from_lbd_cubie(facelets);
+  facelets = assign_centers_starter(facelets);
   var verif = verify_starter();
   if (verif != 0) {
     console.log('err:', verif);
@@ -329,16 +308,10 @@ function verify_starter() {
   return(0);
 }
 
-function assign_centers_from_lbd_cubie(f) {
+function assign_centers_starter(f) {
   var a = f.split('');
-  var L = a[33];
-  var B = a[44];
-  var D = a[51]; 
-  var R = L;
-  var F = B;
-  var U = D;
-  a[4] = U;   a[22] = L;  a[25] = F;
-  a[28] = R;  a[31] = B;  a[49] = D;
+  a[4] = 'R';
+  a[49] = 'R';
   return a.join('');
 }
 
@@ -366,9 +339,7 @@ function step3()
 
 function show_solution()
 {
-  facelets = blank_centers(facelets);
   var af = cvt_to_anim2(facelets);
-  af = af.replace(/Y/g,'L').replace(/B/g,'L');
   var sol = solution.join('');
   acjs_removeListeners['cube']();
   AnimCube2("id=cube&config=../AnimCube.txt&edit=1&move=" + sol + "&facelets=" + af);
@@ -387,7 +358,6 @@ function show_cube(n)
     acjs_removeListeners['cube']();
   }
   var af = cvt_to_anim2(facelets);
-  af = af.replace(/Y/g,'L').replace(/B/g,'L');
   AnimCube2("id=cube&config=../AnimCube.txt&edit=1&facelets=" + af);
 }
 
@@ -441,7 +411,6 @@ function randcube()
   int_to_perm(ep, eps, 12);
   int_to_strp(et, ets, 11, 2);
   make_cubestr();
-  assign_centers_3c();
   colorize(cs);
   return(cs.join(''));
 }
