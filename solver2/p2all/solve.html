@@ -589,15 +589,15 @@ function main() {
     else if (batch >= '2' && batch <= '6') {
       var script = document.createElement('script');
       if (batch == '2')
-        var file = '../batch/batch_cubes_100.js';
+        var file = '../../batch/batch_cubes_100.js';
       else if (batch == '3')
-        file = '../batch/batch_cubes_19_move.js';
+        file = '../../batch/batch_cubes_19_move.js';
       else if (batch == '4')
-        file = '../batch/batch_cubes_1000.js';
+        file = '../../batch/batch_cubes_1000.js';
       else if (batch == '5')
-        file = '../batch/batch_presolved_16_move.js';
+        file = '../../batch/batch_presolved_16_move.js';
       else if (batch == '6')
-        file = '../batch/batch_presolved_1000.js';
+        file = '../../batch/batch_presolved_1000.js';
       script.setAttribute('src', file);
       script.addEventListener('load', cube_file_loaded);
       document.head.appendChild(script);

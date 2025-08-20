@@ -218,6 +218,53 @@ relatively small (8 MB).</p>
   <td style="border:1px solid white"> 3981312 </td>
   <td style="border:1px solid white"> 100.00 </td>
 </table>
+<br><br>
+<p>An interesting feature of using only depths 1-8 for DistP2 is that it
+generates phase two configurations that can be solved using half-turns only.
+The distribution of configs generated using half-turns only is shown in the
+HTO column in the table below.
+However, the solver is not limited to using only half-turns in phase two
+so it uses all possible moves to get optimal solutions.
+The distribution for optimal solutions to HTO configs is shown in the Optimal
+column.
+Comparing that to the DistP2 column shows that the counts match for the first
+eight moves hence the coincidental generation of HTO configs for phase two.
+</p>
+<br>
+<table class=tabdata5 style=border-collapse:collapse;border-color:white border=1>
+<tr> 
+  <td style="border:1px solid white">Depth</td> 
+  <td style="border:1px solid white">HTO</td> 
+  <td style="border:1px solid white">Optimal</td> 
+  <td style="border:1px solid white">DistP2</td>
+</tr>
+<tr> <td>0</td> <td>1</td> <td>1</td> <td>1</td></tr>
+<tr> <td>1</td> <td>6</td> <td>6</td> <td>6</td></tr>
+<tr> <td>2</td> <td>27</td> <td>27</td> <td>27</td></tr>
+<tr> <td>3</td> <td>120</td> <td>120</td> <td>120</td></tr>
+<tr> <td>4</td> <td>519</td> <td>519</td> <td>519</td></tr>
+<tr> <td>5</td> <td>1932</td> <td>2124</td> <td>2124</td></tr>
+<tr> <td>6</td> <td>6484</td> <td>8188</td> <td>8188</td></tr>
+<tr> <td>7</td> <td>20310</td> <td>27636</td> <td>27636</td></tr>
+<tr> <td>8</td> <td>55034</td> <td>78644</td> <td>78644</td></tr>
+<tr> <td>9</td> <td>113892</td> <td>174521</td> <td>175497</td></tr>
+<tr> <td>10</td> <td>178495</td> <td>233504</td> <td>248288</td></tr>
+<tr> <td>11</td> <td>179196</td> <td>116010</td> <td>252210</td></tr>
+<tr> <td>12</td> <td>89728</td> <td>22228</td> <td>685188</td></tr>
+<tr> <td>13</td> <td>16176</td> <td>24</td> <td>1480040</td></tr>
+<tr> <td>14</td> <td>1488</td> <td></td> <td>883908</td></tr>
+<tr> <td>15</td> <td>144</td> <td></td> <td>137200</td></tr>
+<tr> <td>16</td> <td></td> <td></td> <td>1716</td></tr>
+<tr> <td>Total</td> <td>663552</td> <td>663552</td> <td>3981312</td></tr>
+</table>
+<br>
+<p>The HTO counts can be found in:
+<a target=_blank href=https://www.cube20.org/cubelovers/cube-mail-12.txt>cube-mail-12</a>
+(search for "Analysis of the 3x3x3 squares group" by Mark Longridge) or
+<a target=_blank href=https://www.sciencedirect.com/science/article/pii/S0747717108001272>
+Harnessing parallel disks to solve Rubik’s cube</a> by Daniel Kunkle,
+Gene Cooperman which also includes the Optimal counts (see pg 883).
+</p>
 <br>
 <p>With the new Solver 2, depths above 8 are used for pruning which makes a
 significant difference in performance when solving configurations that are
