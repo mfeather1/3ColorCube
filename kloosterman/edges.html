@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+<title>Hans Kloosterman Method - Stage 4 Edge Configs</title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=../AnimCube3.js></script>
+ <script src=edges.js></script>
+ <style> 
+  body {margin-left:8%; margin-right:8%;}
+  td {text-align:center; border-color:black}
+  .tabdata td {padding-left:6px; padding-right:6px; text-align:center;}
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>Hans Kloosterman Method<br>Stage 4 Edge Configs</font>
+<br><br>
+<div id=text></div>
+<table>
+ <tr>
+  <td><button class="btn ixw2" onclick=first()>First</button></td>
+  <td width=30>
+  <td><button class="btn ixw2" onclick=prev()>Prev</button></td>
+  <td width=30>
+  <td><button class="btn ixw2" onclick=next()>Next</button></td>
+  <td width=30>
+  <td><button class="btn ixw2" onclick=last()>Last</button></td>
+ </tr>
+ <tr height=14>
+</table>
+<table border=0 id=t1></table>
+<table style=margin-top:10px>
+ <tr>
+  <td><button class="btn ixw2" onclick=first()>First</button></td>
+  <td width=30>
+  <td><button class="btn ixw2" onclick=prev()>Prev</button></td>
+  <td width=30>
+  <td><button class="btn ixw2" onclick=next()>Next</button></td>
+  <td width=30>
+  <td><button class="btn ixw2" onclick=last()>Last</button></td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-hist)>Back</a>')</script>
+<br><br><br>
+<script>
+"use strict";
+var rows = 25;
+var cols = 4;
+var page = 1;
+var start = 1;
+var tablen = kloosterman.length;
+var edges = [1,3,5,7,10,13,16,19,21,23,24,26,27,29,30,32,34,37,40,43,46,48,50,52];
+var edges2 = [10,13,16,19,21,23,24,26,27,29,30,32,34,37,40,43];
+var home = 'RRRRRRRRRGGGYYYBBBWWWGGGYYYBBBWWWGGGYYYBBBWWWOOOOOOOOO';
+main();
+function main() {
+  getParams();
+  if (page == 1)
+    showText();
+  var table = document.getElementById('t1');
+  start = (page > 1) ? (page-1)*rows : 0; 
+  for (var i=start; i < start+rows && i*cols < tablen; i++) {
+    var r = table.insertRow(-1);
+    for (var j=0; j < cols; j++) {
+      var ix = i*cols + j;
+      var id = 'c' + ix;
+      var div = document.createElement('div');
+      div.style.width = '150px';
+      div.style.height = '150px';
+      div.style.margin = '12px';
+      div.id = id;
+      var cell = r.insertCell(j);
+      cell.innerHTML = (ix+1);
+      cell.appendChild(div);
+      var f = get_facelets(ix);
+      var p = 'id=' + id;
+      p += '&config=../AnimCube.txt';
+      p += '&facelets=' + cvt_to_anim(f);
+      p += '&fonttype=0';
+      p += '&buttonbar=0';
+      p += '&buttonheight=12';
+      p += '&counter=0';
+      p += '&edit=1';
+      AnimCube3(p);
+    }
+    // spacer row
+    if (i+1 < start+rows && i+1 < tablen/cols) {
+      var r = table.insertRow(-1);
+      r.style.height = '45px';
+      var cell = r.insertCell(0);
+    }
+  }
+}
+function get_facelets(ix) {
+  var fa = home.split('');
+  var kf = kloosterman[ix].split(''); 
+  for (var i=0; i < 16; i++)
+     fa[edges2[i]] = kf[i];
+  return fa.join('');
+}
+function cvt_to_anim(c) {
+  var m = [];
+  var anim = [
+    6,7,8,3,4,5,0,1,2,45,48,51,46,49,52,47,50,53,12,24,
+    36,13,25,37,14,26,38,18,30,42,19,31,43,20,32,44,11,
+    10,9,23,22,21,35,34,33,15,27,39,16,28,40,17,29,41];
+  for (var i=0; i < 54; i++)
+    m[i] = c[anim[i]];
+  return(m.join(''));
+}
+function getParams() {
+  var params = location.search.substr(1).split('&');
+  for (var i=0; i < params.length; i++) {
+    var p = params[i].split('=');
+    if (typeof(p[1]) != 'undefined')
+      window[p[0]] = p[1];
+  }
+  if (typeof page == 'string') {
+    if (isNaN(page))
+      page = 1;
+    page = Math.floor(page);
+    if (page < 1)
+      start = 1;
+    if (page > Math.floor(tablen/rows))
+      page = Math.floor(tablen/rows);
+  }
+  if (typeof hist == "undefined")
+    window.hist = 1;
+  if (typeof hist == 'string')
+    hist = (isNaN(hist)) ? 0 : Number(hist);
+}
+function showText() {
+  var s =  '<p> This shows all 6912 possible edge configurations (with ';
+  s += ' corners already solved) in the final stage of Kloosterman\'s';
+  s += ' solving method.</p><br>';
+  document.getElementById('text').innerHTML = s;
+}
+function first() {
+  if (page != 1) {
+    var s = '?page=1' + '&hist=' + (hist+1);
+    window.location.search = s; 
+  }
+}
+function prev() {
+  if (page > 1) {
+    var s = '?page=' + (page-1) + '&hist=' + (hist+1);
+    window.location.search = s; 
+  }
+}
+function next() {
+  if (page*rows*cols < tablen) {
+    var s = '?page=' + (page+1) + '&hist=' + (hist+1);
+    window.location.search = s; 
+  }
+}
+function last() {
+  if (page != 70) {
+    var s = '?page=70' + '&hist=' + (hist+1);
+    window.location.search = s; 
+  }
+}
+</script>
+</center>
+</body>
+</html>
