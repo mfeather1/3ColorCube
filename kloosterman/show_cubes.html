@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<title>Show Cubes</title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=../AnimCube3.js></script>
+ <script src=edges.js></script>
+ <style> 
+  body {margin-left:8%; margin-right:8%; text-align:center;}
+  .textarea {
+    width:650px; 
+    height:300px;
+    margin:0;
+    text-transform:uppercase;
+  }
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>Show Cubes</font>
+<br><br>
+Paste a list of facelets into the box and press Go to
+display them.
+<br><br>
+<textarea id=ta class=textarea spellcheck=false></textarea>
+<br><br>
+<button class="btn tiw1" onclick=go()>Go</button> &nbsp; &nbsp;
+<button class="btn cuw2" onclick=clera()>Clear</button>
+<span style=display:block;margin-bottom:10px></span>
+<script>
+add_close_btn(0);
+var cube_numbers = 0;
+getParams();
+function go() {
+  var txt = document.getElementById('ta').value;
+  if (txt.length == 0)
+    return;
+  clear_divs(); 
+  var arr = txt.replace(/\r\n/g, '\n').split('\n');
+  while (arr[arr.length-1] == '')
+    arr.length--;
+  for (var i=0; i < arr.length; i++) {
+      var id = 'c' + i;
+      var div = document.createElement('div');
+      div.style.width = '140px';
+      div.style.height = '140px';
+      div.style.display = 'inline-block';
+      div.style.margin = '10px';
+      div.id = id;
+      var f = arr[i];
+      var p = 'id=' + id;
+      p += '&config=../AnimCube.txt';
+      p += '&facelets=' + cvt_to_anim(f);
+      p += '&fonttype=0';
+      p += '&buttonbar=0';
+      p += '&buttonheight=12';
+      p += '&counter=0';
+      p += '&edit=1';
+      if (cube_numbers == '1')
+        p += '&move={' + (i+1) + '}';
+      document.body.appendChild(div);
+      AnimCube3(p);
+  }
+  add_close_btn(id);
+}
+function add_close_btn(id) {
+  div = document.createElement('div');
+  div.id = id;
+  var s = '<center>';
+  var px = (id == 0) ? 18 : 5;
+    s += '<span style=display:block;margin-top:' + px + 'px>';
+  s += '<a href=javascript:window.close()>Close</a>';
+  s += '</center><br>';
+  div.innerHTML = s;
+  document.body.appendChild(div);
+}
+function clear_divs() {
+  var divs = document.querySelectorAll('div');
+  for (var i=0; i < divs.length; i++)
+    divs[i].remove();
+}
+function clera() {
+  document.getElementById('ta').value = '';
+  clear_divs();
+  add_close_btn(0);
+}
+function cvt_to_anim(c) {
+  var m = [];
+  var anim = [
+    6,7,8,3,4,5,0,1,2,45,48,51,46,49,52,47,50,53,12,24,
+    36,13,25,37,14,26,38,18,30,42,19,31,43,20,32,44,11,
+    10,9,23,22,21,35,34,33,15,27,39,16,28,40,17,29,41];
+  for (var i=0; i < 54; i++)
+    m[i] = c[anim[i]];
+  return(m.join(''));
+}
+function getParams() {
+  var params = location.search.substr(1).split('&');
+  for (var i=0; i < params.length; i++) {
+    var p = params[i].split('=');
+    if (typeof(p[1]) != 'undefined')
+      window[p[0]] = p[1];
+  }
+}
+</script>
