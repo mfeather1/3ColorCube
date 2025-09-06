@@ -71,7 +71,10 @@ function add_close_btn(id) {
   var s = '<center>';
   var px = (id == 0) ? 18 : 5;
     s += '<span style=display:block;margin-top:' + px + 'px>';
-  s += '<a href=javascript:window.close()>Close</a>';
+  if (history.length > 1)
+    s += '<a href=javascript:history.go(-1)>Back</a>';
+  else
+    s += '<a href=javascript:window.close()>Close</a>';
   s += '</center><br>';
   div.innerHTML = s;
   document.body.appendChild(div);
