@@ -3,13 +3,12 @@
 <head>
 <title>Show Cubes</title>
  <meta name="robots" content="noindex, nofollow">
- <link rel=icon href=../mini_cube.png type=image/png>
- <link rel="stylesheet" type="text/css" href="../style2.css">
+ <link rel=icon href=mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="style2.css">
  <meta name=viewport content="width=device-width, initial-scale=1">
- <script src=../AnimCube3.js></script>
- <script src=edges.js></script>
+ <script src=AnimCube3.js></script>
  <style> 
-  body {margin-left:8%; margin-right:8%; text-align:center;}
+  body {margin-left:5%; margin-right:5%; text-align:center;}
   .textarea {
     width:650px; 
     height:300px;
@@ -52,7 +51,7 @@ function go() {
       div.id = id;
       var f = arr[i];
       var p = 'id=' + id;
-      p += '&config=../AnimCube.txt';
+      p += '&config=AnimCube.txt';
       p += '&facelets=' + cvt_to_anim(f);
       p += '&fonttype=0';
       p += '&buttonbar=0';
