@@ -32,6 +32,7 @@ display them.
 <script>
 add_close_btn(0);
 var cube_numbers = 0;
+var acjs_format = 0;
 getParams();
 function go() {
   var txt = document.getElementById('ta').value;
@@ -52,7 +53,10 @@ function go() {
       var f = arr[i];
       var p = 'id=' + id;
       p += '&config=AnimCube.txt';
-      p += '&facelets=' + cvt_to_anim(f);
+      if (acjs_format == '1')
+        p += '&facelets=' + f;
+      else
+        p += '&facelets=' + cvt_to_anim(f);
       p += '&fonttype=0';
       p += '&buttonbar=0';
       p += '&buttonheight=12';
