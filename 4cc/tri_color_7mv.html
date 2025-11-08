@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+<title>4-Color cube - Tri-Color Corners - 7 Move Configs</title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=A3_4cc.js></script>
+ <script src=tri_color_7mv.js></script>
+ <style> 
+  body {margin-left:8%; margin-right:8%;}
+  td {text-align:center; border-color:black}
+  .tabdata td {padding-left:6px; padding-right:6px; text-align:center;}
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>4-Color Cube<br>Tri-Color Corners<br>7 Move Configs</font>
+<br><br>
+<div id=text></div>
+<table>
+ <tr>
+  <td><button class="btn ixw2" onclick=first()>First</button></td>
+  <td width=30>
+  <td><button class="btn ixw2" onclick=prev()>Prev</button></td>
+  <td width=30>
+  <td><button class="btn ixw2" onclick=next()>Next</button></td>
+  <td width=30>
+  <td><button class="btn ixw2" onclick=last()>Last</button></td>
+ </tr>
+ <tr height=14>
+</table>
+<table border=0 id=t1></table>
+<table style=margin-top:10px>
+ <tr>
+  <td><button class="btn ixw2" onclick=first()>First</button></td>
+  <td width=30>
+  <td><button class="btn ixw2" onclick=prev()>Prev</button></td>
+  <td width=30>
+  <td><button class="btn ixw2" onclick=next()>Next</button></td>
+  <td width=30>
+  <td><button class="btn ixw2" onclick=last()>Last</button></td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-hist)>Back</a>')</script>
+<br><br><br>
+<script>
+"use strict";
+var rows = 25;
+var cols = 4;
+var page = 1;
+var start = 1;
+var tablen = cubes.length;
+var home = '1LLL1LLL1LL2L2L2LL3LLL3LLL34LLL4LLL45LLL5LLL5LL6L6L6LL';
+var acjs_cube = [];
+var acjs_scube = [];
+main();
+function main() {
+  getParams();
+  if (page == 1)
+    showText();
+  var table = document.getElementById('t1');
+  start = (page > 1) ? (page-1)*rows : 0; 
+  for (var i=start; i < start+rows && i*cols < tablen; i++) {
+    var r = table.insertRow(-1);
+    for (var j=0; j < cols; j++) {
+      var ix = i*cols + j;
+      var id = 'c' + (ix + 1);
+      var div = document.createElement('div');
+      div.style.width = '140px';
+      div.style.height = '140px';
+      div.style.margin = '12px';
+      div.id = id;
+      var cell = r.insertCell(j);
+      cell.innerHTML = (ix+1);
+      cell.appendChild(div);
+      var m = cubes[ix];
+      var p = 'id=' + id;
+      p += '&config=../AnimCube.txt';
+      p += '&4colorcube=1';
+      p += '&facelets=' + home;
+      p += '&initrevmove=#';
+      p += '&move=' + m;
+      p += '&fonttype=0';
+      p += '&textsize=17';
+      AnimCube3(p);
+    }
+    // spacer row
+    if (i+1 < start+rows && i+1 < tablen/cols) {
+      var r = table.insertRow(-1);
+      r.style.height = '45px';
+      var cell = r.insertCell(0);
+    }
+  }
+}
+function getParams() {
+  var params = location.search.substr(1).split('&');
+  for (var i=0; i < params.length; i++) {
+    var p = params[i].split('=');
+    if (typeof(p[1]) != 'undefined')
+      window[p[0]] = p[1];
+  }
+  if (typeof page == 'string') {
+    if (isNaN(page))
+      page = 1;
+    page = Math.floor(page);
+    if (page < 1)
+      start = 1;
+    if (page > Math.floor(tablen/rows))
+      page = Math.floor(tablen/rows);
+  }
+  if (typeof hist == "undefined")
+    window.hist = 1;
+  if (typeof hist == 'string')
+    hist = (isNaN(hist)) ? 0 : Number(hist);
+}
+function showText() {
+  var s =  '<p>There are 136,080 tri-color corner configs of which';
+  s += ' these 648 require the max of seven moves to solve.</p><br>';
+  document.getElementById('text').innerHTML = s;
+}
+function first() {
+  if (page != 1) {
+    var s = '?page=1' + '&hist=' + (hist+1);
+    window.location.search = s; 
+  }
+}
+function prev() {
+  if (page > 1) {
+    var s = '?page=' + (page-1) + '&hist=' + (hist+1);
+    window.location.search = s; 
+  }
+}
+function next() {
+  if (page*rows*cols < tablen) {
+    var s = '?page=' + (page+1) + '&hist=' + (hist+1);
+    window.location.search = s; 
+  }
+}
+function last() {
+  if (page != 7) {
+    var s = '?page=7' + '&hist=' + (hist+1);
+    window.location.search = s; 
+  }
+}
+/*
+function callback_acjs(id) {
+  // this shows the facelets & superfacelets for each cube (in console)
+  var color = [0,1,2,3,4,5,6,7,8,9,'W','Y','O','R','G','B','L'];
+  for (var f='', sf='', i=0; i < 6; i++)
+    for (var j=0; j < 9; j++) {
+      f += color[acjs_cube[id][i][j]];
+      sf += acjs_scube[id][i][j];
+    }
+  console.log(id, f, sf);
+}
+*/
+</script>
+</center>
+</body>
+</html>

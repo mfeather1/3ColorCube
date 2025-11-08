@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+<head>
+ <title> 4-Color Cube </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=A3_4cc.js></script>
+</head>
+<body>
+<center>
+<font size="+2"> 4-Color Cube </font>
+<br>
+<select id=type onchange=home()
+  style="height:30px; border-radius:12px;padding:0 10px 0; 
+         outline:none; background-color:#ffffff;margin-top:10px">
+  <option value=1>Tri-Color Corners</option>
+  <option value=2>Corners - tri-color solved</option>
+  <option value=3>Edges - corners solved</option>
+  <option value=4>Edges - four colors per slice</option>
+  <option value=5>Full Cube - centers only scramble</option>
+  <option value=6>Full Cube - normal scramble</option>
+</select>
+<div id=c1 style=width:300px;height:300px></div>
+<table>
+ <tr height=1>
+ <tr>
+  <td><button class="btn cuw1" onclick=home()>Home</button></td>
+  <td width=10>
+  <td><button class="btn cuw1" onclick=rand()>Random</button></td>
+ </tr>
+ <tr height=10>
+ <tr>
+  <td><button class="btn cuw1" onclick=repos()>Repos</button></td>
+  <td>
+  <td><button class="btn cuw1" onclick=reset()>Reset</button></td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+<script>
+var id = 'c1';
+var acjs_button = [];
+var acjs_cube = [];
+var acjs_scube = [];
+var acjs_colors = [];
+var acjs_put_var = [];
+var acjs_graphics = [];
+var acjs_paint = [];
+var acjs_eye = [];
+var acjs_eyeX = [];
+var acjs_eyeY = [];
+var acjs_initialEye = [];
+var acjs_initialEyeX = [];
+var acjs_initialEyeY = [];
+var acjs_vCopy = [];
+var acjs_removeListeners = [];
+var fc = '1LLL1LLL1LL2L2L2LL3LLL3LLL34LLL4LLL45LLL5LLL5LL6L6L6LL';
+var fh = '1YYR1YRR1GG2G2B2BB3GGY3GYY34BBR4BRR45RRG5RGG5YY6Y6B6BB'; 
+var params = 'id=c1&config=../AnimCube.txt&4colorcube=1&buttonbar=0';
+var perm = [
+  '0123','0132','0213','0231','0312','0321','1023','1032',
+  '1203','1230','1302','1320','2013','2031','2103','2130',
+  '2301','2310','3012','3021','3102','3120','3201','3210'
+];
+var parity = [0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0];
+AnimCube3('id=c1');
+var rbtn = 0;
+home();
+function home() {
+  var p = params;
+  if (type.value == 1)
+    p += '&facelets=' + fc;
+  else if (type.value == 2) {
+    f = blank_edges(fh);
+    p += '&facelets=' + f;
+  }
+  else
+    p += '&facelets=' + fh;
+  acjs_removeListeners[id]();
+  AnimCube3(p);
+}
+function rand() {
+  rbtn = 1;
+  var p = params;
+  var t = type.value;
+  if (t == 1) {
+    p += '&initmove=random';
+    p += '&facelets=' + fc;
+  }
+  else if (t == 2) {
+    var r = Math.floor(Math.random()*23);
+    f = single_color_corners(fh, perm[r]);
+    f = blank_edges(f);
+    p += '&facelets=' + f;
+    p += '&superfacelets=' + random_center_twist(parity[r]);
+  }
+  else if (t == 3) {
+    p += '&initmove=random';
+    p += '&facelets=' + fh
+  }
+  else if (t == 4) {
+    var sf = random_center_twist(0);
+    f = random_edges_within_slices(fh);
+    p += '&facelets=' + f;
+    p += '&superfacelets=' + sf;
+  }
+  else if (t == 5) {
+    p += '&facelets=' + fh;
+    p += '&superfacelets=' + random_center_twist(0);
+  }
+  else if (t == 6) {
+    p += '&initmove=random';
+    p += '&facelets=' + fh;
+  }
+  acjs_removeListeners[id]();
+  AnimCube3(p);
+}
+function callback_acjs() {
+  if (rbtn == '')
+    return;
+  var t = type.value;
+  if (t == 3 || t == 4)
+    solved_corners();
+  if (t == 3) {
+    for (var s=0, i=0; i < 5; i++) {
+      var r = Math.floor(Math.random()*4);
+      acjs_scube[id][i][4] = r;
+      s += r;
+    }
+    acjs_scube[id][5][4] = s%2;
+  }
+  acjs_paint[id]();
+  rbtn = '';
+}
+function solved_corners() {
+  var cix = [
+    [[0,0], [2,0], [4,0]], // UFL
+    [[0,8], [3,0], [5,6]], // UBR
+    [[1,6], [2,8], [5,2]], // DFR 
+    [[1,2], [3,8], [4,8]], // DBL
+    [[0,6], [3,6], [4,2]], // UBL
+    [[0,2], [2,6], [5,0]], // UFR
+    [[1,0], [2,2], [4,6]], // DFL
+    [[1,8], [3,2], [5,8]], // DBR
+  ];
+  for (var i=0; i < 8; i++)
+    for (var j=0; j < 3; j++) {
+      var ix0 = cix[i][j][0];
+      var ix1 = cix[i][j][1];
+      acjs_cube[id][ix0][ix1] = (i<4) ? ix0+1 : [13,11,14,15][i-4];
+      acjs_scube[id][ix0][ix1] = 0;
+    }
+  acjs_paint[id]();
+}
+function single_color_corners(f, p) {
+  var c = ['R', 'Y', 'G', 'B'];
+  f = f.split('');
+  f[6]  = f[33] = f[38] = c[p[0]]; // UBL
+  f[2]  = f[24] = f[45] = c[p[1]]; // UFR
+  f[9]  = f[20] = f[42] = c[p[2]]; // DFL
+  f[17] = f[29] = f[53] = c[p[3]]; // DBR
+  return f.join('');
+}
+function random_edges_within_slices(f) {
+  var pr = r();
+  f = f.split('');
+  f[19] = f[39] = pr[0]; // E slice
+  f[25] = f[46] = pr[1];
+  f[28] = f[52] = pr[2];
+  f[34] = f[41] = pr[3];
+  var pr = r();
+  f[3]  = f[37] = pr[0];  // S slice
+  f[5]  = f[48] = pr[1];
+  f[16] = f[50] = pr[2];
+  f[10] = f[43] = pr[3];
+  var pr = r();
+  f[1]  = f[21] = pr[0]; // M slice
+  f[12] = f[23] = pr[1];
+  f[14] = f[32] = pr[2];
+  f[7]  = f[30] = pr[3];
+  return f.join('');
+  function r() {
+    var c = ['R', 'Y', 'G', 'B'];
+    var p = perm[Math.floor(Math.random()*23)].split('');
+    for (var p2=[], i=0; i < 4; i++)
+       p[i] = c[p[i]]; 
+    return p;
+  }
+}
+function random_center_twist(p) {
+  var f = new Array(54).fill(0);  
+  for (var i=0, s=0; i < 5; i++) {
+    var r = Math.floor(Math.random()*4);
+    f[[4,13,22,31,40][i]] = r;
+    s += r;
+  }
+  f[49] = (p == s%2) ? 0 : 1;
+  return f.join('');
+}
+function repos() {
+  var vCopy = acjs_vCopy[id];
+  vCopy(acjs_eye[id], acjs_initialEye[id]);
+  vCopy(acjs_eyeX[id], acjs_initialEyeX[id]);
+  vCopy(acjs_eyeY[id], acjs_initialEyeY[id]);
+  acjs_paint[id]();
+}
+function reset() {
+  acjs_put_var[id]('buttonPressed', 0, 'n');
+  acjs_button[id](0);
+  callback_acjs();
+  acjs_put_var[id]('pushed', 0, 'n');
+}
+function blank_edges(f) {
+  f = f.split('');
+  for (var i=0; i < 54; i+=9)
+    for (var j=1; j <=7; j+=2)
+      f[i+j] = 'L';
+  return f.join('');
+}
+</script>
+</center>
+</body>
+</html>

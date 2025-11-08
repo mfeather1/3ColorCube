@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+ <title>4-Color Cube - Solve Corners</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=A3_4cc.js></script>
+ <style>
+   td {text-align:center}
+   div {width:140px; height:140px;}
+ </style>
+</head>
+<body>
+<center>
+<font size="+2">4-Color Cube<br>Solve Corners</font>
+<br><br>
+<p>This shows optimal solutions for all possible positions/orientations
+of the red-green-blue corner after the three yellow tri-color corners
+have been solved.</p>
+<table>
+ <tr height=15>
+ <tr><td colspan=5>Up Back Left</td></tr>
+ <tr>
+  <td><div id=c1></div></td><td width=20>
+  <td><div id=c2></div></td><td width=20>
+  <td><div id=c3></div></td>
+ </tr>
+ <tr height=28>
+ <tr><td colspan=5>Up Front Right</td></tr>
+ <tr>
+  <td><div id=c4></div></td><td width=20>
+  <td><div id=c5></div></td><td width=20>
+  <td><div id=c6></div></td>
+ </tr>
+ <tr height=28>
+
+ <tr><td colspan=5>Down Front Left</td></tr>
+ <tr>
+  <td><div id=c7></div></td><td width=20>
+  <td><div id=c8></div></td><td width=20>
+  <td><div id=c9></div></td>
+ </tr>
+ <tr height=28>
+
+ <tr><td colspan=5>Down Back Right</td></tr>
+ <tr>
+  <td><div id=c10></div></td><td width=20>
+  <td><div id=c11></div></td><td width=20>
+  <td><div id=c12></div></td>
+ </tr>
+ <tr height=28>
+
+ <tr><td colspan=5>Down Back Left<br>(solved position)</td></tr>
+ <tr>
+  <td><div id=c13></div></td><td width=20>
+  <td><div id=c14></div></td><td width=20>
+  <td><div id=c15></div></td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+<script>
+  params = '&config=../AnimCube.txt&4colorcube=1&initrevmove=#';
+  params += '&facelets=1LLL1LLL1LL2L2L2LL3LLL3LLL34LLL4LLL45LLL5LLL5LL6L6L6LL';
+  var ma = [
+   "RD'R'B", "RU'L2UR'", "F'DFL'",     // UBL
+   "RU'L'UR'", "R'FLF'R", "UF'D'FU'",  // UFR
+   "UB'U'L", "R'BRD'", "RFL2F'R'",     // DFL
+   "U'LUB'", "FL'F'D", "U R D2 R' U'", // DBR
+   "", "R'BD2RD'", "DR'D2B'R"          // DBL
+  ];
+  for (var i=1; i <= 15; i++) {
+    var id = 'c' + i;
+    var c = document.getElementById(id)
+    var p = 'id=' + id + params + '&move=' + ma[i-1];
+    AnimCube3(p);
+    if (i > 12)
+      document.getElementById(id).style.marginBottom = '0';
+  }
+</script>
+</center>
+</body>
+</html>
+

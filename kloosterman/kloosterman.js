@@ -19,8 +19,8 @@
   -----------------------
   CP = 70 3-Color Corner Positions
   EP = 34650 3-Color Edge Positions
-  CPR = 576 6-Color Corner Positions
-  EPR = 13824 6-Color Edge Positions
+  CPR = 576 6-Color Corner Positions (3-color reduced)
+  EPR = 13824 6-Color Edge Positions (3-color reduced)
 
   With Kloosterman's method, the 576 corner configs in stage 4 are a
   combination of 36 CP configs with 12 lists of 16 CPR configs which are

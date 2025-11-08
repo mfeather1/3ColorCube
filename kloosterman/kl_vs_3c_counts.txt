@@ -1,0 +1,49 @@
+The following shows how the permutation counts compare between the
+Kloosterman & 3-Color methods.
+
+For both methods:
+Edge permutation has 5 components: 70,495,24,24,24
+Corner permutation has 3 components: 70,24,24
+
+3-Color Cube Method:
+
+  Stage 1 (solve as 3-color):
+    70 Corners
+    495*70 Edges
+
+  Stage 2 (solve as 6-color):
+    Corners:
+      24 Tetrad 1
+      24 Tetrad 2
+    Edges:
+      24 M slice
+      24 E slice
+      24 S slice
+
+Kloosterman Method:
+
+  Stage 2 (see note 1 below)
+    495 E slice as 3-Color
+
+  Stage 3 (see note 2)
+    70 Corners
+    70 Edges 
+
+  Stage 4 (solve as 6-color)
+    Edges:
+      24 Top layer
+      24 Middle layer
+      24 Bottom layer
+    Corners:
+      24 Top layer
+      24 Bottom layer
+
+  Notes:
+  1. With edge & corner orientation solved, solving the E slice as 3-color
+     also solves the top & bottom faces as 3-color (face solve only, not the
+     whole layer).
+ 
+  2. Unlike the 3-Color method where the two components of 70 are solving
+     cubies as 3-color, in Kloosterman's method they are solving the top
+     and bottom faces as 6-color.
+

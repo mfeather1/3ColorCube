@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+ <title>4-Color Cube - Corner Solutions</title>
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> 
+  body {margin-left:8%; margin-right:8%;}
+  td {text-align:center; border-color:black}
+  .tabdata td {padding-left:6px; padding-right:6px; text-align:center;}
+ </style>
+ <script src=A3_4cc.js></script>
+ <script src=corners2.js></script>
+</head>
+<body>
+<center>
+<font size="+2">4-Color Cube<br>Corner Solutions</font>
+<br><br>
+<p> This shows how to solve all 24 of the possible corner configs that
+remain after solving the tri-color corners.
+There are three steps, first the setup is made for the appropriate sequence
+using half-twists or rotation of the cube.
+If one pair of opposite faces can be solved then the Waterwheel (WW) sequence
+is used, if no faces can be solved then the Parallel sequence is used.
+The last step is to complete the solve with half-twists.</p>
+<br>
+<div id=text></div>
+<table border=0 id=t1></table>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+<script>
+"use strict";
+main();
+function main() {
+  var rows = 10;
+  var cols = 4;
+  var start = 0;
+  var tablen = cpr.length;
+  var fc = '1LYL1LRL1GL2L2L2LB3LGL3LYL34LBL4LRL45LRL5LGL5YL6L6L6LB';
+  var ww_seq="R' D2' L2' F2 R F2' L2 D2 R";
+  var par_seq="R D2 R D2 R L D2 L D2 L";
+  var table = document.getElementById('t1');
+  for (var i=start; i < start+rows && i*cols < tablen; i++) {
+    var r = table.insertRow(-1);
+    for (var j=0; j < cols; j++) {
+      var ix = i*cols + j;
+      var id = 'c' + ix;
+      var div = document.createElement('div');
+      div.style.width = '140px';
+      div.style.height = '140px';
+      div.style.margin = '12px';
+      div.id = id;
+      var mvStr = cpr[ix];
+      var mvStr2 = mvStr.replace('PAR',par_seq).replace('WW',ww_seq);
+      var mvLen = mvStr2.split(' ').length;
+      var mvArr = mvStr.split(' ');
+      var ixw = mvArr.indexOf('WW');
+      var ixp = mvArr.indexOf('PAR');
+      var s = '<table align=center class=tabdata style=width:140px;border-collapse:collapse;border-color:white border=1>';
+      if (ix == 0) {
+        s += '<tr><td>&nbsp;</td></tr>';
+        s += '<tr><td>Solved</td></tr>';
+        s += '<tr><td>&nbsp;</td></tr>';
+      }
+      else {
+        var v1='', v2='', v3='', v4='', v5='', v6='';  
+        if (ixw >= 0 || ixp >= 0) {
+          var pos = (ixw >= 0) ? ixw : ixp;
+          var len = (ixw >= 0) ? 9 : 10;
+          v1 = (pos == 0) ? '&nbsp' : ((pos > 1) ? '1-' + pos : 1);
+          v2 = (pos == 0) ? '' : 'Setup';
+          v3 = (pos+1) + '-' + (pos+len);
+          v4 = (ixw >= 0) ? 'WW' : 'Parallel';
+          v5 = (pos+len+1) + '-' + mvLen;
+          v6 = 'Solve';
+        }
+        else {
+          v1 = v3 = '&nbsp';
+          v5 = (mvLen > 1) ? '1-' + mvLen : 1;
+          v6 = 'Solve';
+        }
+        s += '<tr><td>' + v1 + '</td><td>' + v2 + '</td></tr>'
+        s += '<tr><td>' + v3 + '</td><td>' + v4 + '</td></tr>'
+        s += '<tr><td>' + v5 + '</td><td>' + v6 + '</td></tr>'
+      }
+      s += '</table>'
+      var cell = r.insertCell(j);
+      cell.innerHTML = (ix+1) + '<br>' + s;
+      cell.appendChild(div);
+      var p = 'id=' + id ;
+      p += '&config=../AnimCube.txt';
+      p += '&4colorcube=1';
+      p += '&textsize=17';
+      p += '&initrevmove=#';
+      p += '&move=' + mvStr2;
+      p += '&facelets=' + fc;
+      AnimCube3(p);
+    }
+    // spacer row
+    if (i+1 < start+rows && i+1 < tablen/cols) {
+      var r = table.insertRow(-1);
+      r.style.height = '45px';
+      var cell = r.insertCell(0);
+    }
+  }
+}
+</script>
+</center>
+</body>
+</html>

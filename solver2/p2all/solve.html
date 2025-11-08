@@ -12,9 +12,9 @@
  <script src=../../rclib.js></script>
  <script src=../../verify.js></script>
  <script src=../../coi-serviceworker.js></script>
+ <script src=../../lzma.js></script>
  <script src=../readfiles.js></script>
  <script src=p2seq.js></script>
- <script src=lzma.js></script>
  <style> 
   html, body {
     overflow:auto;
@@ -277,7 +277,7 @@ var params;
 // for phase 2 sequences
 var p2seq2, lzma_t0;
 var rr_min_shared, rr_min_op_shared, p2seq2_shared;
-var lzma = new LZMA("lzma_worker.js");
+var lzma = new LZMA("../../lzma_worker.js");
 
 main();
 

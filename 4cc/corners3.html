@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+<head>
+ <title>4-Color Cube - Corners 3</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=A3_4cc.js></script>
+ <style> .tabdata td {
+   padding-left:15px; padding-right:15px; border-color:black; text-align:left; }
+ </style>
+</head>
+<body>
+<center>
+<font size="+2">4-Color Cube<br>Corners 3</font>
+<script>var fc='1LYL1LRL1GL2L2L2LB3LGL3LYL34LBL4LRL45LRL5LGL5YL6L6L6LB'</script>
+<br><br>
+<p>With solved tri-color corners there are 24 possible configurations of
+the single-color corners, half with even parity and half with odd parity.
+The following three sets of four configs are even parity.
+They are interconnected by half-twists within each set but not across sets
+(RYGB is the solved state).
+</p>
+<br>
+RYGB &nbsp; YRBG &nbsp; BGYR &nbsp; GBRY<br>
+RBYG &nbsp; BRGY &nbsp; GYBR &nbsp; YGRB<br>
+RGBY &nbsp; GRYB &nbsp; YBGR &nbsp; BYRG
+<br><br>
+<p>These cubes show the above config sets with another config appearing every
+fourth move.</p>
+<table>
+ <tr>
+  <td>
+   <div style='width:140px; height:140px;'>
+    <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&textsize=17&move=\
+     {RYGB}U2{}F2R2F2{YRBG}L2'{}F2D2F2{BGYR}U2{}F2R2F2{GBRY}&facelets=" + fc)
+    </script>
+   </div>
+  </td>
+  <td width=20>
+  <td>
+   <div style='width:140px; height:140px;'>
+    <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&textsize=17&move=\
+     &initmove=RD2RD2RLD2LD2L L2B2 \
+     &move={RBYG}U2{}F2R2F2{BRGY}L2'{}F2D2F2{GYBR}U2{}F2R2F2{YGRB}&facelets=" + fc)
+    </script>
+   </div>
+  </td>
+  <td width=20>
+  <td>
+   <div style='width:140px; height:140px;'>
+    <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&textsize=17&move=\
+     &initmove=RD2RD2RLD2LD2L L2B2 RD2RD2RLD2LD2L L2B2\
+     &move={RGBY}U2{}F2R2F2{GRYB}L2'{}F2D2F2{YBGR}U2{}F2R2F2{BYRG}&facelets=" + fc)
+    </script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<p>The parallel sequence is used to go between the three sets.</p>
+<table>
+ <tr>
+  <td>
+   <div style='width:160px; height:160px;'>
+    <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&textsize=17&move=\
+     {RYGB}R{}D2RD2RLD2LD2L L2B2 {RBYG} R{}D2RD2RLD2LD2L L2B2{RGBY} &facelets=" + fc)</script>
+   </div>
+  </td>
+  <td width=30>
+  <td>
+   <table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+    <tr><td style=text-align:center>1-10</td><td>Parallel Sequence</td></tr>
+    <tr><td style=text-align:center>11-12</td><td>Solve with half-twists -&gt; RBYG</td></tr>
+    <tr><td style=text-align:center>13-22</td><td>Parallel Sequence</td></tr>
+    <tr><td style=text-align:center>23-24</td><td>Solve with half-twists -&gt; RGBY</td></tr>
+   </table>
+  </td>
+ </tr>
+</table>
+<br>
+<hr>
+<br>
+<p> The Waterwheel sequence is used to get to the odd parity configs,
+here are the three sets:</p>
+<br>
+RBGY &nbsp; BRYG &nbsp; YGBR &nbsp; GYRB<br>
+RYBG &nbsp; YRGB &nbsp; GBYR &nbsp; BGRY<br>
+RGYB &nbsp; GRBY &nbsp; BYGR &nbsp; YBRG
+<br><br>
+<p>These cubes show the above config sets with another config appearing every
+fourth move.</p>
+<table>
+ <tr height=5>
+ <tr>
+  <td>
+   <div style='width:140px; height:140px;'>
+    <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&textsize=17\
+     &initmove=R'D2L2F2RF2L2D2R B2R2D2R2\
+     &move={RBGY}U2{}F2R2F2{BRYG}L2'{}F2D2F2{YGBR}U2{}F2R2F2{GYRB}&facelets=" + fc)
+    </script>
+   </div>
+  </td>
+  <td width=20>
+  <td>
+   <div style='width:140px; height:140px;'>
+    <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&textsize=17&move=\
+     &initmove=R'D2L2F2RF2L2D2R B2R2D2R2 RD2RD2RLD2LD2L L2B2 \
+     &move={RYBG}U2{}F2R2F2{YRGB}L2'{}F2D2F2{GBYR}U2{}F2R2F2{BGRY}&facelets=" + fc)
+    </script>
+   </div>
+  </td>
+  <td width=20>
+  <td>
+   <div style='width:140px; height:140px;'>
+    <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&textsize=17&move=\
+     &initmove=R'D2L2F2RF2L2D2R B2R2D2R2 RD2RD2RLD2LD2L L2B2 RD2RD2RLD2LD2L L2B2\
+     &move={RGYB}U2{}F2R2F2{GRBY}L2'{}F2D2F2{BYGR}U2{}F2R2F2{YBRG}&facelets=" + fc)
+    </script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<p>The parallel sequence is used to go between the three sets.</p>
+<table>
+ <tr>
+  <td>
+   <div style='width:160px; height:160px;'>
+    <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&textsize=17\
+     &initmove=R'D2L2F2RF2L2D2R B2R2D2R2\
+     &move={RBGY}R{}D2RD2RLD2LD2L L2B2{RYBG} R{}D2RD2RLD2LD2L L2B2{RGYB} &facelets=" + fc)</script>
+   </div>
+  </td>
+  <td width=30>
+  <td>
+   <table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+    <tr><td style=text-align:center>1-10</td><td>Parallel Sequence</td></tr>
+    <tr><td style=text-align:center>11-12</td><td>Solve with half-twists -&gt; RYBG</td></tr>
+    <tr><td style=text-align:center>13-22</td><td>Parallel Sequence</td></tr>
+    <tr><td style=text-align:center>23-24</td><td>Solve with half-twists -&gt; RGYB</td></tr>
+   </table>
+  </td>
+ </tr>
+</table>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</body>
+</html>

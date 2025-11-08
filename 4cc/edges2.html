@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+ <title>4-Color Cube - Solve Edges</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=A3_4cc.js></script>
+ <style> .tabdata td {
+   padding-left:15px; padding-right:15px; border-color:black; text-align:left; }
+ </style>
+</head>
+<body>
+<center>
+<font size="+2">4-Color Cube<br>Solve Edges</font>
+<br><br>
+<p>In this example the E slice with the red edge pair also has a yellow edge.
+This means that the sequence only separates the red edges into different
+slices, the yellow ones end up with a pair in the E slice.
+Hence the reason that it is preferable to not have an edge matching the color
+pair in the other slice.
+If both color pairs have matching edges in the other slice then this sequence
+is of no benefit but fortunately for those cases there is always another setup
+that can be made where at least one slice does not have this issue.</p>
+<div style='width:180px; height:180px;'>
+ <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&move=R'Um'R2'UmR'&facelets=LLLLLYLLLLLLLLLLYLLRLLLLLRLLYLLLLLLLLLLRLLLLLLRLYLYLYL")</script></div>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</body>
+</html>

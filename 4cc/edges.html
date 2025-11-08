@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+ <title>4-Color Cube - Solve Edges</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=A3_4cc.js></script>
+ <style> .tabdata td {
+   padding-left:15px; padding-right:15px; border-color:black; text-align:left; }
+ </style>
+</head>
+<body>
+<center>
+<font size="+2">4-Color Cube<br>Solve Edges</font>
+<br><br>
+<p>To solve the edges, first separate them so there are four different
+colors in each slice.
+To do that, use half-twists to move same-colored pairs of edges into the
+positions shown.
+Preferably the remaining edges in each slice do not match the color of the
+pair in the other slice, more about that <a href=edges2.html>here</a>.
+After the setup has been made do Sequence
+<a href=../edges.html#cube2>3C&#8209;E2</a> to separate the same-color
+pairs into different slices (last move is R' instead of R to preserve
+corners for 4-color cube).
+Repeat this process until all edges are separated and then restore the
+corners with half-twists.</p>
+<div style='width:180px; height:180px;'>
+ <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&move=R'Um'R2'UmR'&facelets=LLLLLYLLLLLLLLLLYLLRLLLLLRLLLLLLLLLLLLLRLLLLLLRLYLYLLL")</script>
+</div>
+<br><br>
+<p>After the edges have been separated the cube can be solved using the
+<a href=../edges_6c.html>6&#8209;Color Edge Sequences</a>.
+There is one difference which is that at the end of a solve there may remain
+a single pair of edges that need to be swapped.
+In the following example the green &amp; yellow edges on the front face (in 
+the E slice) need to be swapped.
+To solve, use sequence 6C&#8209;E2 with a setup where two opposite 
+edges are the same color, this is done with two red edges on the right face
+(in the S slice) on the third move.
+<div style="width:180px; height:180px;">
+ <script>AnimCube3("&config=../AnimCube.txt&&4colorcube=1&initrevmove=#&move=Z R2 U R'Um2'R2'Um2'R' U' R2 Z'&facelets=1YYRLYRR1GG2GLB2BB3GGYLGYY34BBRLBRR45RRGLRGG5YY6YLB6BB")</script>
+</div>
+<br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td style=text-align:center>1-3</td><td>Make setup</td></tr>
+ <tr><td style=text-align:center>4-8</td><td>Apply Seqence 6C&#8209;E2</td></tr>
+ <tr><td style=text-align:center>9-11</td><td>Undo setup moves</td></tr>
+</table>
+<br><br>
+<p>After the edges are solved the centers can be solved using the supercube 
+sequences shown <a href=../supercube.html>here</a>.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</body>
+</html>

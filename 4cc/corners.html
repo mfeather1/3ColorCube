@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+ <title>4-Color Cube - Solve Corners</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="noindex, nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style2.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=A3_4cc.js></script>
+ <style>
+   td {text-align:center}
+ </style>
+</head>
+<body>
+<center>
+<font size="+2">4-Color Cube<br>Solve Corners</font>
+<br><br>
+<p>First solve the three yellow tri-color corners so they are in the
+positions shown, then move them so they are all in the front layer as shown
+by pressing play.
+The orientation of the centers can be ignored, they are solved last
+(they don't have to match the cubes on these pages).</p>
+<div style=width:140px;height:140px>
+ <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&move=D'R'&facelets=1LLL1LLL1LLLLLL2LL3LLL3LLL34LLLLLLLL5LLLLLLLLLL6L6L6LL")</script>
+</div>
+<br><br>
+<p>If the remaining tri-color corner (red-green-blue = RGB) is in the back
+layer then twist it until it is in the position shown below (up-back-right).
+If it is in the front layer then do moves D B D' to move it to the back
+layer.
+In either case the result will match one of the cubes below (the only
+difference is the orientation of the RGB corner).
+The move sequence on each cube shows how to solve the tri-color corners
+by moving the RGB corner to its proper position while restoring the other
+two to the solved state.</p>
+<table>
+ <tr>
+  <td>
+   <div style="width:140px;height:140px;">
+    <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&initrevmove=#&move=R D&facelets=1LLL1LLL1LL2L2L2LL3LLL3LLL34LLL4LLL45LLL5LLL5LL6L6L6LL")</script>
+   </div>
+  </td>
+  <td width=20>
+  <td>
+   <div style="width:140px;height:140px;">
+    <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&initrevmove=#&move=B2 D' R D2&facelets=1LLL1LLL1LL2L2L2LL3LLL3LLL34LLL4LLL45LLL5LLL5LL6L6L6LL")</script>
+   </div>
+  </td>
+ </tr>
+ <tr height=5>
+</table>
+<div style="width:140px;height:140px;">
+ <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&initrevmove=#&move=U'LUBR&facelets=1LLL1LLL1LL2L2L2LL3LLL3LLL34LLL4LLL45LLL5LLL5LL6L6L6LL")</script>
+</div>
+<br>
+<p>As an alternative, the RGB corner can be solved directly from whatever
+position/orientation that it happens to be in after solving the three yellow
+tri-color corners although that requires 14 sequences to cover all of the
+possibilities, those can be found <a href=rgb.html>here</a>.</p>
+<br><hr><br>
+<p>
+After the tri-color corners are solved, the four remaining single-color
+corners can be solved using the method shown
+<a href=../corners_6c.html>here</a>.
+However, the opposite face arrangements look completely different, the
+following shows how to recognize them with the first two being solvable
+with half-twists and the second two not.</p>
+<br> 
+<table>
+ <tr>
+  <td>Parallel<br>Aligned</td>
+  <td width=30>
+  <td>Diagonal</td>
+ </tr>
+ <tr>
+  <td>
+   <div style="width:118px;height:118px;">
+    <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&initmove=R2B2&facelets=LLLLLLLLLLLLLLLLLL3LGL3LYL34LBL4LRL4LLLLLLLLLLLLLLLLLL")</script>
+   </div>
+  </td>
+  <td>
+  <td>
+   <div style="width:118px;height:118px;">
+    <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&initmove=R2B2U2&facelets=LLLLLLLLLLLLLLLLLL3LGL3LYL34LBL4LRL4LLLLLLLLLLLLLLLLLL")</script>
+   </div>
+  </td>
+  <td>
+ </tr>
+ <tr height=30>
+ <tr>
+  <td>Parallel<br>Perpendicular</td>
+  <td width=30>
+  <td>3-1 split</td>
+ </tr>
+ <tr>
+  <td>
+   <div style="width:118px;height:118px;">
+    <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&initmove=RD2RD2RLD2LD2LB2Y&facelets=LLLLLLLLLLLLLLLLLL3LGL3LYL34LBL4LRL4LLLLLLLLLLLLLLLLLL")</script>
+   </div>
+  </td>
+  <td>
+  <td>
+   <div style="width:118px;height:118px;">
+    <script>AnimCube3("config=../AnimCube.txt&4colorcube=1&initmove=RD2RD2RLD2LD2LU2&facelets=LLLLLLLLLLLLLLLLLL3LGL3LYL34LBL4LRL4LLLLLLLLLLLLLLLLLL")</script>
+   </div>
+  </td>
+ </tr>
+</table>
+<br>
+<p>After the tri-color corners are solved there are only 24 possible
+configurations of the single-color corners.
+A listing of those configs with solutions is <a href=corners2.html>here</a>.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</body>
+</html>
