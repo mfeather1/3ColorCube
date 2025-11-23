@@ -21,8 +21,11 @@
   <option value=3>Edges - corners solved</option>
   <option value=4>Edges - four colors per slice</option>
   <option value=5>Full Cube - centers only scramble</option>
-  <option value=6>Full Cube - normal scramble</option>
+  <option value=6 selected>Full Cube - normal scramble</option>
 </select>
+<br>
+<input id=cb type=checkbox onchange=set_color_scheme() 
+  style=height:15px;margin-top:15px></input>&nbsp; Switch blue/green
 <div id=c1 style=width:300px;height:300px></div>
 <table>
  <tr height=1>
@@ -42,6 +45,8 @@
 <script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
 <br><br><br>
 <script>
+var cs, fh;
+var rbtn = 0;
 var id = 'c1';
 var acjs_button = [];
 var acjs_cube = [];
@@ -59,8 +64,9 @@ var acjs_initialEyeY = [];
 var acjs_vCopy = [];
 var acjs_removeListeners = [];
 var fc = '1LLL1LLL1LL2L2L2LL3LLL3LLL34LLL4LLL45LLL5LLL5LL6L6L6LL';
-var fh = '1YYR1YRR1GG2G2B2BB3GGY3GYY34BBR4BRR45RRG5RGG5YY6Y6B6BB'; 
-var params = 'id=c1&config=../AnimCube.txt&4colorcube=1&buttonbar=0';
+var fh1 = '1YYR1YRR1GG2G2B2BB3GGY3GYY34BBR4BRR45RRG5RGG5YY6Y6B6BB'; 
+var fh2 = '1YYR1YRR1BB2B2G2GG3BBY3BYY34GGR4GRR45RRB5RBB5YY6Y6G6GG';
+var params = 'id=c1&config=../AnimCube.txt&buttonbar=0&4colorcube=1';
 var perm = [
   '0123','0132','0213','0231','0312','0321','1023','1032',
   '1203','1230','1302','1320','2013','2031','2103','2130',
@@ -68,8 +74,20 @@ var perm = [
 ];
 var parity = [0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0];
 AnimCube3('id=c1');
-var rbtn = 0;
-home();
+set_color_scheme();
+function set_color_scheme() {
+  var v = document.getElementById('cb').checked;
+  cs = (v) ? 2 : 1;
+  if (cs == 1) {
+    fh = fh1;
+    params = params.replace('e=2', 'e=1');
+  }
+  else {
+    fh = fh2;
+    params = params.replace('e=1', 'e=2');
+  }
+  home();
+}
 function home() {
   var p = params;
   if (type.value == 1)
@@ -92,7 +110,7 @@ function rand() {
     p += '&facelets=' + fc;
   }
   else if (t == 2) {
-    var r = Math.floor(Math.random()*23);
+    var r = Math.floor(Math.random()*23) + 1;
     f = single_color_corners(fh, perm[r]);
     f = blank_edges(f);
     p += '&facelets=' + f;
@@ -147,17 +165,19 @@ function solved_corners() {
     [[1,0], [2,2], [4,6]], // DFL
     [[1,8], [3,2], [5,8]], // DBR
   ];
+  
+  var colors = (cs == 1) ? [13,11,14,15] : [13,11,15,14];
   for (var i=0; i < 8; i++)
     for (var j=0; j < 3; j++) {
       var ix0 = cix[i][j][0];
       var ix1 = cix[i][j][1];
-      acjs_cube[id][ix0][ix1] = (i<4) ? ix0+1 : [13,11,14,15][i-4];
+      acjs_cube[id][ix0][ix1] = (i<4) ? ix0+1 : colors[i-4];
       acjs_scube[id][ix0][ix1] = 0;
     }
   acjs_paint[id]();
 }
 function single_color_corners(f, p) {
-  var c = ['R', 'Y', 'G', 'B'];
+  var c = (cs == 1) ? ['R','Y','G','B'] : ['R','Y','B','G'];
   f = f.split('');
   f[6]  = f[33] = f[38] = c[p[0]]; // UBL
   f[2]  = f[24] = f[45] = c[p[1]]; // UFR
@@ -185,7 +205,7 @@ function random_edges_within_slices(f) {
   return f.join('');
   function r() {
     var c = ['R', 'Y', 'G', 'B'];
-    var p = perm[Math.floor(Math.random()*23)].split('');
+    var p = perm[Math.floor(Math.random()*24)].split('');
     for (var p2=[], i=0; i < 4; i++)
        p[i] = c[p[i]]; 
     return p;

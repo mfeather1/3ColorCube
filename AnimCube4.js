@@ -2520,8 +2520,8 @@ function AnimCube4(params) {
     initInfoText(mv);
   }
 
-  document.addEventListener('touchstart', mousedown);
-  document.addEventListener('touchmove', mousemove, {passive: false});
+  document.addEventListener('touchstart', mousedown, {passive:false});
+  document.addEventListener('touchmove', mousemove, {passive:false});
   document.addEventListener('touchend', mouseup);
   document.addEventListener('mousedown', mousedown);
   document.addEventListener('mousemove', mousemove);

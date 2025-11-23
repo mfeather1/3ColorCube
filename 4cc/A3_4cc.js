@@ -149,6 +149,7 @@ function AnimCube3(params) {
   var borderWidth = 0;
   var rotateAllowed = 1;
   var fourColorCube = false;
+  var splitColors;
   // transformation tables for compatibility with Lars's applet
   // pos layout:
   //           25 26 27
@@ -306,8 +307,17 @@ function AnimCube3(params) {
         }
       }
     param = getParameter("4colorcube");
-    if (param != null && "1" == (param)) {
-      fourColorCube = true;
+    if (param != null && (param == "1" || param == "2")) {
+      if ("1" == param) {
+        fourColorCube = 1;
+        // split colors: YR BG YG RB GR BY
+        splitColors = [[11,13],[15,14],[11,14],[13,15],[14,13],[15,11]];
+      }
+      else if ("2" == param) {
+        fourColorCube = 2;
+        // split colors: YR GB YB RG BR GY
+        splitColors = [[11,13],[14,15],[11,15],[13,14],[15,13],[14,11]];
+      }
       superCube = true;
       setBorderWidth(.06);
     }
@@ -370,6 +380,12 @@ function AnimCube3(params) {
       }
       // setup color facelets
       param = getParameter("facelets");
+      if (param == null && fourColorCube) {
+        if (fourColorCube == 1)
+          param = '1YYR1YRR1GG2G2B2BB3GGY3GYY34BBR4BRR45RRG5RGG5YY6Y6B6BB'
+        else if (fourColorCube == 2)
+          param = '1YYR1YRR1BB2B2G2GG3BBY3BYY34GGR4GRR45RRB5RBB5YY6Y6G6GG';
+      }
       if (param != null && param.length == 54) {
         for (var i = 0; i < 6; i++) {
           for (var j = 0; j < 9; j++) {
@@ -2090,9 +2106,6 @@ function AnimCube3(params) {
     g.fill();
   }
 
-  // split colors: YR BG YG RB GR BY
-  var splitColors = [[11,13],[15,14],[11,14],[13,15],[14,13],[15,11]];
-
   function splitColor(g, x, y, face, superTwist, color) {
     if (color == 0 || color > 6) {
       fillPolygon(g, fillX, fillY, colors[color]);
@@ -2455,8 +2468,8 @@ function AnimCube3(params) {
     initInfoText(mv);
   }
 
-  document.addEventListener('touchstart', mousedown);
-  document.addEventListener('touchmove', mousemove, {passive: false});
+  document.addEventListener('touchstart', mousedown, {passive:false});
+  document.addEventListener('touchmove', mousemove, {passive:false});
   document.addEventListener('touchend', mouseup);
   document.addEventListener('mousedown', mousedown);
   document.addEventListener('mousemove', mousemove);
