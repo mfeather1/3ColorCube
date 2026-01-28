@@ -26,6 +26,8 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
         if (dst < 9) {
           if (n + dst < minmv) {
             minmv = dst + n;
+            if (minmv < gdone[1])
+              gdone[1] = minmv;
             sol3c[0] = n;
             for (var j=1; j <= n; j++)
               sol3c[j] = seq[j];
@@ -54,6 +56,8 @@ function solver_search(epn, etn, cpn, ctn, cp6cn, eprn, n, mvlist)
             done = 2;
             return;
           }
+          if (gdone[1] < minmv)
+            minmv = gdone[1];
           op = get_min_op_3c(cp, ct, op, ix2);
           if (use_stl) {
             var time1 = Date.now();
