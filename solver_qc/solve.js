@@ -343,7 +343,6 @@ function show_moves()
       sol3c[0]--;  // shorten sol3c by 1
       minmv--;
     } 
-    gdone[1] = minmv;
   }
   for (var i=1; i <= sol3c[0]; i++) 
     solution[i-1] = disp[Math.floor(sol3c[i]/3)] + disp2[sol3c[i]%3];
