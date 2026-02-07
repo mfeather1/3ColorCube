@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+ <title>Solver 2.1</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> 
+  .link {
+   width:100px;
+   border-radius:15px;
+   background-color:#ffffff;
+   padding:3px 20px;
+   border:none;
+   outline:none;
+   color:black;
+   text-decoration:none;
+   font-family:sans-serif;
+   white-space:nowrap;
+  }
+  a.link {color:black}
+  a.link:visited {color:black}
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>Solver 2.1</font>
+<br>
+<table border=0><tr height=5><td></table>
+<font size=+1><a href=info.html>Info</a></font>
+<table><tr height=10><td></table>
+<div style="width:fit-content;border:1px solid white">
+<table><tr height=2><td></table>
+<font size=+2>Sub-optimal</font><br>
+<table border=0>
+ <tr height=2>
+ <tr>
+  <td colspan=3 style=text-align:center>
+   <a class=link onclick=go('solve.html?stl=5s&snc=1&log_brief=1') translate=no>Basic</a>
+  </td>
+ </tr>
+ <tr height=18>
+</table>
+<font size=+1>Dist3 MB</font>
+<table>
+ <tr height=2>
+ <tr>
+  <td><a class=link onclick=go('solve.html?stl=5s&snc=1&use_dist3=1&log_brief=1') translate=no>418</a></td>
+  <td width=18>
+  <td><a class=link onclick=go('solve.html?stl=5s&snc=1&use_dist3=2&log_brief=1') translate=no>836</a></td>
+ </tr>
+ <tr height=20>
+</table>
+<hr style=margin:0>
+<table><tr height=1><td></table>
+<font size=+2>Optimal</font><br>
+<font size=+1>Dist4 GB</font>
+<table border=0>
+ <tr height=2>
+ <tr>
+  <td width=18>
+  <td><a class=link onclick=go('solve.html?stl=60&snc=1&use_dist4=11&log_brief=1') translate=no>1.8</a></td>
+  <td width=18>
+  <td><a class=link onclick=go('solve.html?stl=60&snc=1&use_dist4=22&log_brief=1') translate=no>3.6</a></td>
+  <td width=18>
+  <td><a class=link onclick=go('solve.html?stl=60&snc=1&use_dist4=34&log_brief=1') translate=no>7.1</a></td>
+  <td width=18>
+ </tr>
+ <tr height=18>
+</table>
+<hr style=margin:0>
+<table>
+ <tr height=18>
+ <tr><td><a class=link onclick=go('solve.html?stl=30s&snc=1&use_dist9=1&random_presolved=1&log_brief=1') translate=no>Presolved</a></td></tr>
+ <tr height=18>
+</table>
+</div>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+<script>function go(s){location=s}</script>
+</center>
+</body>
+</html>

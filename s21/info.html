@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+ <title> Solver 2.1 Info </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> 
+  .link {
+   width:100px;
+   border-radius:15px;
+   background-color:#ffffff;
+   padding:3px 20px;
+   border:none;
+   outline:none;
+   color:black;
+   text-decoration:none;
+   font-family:sans-serif;
+   white-space:nowrap;
+  }
+  pre {margin:0}
+  a.link {color:black}
+  a.link:visited {color:black}
+ </style>
+</head>
+<body>
+<center>
+<font size=+2> Solver 2.1 Info </font>
+<br><br>
+<p>This version of the solver adds new search array 
+<a target=_blank href=https://drive.google.com/file/d/1nB-c4OqCXn5Tqx7XGOy-b6O36zt35khL/view?usp=sharing>Dist7</a>
+(edge cube) for use with the optimal and presolved solvers.
+The full size of the edge cube is 981 billion
+configs which reduces by symmetry to 21 billion, it is further reduced to
+660 MB by excluding three bits from edge twist and storing four configs per
+byte.
+The distribution of configs by depth for Dist7 is
+<a href=dist7_counts.html>here</a>.
+The distribution for the full size edge cube is 
+<a target=_blank href=http://forum.cubeman.org/text/fullcube.txt>here</a>,
+search for: "Analysis of 3x3x3 edges only using q+h turns".
+<br><br>
+A different method is used for pruning with search arrays that contain
+6-color cube components (Dist7 contains "EPR" component as defined 
+<a href=../dist_file_contents.html#epr>here</a>) to avoid eliminating
+3-color suboptimal solutions.
+Instead of pruning based on search depth, it is done based on the minimum
+length suboptimal solution that has currently been found (call it "minmv")
+thus no 3-color suboptimal solutions that may prove to be optimal will
+be eliminated.
+<br><br>
+This method relies on the 3-color pruning to quickly find a solution close
+to optimal because it can only prune as efficiently as the normal method
+when minmv = depth+1.
+This is actually the state that the optimal solver is often in when solving
+random cubes because it already has a 19 move suboptimal solution and it is
+searching depth 18 so in either case it is pruning nodes where distance
+&gt; 18 (prune if dist &gt; depth or dist &ge; minmv).
+<br><br>
+For best performance with concurrent processing, minmv should be shared
+between workers so that they can all use the lowest minmv found by any
+of them.
+Prior versions of the solver did not share minmv which is why the log shows
+multiple workers finding the same length solutions. 
+This version does share and as a result there are fewer solutions in the
+log, usually only one for each solution length found.</p>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</body>
+</html>

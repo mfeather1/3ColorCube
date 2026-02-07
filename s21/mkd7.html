@@ -1,0 +1,408 @@
+<!doctype html>
+<html>
+<head>
+ <title> Make Dist7 </title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <script src=epr_sym.js></script>
+</head>
+<body>
+<center><font size=+2>Make Dist7</font></center>
+<br>
+<div id=text0></div>
+<button onclick=make_dist7()>Start</button>
+<div id=text></div>
+<div id=status></div>
+<div id=status2></div>
+<div id=back></div>
+<a id=d1e></a>
+<script>
+/*
+   This generates Dist7_10F.dat for use with the solver.
+
+   Here is the screen output from a run on Ryzen 5 (18 min):  
+   Press Start to make file Dist7_10F.dat (660 MB)
+   Init 0.82
+   Depth 1 nodes 2  0.00
+   Depth 2 nodes 9  0.00
+   Depth 3 nodes 75  0.00
+   Depth 4 nodes 924  0.00
+   Depth 5 nodes 11654  0.03
+   Depth 6 nodes 146997  0.21
+   Depth 7 nodes 1810630  0.69
+   Depth 8 nodes 21194046  5.97
+   Depth 9 nodes 212630644  78.07
+   Depth 10 nodes 1250421451  994.34
+   Update array 0.51
+   Run Time: 1080.64
+
+-------------------------------------------------------------------------------
+
+   The file size is fixed in this version but can be easily changed with
+   three mods:
+
+   1. change allocation size in solve.html, example:
+      before: dist7_shared = new SharedArrayBuffer(782*13824*64);  // 660 MB
+      after:  dist7_shared = new SharedArrayBuffer(782*13824*128); // 1320 MB
+
+   2. change the rs and ix values in search_dNNN.js (for NNN of choice)
+      before (660 MB):
+        var rs = etsym>>3;
+        ix = (epmin*13824 + eprsymn)*64 + (rs>>2);
+      after (1320 MB):
+        var rs = etsym>>2;
+        ix = (epmin*13824 + eprsymn)*128 + (rs>>2);
+
+   3. load the 1320 MB DIST7_10F.dat file into the solver instead 
+      of the 660 MB file
+
+   Notes: 
+   The 1320 MB size has been tested and only improves performance by
+   a few percent on Ryzen 7. Going to larger file size (2639) will require
+   splitting into multiple files (like Dist4) because of Chrome limitation.
+
+   Pruning distances are lower for edge cube than for 3-color cube.
+   Here is a comparison of similar sizes with the percentage
+   of depth 12 configs for each:
+ 
+   Dist7  5.2 GB  31%  Edge cube (full size)
+   Dist4  3.6 GB  54%  3-color cube (reduced size)
+   Dist4  7.2 GB  70%  same
+  
+    --------------------------------------------------------------
+            660 MB            1320            2639            5279
+    --------------  --------------  --------------  --------------
+    1            2               2               2               2
+    2            9               9               9               9
+    3           75              75              75              75
+    4          924             924             924             925
+    5        11654           11662           11667           11684
+    6       146997          147259          147445          147680
+    7      1810630         1820015         1825963         1830601
+    8     21194046        21539587        21759426        21890847
+    9    212630644       226874570       236151189       241449652
+   10   1250421451      1695647970      2057787160      2300251615
+   NR   1130970896      3262136103      8025972076     17872264286
+ Array  2767454208      5534908416     11069816832     22139633664
+ Adjust 2617187328      5208178176     10343655936     20489518080
+ Actual                                                20437847376
+
+ Adjusted percentages for sizes 660 to 2639    	       Actual 5279
+ -------------------------------------------------     -----------
+    8       .00809          .00413          .00210          .00107
+    9       .08124          .04356          .02283          .01181
+   10       .47777          .32557          .19894          .11254
+   NR       .43213          .62634          .77593          .87446
+
+  Note: 
+  Adjusted count for 660 MB is:
+  189322 * 13824 = 2617187328  
+
+  189322 is the count for symmetry reduced edge position combined with
+  edge twist (from totals.html), 13824 is the EPR component (see
+  dist_file_contents.html)
+
+-------------------------------------------------------------------------------
+
+Counts from http://forum.cubeman.org/text/fullcube.txt with
+total and percentages added for symmetry counts (Unique mod M)
+
+Dist   Positions          Unique mod M 
+----   ---------------    -------------
+ 0                  1               1 
+ 1                 18               2 
+ 2                243               9 
+ 3              3,240              75 
+ 4             42,807             925 
+ 5            555,866          11,684 
+ 6          7,070,103         147,680 
+ 7         87,801,812       1,830,601 
+ 8      1,050,559,626      21,890,847  .00107
+ 9     11,588,911,021     241,449,652  .01181
+ 10   110,409,721,989   2,300,251,615  .11254
+ 11   552,734,197,682  11,515,452,614  .56343  .87445 11+
+ 12   304,786,076,626   6,349,914,756  .31069
+ 13       330,335,518       6,896,891  .00033
+ 14               248              24
+                       20,437,847,376
+*/
+
+"use strict";
+var EPR_SYM_METHOD = 2;
+var SYM_FIRST_MOVE = 1;  // 0=all first moves, 1=sym first moves
+var GEN_DEPTH = 10;
+var CFG_LIST_6C = 14000;
+var count, depth, quad_depth; 
+var cfg = new Uint32Array(CFG_LIST_6C*4);
+var seq = new Int8Array(20)
+var epr_min_op = new Int8Array(E_PRMr); 
+var dist7 = new Uint8Array(MIN_EP*E_PRMr*E_TWIST/32); // 782*13824*2048/32 = 660 MB
+var epr_sym, epr_sym2, epr_idx, get_eprsym;
+var text;
+var done = 0;
+var dl1_done = 0;
+var d1_url;
+var d1_blob;
+var file_name;
+var time = [];
+var running = 0;
+main();
+function main() {
+  file_name = 'Dist7_' + String(GEN_DEPTH).padStart(2,0) + 'F.dat';
+  var size = (dist7.byteLength/(1024*1024)).toFixed(0);
+  var s = 'Press Start to make file ' + file_name + ' (' + size + ' MB)';
+  document.getElementById('text0').innerHTML = s; 
+}
+function make_dist7() {
+  time[0] = Date.now();
+  if (running)
+    return;
+  running = 1;
+  init();
+}
+function populate_dist_array() {
+  if (depth <= GEN_DEPTH) {
+    var epr = new Int8Array(3);
+    cfg_idx = count = 0;
+    quad_depth = (depth <= GEN_DEPTH-2) ? 1 : depth-(GEN_DEPTH-3);
+    if (SYM_FIRST_MOVE)
+      search(0, 0, epr, 1, mvlist1);
+    else
+      search(0, 0, epr, 1, mvlist2);
+    var s = 'Depth ' + depth + ' nodes ' + count;
+    time[depth+1] = Date.now(); 
+    s += '&nbsp; ' + ((time[depth+1] - time[depth])/1000).toFixed(2);
+    document.getElementById('text').innerHTML += s + '<br>';
+    if (depth == GEN_DEPTH) {
+      setTimeout(update_quad, 0);
+    }
+    depth++;
+    setTimeout(populate_dist_array, 0)
+  }
+}
+function search (epn, etn, eprn, n, mvlist) {
+  var epr = new Int8Array(3);
+  var eprsym = new Int8Array(3);
+  for (var i=0, mv=0; (mv = mvlist[i]) != -1; i++) {
+    var ep = ep_mov[epn*18+mv];
+    var et = et_mov[etn*18+mv];
+    get_epr_mov(epr, epn, eprn, mv);
+    var ix = ept_op_idx[ep];
+    if (ix != -1)
+      var op = ept_min_op[ix*2048+et];
+    else
+      op = ep_min_op[ep];
+    var epmin = ep_min[ep];
+    var etsym = get_etsym_m2(ep, et, op);
+    if (ix != -1) {
+      var ix2 = ept_ops_ix2[ept_ops_ix1[epmin]*2048+etsym];
+      if (ix2 != -1)
+        var op_before = op;
+      op = get_min_op_e6c(mv, ep, epr, op, ix2);
+    }
+    get_eprsym(eprsym, ep, epr, op);
+    var eprx = eprsum(eprsym); 
+    if (n == depth) {
+      var rs = Math.floor(etsym/8);
+      var d7ix = (epmin*13824 + eprx)*64 + Math.floor(rs/4);
+      var tmp = (dist7[d7ix] >> ((rs & 3) << 1)) & 3;
+      if (tmp == 0) {
+        dist7[d7ix] |= quad_depth << ((rs & 3) << 1);
+        count++;
+      }
+    }
+    else {
+      if (n <= 5)
+        if (chk_dup_6c (epmin, etsym, eprx, 0, 0, n))
+          continue;
+      seq[n] = mv;
+      search (ep, et, epr, n+1, seq_gen[mv]);
+    }
+  }
+}
+function init() {
+  if (EPR_SYM_METHOD == 1) {
+    epr_sym = new Uint8Array(CUBE_SYM * SLICE_PRM * 24 * 3);  // 1671 KB
+    get_eprsym = get_eprsym_m1;
+  }
+  else {
+    epr_sym2 = new Uint8Array(176 * 24);                      //  4 KB
+    epr_idx = new Uint8Array(CUBE_SYM * SLICE_PRM *3);        // 70 KB
+    get_eprsym = get_eprsym_m2;
+  }
+  if (ET_SYM_METHOD == 1)
+    get_etsym = get_etsym_m1;
+  else if (ET_SYM_METHOD == 2)
+    get_etsym = get_etsym_m2;
+  init2();
+  init_seq();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_ep_min();
+  populate_epr_mov();
+  populate_et_sym();
+  populate_ept_min_op();
+  populate_ept_ops_indexes();
+  populate_min_ep();
+  if (EPR_SYM_METHOD == 1)
+    populate_epr_sym();
+  else
+    populate_epr_sym2();
+  populate_epr_min_op();
+  dist7[0] = 1;
+  depth = 1;
+  time[1] = Date.now();
+  var t1 = ((time[1] - time[0])/1000).toFixed(2);
+  document.getElementById('text').innerHTML = 'Init ' + t1 + '<br>';
+  setTimeout(populate_dist_array, 0);
+}
+function populate_epr_min_op() {
+  var ix = 0;
+  var epr = new Int8Array(3);
+  var eprsym = new Int8Array(3);
+  for (epr[0]=0; epr[0] < 24; epr[0]++)
+    for (epr[1]=0; epr[1] < 24; epr[1]++)
+      for (epr[2]=0; epr[2] < 24; epr[2]++) {
+        var min = eprsum(epr);
+        var min_op = 0;
+        for (var op=1; op < CUBE_SYM; op++) {
+          get_eprsym(eprsym, 0, epr, op);
+          var n = eprsum(eprsym)
+          if (n < min) {
+            min = n;
+            min_op = op;
+          }
+      }
+      epr_min_op[ix++] = min_op;
+    }
+}
+function eprsum(epr) {
+  return(epr[0]*576 + epr[1]*24 + epr[2]);
+}
+function get_epr_mov(eprmv, ep, epr, mv) {
+  for (var i=0; i < 3; i++)
+    eprmv[i] = epr_mov[ep_slice[ep*3+i]*24*MOVES + epr[i]*MOVES + mv];
+}
+function get_epr_mov2(eprmv, ep, epr, mv) {
+  for (var i=0; i < 3; i++)
+    eprmv[i] = epr_mov2[epr_mov_idx[ep_slice[ep*3+i]*18+mv]*24+epr[i]];
+}
+function get_min_op_e6c(mv, ep, epr, op, ix) {	
+  var eprsym = new Int8Array(3);
+  var eprtmp = new Int8Array(3);
+  var oplist = new Int8Array(48);
+  var n = ept_min_ops[ix*27+2];
+  if (n == 47)
+    return epr_min_op[eprsum(epr)];
+  for (var i=0; i < n; i++)
+    oplist[i] = ept_min_ops[ix*27+i+3];
+  var epmin = min_ep[ep_min[ep]];
+  get_eprsym(eprtmp, ep, epr, op);
+  var min = eprsum(eprtmp);
+  var min_op = 0;
+  for (var i=0, dif=0; i < n; i++) {
+    get_eprsym(eprsym, epmin, eprtmp, oplist[i]);
+    var sym = eprsum(eprsym);
+    if (sym < min) {
+      min = sym;
+      min_op = oplist[i];
+      dif = 1;
+    }
+  }
+  return ((dif) ? op_op[op*48 + min_op] : op);
+}
+function get_etsym_m1(ep, et, op) {
+  return ((op16e[op*2] == 0) ? et_sym[et*CUBE_SYM+op] :
+    ((op16e[op*2] == OP_FR) ?
+     et_sym[et_sym_FR[ep_slice[ep*3]*E_TWIST+et]*CUBE_SYM+op] :
+     et_sym[et_sym_UF[ep_slice[ep*3+1]*E_TWIST+et]*CUBE_SYM+op]));
+}
+
+function get_etsym_m2(ep, et, op) {
+  return ((op16e[op*2] == 0) ? et_sym[et*CUBE_SYM+op] :
+    ((op16e[op*2] == OP_FR) ?
+    et_sym[et_sym_FR[ep_slice[ep*3]*E_TWIST+et]*CUBE_SYM+op] :
+    et_sym[et_sym_FR[ep_slice[ep*3+1]*E_TWIST+et]*CUBE_SYM+op]));
+}
+
+function chk_dup_6c(ep, et, epr, cp, ct, n) {
+  var ept = ep*E_TWIST + et;
+  var cpt = cp*C_TWIST + ct;
+  for (var i=0; i < cfg_idx; i++) {
+    var ix = i*4;
+    if (cfg[ix+0] == ept && cfg[ix+1] == epr && 
+	cfg[ix+2] == cpt && cfg[ix+3] <= n)
+      return(1);
+  }
+  if (cfg_idx >= CFG_LIST_6C) {
+    console.log("ERROR: Max size exceeded in chk_dup_6c()");
+    return(2);
+  }
+  ix = cfg_idx*4;
+  cfg[ix+0] = ept;
+  cfg[ix+1] = epr;
+  cfg[ix+2] = cpt;
+  cfg[ix+3] = n;
+  cfg_idx++;
+  return(0);
+}
+function update_quad() {
+  // assign 0->3, 3->2, 2->1, 1->0
+  var i, j, k, n, x;
+  var rearrange = new Uint8Array(256);
+  for (i=0, n=0; n < 256; i++, n++) {
+    for (j=x=0; j < 4; j++) {
+      k = ((i>>((j&3)<<1))&3);
+      if (k == 0) 
+        x |= 3<<((j&3)<<1);
+      else if (k == 2) 
+        x |= 1<<((j&3)<<1);
+      else if (k == 3) 
+        x |= 2<<((j&3)<<1);
+    }  
+    rearrange[i] = x;
+  }
+  for (i=0; i < dist7.byteLength; i++)
+    dist7[i] = rearrange[dist7[i]];
+  var t1 = ((Date.now() - time[GEN_DEPTH+1])/1000).toFixed(2);
+  document.getElementById('text').innerHTML += 'Update array ' + t1;
+  save_file_button();
+}
+function save_file_button() {
+  var t1 = ((Date.now()-time[0])/1000).toFixed(2);
+  var s = 'Run Time: ' + t1 + '<br><br>';
+  s += 'Press to save file ' + file_name + '<br>'; 
+  s += '<button onclick=dl1m()>Save</button>&nbsp;&nbsp;&nbsp;'; 
+  document.getElementById('status').innerHTML += s
+  s = '<br><center><a href="javascript: history.go(-1)">Back</a> </center>';
+  document.getElementById('back').innerHTML = s;
+}
+function dl1m() {
+  if (!dl1_done) {
+    document.getElementById('status2').innerHTML =
+      '<br>Preparing Download for ' + file_name + '<br>';
+    setTimeout(dl1, 0);
+  }
+}
+function dl1() {
+  try {
+    d1_blob = new Blob([dist7], {type: "octet/stream"});
+    d1_url = window.URL.createObjectURL(d1_blob);
+    d1e.href = d1_url;
+    d1e.download = file_name; 
+    d1e.click();
+    dl1_done = 1;
+  }
+  catch (e) {
+    alert(e);
+  }
+}
+</script>
+</body>
+</html>

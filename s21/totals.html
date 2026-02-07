@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+ <title>Dist Array Totals - Adjusting for ET bit reduction</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <script src=../rch.js></script>
+ <script src=../rclib.js></script>
+ <style> 
+   .tabdata  td {padding: 2px 20px; text-align: center; border-color: black}
+ </style> 
+</head>
+<body>
+<center>
+<font size=+2>Dist Array Totals</font><br>
+<font size=+1>Adjusting for ET bit reduction</font>
+<br><br>
+<p>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr><td>EP</td><td>3-Color Edge Positions</td><td>34650</td></tr>
+ <tr><td>ET</td><td>Edge Twist</td><td>2048</td></tr>
+ <tr><td>EPT</td><td>EP combined with ET</td><td>70963200</td></tr>
+ <tr><td>EPSYM</td><td>EP reduced by symmetry</td><td>782</td></tr>
+ <tr><td>EPTSYM</td><td>EPT reduced by symmetry</td><td>1482170</td></tr>
+ <tr><td>ET(B)</td><td>ET reduced to B bits</td><td>2^B</td></tr>
+ <tr><td>EPTSYM(B)</td><td>EPSYM combined with ET(B)</td><td>count</td></tr>
+</table>
+<br>
+<p>The size of the dist arrays can be varied depending on how many bits
+of edge twist are used.
+The following table shows the EPTSYM(B) counts by size (ET Bits) which were
+obtained by generating all 70 million possible EPT combinations and then
+counting the number of unique values of EP combined with ET(B).
+When combining EPT with other cube components to make dist arrays the
+EPTSYM(B) value is used to get a more accurate estimate of the total than
+EPSYM * ET(B) which overstates the size by up to 7.45%.</p>
+<br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr>
+  <td style=border-color:white>ET Bits</td>
+  <td style=border-color:white>EPTSYM(B)</td>
+  <td style=border-color:white>EPSYM * ET(B)</td>
+  <td style=border-color:white>%Diff</td>
+ </tr>
+ <tr><td>11</td><td> 1482170 </td><td> 1601536 </td><td>7.45</td></tr>
+ <tr><td>10</td><td> 748239 </td><td> 800768 </td><td>6.56</td></tr>
+ <tr><td>9</td><td> 376749 </td><td> 400384 </td><td>5.90</td></tr>
+ <tr><td>8</td><td> 189322 </td><td> 200192 </td><td>5.43</td></tr>
+ <tr><td>7</td><td> 95333 </td><td> 100096 </td><td>4.76</td></tr>
+ <tr><td>6</td><td> 47920 </td><td> 50048 </td><td>4.25</td></tr>
+ <tr><td>5</td><td> 24146 </td><td> 25024 </td><td>3.51</td></tr>
+ <tr><td>4</td><td> 12126 </td><td> 12512 </td><td>3.09</td></tr>
+ <tr><td>3</td><td> 6157 </td><td> 6256 </td><td>1.58</td></tr>
+ <tr><td>2</td><td> 3091 </td><td> 3128 </td><td>1.18</td></tr>
+ <tr><td>1</td><td> 1564 </td><td> 1564 </td><td>0.00</td></tr>
+ <tr><td>0</td><td> 782 </td><td> 782 </td><td>0.00</td></tr>
+</table>
+<!--
+<br>
+<button onclick=run_counts()>Start</button> 
+-->
+<div id=text></div>
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br>
+<script>
+var ept = new Int32Array(782 * E_TWIST);
+var s = '<br>';
+function run_counts() {
+  init();
+  s += '<table class=tabdata';
+  s += ' style=border-collapse:collapse;border-color:white border=1>';
+  s += '<tr>';
+  s += '  <td style=border-color:white>ET Bits</td>';
+  s += '  <td style=border-color:white>EPTSYM(B)</td>';
+  s += '  <td style=border-color:white>EPSYM * ET(B)</td>';
+  s += '  <td style=border-color:white>%Diff</td>';
+  s += ' </tr>';
+  for (var i=0; i < 12; i++)
+    get_ept_count(i);
+  s += '</table>'
+  document.getElementById('text').innerHTML = s;
+}
+function get_ept_count (et_rs) {
+  for (var i=0; i < MIN_EP*E_TWIST; i++)
+    ept[i] = 0;
+  for (ep=count=0; ep < E_PRM; ep++) {
+    var epmin = ep_min[ep];
+    var ix = ept_op_idx[ep];
+    for (et = 0; et < E_TWIST; et++) {
+      if (ix != -1) 
+        var op = ept_min_op[ix*E_TWIST+et];
+      else
+        op = ep_min_op[ep];
+      var etsym = get_etsym(ep, et, op);;
+      var rs = etsym >> et_rs;
+      if (ept[epmin*E_TWIST+rs] == 0) {
+        ept[epmin*E_TWIST+rs] = 1;
+        count++;
+      }
+    }
+  }
+  var b = 11 - et_rs;
+  var c = MIN_EP * 2**b;
+  var p = (100*(1-count/c)).toFixed(2);
+  s += '<tr>';
+  s += '<td>' + b + '</td>';
+  s += '<td>' + count + '</td>';
+  s += '<td>' + c + '</td>';
+  s += '<td>' + p + '</td>';
+  s += '</tr>';
+  console.log(b, count, c, p);
+}
+function init() {
+  if (ET_SYM_METHOD == 1)
+    get_etsym = get_etsym_m1;
+  else if (ET_SYM_METHOD == 2)
+    get_etsym = get_etsym_m2;
+  init2();
+  set_colors_3c(0, 1, 2);
+  init_map(map, sym_op_FR, sym_op_UR, reflect);
+  populate_op_tables();
+  populate_ep_min();
+  populate_et_sym();
+  populate_ept_min_op();
+}
+</script>
+</center>
+</body>
+</html>

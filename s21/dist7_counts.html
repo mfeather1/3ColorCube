@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+ <title>Dist7 Counts</title>
+ <meta name="author" content="Michael Feather">
+ <meta name="robots" content="nofollow">
+ <link rel=icon href=../mini_cube.png type=image/png>
+ <link rel="stylesheet" type="text/css" href="../style.css">
+ <meta name=viewport content="width=device-width, initial-scale=1">
+ <style> 
+   .tabdata td {padding: 2px 15px; text-align: right;  border-color: black}
+ </style>
+</head>
+<body>
+<center>
+<font size=+2>Dist 7 Counts</font>
+<br><br>
+<table class=tabdata style=border-collapse:collapse;border-color:white border=1>
+ <tr>
+  <td style="border:1px solid white">Depth</td>
+  <td style="border:1px solid white">Configs</td>
+  <td style="border:1px solid white">Percent</td>
+ </tr>
+ <tr><td>  0 </td><td>          1 </td><td>  </td></tr>
+ <tr><td>  1 </td><td>          2 </td><td>  </td></tr>
+ <tr><td>  2 </td><td>          9 </td><td>  </td></tr>
+ <tr><td>  3 </td><td>         75 </td><td>  </td></tr>
+ <tr><td>  4 </td><td>        924 </td><td>  </td></tr>
+ <tr><td>  5 </td><td>      11654 </td><td>  </td></tr>
+ <tr><td>  6 </td><td>     146997 </td><td>  0.01 </td></tr>
+ <tr><td>  7 </td><td>    1810630 </td><td>  0.07 </td></tr>
+ <tr><td>  8 </td><td>   21194046 </td><td>  0.81 </td></tr>
+ <tr><td>  9 </td><td>  212630644 </td><td>  8.12 </td></tr>
+ <tr><td> 10 </td><td> 1250421451 </td><td> 47.78 </td></tr>
+ <tr><td> NR </td><td> 1130970895 </td><td> 43.21 </td></tr>
+ <tr><td> Total </td><td> 2617187328 </td><td> 100.00 </td></tr>
+ <tr>
+  <td style="text-align:center;border:1px solid white" colspan=5>
+   NR = Not Reached
+  </td>
+ </tr>
+</table>
+<!--
+  Calculations for Total and NR:
+
+  The 660 MB size for Dist7 uses 8 of 11 ET bits so use 189322 from
+  totals.html for the number of symmetry reduced combinations of edge
+  position and edge twist.
+
+  Combine that with the 6-color component (EPR) for the total.
+  189322 * 13824 = 2617187328
+
+  Sum counts for depths 0-10: 1486216433
+
+  Subtract that from total for NR:
+  2617187328 - 1486216433 = 1130970895
+-->
+<br>
+<script>document.write('<a href=javascript:history.go(-1)>Back</a>')</script>
+<br><br><br>
+</center>
+</body>
+</html>

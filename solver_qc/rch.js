@@ -17,6 +17,7 @@
 var CT_SYM_METHOD = 3;
 var ET_SYM_METHOD = 2;
 var EPT_OP_METHOD = 1;
+var EPR_SYM_METHOD = 2;
 
 var MOVES     = 18;         // moves in face-turn metric
 var E_PRM     = 34650;      // 3C edge perms
