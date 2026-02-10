@@ -464,13 +464,17 @@ function main() {
 
   if (USE_DIST4 || random_presolved == 1) {
     USE_DIST7 = 1;
-    dist7_shared = new SharedArrayBuffer(782*13824*64);  // 660 MB
+    dist_loaded[dist_loaded.length] = 0;
+    try {
+      dist7_shared = new SharedArrayBuffer(782*13824*64);  // 660 MB
+    }
+    catch(e) {
+      memory_allocation_error_handler(e);
+      return;
+    }
   }
 
   if (USE_DIST5 == 1)
-    dist_loaded[dist_loaded.length] = 0;
-
-  if (USE_DIST7 == 1)
     dist_loaded[dist_loaded.length] = 0;
 
   if (isNaN(dist_gen_depth))
@@ -1470,7 +1474,6 @@ function randcube()
       break;
   }
 
-  document.getElementById('status').innerHTML = 'ok';
   make_cubestr();
   assign_centers_6c();
   colorize(cs);
