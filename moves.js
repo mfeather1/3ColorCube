@@ -176,3 +176,14 @@ function m2a(m, s1, s2) {
     s2[i] = m[s1[m[i]]];
 }
 
+function format_moves(s) {
+  return s.replace(/%20/g, ' ').replace(/%27/g, "'").
+    replace(/1/g, '').replace(/3/g, "'").
+    replace(/U/g, ' U').replace(/D/g, ' D').
+    replace(/F/g, ' F').replace(/B/g, ' B').
+    replace(/L/g, ' L').replace(/R/g, ' R').
+    replace(/M/g, ' M').replace(/E/g, ' E').
+    replace(/S/g, ' S').replace(/ +/g, ' ').
+    trim();
+}
+

@@ -213,7 +213,8 @@ function apply_moves(inv) {
   if (seq == '')
     return;
   var line = document.getElementById('line').value
-  facelets = do_moves(line, seq, inv);
+  document.getElementById('seq').value = format_moves(seq);
+  facelets = do_moves(line, format_moves(seq), inv);
   show_text();
   show_cube(1);
 }
